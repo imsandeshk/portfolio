@@ -26,7 +26,7 @@ const ParticlesBackground: React.FC = () => {
         fpsLimit: 60,
         particles: {
           number: {
-            value: 120,
+            value: 80,
             density: {
               enable: true,
               value_area: 800,
@@ -39,42 +39,30 @@ const ParticlesBackground: React.FC = () => {
             type: "circle",
           },
           opacity: {
-            value: 0.2,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 0.5,
-              opacity_min: 0.1,
-              sync: false,
-            },
+            value: 0.5,
+            random: false,
           },
           size: {
-            value: 1.5,
+            value: 2,
             random: true,
-            anim: {
-              enable: true,
-              speed: 1,
-              size_min: 0.1,
-              sync: false,
-            },
           },
           line_linked: {
             enable: true,
             distance: 150,
             color: "#ffffff",
-            opacity: 0.1,
+            opacity: 0.2,
             width: 1,
           },
           move: {
             enable: true,
-            speed: 0.8,
+            speed: 1,
             direction: "none",
             random: true,
             straight: false,
             out_mode: "out",
             bounce: false,
             attract: {
-              enable: true,
+              enable: false,
               rotateX: 600,
               rotateY: 1200,
             },
