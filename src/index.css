@@ -1,17 +1,16 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
+    --background: 240 58% 7%;
     --foreground: 210 40% 98%;
 
-    --card: 0 0% 3%;
+    --card: 240 42% 9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 3%;
+    --popover: 240 42% 9%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 0 0% 100%;
@@ -23,7 +22,7 @@
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 12 90% 55%;
+    --accent: 255 45% 75%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -72,6 +71,10 @@
   .text-gradient-accent {
     @apply bg-gradient-to-br from-accent via-accent/80 to-accent/60 bg-clip-text text-transparent;
   }
+  
+  .premium-shadow {
+    @apply shadow-[0_10px_30px_rgba(155,135,245,0.1)];
+  }
 }
 
 .story-link * {
@@ -86,7 +89,6 @@
   @apply transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)];
 }
 
-/* Profile image styling */
 .profile-image {
   filter: grayscale(100%);
   transition: transform 0.5s ease-out;
@@ -96,22 +98,18 @@
   transform: scale(1.03);
 }
 
-/* Section styling */
 section {
   @apply py-20;
 }
 
-/* Card hover effects */
 .card-hover {
   @apply transition-all duration-300 hover:translate-y-[-5px] hover:shadow-[0_10px_20px_rgba(0,0,0,0.3)];
 }
 
-/* Button hover effects */
 .btn-hover {
   @apply relative overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:z-[-1] after:bg-white/10 after:opacity-0 after:transition-opacity hover:after:opacity-100;
 }
 
-/* Animated borders */
 .animated-border {
   @apply relative after:absolute after:inset-0 after:z-[-1] after:rounded-md after:p-[1px] after:bg-gradient-to-r after:from-transparent after:via-white/30 after:to-transparent after:animate-[gradient-x_2s_ease_infinite];
 }
@@ -123,4 +121,41 @@ section {
   50% {
     background-position: 100% 50%;
   }
+}
+
+.premium-card {
+  @apply relative overflow-hidden bg-gradient-to-br from-card/60 to-card/30 backdrop-blur-md border border-white/5 shadow-[0_10px_25px_rgba(0,0,0,0.25)];
+}
+
+.premium-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-700;
+}
+
+.premium-card:hover::before {
+  @apply opacity-100;
+}
+
+.premium-button {
+  @apply relative overflow-hidden bg-gradient-to-r from-accent/90 to-accent/70 hover:from-accent hover:to-accent/80 transition-all duration-300 shadow-[0_5px_15px_rgba(155,135,245,0.3)];
+}
+
+.fancy-border {
+  @apply relative after:absolute after:inset-0 after:p-[1px] after:rounded-lg after:bg-gradient-to-r after:from-accent/30 after:via-white/20 after:to-accent/30 after:-z-10;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold tracking-tight;
+}
+
+h1 {
+  @apply text-4xl md:text-5xl lg:text-6xl;
+}
+
+h2 {
+  @apply text-3xl md:text-4xl;
+}
+
+.premium-transition {
+  @apply transition-all duration-500 ease-out;
 }
