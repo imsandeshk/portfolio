@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   Dialog, 
@@ -8,7 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { 
   ExternalLink, 
-  GitHub, 
+  Github, 
   Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -86,7 +85,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     rel="noopener noreferrer"
                     className="flex items-center"
                   >
-                    <GitHub className="mr-2 h-4 w-4" />
+                    <Github className="mr-2 h-4 w-4" />
                     View Code
                   </a>
                 </Button>

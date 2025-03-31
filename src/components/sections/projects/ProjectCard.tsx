@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Project } from '@/services/storageService';
@@ -6,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
   ExternalLink, 
-  GitHub, 
+  Github, 
   Star, 
   Maximize2
 } from 'lucide-react';
@@ -132,7 +131,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <GitHub className="mr-1 h-3 w-3" />
+                <Github className="mr-1 h-3 w-3" />
                 Code
               </a>
             </Button>
