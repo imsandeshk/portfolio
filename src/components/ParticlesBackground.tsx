@@ -16,7 +16,7 @@ const ParticlesBackground: React.FC = () => {
       options={{
         background: {
           color: {
-            value: "#07071C", // Deeper, richer background color
+            value: "#000000",
           },
         },
         fullScreen: {
@@ -26,20 +26,20 @@ const ParticlesBackground: React.FC = () => {
         fpsLimit: 60,
         particles: {
           number: {
-            value: 100, // Reduced particle count for cleaner look
+            value: 120,
             density: {
               enable: true,
               value_area: 800,
             },
           },
           color: {
-            value: ["#9b87f5", "#7E69AB", "#ffffff"], // Premium color palette
+            value: "#ffffff",
           },
           shape: {
             type: "circle",
           },
           opacity: {
-            value: 0.3,
+            value: 0.2,
             random: true,
             anim: {
               enable: true,
@@ -49,7 +49,7 @@ const ParticlesBackground: React.FC = () => {
             },
           },
           size: {
-            value: 1.8,
+            value: 1.5,
             random: true,
             anim: {
               enable: true,
@@ -60,14 +60,14 @@ const ParticlesBackground: React.FC = () => {
           },
           line_linked: {
             enable: true,
-            distance: 180,
-            color: "#9b87f5", // Premium purple color
-            opacity: 0.2,
+            distance: 150,
+            color: "#ffffff",
+            opacity: 0.1,
             width: 1,
           },
           move: {
             enable: true,
-            speed: 0.6, // Smoother, slightly slower movement
+            speed: 0.8,
             direction: "none",
             random: true,
             straight: false,
@@ -95,9 +95,9 @@ const ParticlesBackground: React.FC = () => {
           },
           modes: {
             grab: {
-              distance: 180,
+              distance: 140,
               line_linked: {
-                opacity: 0.4,
+                opacity: 0.5,
               },
             },
             push: {
