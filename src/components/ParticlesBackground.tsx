@@ -25,7 +25,7 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           number: {
-            value: 100,
+            value: 120,
             density: {
               enable: true,
               value_area: 800,
@@ -38,17 +38,17 @@ const ParticlesBackground: React.FC = () => {
             type: "circle",
           },
           opacity: {
-            value: 0.2,
+            value: 0.3,
             random: true,
             anim: {
               enable: true,
-              speed: 1,
+              speed: 0.5,
               opacity_min: 0.1,
               sync: false,
             },
           },
           size: {
-            value: 2,
+            value: 1.8,
             random: true,
             anim: {
               enable: true,
@@ -61,12 +61,12 @@ const ParticlesBackground: React.FC = () => {
             enable: true,
             distance: 150,
             color: "#ffffff",
-            opacity: 0.15,
+            opacity: 0.2,
             width: 1,
           },
           move: {
             enable: true,
-            speed: 0.5,
+            speed: 0.8,
             direction: "none",
             random: true,
             straight: false,
@@ -94,9 +94,9 @@ const ParticlesBackground: React.FC = () => {
           },
           modes: {
             grab: {
-              distance: 140,
+              distance: 180,
               line_linked: {
-                opacity: 0.3,
+                opacity: 0.4,
               },
             },
             push: {
