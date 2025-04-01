@@ -50,12 +50,12 @@ const ParticlesBackground: React.FC = () => {
             enable: true,
             distance: 150,
             color: "#ffffff",
-            opacity: 0.2,
+            opacity: 0.4,
             width: 1,
           },
           move: {
             enable: true,
-            speed: 1,
+            speed: 2,
             direction: "none",
             random: true,
             straight: false,
@@ -85,7 +85,7 @@ const ParticlesBackground: React.FC = () => {
             grab: {
               distance: 140,
               line_linked: {
-                opacity: 0.5,
+                opacity: 0.8,
               },
             },
             push: {
