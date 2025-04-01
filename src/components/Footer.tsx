@@ -21,7 +21,11 @@ const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <SocialLinks links={socialLinks} className="mb-4" />
+            <SocialLinks 
+              links={socialLinks} 
+              className="mb-4" 
+              iconSize={24}
+            />
           </motion.div>
           
           <motion.p
