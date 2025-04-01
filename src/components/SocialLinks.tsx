@@ -19,8 +19,11 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   return (
     <div className={`flex items-center gap-4 ${className}`}>
       {links.map((link, index) => {
-        // Make sure to use the correct icon from the icon set
-        const Icon = (Icons as any)[link.icon] || Icons.Link;
+        // Safely get the icon component if it exists
+        const iconName = link.icon;
+        const IconComponent = iconName && typeof iconName === 'string' && iconName in Icons 
+          ? (Icons as Record<string, React.FC<{ size?: number }>>)[iconName] 
+          : Icons.Link;
         
         return (
           <motion.a
@@ -35,7 +38,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             whileHover={{ scale: 1.1 }}
             title={link.platform}
           >
-            <Icon size={iconSize} />
+            <IconComponent size={iconSize} />
             {showLabels && <span className="text-sm">{link.platform}</span>}
             {!showLabels && <span className="sr-only">{link.platform}</span>}
           </motion.a>

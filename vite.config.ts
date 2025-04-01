@@ -5,13 +5,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    host: "::",
-    port: 8080,
-  },
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
+  base: "./", // This ensures assets are loaded correctly with relative paths
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -108,7 +108,7 @@ const Hero: React.FC<HeroProps> = ({
           <div className="relative max-w-md mx-auto">
             <div className="aspect-square rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_35px_rgba(255,255,255,0.15)] hover-glow">
               <img 
-                src="/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png" 
+                src="./lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png" 
                 alt={profile.name} 
                 className="w-full h-full profile-image object-cover" 
               />
