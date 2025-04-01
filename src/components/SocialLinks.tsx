@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { SocialLink } from "@/services/storageService";
+import { LucideIcon } from "lucide-react";
 
 interface SocialLinksProps {
   links: SocialLink[];
@@ -16,14 +17,25 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   iconSize = 24,
   showLabels = false 
 }) => {
+  // Helper function to get icon component by name
+  const getIconByName = (iconName: string): LucideIcon => {
+    // Check if the icon exists in the Icons object
+    if (iconName && typeof iconName === 'string' && iconName in Icons) {
+      // Only access valid icon components, not helper functions or other properties
+      const IconComponent = Icons[iconName as keyof typeof Icons];
+      // Check if it's a valid icon component (not a function like createIcon)
+      if (typeof IconComponent === 'function' && 'displayName' in IconComponent) {
+        return IconComponent as LucideIcon;
+      }
+    }
+    // Fallback to Link icon
+    return Icons.Link;
+  };
+
   return (
     <div className={`flex items-center gap-4 ${className}`}>
       {links.map((link, index) => {
-        // Safely get the icon component if it exists
-        const iconName = link.icon;
-        const IconComponent = iconName && typeof iconName === 'string' && iconName in Icons 
-          ? (Icons as Record<string, React.FC<{ size?: number }>>)[iconName] 
-          : Icons.Link;
+        const IconComponent = getIconByName(link.icon);
         
         return (
           <motion.a
