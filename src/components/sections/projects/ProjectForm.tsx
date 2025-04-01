@@ -15,6 +15,7 @@ import { Switch } from "@/components/ui/switch";
 import { Project } from "@/services/storageService";
 import ImageUpload from "@/components/ImageUpload";
 import { X } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ProjectFormProps {
   project?: Project;
@@ -227,7 +228,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
             </div>
           </div>
           
-          <DialogFooter>
+          <DialogFooter className="pt-4">
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
