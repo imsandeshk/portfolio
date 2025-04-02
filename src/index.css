@@ -242,3 +242,12 @@ section {
     @apply flex flex-col;
   }
 }
+
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  }
+  50% {
+    text-shadow: 0 0 15px #fff, 0 0 25px #fff;
+  }
+}
