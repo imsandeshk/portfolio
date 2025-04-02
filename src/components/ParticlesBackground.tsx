@@ -3,11 +3,8 @@ import React, { useCallback } from "react";
 import Particles from "react-tsparticles";
 import type { Engine } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const ParticlesBackground: React.FC = () => {
-  const isMobile = useIsMobile();
-  
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
@@ -29,37 +26,25 @@ const ParticlesBackground: React.FC = () => {
         fpsLimit: 60,
         particles: {
           number: {
-            value: isMobile ? 40 : 80,
+            value: 80,
             density: {
               enable: true,
               value_area: 800,
             },
           },
           color: {
-            value: ["#ffffff", "#ff5722", "#4285f4", "#34a853"],
+            value: "#ffffff",
           },
           shape: {
-            type: ["circle", "triangle", "star"],
+            type: "circle",
           },
           opacity: {
             value: 0.5,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 1,
-              opacity_min: 0.1,
-              sync: false,
-            },
+            random: false,
           },
           size: {
-            value: 3,
+            value: 2,
             random: true,
-            anim: {
-              enable: true,
-              speed: 2,
-              size_min: 0.1,
-              sync: false,
-            },
           },
           line_linked: {
             enable: true,
@@ -70,28 +55,16 @@ const ParticlesBackground: React.FC = () => {
           },
           move: {
             enable: true,
-            speed: isMobile ? 1 : 2,
+            speed: 2,
             direction: "none",
             random: true,
             straight: false,
             out_mode: "out",
             bounce: false,
             attract: {
-              enable: true,
+              enable: false,
               rotateX: 600,
               rotateY: 1200,
-            },
-          },
-          twist: {
-            enable: true,
-            area: 800,
-            factor: 5,
-          },
-          trail: {
-            enable: true,
-            length: 10,
-            fill: {
-              color: "#000",
             },
           },
         },
@@ -100,7 +73,7 @@ const ParticlesBackground: React.FC = () => {
           events: {
             onhover: {
               enable: true,
-              mode: "bubble",
+              mode: "grab",
             },
             onclick: {
               enable: true,
@@ -114,13 +87,6 @@ const ParticlesBackground: React.FC = () => {
               line_linked: {
                 opacity: 0.8,
               },
-            },
-            bubble: {
-              distance: 200,
-              size: 6,
-              duration: 2,
-              opacity: 0.8,
-              speed: 3,
             },
             push: {
               particles_nb: 4,
