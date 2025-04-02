@@ -44,7 +44,7 @@ const Hero: React.FC<HeroProps> = ({
        <motion.h1
   style={{
     animation: "pulseGlow 2s ease-in-out infinite",
-    textShadow: "0 0 5px #fff, 0 0 10px #fff"
+    textShadow: "0 0 3px #fff, 0 0 6px #fff"
   }}
   className="text-5xl md:text-6xl mb-6 text-white font-extrabold text-left lg:text-7xl"
 >
