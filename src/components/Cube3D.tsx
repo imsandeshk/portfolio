@@ -1,107 +1,127 @@
 
-import React, { useRef, useEffect } from "react";
-import * as THREE from "three";
-import { useIsMobile } from "@/hooks/use-mobile";
+import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
 interface Cube3DProps {
   size?: number;
-  position?: "left" | "right" | "center";
+  position?: { x: number; y: number; z: number };
+  rotation?: { x: number; y: number; z: number };
+  color?: string;
+  wireframe?: boolean;
   className?: string;
 }
 
-const Cube3D: React.FC<Cube3DProps> = ({ 
-  size = 100, 
-  position = "center",
-  className = ""
+const Cube3D: React.FC<Cube3DProps> = ({
+  size = 1,
+  position = { x: 0, y: 0, z: 0 },
+  rotation = { x: 0.01, y: 0.01, z: 0 },
+  color = '#ff5733',
+  wireframe = false,
+  className = '',
 }) => {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
-  const actualSize = isMobile ? size * 0.8 : size;
-  
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const cubeRef = useRef<THREE.Mesh | null>(null);
+
   useEffect(() => {
-    // Scene setup
+    if (!containerRef.current) return;
+
+    // Create scene
     const scene = new THREE.Scene();
-    
-    // Camera setup
-    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    sceneRef.current = scene;
+
+    // Create camera
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      containerRef.current.clientWidth / containerRef.current.clientHeight,
+      0.1,
+      1000
+    );
     camera.position.z = 5;
-    
-    // Renderer setup
+    cameraRef.current = camera;
+
+    // Create renderer
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(actualSize, actualSize);
     renderer.setClearColor(0x000000, 0);
-    
-    if (mountRef.current) {
-      mountRef.current.appendChild(renderer.domElement);
-    }
-    
-    // Geometry and materials
-    const geometry = new THREE.BoxGeometry(3, 3, 3);
-    
-    // Create materials with different colors for each face
-    const materials = [
-      new THREE.MeshBasicMaterial({ color: 0xff5733, transparent: true, opacity: 0.7 }),
-      new THREE.MeshBasicMaterial({ color: 0x33ff57, transparent: true, opacity: 0.7 }),
-      new THREE.MeshBasicMaterial({ color: 0x3357ff, transparent: true, opacity: 0.7 }),
-      new THREE.MeshBasicMaterial({ color: 0xff33ff, transparent: true, opacity: 0.7 }),
-      new THREE.MeshBasicMaterial({ color: 0xffff33, transparent: true, opacity: 0.7 }),
-      new THREE.MeshBasicMaterial({ color: 0x33ffff, transparent: true, opacity: 0.7 }),
-    ];
-    
-    // Create cube with materials
-    const cube = new THREE.Mesh(geometry, materials);
-    scene.add(cube);
-    
-    // Add wireframe
-    const wireframeGeometry = new THREE.BoxGeometry(3.1, 3.1, 3.1);
-    const wireframeMaterial = new THREE.MeshBasicMaterial({ 
-      color: 0xffffff, 
-      wireframe: true,
-      transparent: true,
-      opacity: 0.3
+    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    containerRef.current.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
+
+    // Create cube
+    const geometry = new THREE.BoxGeometry(size, size, size);
+    const material = new THREE.MeshPhongMaterial({
+      color: new THREE.Color(color),
+      wireframe,
+      specular: 0xffffff,
+      shininess: 100,
+      reflectivity: 1,
     });
-    const wireframe = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
-    scene.add(wireframe);
     
-    // Animation
+    const cube = new THREE.Mesh(geometry, material);
+    cube.position.set(position.x, position.y, position.z);
+    scene.add(cube);
+    cubeRef.current = cube;
+
+    // Add lights
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(directionalLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+    pointLight.position.set(10, 10, 10);
+    scene.add(pointLight);
+
+    // Create animation loop
     const animate = () => {
       requestAnimationFrame(animate);
       
-      cube.rotation.x += 0.005;
-      cube.rotation.y += 0.01;
-      wireframe.rotation.x = cube.rotation.x;
-      wireframe.rotation.y = cube.rotation.y;
+      if (cubeRef.current) {
+        cubeRef.current.rotation.x += rotation.x;
+        cubeRef.current.rotation.y += rotation.y;
+        cubeRef.current.rotation.z += rotation.z;
+      }
       
       renderer.render(scene, camera);
     };
     
     animate();
+
+    // Handle resize
+    const handleResize = () => {
+      if (!containerRef.current || !cameraRef.current || !rendererRef.current) return;
+      
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
+      
+      cameraRef.current.aspect = width / height;
+      cameraRef.current.updateProjectionMatrix();
+      
+      rendererRef.current.setSize(width, height);
+    };
     
+    window.addEventListener('resize', handleResize);
+
     // Cleanup
     return () => {
-      if (mountRef.current && mountRef.current.contains(renderer.domElement)) {
-        mountRef.current.removeChild(renderer.domElement);
+      window.removeEventListener('resize', handleResize);
+      if (containerRef.current && rendererRef.current) {
+        containerRef.current.removeChild(rendererRef.current.domElement);
       }
-      scene.remove(cube);
-      scene.remove(wireframe);
-      geometry.dispose();
-      materials.forEach(material => material.dispose());
-      wireframeGeometry.dispose();
-      wireframeMaterial.dispose();
+      if (cubeRef.current) {
+        geometry.dispose();
+        material.dispose();
+        scene.remove(cubeRef.current);
+      }
     };
-  }, [actualSize]);
-  
-  let positionClass = "mx-auto"; // center by default
-  if (position === "left") positionClass = "ml-0 mr-auto";
-  if (position === "right") positionClass = "ml-auto mr-0";
-  
-  return (
-    <div 
-      ref={mountRef} 
-      className={`${positionClass} ${className}`}
-      style={{ width: actualSize, height: actualSize }}
-    />
-  );
+  }, [size, position, rotation, color, wireframe]);
+
+  return <div ref={containerRef} className={`w-full h-full ${className}`}></div>;
 };
 
 export default Cube3D;

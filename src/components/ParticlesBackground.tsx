@@ -42,23 +42,12 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: 1.5,
+            speed: 2,
             straight: false,
             attract: {
               enable: true,
               rotateX: 600,
               rotateY: 1200,
-            },
-            path: {
-              enable: true,
-              delay: {
-                value: 0.1
-              },
-              options: {
-                size: 5,
-                draw: false,
-                generator: "perlinNoise"
-              }
             },
           },
           number: {
@@ -91,7 +80,6 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               speed: 3,
               minimumValue: 0.1,
-              sync: false
             },
           },
           twinkle: {
@@ -100,11 +88,6 @@ const ParticlesBackground: React.FC = () => {
               frequency: 0.05,
               opacity: 1,
             },
-            lines: {
-              enable: true,
-              frequency: 0.005,
-              opacity: 1
-            }
           },
         },
         interactivity: {
@@ -137,12 +120,6 @@ const ParticlesBackground: React.FC = () => {
               links: {
                 opacity: 0.8,
               },
-            },
-            bubble: {
-              distance: 250,
-              size: 10,
-              duration: 2,
-              opacity: 0.8
             },
           },
         },

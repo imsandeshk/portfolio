@@ -8,9 +8,9 @@ import CertificatesSection from "@/components/sections/certificates/Certificates
 import TasksSection from "@/components/sections/tasks/TasksSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import EducationSection from "@/components/sections/EducationSection";
-// import ExperienceSection from "@/components/sections/ExperienceSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
 import ContactSection from "@/components/sections/ContactSection";
-// import FeedbackSection from "@/components/sections/feedback/FeedbackSection";
+import FeedbackSection from "@/components/sections/feedback/FeedbackSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import {
@@ -35,9 +35,9 @@ const Index = () => {
   const tasks = getTasks();
   const skills = getSkills();
   const education = getEducation();
-  // const experience = getExperience();
+  const experience = getExperience();
   const contact = getContact();
-  // const feedback = getFeedback();
+  const feedback = getFeedback();
 
   // Tab state for the content switcher
   const [activeTab, setActiveTab] = useState("projects");
@@ -89,13 +89,14 @@ const Index = () => {
       {/* Education Section */}
       <EducationSection education={education} />
       
-      {/* Experience Section - Commented out as requested */}
-      {/* <ExperienceSection experience={experience} /> */}
+      {/* Experience Section */}
+      <ExperienceSection experience={experience} />
       
       {/* Contact Section */}
       <ContactSection contact={contact} />
       
-      {/* Feedback Section - Removed as requested */}
+      {/* Feedback Section */}
+      <FeedbackSection feedback={feedback} />
       
       {/* Footer */}
       <Footer socialLinks={socialLinks} />
