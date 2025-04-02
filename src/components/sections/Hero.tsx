@@ -41,14 +41,14 @@ const Hero: React.FC<HeroProps> = ({
           animate={{ opacity: 1, x: 0 }} 
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }} 
-            className="text-5xl md:text-6xl mb-6 text-gradient font-extrabold text-left lg:text-7xl"
-          >
-            {profile.name}
-          </motion.h1>
+          <motion.h1
+          className="text-5xl md:text-6xl mb-6 text-gradient font-extrabold text-left lg:text-7xl
+             p-4 rounded-xl bg-black/10 shadow-[0_0_35px_rgba(255,255,255,0.3)]
+             transition-shadow duration-300"
+             >
+           {profile.name}
+            </motion.h1>
+
           
           <motion.h2 
             className="text-2xl md:text-3xl lg:text-4xl font-medium mb-6 text-accent/90" 
