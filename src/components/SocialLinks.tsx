@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { SocialLink } from "@/services/storageService";
 import { LucideIcon } from "lucide-react";
+import { Github, Twitter, Linkedin } from "lucide-react";
 
 interface SocialLinksProps {
   links: SocialLink[];
