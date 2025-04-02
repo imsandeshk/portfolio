@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { SocialLink } from "@/services/storageService";
 import { LucideIcon } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SocialLinksProps {
   links: SocialLink[];
@@ -17,6 +18,9 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   iconSize = 24,
   showLabels = false 
 }) => {
+  const isMobile = useIsMobile();
+  const actualIconSize = isMobile ? Math.min(iconSize, 20) : iconSize;
+
   // Helper function to get icon component by name
   const getIconByName = (iconName: string): LucideIcon => {
     // Check if the icon exists in the Icons object
@@ -53,15 +57,24 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   // Hover animation for each icon
   const iconHover = {
     rest: { scale: 1, rotate: 0 },
-    hover: { scale: 1.2, rotate: 5, transition: { type: "spring", stiffness: 400, damping: 10 } }
+    hover: { 
+      scale: 1.2, 
+      rotate: 5, 
+      transition: { 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 10 
+      } 
+    }
   };
 
   return (
     <motion.div 
-      className={`flex flex-wrap items-center gap-4 ${className}`}
+      className={`flex flex-wrap items-center justify-center md:justify-start gap-3 ${className}`}
       variants={container}
       initial="hidden"
-      animate="show"
+      whileInView="show"
+      viewport={{ once: true, margin: "-50px" }}
     >
       {links.map((link, index) => {
         const IconComponent = getIconByName(link.icon);
@@ -72,14 +85,17 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-accent transition-colors duration-300 flex items-center gap-2 bg-black/30 backdrop-blur-sm p-2 rounded-full hover:shadow-[0_0_15px_rgba(255,87,51,0.5)]"
+            className="text-white hover:text-accent transition-colors duration-300 flex items-center gap-2 bg-black/30 backdrop-blur-sm p-2.5 rounded-full hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] transform-gpu"
             variants={item}
             whileHover="hover"
             initial="rest"
             title={link.platform}
           >
-            <motion.div variants={iconHover}>
-              <IconComponent size={iconSize} />
+            <motion.div 
+              className="flex items-center justify-center"
+              variants={iconHover}
+            >
+              <IconComponent size={actualIconSize} strokeWidth={1.5} />
             </motion.div>
             {showLabels && (
               <span className="text-sm hidden md:inline">{link.platform}</span>

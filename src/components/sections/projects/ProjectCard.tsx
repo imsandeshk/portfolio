@@ -1,22 +1,17 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Project } from '@/services/storageService';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { 
-  ExternalLink, 
-  Github, 
-  Star, 
-  Maximize2
-} from 'lucide-react';
-import EditControls from '@/components/EditControls';
+
+import { motion } from "framer-motion";
+import { Project } from "@/services/storageService";
+import { Badge } from "@/components/ui/badge";
+import { Star, ExternalLink, Github, Edit, Trash } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import EditControls from "@/components/EditControls";
 
 interface ProjectCardProps {
   project: Project;
   isAdmin?: boolean;
-  onEdit?: () => void;
-  onDelete?: () => void;
-  onClick?: () => void;
+  onEdit?: (project: Project) => void;
+  onDelete?: (project: Project) => void;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
@@ -24,115 +19,85 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   isAdmin = false,
   onEdit,
   onDelete,
-  onClick
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <motion.div
-      className="relative group glass-card rounded-lg overflow-hidden hover-glow"
+      className="glass-card rounded-lg overflow-hidden hover-scale card-hover"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true, margin: "-100px" }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      onClick={onClick}
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true, margin: "-50px" }}
     >
-      {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      {/* Image Area */}
+      <div className="relative aspect-video overflow-hidden">
         <img
           src={project.image || "/placeholder.svg"}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover"
         />
         
-        {/* Pinned indicator */}
-        {project.pinned && (
-          <div className="absolute top-2 right-2 text-accent">
-            <Star className="fill-accent" size={20} />
+        {/* Star Indicator */}
+        {project.featured && (
+          <div className="absolute top-2 right-2">
+            <Star className="text-yellow-400 fill-yellow-400" size={20} />
           </div>
         )}
-        
-        {/* View details overlay */}
-        <motion.div 
-          className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-        >
-          <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white">
-            <Maximize2 className="mr-2 h-4 w-4" />
-            View Details
-          </Button>
-        </motion.div>
       </div>
-
-      {/* Content */}
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-bold">{project.title}</h3>
+      
+      {/* Content Area */}
+      <div className="p-5">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="text-lg font-bold text-white">{project.title}</h3>
           
           {isAdmin && onEdit && onDelete && (
-            <EditControls onEdit={onEdit} onDelete={onDelete} />
+            <EditControls 
+              onEdit={() => onEdit(project)} 
+              onDelete={() => onDelete(project)} 
+            />
           )}
         </div>
         
-        <p className="text-muted-foreground text-sm line-clamp-2 mb-3">
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
           {project.description}
         </p>
         
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1 mb-4">
-          {project.tags.slice(0, 3).map((tag, index) => (
-            <Badge key={index} variant="outline" className="text-xs">
-              {tag}
+        {/* Tags/Technologies */}
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {project.technologies.map((tech, index) => (
+            <Badge key={index} variant="outline" className={isMobile ? "text-xs px-1.5 py-0.5" : ""}>
+              {tech}
             </Badge>
           ))}
-          {project.tags.length > 3 && (
-            <Badge variant="outline" className="text-xs">
-              +{project.tags.length - 3}
-            </Badge>
-          )}
         </div>
         
-        {/* Links */}
-        <div className="flex gap-2">
-          {project.url && (
-            <Button 
-              size="sm" 
-              variant="outline" 
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-2 mt-auto">
+          {project.demoUrl && (
+            <Button
+              variant="outline"
+              size={isMobile ? "sm" : "default"}
+              className="flex-1"
               asChild
-              className="text-xs"
-              onClick={(e) => e.stopPropagation()}
             >
-              <a 
-                href={project.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center"
-              >
-                <ExternalLink className="mr-1 h-3 w-3" />
-                Live Demo
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                <ExternalLink size={16} className="mr-1.5" />
+                <span>Demo</span>
               </a>
             </Button>
           )}
           
-          {project.github && (
-            <Button 
-              size="sm" 
-              variant="outline" 
+          {project.repoUrl && (
+            <Button
+              variant="outline"
+              size={isMobile ? "sm" : "default"}
+              className="flex-1"
               asChild
-              className="text-xs"
-              onClick={(e) => e.stopPropagation()}
             >
-              <a 
-                href={project.github} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center"
-              >
-                <Github className="mr-1 h-3 w-3" />
-                Code
+              <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                <Github size={16} className="mr-1.5" />
+                <span>Code</span>
               </a>
             </Button>
           )}

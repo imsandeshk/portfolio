@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +9,7 @@ import CertificatesSection from "@/components/sections/certificates/Certificates
 import TasksSection from "@/components/sections/tasks/TasksSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import EducationSection from "@/components/sections/EducationSection";
-import ExperienceSection from "@/components/sections/ExperienceSection";
 import ContactSection from "@/components/sections/ContactSection";
-import FeedbackSection from "@/components/sections/feedback/FeedbackSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import ProfileForm from "@/components/ProfileForm";
@@ -71,9 +68,7 @@ const AdminPanel = () => {
   const [tasks, setTasks] = useState(getTasks());
   const [skills, setSkills] = useState(getSkills());
   const [education, setEducation] = useState(getEducation());
-  const [experience, setExperience] = useState(getExperience());
   const [contact, setContact] = useState(getContact());
-  const [feedback, setFeedback] = useState(getFeedback());
 
   // State for edit forms
   const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
@@ -219,34 +214,10 @@ const AdminPanel = () => {
     setEducation(education.filter((educationEntry) => educationEntry.id !== id));
   };
 
-  // Handle experience
-  const handleAddExperience = (experienceEntry) => {
-    const newExperience = addExperience(experienceEntry);
-    setExperience([...experience, newExperience]);
-  };
-
-  const handleUpdateExperience = (experienceEntry) => {
-    updateExperience(experienceEntry);
-    setExperience(
-      experience.map((e) => (e.id === experienceEntry.id ? experienceEntry : e))
-    );
-  };
-
-  const handleDeleteExperience = (id) => {
-    deleteExperience(id);
-    setExperience(experience.filter((experienceEntry) => experienceEntry.id !== id));
-  };
-
   // Handle contact
   const handleUpdateContact = (contactInfo) => {
     updateContact(contactInfo);
     setContact(contactInfo);
-  };
-
-  // Handle feedback
-  const handleDeleteFeedback = (id) => {
-    deleteFeedback(id);
-    setFeedback(feedback.filter((f) => f.id !== id));
   };
 
   // Handle logout
@@ -363,26 +334,19 @@ const AdminPanel = () => {
       />
       
       {/* Experience Section */}
-      <ExperienceSection 
+      {/* <ExperienceSection 
         experience={experience} 
         isAdmin={true}
         onAddExperience={handleAddExperience}
         onUpdateExperience={handleUpdateExperience}
         onDeleteExperience={handleDeleteExperience}
-      />
+      /> */}
       
       {/* Contact Section */}
       <ContactSection 
         contact={contact} 
         isAdmin={true}
         onUpdateContact={handleUpdateContact}
-      />
-      
-      {/* Feedback Section */}
-      <FeedbackSection 
-        feedback={feedback} 
-        isAdmin={true}
-        onDeleteFeedback={handleDeleteFeedback}
       />
       
       {/* Footer */}
