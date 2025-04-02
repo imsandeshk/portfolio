@@ -32,8 +32,37 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     return Icons.Link;
   };
 
+  // Animation variants for the container
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  // Animation variants for each item
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
+  // Hover animation for each icon
+  const iconHover = {
+    rest: { scale: 1, rotate: 0 },
+    hover: { scale: 1.2, rotate: 5, transition: { type: "spring", stiffness: 400, damping: 10 } }
+  };
+
   return (
-    <div className={`flex items-center gap-4 ${className}`}>
+    <motion.div 
+      className={`flex flex-wrap items-center gap-4 ${className}`}
+      variants={container}
+      initial="hidden"
+      animate="show"
+    >
       {links.map((link, index) => {
         const IconComponent = getIconByName(link.icon);
         
@@ -43,20 +72,23 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-accent transition-colors duration-300 flex items-center gap-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            whileHover={{ scale: 1.1 }}
+            className="text-white hover:text-accent transition-colors duration-300 flex items-center gap-2 bg-black/30 backdrop-blur-sm p-2 rounded-full hover:shadow-[0_0_15px_rgba(255,87,51,0.5)]"
+            variants={item}
+            whileHover="hover"
+            initial="rest"
             title={link.platform}
           >
-            <IconComponent size={iconSize} />
-            {showLabels && <span className="text-sm">{link.platform}</span>}
+            <motion.div variants={iconHover}>
+              <IconComponent size={iconSize} />
+            </motion.div>
+            {showLabels && (
+              <span className="text-sm hidden md:inline">{link.platform}</span>
+            )}
             {!showLabels && <span className="sr-only">{link.platform}</span>}
           </motion.a>
         );
       })}
-    </div>
+    </motion.div>
   );
 };
 

@@ -14,6 +14,7 @@ const ParticlesBackground: React.FC = () => {
       id="tsparticles"
       init={particlesInit}
       options={{
+        fpsLimit: 120,
         background: {
           color: {
             value: "#000000",
@@ -23,81 +24,106 @@ const ParticlesBackground: React.FC = () => {
           enable: true,
           zIndex: -1,
         },
-        fpsLimit: 60,
         particles: {
-          number: {
-            value: 80,
-            density: {
-              enable: true,
-              value_area: 800,
-            },
-          },
           color: {
-            value: "#ffffff",
+            value: ["#ffffff", "#ff5733", "#33ff57", "#3357ff"],
           },
-          shape: {
-            type: "circle",
-          },
-          opacity: {
-            value: 0.5,
-            random: false,
-          },
-          size: {
-            value: 2,
-            random: true,
-          },
-          line_linked: {
-            enable: true,
-            distance: 150,
+          links: {
             color: "#ffffff",
-            opacity: 0.4,
+            distance: 150,
+            enable: true,
+            opacity: 0.3,
             width: 1,
           },
           move: {
-            enable: true,
-            speed: 2,
             direction: "none",
+            enable: true,
+            outModes: {
+              default: "bounce",
+            },
             random: true,
+            speed: 2,
             straight: false,
-            out_mode: "out",
-            bounce: false,
             attract: {
-              enable: false,
+              enable: true,
               rotateX: 600,
               rotateY: 1200,
             },
           },
+          number: {
+            density: {
+              enable: true,
+              area: 800,
+            },
+            value: 80,
+          },
+          opacity: {
+            value: {
+              min: 0.1,
+              max: 0.5,
+            },
+            animation: {
+              enable: true,
+              speed: 1,
+              minimumValue: 0.1,
+            },
+          },
+          shape: {
+            type: ["circle", "triangle", "star"],
+          },
+          size: {
+            value: {
+              min: 1,
+              max: 4,
+            },
+            animation: {
+              enable: true,
+              speed: 3,
+              minimumValue: 0.1,
+            },
+          },
+          twinkle: {
+            particles: {
+              enable: true,
+              frequency: 0.05,
+              opacity: 1,
+            },
+          },
         },
         interactivity: {
-          detect_on: "canvas",
           events: {
-            onhover: {
-              enable: true,
-              mode: "grab",
-            },
-            onclick: {
+            onClick: {
               enable: true,
               mode: "push",
+            },
+            onHover: {
+              enable: true,
+              mode: "repulse",
+              parallax: {
+                enable: true,
+                force: 60,
+                smooth: 10,
+              },
             },
             resize: true,
           },
           modes: {
+            push: {
+              quantity: 4,
+            },
+            repulse: {
+              distance: 150,
+              duration: 0.4,
+            },
             grab: {
-              distance: 140,
-              line_linked: {
+              distance: 200,
+              links: {
                 opacity: 0.8,
               },
             },
-            push: {
-              particles_nb: 4,
-            },
-            repulse: {
-              distance: 100,
-              duration: 0.4,
-            },
           },
         },
-        retina_detect: true,
+        detectRetina: true,
       }}
     />
   );
