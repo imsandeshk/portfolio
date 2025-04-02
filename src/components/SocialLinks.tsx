@@ -32,9 +32,45 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     return Icons.Link;
   };
 
+  // Animation variants for the container
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  // Animation variants for each item
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100
+      }
+    },
+    hover: { 
+      scale: 1.2,
+      rotate: [0, -10, 10, -5, 5, 0],
+      transition: {
+        duration: 0.6
+      }
+    }
+  };
+
   return (
-    <div className={`flex items-center gap-4 ${className}`}>
-      {links.map((link, index) => {
+    <motion.div 
+      className={`flex items-center gap-4 ${className}`}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {links.map((link) => {
         const IconComponent = getIconByName(link.icon);
         
         return (
@@ -44,10 +80,8 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             className="text-white hover:text-accent transition-colors duration-300 flex items-center gap-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            whileHover={{ scale: 1.1 }}
+            variants={itemVariants}
+            whileHover="hover"
             title={link.platform}
           >
             <IconComponent size={iconSize} />
@@ -56,7 +90,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
           </motion.a>
         );
       })}
-    </div>
+    </motion.div>
   );
 };
 
