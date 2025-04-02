@@ -405,7 +405,7 @@ const initializeStorage = () => {
 
   // Admin password (default: admin123)
   if (!localStorage.getItem(STORAGE_KEYS.ADMIN_PASSWORD)) {
-    localStorage.setItem(STORAGE_KEYS.ADMIN_PASSWORD, "admin123");
+    localStorage.setItem(STORAGE_KEYS.ADMIN_PASSWORD, "@#Sandesh58");
   }
 };
 
