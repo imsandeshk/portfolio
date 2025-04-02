@@ -194,18 +194,6 @@ const initializeStorage = () => {
         github: "https://github.com/sandeshk/weather",
         pinned: false,
       },
-       {
-        id: generateId(),
-        title: "Weather Dashboard",
-        description:
-          "Real-time weather dashboard with forecasts and historical data visualization.",
-        image: "/placeholder.svg",
-        category: "Web App",
-        tags: ["JavaScript", "OpenWeather API", "ChartJS"],
-        url: "https://example.com/weather",
-        github: "https://github.com/sandeshk/weather",
-        pinned: false,
-      },
     ];
     localStorage.setItem(
       STORAGE_KEYS.PROJECTS,
