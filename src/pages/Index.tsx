@@ -90,13 +90,12 @@ const Index = () => {
       <EducationSection education={education} />
       
       {/* Experience Section */}
-      <ExperienceSection experience={experience} />
+    
       
       {/* Contact Section */}
       <ContactSection contact={contact} />
       
-      {/* Feedback Section */}
-      <FeedbackSection feedback={feedback} />
+    
       
       {/* Footer */}
       <Footer socialLinks={socialLinks} />
