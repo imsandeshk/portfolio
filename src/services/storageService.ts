@@ -118,10 +118,10 @@ const initializeStorage = () => {
     const defaultProfile: ProfileInfo = {
       name: "Sandesh K",
       title: "Web Developer",
-      bio: "Passionate web developer with expertise in building modern, responsive web applications using React and TypeScript.",
-      email: "sandesh@example.com",
+      bio: "Passionate web developer with expertise in building modern, responsive web applications.",
+      email: "sandeshkullolli4@gmail.com",
       phone: "+1 (555) 123-4567",
-      location: "San Francisco, CA",
+      location: "Raghuvanahalli, Banagalore",
       profileImage: "/placeholder.svg", // Default image, will be replaced by user
     };
     localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(defaultProfile));
@@ -133,20 +133,20 @@ const initializeStorage = () => {
       {
         id: generateId(),
         platform: "GitHub",
-        url: "https://github.com/sandeshk",
-        icon: "github",
+        url: "https://github.com/iamsandeshk",
+        icon: "Github",
       },
       {
         id: generateId(),
         platform: "LinkedIn",
-        url: "https://linkedin.com/in/sandeshk",
-        icon: "linkedin",
+        url: "https://linkedin.com/in/sandesh-kullolli",
+        icon: "Linkedin",
       },
       {
         id: generateId(),
         platform: "Twitter",
-        url: "https://twitter.com/sandeshk",
-        icon: "twitter",
+        url: "https://twitter.com/The1UX",
+        icon: "Twitter",
       },
     ];
     localStorage.setItem(
@@ -167,7 +167,7 @@ const initializeStorage = () => {
         category: "Web Development",
         tags: ["React", "Node.js", "MongoDB", "Stripe"],
         url: "https://example.com/ecommerce",
-        github: "https://github.com/sandeshk/ecommerce",
+        github: "https://github.com/iamsandeshk/ecommerce",
         pinned: true,
       },
       {
@@ -183,6 +183,18 @@ const initializeStorage = () => {
         pinned: true,
       },
       {
+        id: generateId(),
+        title: "Weather Dashboard",
+        description:
+          "Real-time weather dashboard with forecasts and historical data visualization.",
+        image: "/placeholder.svg",
+        category: "Web App",
+        tags: ["JavaScript", "OpenWeather API", "ChartJS"],
+        url: "https://example.com/weather",
+        github: "https://github.com/sandeshk/weather",
+        pinned: false,
+      },
+       {
         id: generateId(),
         title: "Weather Dashboard",
         description:
@@ -311,24 +323,15 @@ const initializeStorage = () => {
     const defaultEducation: Education[] = [
       {
         id: generateId(),
-        institution: "Stanford University",
-        degree: "Master's Degree",
-        field: "Computer Science",
-        startDate: "2018-09-01",
-        endDate: "2020-06-30",
+        institution: "K S INSTITUTE OF TECHNOLOGY",
+        degree: "Bachelor Degree",
+        field: "Computer Science & Engineering",
+        startDate: "2022-11-01",
+        endDate: "2026-07-30",
         description:
           "Focused on software engineering and artificial intelligence.",
       },
-      {
-        id: generateId(),
-        institution: "University of California",
-        degree: "Bachelor's Degree",
-        field: "Computer Engineering",
-        startDate: "2014-09-01",
-        endDate: "2018-05-30",
-        description:
-          "Studied computer architecture, software development, and mathematics.",
-      },
+     
     ];
     localStorage.setItem(
       STORAGE_KEYS.EDUCATION,
@@ -392,10 +395,10 @@ const initializeStorage = () => {
   // Contact info
   if (!localStorage.getItem(STORAGE_KEYS.CONTACT)) {
     const defaultContact: ContactInfo = {
-      email: "sandesh@example.com",
+      email: "sandeshkullolli4@gmail.com",
       phone: "+1 (555) 123-4567",
-      address: "123 Tech Street",
-      location: "San Francisco, CA",
+      address: "Raghuvanahalli",
+      location: "Bangalore-560109",
     };
     localStorage.setItem(STORAGE_KEYS.CONTACT, JSON.stringify(defaultContact));
   }
