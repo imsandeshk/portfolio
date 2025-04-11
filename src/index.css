@@ -31,7 +31,7 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 }
 
@@ -94,7 +94,7 @@
     @apply relative after:absolute after:inset-0 after:blur-md after:bg-accent/20 after:-z-10;
   }
 
-  /* Drop shadow glow */
+  /* New: Drop shadow glow */
   .drop-shadow-glow {
     filter: drop-shadow(0 0 8px rgba(255, 87, 51, 0.6));
   }
@@ -141,20 +141,16 @@
   .stagger-card:nth-child(7) { animation-delay: 0.7s; }
   .stagger-card:nth-child(8) { animation-delay: 0.8s; }
 
-  /* Improved 3D card hover effect */
+  /* New: Improved card hover transition */
   .card-hover-3d {
-    @apply transition-transform;
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .card-hover-3d:hover {
     transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 87, 51, 0.2);
   }
   
-  /* Badge glow effect */
+  /* New: Badge glow effect */
   .badge-glow {
     @apply relative overflow-hidden;
   }
@@ -174,40 +170,8 @@
     );
     animation: badgeGlow 2s ease-in-out infinite;
   }
-  
-  /* New: Animated border effect */
-  .animated-border-gradient {
-    position: relative;
-    border-radius: 0.75rem;
-    overflow: hidden;
-  }
-  
-  .animated-border-gradient::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(
-      90deg, 
-      rgba(255, 87, 51, 0.6), 
-      rgba(255, 255, 255, 0.2), 
-      rgba(255, 87, 51, 0.6)
-    );
-    z-index: -1;
-    animation: rotate 4s linear infinite;
-  }
-  
-  /* New: Breathing animation */
-  .breathing {
-    animation: breathing 3s ease-in-out infinite;
-  }
-  
-  /* New: Blinking effect */
-  .blinking {
-    animation: blinking 5s ease-in-out infinite;
-  }
 }
 
-/* Story link styling */
 .story-link * {
   @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
 }
@@ -341,54 +305,18 @@ section {
   }
 }
 
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes breathing {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-}
-
-@keyframes blinking {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 /* Media queries for better mobile responsiveness */
 @media (max-width: 640px) {
   .container {
-    @apply px-3;
+    @apply px-4;
   }
   
   section {
-    @apply py-8;
+    @apply py-10;
+  }
+  
+  .responsive-grid {
+    @apply grid-cols-1 gap-4;
   }
   
   .mobile-full-width {
@@ -402,14 +330,18 @@ section {
   }
   
   .glass-card {
-    @apply mx-1;
+    @apply mx-2;
+  }
+  
+  button[role="tab"] {
+    @apply px-3 py-2 text-xs;
   }
 }
 
 /* Tablet adjustments */
 @media (min-width: 641px) and (max-width: 1024px) {
   section {
-    @apply py-12;
+    @apply py-14;
   }
   
   .glass-card {

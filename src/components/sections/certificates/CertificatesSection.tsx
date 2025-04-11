@@ -117,26 +117,16 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
           </motion.div>
         )}
         
-        {/* Certificates Grid - Updated to maintain 2 columns on all devices */}
-        <div className="grid grid-cols-2 gap-3 md:gap-6 mt-8">
-          {sortedCertificates.map((certificate, index) => (
-            <motion.div
+        {/* Certificates Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          {sortedCertificates.map((certificate) => (
+            <CertificateCard
               key={certificate.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-            >
-              <CertificateCard
-                certificate={certificate}
-                isAdmin={isAdmin}
-                onEdit={isAdmin ? () => handleEditCertificate(certificate) : undefined}
-                onDelete={isAdmin ? () => handleDeleteCertificate(certificate) : undefined}
-              />
-            </motion.div>
+              certificate={certificate}
+              isAdmin={isAdmin}
+              onEdit={isAdmin ? () => handleEditCertificate(certificate) : undefined}
+              onDelete={isAdmin ? () => handleDeleteCertificate(certificate) : undefined}
+            />
           ))}
         </div>
         

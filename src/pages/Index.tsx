@@ -53,11 +53,7 @@ const Index = () => {
 
   // Set initial load to false after component mount
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInitialLoad(false);
-    }, 300);
-    
-    return () => clearTimeout(timer);
+    setIsInitialLoad(false);
   }, []);
 
   // Page scroll animation variants
@@ -66,18 +62,18 @@ const Index = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -87,7 +83,7 @@ const Index = () => {
       
       {/* Hero Section with staggered animation */}
       <motion.div
-        initial="hidden"
+        initial={isInitialLoad ? "hidden" : false}
         animate="visible"
         variants={sectionVariants}
       >
@@ -96,8 +92,8 @@ const Index = () => {
         </motion.div>
       
         {/* Content Tabs Section */}
-        <motion.section id="content-tabs" className="py-12 md:py-16" variants={itemVariants}>
-          <div className="container mx-auto px-3 sm:px-4">
+        <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
+          <div className="container mx-auto px-4">
             <TabSwitcher
               tabs={tabs}
               activeTab={activeTab}
