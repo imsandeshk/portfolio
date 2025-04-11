@@ -14,7 +14,7 @@ const ParticlesBackground: React.FC = () => {
       id="tsparticles"
       init={particlesInit}
       options={{
-        fpsLimit: 120,
+        fpsLimit: 60,
         background: {
           color: {
             value: "#000000",
@@ -26,23 +26,23 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: ["#ffffff", "#ff5733", "#33ff57", "#3357ff"],
+            value: ["#ffffff", "#ff5733", "#33a9ff", "#3357ff"],
           },
           links: {
             color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: 0.3,
+            opacity: 0.2,
             width: 1,
           },
           move: {
             direction: "none",
             enable: true,
             outModes: {
-              default: "bounce",
+              default: "out",
             },
             random: true,
-            speed: 2,
+            speed: 1.5,
             straight: false,
             attract: {
               enable: true,
@@ -55,7 +55,7 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 800,
             },
-            value: 80,
+            value: 70,
           },
           opacity: {
             value: {
@@ -74,11 +74,11 @@ const ParticlesBackground: React.FC = () => {
           size: {
             value: {
               min: 1,
-              max: 4,
+              max: 3,
             },
             animation: {
               enable: true,
-              speed: 3,
+              speed: 2,
               minimumValue: 0.1,
             },
           },

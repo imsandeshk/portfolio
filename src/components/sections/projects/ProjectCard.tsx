@@ -8,7 +8,9 @@ import {
   ExternalLink, 
   Github, 
   Star, 
-  Maximize2
+  Maximize2,
+  Calendar,
+  Code
 } from 'lucide-react';
 import EditControls from '@/components/EditControls';
 

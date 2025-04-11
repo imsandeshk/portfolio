@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Code, Certificate, CheckSquare } from "lucide-react";
 import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
 import ProjectsSection from "@/components/sections/projects/ProjectsSection";
@@ -8,9 +9,7 @@ import CertificatesSection from "@/components/sections/certificates/Certificates
 import TasksSection from "@/components/sections/tasks/TasksSection";
 import SkillsSection from "@/components/sections/SkillsSection";
 import EducationSection from "@/components/sections/EducationSection";
-import ExperienceSection from "@/components/sections/ExperienceSection";
 import ContactSection from "@/components/sections/ContactSection";
-import FeedbackSection from "@/components/sections/feedback/FeedbackSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import {
@@ -23,7 +22,6 @@ import {
   getEducation,
   getExperience,
   getContact,
-  getFeedback,
 } from "@/services/storageService";
 
 const Index = () => {
@@ -37,14 +35,13 @@ const Index = () => {
   const education = getEducation();
   const experience = getExperience();
   const contact = getContact();
-  const feedback = getFeedback();
 
   // Tab state for the content switcher
   const [activeTab, setActiveTab] = useState("projects");
   const tabs = [
-    { id: "projects", label: "Projects" },
-    { id: "certificates", label: "Certificates" },
-    { id: "tasks", label: "Tasks" },
+    { id: "projects", label: "Projects", icon: <Code size={16} /> },
+    { id: "certificates", label: "Certificates", icon: <Certificate size={16} /> },
+    { id: "tasks", label: "Tasks", icon: <CheckSquare size={16} /> },
   ];
 
   // Handle tab change
@@ -61,7 +58,7 @@ const Index = () => {
       
       {/* Content Tabs Section */}
       <section id="content-tabs" className="py-16">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <TabSwitcher
             tabs={tabs}
             activeTab={activeTab}
@@ -74,7 +71,8 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
+            className="min-h-[400px]"
           >
             {activeTab === "projects" && <ProjectsSection projects={projects} />}
             {activeTab === "certificates" && <CertificatesSection certificates={certificates} />}
@@ -89,13 +87,11 @@ const Index = () => {
       {/* Education Section */}
       <EducationSection education={education} />
       
-      {/* Experience Section */}
-    
+      {/* Experience Section is commented out but kept for future use */}
+      {/* <ExperienceSection experience={experience} /> */}
       
       {/* Contact Section */}
       <ContactSection contact={contact} />
-      
-    
       
       {/* Footer */}
       <Footer socialLinks={socialLinks} />

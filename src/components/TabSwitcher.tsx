@@ -1,50 +1,57 @@
 
 import { motion } from "framer-motion";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+interface Tab {
+  id: string;
+  label: string;
+  icon?: React.ReactNode;
+}
 
 interface TabSwitcherProps {
-  tabs: {
-    id: string;
-    label: string;
-  }[];
+  tabs: Tab[];
   activeTab: string;
   onTabChange: (tabId: string) => void;
 }
 
-const TabSwitcher: React.FC<TabSwitcherProps> = ({
-  tabs,
-  activeTab,
-  onTabChange
+const TabSwitcher: React.FC<TabSwitcherProps> = ({ 
+  tabs, 
+  activeTab, 
+  onTabChange 
 }) => {
   return (
-    <motion.div 
-      initial={{
-        opacity: 0,
-        y: 20
-      }} 
-      animate={{
-        opacity: 1,
-        y: 0
-      }} 
-      transition={{
-        duration: 0.5
-      }} 
-      className="w-full flex justify-center mb-8 rounded-xl"
-    >
-      <Tabs value={activeTab} onValueChange={onTabChange} className="w-full max-w-md">
-        <TabsList className="grid grid-cols-3 w-full rounded-xl">
-          {tabs.map(tab => (
-            <TabsTrigger 
-              key={tab.id} 
-              value={tab.id} 
-              className="font-normal rounded-xl"
-            >
+    <div className="flex flex-wrap justify-center gap-4 mb-8">
+      {tabs.map((tab) => {
+        const isActive = tab.id === activeTab;
+        
+        return (
+          <motion.button
+            key={tab.id}
+            onClick={() => onTabChange(tab.id)}
+            className={`
+              relative px-6 py-3 rounded-xl text-sm font-medium transition-all
+              ${isActive ? 'text-black' : 'text-white/80 hover:text-white'}
+            `}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {/* Background */}
+            {isActive && (
+              <motion.span
+                className="absolute inset-0 bg-white rounded-xl"
+                layoutId="tabBackground"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              />
+            )}
+            
+            {/* Content */}
+            <span className="relative flex items-center gap-2">
+              {tab.icon && <span>{tab.icon}</span>}
               {tab.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-    </motion.div>
+            </span>
+          </motion.button>
+        );
+      })}
+    </div>
   );
 };
 

@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { SocialLink } from "@/services/storageService";
 import { LucideIcon } from "lucide-react";
-import { Github, Twitter, Linkedin } from "lucide-react";
 
 interface SocialLinksProps {
   links: SocialLink[];
@@ -54,7 +53,15 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   // Hover animation for each icon
   const iconHover = {
     rest: { scale: 1, rotate: 0 },
-    hover: { scale: 1.2, rotate: 5, transition: { type: "spring", stiffness: 400, damping: 10 } }
+    hover: { 
+      scale: 1.2, 
+      rotate: 5, 
+      transition: { 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 10 
+      } 
+    }
   };
 
   return (
@@ -69,7 +76,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
         
         return (
           <motion.a
-            key={link.id}
+            key={link.id || index}
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ProfileInfo, SocialLink } from "@/services/storageService";
 import SocialLinks from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Edit } from "lucide-react";
+import { ArrowDown, ExternalLink } from "lucide-react";
 
 interface HeroProps {
   profile: ProfileInfo;
@@ -32,49 +32,58 @@ const Hero: React.FC<HeroProps> = ({
     }
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
+
   return (
     <section className="relative min-h-[100vh] flex flex-col justify-center px-6 overflow-hidden">
       <div className="container mx-auto max-w-6xl flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
         {/* Content */}
-        <motion.div className="w-full md:w-1/2 text-center md:text-left" 
-          initial={{ opacity: 0, x: -50 }} 
-          animate={{ opacity: 1, x: 0 }} 
-          transition={{ duration: 0.8, ease: "easeOut" }}
+        <motion.div 
+          className="w-full md:w-1/2 text-center md:text-left z-10" 
+          variants={containerVariants}
+          initial="hidden" 
+          animate="visible" 
         >
-       <motion.h1
-  style={{
-    animation: "pulseGlow 2s ease-in-out infinite",
-      textShadow: "0 0 2px rgba(255, 255, 255, 0.3), 0 0 4px rgba(255, 255, 255, 0.2)"
-  }}
-  className="text-5xl md:text-6xl mb-6 text-white font-extrabold text-left lg:text-7xl"
->
-  {profile.name}
-</motion.h1>
-
+          <motion.div variants={itemVariants} className="mb-6">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-transparent leading-tight">
+              {profile.name}
+            </h1>
+          </motion.div>
           
-          <motion.h2 
-            className="text-2xl md:text-3xl lg:text-4xl font-medium mb-6 text-accent/90" 
-            initial={{ opacity: 0, y: -20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          >
-            {profile.title}
-          </motion.h2>
+          <motion.div variants={itemVariants}>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium mb-6 text-accent/90">
+              {profile.title}
+            </h2>
+          </motion.div>
           
-          <motion.p 
-            className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0" 
-            initial={{ opacity: 0, y: -20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-          >
-            {profile.bio}
-          </motion.p>
+          <motion.div variants={itemVariants}>
+            <p className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+              {profile.bio}
+            </p>
+          </motion.div>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-5 items-center justify-center md:justify-start" 
-            initial={{ opacity: 0, y: -20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-5 items-center justify-center md:justify-start"
           >
             <div className="flex items-center">
               <SocialLinks links={socialLinks} iconSize={20} className="mt-1" />
@@ -85,7 +94,7 @@ const Hero: React.FC<HeroProps> = ({
                   className="ml-2" 
                   onClick={onEditSocial}
                 >
-                  <Edit size={16} />
+                  <ExternalLink size={16} />
                 </Button>
               )}
             </div>
@@ -93,7 +102,7 @@ const Hero: React.FC<HeroProps> = ({
             <Button 
               onClick={handleContactClick} 
               size="lg" 
-              className="mt-2 sm:mt-0 text-white bg-blue-800 hover:bg-blue-700 rounded-xl text-base"
+              className="mt-2 sm:mt-0 text-black bg-white hover:bg-white/90 rounded-xl text-base font-semibold transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.5)]"
             >
               Contact Me
             </Button>
@@ -102,28 +111,31 @@ const Hero: React.FC<HeroProps> = ({
 
         {/* Image */}
         <motion.div 
-          className="w-full md:w-1/2 relative mb-8 md:mb-0" 
-          initial={{ opacity: 0, x: 50 }} 
-          animate={{ opacity: 1, x: 0 }} 
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full md:w-1/2 relative mb-8 md:mb-0 z-10" 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
         >
           <div className="relative max-w-md mx-auto">
-            <div className="aspect-square rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_35px_rgba(255,255,255,0.15)] hover-glow">
-             <img 
-              src="/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png"
-              alt="Profile Picture"
-              className="w-full h-full profile-image object-cover"
-             />
-
-
-            </div>
+            <motion.div 
+              className="aspect-square rounded-full overflow-hidden border-2 border-white/10"
+              initial={{ boxShadow: "0 0 0 rgba(255,255,255,0)" }}
+              animate={{ boxShadow: "0 0 40px rgba(255,255,255,0.2)" }}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+            >
+              <img 
+                src="/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png"
+                alt="Profile Picture"
+                className="w-full h-full profile-image object-cover"
+              />
+            </motion.div>
             {isAdmin && onEditProfile && (
               <Button 
                 size="icon" 
                 className="absolute bottom-4 right-4 rounded-full opacity-80 hover:opacity-100" 
                 onClick={onEditProfile}
               >
-                <Edit size={16} />
+                <ExternalLink size={16} />
               </Button>
             )}
           </div>
@@ -133,12 +145,21 @@ const Hero: React.FC<HeroProps> = ({
       {/* Scroll indicator */}
       <motion.div 
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2" 
-        initial={{ opacity: 0, y: -20 }} 
+        initial={{ opacity: 0, y: -10 }} 
         animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.5, delay: 1, repeat: Infinity, repeatType: "reverse" }}
+        transition={{ 
+          duration: 0.5, 
+          delay: 1.5, 
+          repeat: Infinity, 
+          repeatType: "reverse" 
+        }}
       >
         <ArrowDown className="w-8 h-8 text-white/50" />
       </motion.div>
+
+      {/* Glow effects */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 filter blur-[80px] -z-0 animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500/10 filter blur-[100px] -z-0 animate-pulse" style={{ animationDelay: '1s' }} />
     </section>
   );
 };
