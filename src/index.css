@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -79,7 +78,7 @@
   }
 
   .glass-card {
-    @apply bg-card/40 backdrop-blur-md border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-white/20 transition-all duration-300;
+    @apply bg-card/40 backdrop-blur-md border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-white/20 transition-all duration-500;
   }
   
   .text-gradient {
@@ -95,12 +94,17 @@
     @apply relative after:absolute after:inset-0 after:blur-md after:bg-accent/20 after:-z-10;
   }
 
-  /* Floating animation */
+  /* New: Drop shadow glow */
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 8px rgba(255, 87, 51, 0.6));
+  }
+
+  /* Floating animation enhanced */
   .float {
     animation: float 6s ease-in-out infinite;
   }
 
-  /* Shine effect */
+  /* Enhanced shine effect */
   .shine {
     position: relative;
     overflow: hidden;
@@ -136,6 +140,36 @@
   .stagger-card:nth-child(6) { animation-delay: 0.6s; }
   .stagger-card:nth-child(7) { animation-delay: 0.7s; }
   .stagger-card:nth-child(8) { animation-delay: 0.8s; }
+
+  /* New: Improved card hover transition */
+  .card-hover-3d {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .card-hover-3d:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
+  }
+  
+  /* New: Badge glow effect */
+  .badge-glow {
+    @apply relative overflow-hidden;
+  }
+  
+  .badge-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: badgeGlow 2s ease-in-out infinite;
+  }
 }
 
 .story-link * {
@@ -211,13 +245,13 @@ section {
 
 @keyframes float {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-10px) rotate(2deg);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
 }
 
@@ -253,6 +287,24 @@ section {
   }
 }
 
+@keyframes badgeGlow {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+@keyframes spotlight {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 /* Media queries for better mobile responsiveness */
 @media (max-width: 640px) {
   .container {
@@ -260,7 +312,7 @@ section {
   }
   
   section {
-    @apply py-12;
+    @apply py-10;
   }
   
   .responsive-grid {
@@ -275,5 +327,31 @@ section {
   
   .mobile-stack {
     @apply flex flex-col;
+  }
+  
+  .glass-card {
+    @apply mx-2;
+  }
+  
+  button[role="tab"] {
+    @apply px-3 py-2 text-xs;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  section {
+    @apply py-14;
+  }
+  
+  .glass-card {
+    @apply mx-1;
+  }
+}
+
+/* Better dark mode handling */
+@media (prefers-color-scheme: dark) {
+  .glass-card {
+    @apply shadow-[0_4px_30px_rgba(0,0,0,0.5)];
   }
 }

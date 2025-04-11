@@ -47,7 +47,14 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   // Animation variants for each item
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    show: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
   };
 
   // Hover animation for each icon
@@ -80,17 +87,22 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-accent transition-colors duration-300 flex items-center gap-2 bg-black/30 backdrop-blur-sm p-2 rounded-full hover:shadow-[0_0_15px_rgba(255,87,51,0.5)]"
+            className="text-white transition-all duration-300 flex items-center gap-2 
+                      bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-md p-2.5 rounded-full 
+                      hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border border-white/10 hover:border-accent/40"
             variants={item}
             whileHover="hover"
             initial="rest"
             title={link.platform}
           >
-            <motion.div variants={iconHover}>
+            <motion.div 
+              variants={iconHover}
+              className="text-white group-hover:text-accent transition-colors duration-300"
+            >
               <IconComponent size={iconSize} />
             </motion.div>
             {showLabels && (
-              <span className="text-sm hidden md:inline">{link.platform}</span>
+              <span className="text-sm hidden md:inline pr-2">{link.platform}</span>
             )}
             {!showLabels && <span className="sr-only">{link.platform}</span>}
           </motion.a>

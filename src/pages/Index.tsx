@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
 import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
@@ -38,6 +38,8 @@ const Index = () => {
 
   // Tab state for the content switcher
   const [activeTab, setActiveTab] = useState("projects");
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  
   const tabs = [
     { id: "projects", label: "Projects", icon: <Code size={16} /> },
     { id: "certificates", label: "Certificates", icon: <Award size={16} /> },
@@ -49,52 +51,100 @@ const Index = () => {
     setActiveTab(tabId);
   };
 
+  // Set initial load to false after component mount
+  useEffect(() => {
+    setIsInitialLoad(false);
+  }, []);
+
+  // Page scroll animation variants
+  const sectionVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
+
   return (
     <div className="bg-background min-h-screen">
       <ParticlesBackground />
       
-      {/* Hero Section */}
-      <Hero profile={profile} socialLinks={socialLinks} />
+      {/* Hero Section with staggered animation */}
+      <motion.div
+        initial={isInitialLoad ? "hidden" : false}
+        animate="visible"
+        variants={sectionVariants}
+      >
+        <motion.div variants={itemVariants}>
+          <Hero profile={profile} socialLinks={socialLinks} />
+        </motion.div>
       
-      {/* Content Tabs Section */}
-      <section id="content-tabs" className="py-16">
-        <div className="container mx-auto px-4">
-          <TabSwitcher
-            tabs={tabs}
-            activeTab={activeTab}
-            onTabChange={handleTabChange}
-          />
-          
-          {/* Tab Content */}
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="min-h-[400px]"
-          >
-            {activeTab === "projects" && <ProjectsSection projects={projects} />}
-            {activeTab === "certificates" && <CertificatesSection certificates={certificates} />}
-            {activeTab === "tasks" && <TasksSection tasks={tasks} />}
-          </motion.div>
-        </div>
-      </section>
+        {/* Content Tabs Section */}
+        <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
+          <div className="container mx-auto px-4">
+            <TabSwitcher
+              tabs={tabs}
+              activeTab={activeTab}
+              onTabChange={handleTabChange}
+            />
+            
+            {/* Tab Content with AnimatePresence for smooth transitions */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ 
+                  duration: 0.5, 
+                  ease: [0.22, 1, 0.36, 1] 
+                }}
+                className="min-h-[400px]"
+              >
+                {activeTab === "projects" && <ProjectsSection projects={projects} />}
+                {activeTab === "certificates" && <CertificatesSection certificates={certificates} />}
+                {activeTab === "tasks" && <TasksSection tasks={tasks} />}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.section>
+        
+        {/* Skills Section */}
+        <motion.div variants={itemVariants}>
+          <SkillsSection skills={skills} />
+        </motion.div>
+        
+        {/* Education Section */}
+        <motion.div variants={itemVariants}>
+          <EducationSection education={education} />
+        </motion.div>
+        
+        {/* Contact Section */}
+        <motion.div variants={itemVariants}>
+          <ContactSection contact={contact} />
+        </motion.div>
+      </motion.div>
       
-      {/* Skills Section */}
-      <SkillsSection skills={skills} />
-      
-      {/* Education Section */}
-      <EducationSection education={education} />
-      
-      {/* Experience Section is commented out but kept for future use */}
-      {/* <ExperienceSection experience={experience} /> */}
-      
-      {/* Contact Section */}
-      <ContactSection contact={contact} />
-      
-      {/* Footer */}
-      <Footer socialLinks={socialLinks} />
+      {/* Footer with fade in animation */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        <Footer socialLinks={socialLinks} />
+      </motion.div>
     </div>
   );
 };
