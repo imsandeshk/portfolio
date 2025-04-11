@@ -126,17 +126,27 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           </motion.div>
         )}
         
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {projects.map((project) => (
-            <ProjectCard
+        {/* Projects Grid - Updated to maintain 2 columns on mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mt-8">
+          {projects.map((project, index) => (
+            <motion.div
               key={project.id}
-              project={project}
-              isAdmin={isAdmin}
-              onEdit={isAdmin ? () => handleEditProject(project) : undefined}
-              onDelete={isAdmin ? () => handleDeleteProject(project) : undefined}
-              onClick={() => handleProjectClick(project)}
-            />
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.6,
+                delay: index * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+            >
+              <ProjectCard
+                project={project}
+                isAdmin={isAdmin}
+                onEdit={isAdmin ? () => handleEditProject(project) : undefined}
+                onDelete={isAdmin ? () => handleDeleteProject(project) : undefined}
+                onClick={() => handleProjectClick(project)}
+              />
+            </motion.div>
           ))}
         </div>
         

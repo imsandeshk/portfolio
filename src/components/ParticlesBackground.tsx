@@ -58,7 +58,7 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 800,
             },
-            value: 120,
+            value: 150, // Increased particle count
           },
           opacity: {
             value: {
@@ -83,6 +83,7 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               speed: 1,
               minimumValue: 0.1,
+              sync: false
             },
           },
           twinkle: {
@@ -112,7 +113,7 @@ const ParticlesBackground: React.FC = () => {
           },
           modes: {
             push: {
-              quantity: 6,
+              quantity: 8, // More particles on click
             },
             repulse: {
               distance: 100,
@@ -123,6 +124,10 @@ const ParticlesBackground: React.FC = () => {
               links: {
                 opacity: 0.5,
               },
+            },
+            trail: {
+              delay: 0.5,
+              quantity: 3,
             },
           },
           detectRetina: true,
