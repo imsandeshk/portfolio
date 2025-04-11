@@ -26,26 +26,29 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: ["#ffffff", "#ff5733", "#33a9ff", "#3357ff"],
+            value: "#ffffff",
           },
           links: {
             color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: 0.2,
-            width: 1,
+            opacity: 0.15,
+            width: 0.5,
+          },
+          collisions: {
+            enable: false,
           },
           move: {
             direction: "none",
             enable: true,
             outModes: {
-              default: "out",
+              default: "bounce",
             },
             random: true,
-            speed: 1.5,
+            speed: 0.8,
             straight: false,
             attract: {
-              enable: true,
+              enable: false,
               rotateX: 600,
               rotateY: 1200,
             },
@@ -55,30 +58,30 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 800,
             },
-            value: 70,
+            value: 120,
           },
           opacity: {
             value: {
-              min: 0.1,
-              max: 0.5,
+              min: 0.05,
+              max: 0.2,
             },
             animation: {
               enable: true,
               speed: 1,
-              minimumValue: 0.1,
+              minimumValue: 0.05,
             },
           },
           shape: {
-            type: ["circle", "triangle", "star"],
+            type: "circle",
           },
           size: {
             value: {
-              min: 1,
-              max: 3,
+              min: 0.5,
+              max: 1.5,
             },
             animation: {
               enable: true,
-              speed: 2,
+              speed: 1,
               minimumValue: 0.1,
             },
           },
@@ -92,38 +95,38 @@ const ParticlesBackground: React.FC = () => {
         },
         interactivity: {
           events: {
-            onClick: {
-              enable: true,
-              mode: "push",
-            },
             onHover: {
               enable: true,
               mode: "repulse",
               parallax: {
                 enable: true,
-                force: 60,
-                smooth: 10,
+                force: 40,
+                smooth: 20,
               },
+            },
+            onClick: {
+              enable: true,
+              mode: "push",
             },
             resize: true,
           },
           modes: {
             push: {
-              quantity: 4,
+              quantity: 6,
             },
             repulse: {
-              distance: 150,
+              distance: 100,
               duration: 0.4,
             },
             grab: {
-              distance: 200,
+              distance: 100,
               links: {
-                opacity: 0.8,
+                opacity: 0.5,
               },
             },
           },
+          detectRetina: true,
         },
-        detectRetina: true,
       }}
     />
   );

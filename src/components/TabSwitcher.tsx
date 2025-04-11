@@ -1,5 +1,6 @@
 
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Tab {
   id: string;
@@ -18,9 +19,11 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
   activeTab, 
   onTabChange 
 }) => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="flex flex-wrap justify-center gap-4 mb-10">
-      <div className="backdrop-blur-md bg-white/5 p-1.5 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+      <div className={`backdrop-blur-md bg-white/5 p-1.5 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ${isMobile ? 'w-full flex justify-center' : ''}`}>
         {tabs.map((tab) => {
           const isActive = tab.id === activeTab;
           
@@ -29,8 +32,9 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`
-                relative px-6 py-3 rounded-xl text-sm font-medium transition-all
+                relative px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm font-medium transition-all
                 ${isActive ? 'text-black' : 'text-white/80 hover:text-white'}
+                ${isMobile ? 'flex-1 max-w-[120px]' : ''}
               `}
               whileHover={{ scale: isActive ? 1 : 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -51,7 +55,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               
               {/* Content */}
               <motion.span 
-                className="relative flex items-center gap-2 z-10"
+                className="relative flex items-center justify-center gap-2 z-10"
                 animate={{ 
                   scale: isActive ? 1.05 : 1
                 }}
