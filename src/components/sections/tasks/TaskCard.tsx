@@ -4,7 +4,7 @@ import { Task } from "@/services/storageService";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { format } from "date-fns";
-import { CalendarClock, AlertCircle, CheckCircle2, Clock } from "lucide-react";
+import { CalendarClock, AlertCircle, CheckCircle2 } from "lucide-react";
 import EditControls from "@/components/EditControls";
 
 interface TaskCardProps {
@@ -51,7 +51,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   return (
     <motion.div
-      className={`glass-card rounded-xl overflow-hidden p-4 sm:p-5 card-hover-3d h-full ${task.completed ? "border-l-4 border-l-green-500/50 opacity-60" : `border-l-4 border-l-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'blue'}-500/50`}`}
+      className={`glass-card rounded-xl p-5 hover-glow transition-all duration-300 border-l-4 ${task.completed ? "border-l-green-500/50 opacity-60" : `border-l-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'blue'}-500/50`}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
@@ -63,9 +63,9 @@ const TaskCard: React.FC<TaskCardProps> = ({
       }}
     >
       <div className="flex justify-between items-start mb-3">
-        <div className="flex items-start gap-2 sm:gap-3">
+        <div className="flex items-start gap-3">
           {isAdmin && onToggleComplete && (
-            <div className="mt-0.5">
+            <div className="mt-1">
               <Checkbox
                 checked={task.completed}
                 onCheckedChange={handleCheckboxChange}
@@ -75,33 +75,28 @@ const TaskCard: React.FC<TaskCardProps> = ({
           )}
           
           <div>
-            <motion.h3 
-              className={`text-base sm:text-lg font-semibold ${task.completed ? "line-through opacity-70 text-muted-foreground" : "text-gradient"}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-            >
+            <h3 className={`text-lg font-semibold ${task.completed ? "line-through opacity-70 text-muted-foreground" : "text-gradient"}`}>
               {task.title}
-            </motion.h3>
+            </h3>
             
             <div className="flex flex-wrap items-center gap-2 mt-2">
               <Badge 
                 variant="outline" 
-                className={`text-xs ${priorityColors[task.priority]} px-1.5 sm:px-2 py-0 sm:py-0.5 flex items-center badge-glow`}
+                className={`text-xs ${priorityColors[task.priority]} px-2 py-0.5 flex items-center`}
               >
                 {priorityIcons[task.priority]}
-                {task.priority}
+                {task.priority} priority
               </Badge>
               
               {task.dueDate && (
                 <span className={`text-xs text-muted-foreground flex items-center gap-1 ${task.completed ? "line-through" : ""}`}>
-                  <Clock size={12} className="opacity-70" />
-                  {formatDate(task.dueDate)}
+                  <CalendarClock size={12} className="opacity-70" />
+                  Due: {formatDate(task.dueDate)}
                 </span>
               )}
               
               {task.completed && (
-                <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-1.5 sm:px-2 py-0 sm:py-0.5 flex items-center gap-1 badge-glow">
+                <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-2 py-0.5 flex items-center gap-1">
                   <CheckCircle2 size={12} />
                   Completed
                 </Badge>
@@ -116,7 +111,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
       </div>
       
       <motion.p 
-        className={`text-xs sm:text-sm text-muted-foreground mt-3 ml-5 sm:ml-8 ${task.completed ? "line-through opacity-70" : ""}`}
+        className={`text-muted-foreground text-sm mt-3 ml-11 ${task.completed ? "line-through opacity-70" : ""}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.3 }}
