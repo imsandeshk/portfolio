@@ -1,6 +1,5 @@
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAdminStatus, setAdminStatus, verifyAdminPassword } from "@/services/storageService";
+import React, { createContext, useContext, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 type AuthContextType = {
@@ -12,25 +11,22 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
+// Hardcoded admin password (for demonstration only)
+const DEMO_PASSWORD = "@#Sandesh58";
 
-  useEffect(() => {
-    // Check if user is already logged in
-    const adminStatus = getAdminStatus();
-    setIsAdmin(adminStatus);
-    setLoading(false);
-  }, []);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Always default to true for demo purposes (removed localStorage dependency)
+  const [isAdmin, setIsAdmin] = useState<boolean>(true);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const login = async (password: string): Promise<boolean> => {
     try {
-      const isValid = verifyAdminPassword(password);
+      // Simple password check (no localStorage)
+      const isValid = password === DEMO_PASSWORD;
       
       if (isValid) {
         setIsAdmin(true);
-        setAdminStatus(true);
         toast({
           title: "Login successful",
           description: "Welcome to the admin panel",
@@ -57,13 +53,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     setIsAdmin(false);
-    setAdminStatus(false);
     toast({
       title: "Logged out",
       description: "You have been logged out successfully",
     });
   };
 
+  // All authentication functionalities are maintained but localStorage dependency is removed
   const value = {
     isAdmin,
     login,
