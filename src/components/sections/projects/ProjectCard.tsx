@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Project } from '@/services/storageService';
@@ -83,15 +84,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         
         {/* Tags */}
         <div className="flex flex-wrap gap-1 mb-4">
-          {project.tags.slice(0, 3).map((tag, index) => (
-            <Badge key={index} variant="outline" className="text-xs">
-              {tag}
-            </Badge>
-          ))}
-          {project.tags.length > 3 && (
-            <Badge variant="outline" className="text-xs">
-              +{project.tags.length - 3}
-            </Badge>
+          {project.tags && project.tags.length > 0 ? (
+            <>
+              {project.tags.slice(0, 3).map((tag, index) => (
+                <Badge key={index} variant="outline" className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
+              {project.tags.length > 3 && (
+                <Badge variant="outline" className="text-xs">
+                  +{project.tags.length - 3}
+                </Badge>
+              )}
+            </>
+          ) : (
+            <Badge variant="outline" className="text-xs">No tags</Badge>
           )}
         </div>
         
