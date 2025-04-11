@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Code, Certificate, CheckSquare } from "lucide-react";
+import { Code, Award, CheckSquare } from "lucide-react";
 import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
 import ProjectsSection from "@/components/sections/projects/ProjectsSection";
@@ -40,7 +40,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("projects");
   const tabs = [
     { id: "projects", label: "Projects", icon: <Code size={16} /> },
-    { id: "certificates", label: "Certificates", icon: <Certificate size={16} /> },
+    { id: "certificates", label: "Certificates", icon: <Award size={16} /> },
     { id: "tasks", label: "Tasks", icon: <CheckSquare size={16} /> },
   ];
 
