@@ -16,9 +16,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Plus } from "lucide-react";
+import { Plus, ChevronDown } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface TasksSectionProps {
   tasks: Task[];
@@ -147,7 +147,7 @@ const TasksSection: React.FC<TasksSectionProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex justify-between items-center w-full max-w-2xl">
+          <div className="flex flex-col sm:flex-row justify-between items-center w-full max-w-2xl gap-4">
             <Tabs 
               defaultValue="all" 
               className="w-full"
@@ -162,29 +162,45 @@ const TasksSection: React.FC<TasksSectionProps> = ({
             </Tabs>
             
             {isAdmin && onAddTask && (
-              <Button onClick={handleAddTask} size="sm">
+              <Button onClick={handleAddTask} size="sm" className="w-full sm:w-auto">
                 <Plus className="mr-2 h-4 w-4" />
                 Add Task
               </Button>
             )}
           </div>
           
-          {/* Tasks List */}
-          <div className="w-full max-w-2xl space-y-4">
+          {/* Tasks Grid - Updated for mobile */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-6">
             {sortedTasks.length > 0 ? (
-              sortedTasks.map((task) => (
-                <TaskCard
+              sortedTasks.map((task, index) => (
+                <motion.div
                   key={task.id}
-                  task={task}
-                  isAdmin={isAdmin}
-                  onEdit={isAdmin ? () => handleEditTask(task) : undefined}
-                  onDelete={isAdmin ? () => handleDeleteTask(task) : undefined}
-                  onToggleComplete={isAdmin ? handleToggleComplete : undefined}
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                >
+                  <TaskCard
+                    task={task}
+                    isAdmin={isAdmin}
+                    onEdit={isAdmin ? () => handleEditTask(task) : undefined}
+                    onDelete={isAdmin ? () => handleDeleteTask(task) : undefined}
+                    onToggleComplete={isAdmin ? handleToggleComplete : undefined}
+                  />
+                </motion.div>
               ))
             ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                {filter === "all" ? "No tasks available." : `No ${filter} tasks available.`}
+              <div className="text-center py-8 text-muted-foreground col-span-full">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {filter === "all" ? "No tasks available." : `No ${filter} tasks available.`}
+                </motion.div>
               </div>
             )}
           </div>
