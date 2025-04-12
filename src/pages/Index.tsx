@@ -78,7 +78,7 @@ const Index = () => {
   };
 
   return (
-    <div className="bg-transparent min-h-screen"> {/* Changed from bg-background to bg-transparent */}
+    <div className="bg-transparent min-h-screen">
       <ParticlesBackground />
       
       {/* Hero Section with staggered animation */}

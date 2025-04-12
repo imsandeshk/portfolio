@@ -117,8 +117,8 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
           </motion.div>
         )}
         
-        {/* Certificates Grid - Improved for mobile with 2 columns */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-8">
+        {/* Certificates List - Changed to 1 column */}
+        <div className="grid grid-cols-1 gap-4 mt-8 max-w-3xl mx-auto">
           {sortedCertificates.map((certificate) => (
             <CertificateCard
               key={certificate.id}
