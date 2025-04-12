@@ -80,6 +80,9 @@ export interface ProfileInfo {
   email: string;
   phone?: string;
   location?: string;
+  dateOfBirth?: string;
+  languages?: string[];
+  hobbies?: string[];
   profileImage: string;
 }
 
@@ -90,538 +93,382 @@ export interface ContactInfo {
   location?: string;
 }
 
-// Storage keys
-const STORAGE_KEYS = {
-  PROFILE: "portfolio_profile",
-  PROJECTS: "portfolio_projects",
-  CERTIFICATES: "portfolio_certificates",
-  TASKS: "portfolio_tasks",
-  SKILLS: "portfolio_skills",
-  EDUCATION: "portfolio_education",
-  EXPERIENCE: "portfolio_experience",
-  SOCIAL_LINKS: "portfolio_social_links",
-  FEEDBACK: "portfolio_feedback",
-  CONTACT: "portfolio_contact",
-  ADMIN_PASSWORD: "portfolio_admin_password",
-  IS_ADMIN: "portfolio_is_admin",
-};
-
 // Helper function to generate IDs
 export const generateId = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 };
 
-// Initialize with sample data if not exists
-const initializeStorage = () => {
-  // Profile
-  if (!localStorage.getItem(STORAGE_KEYS.PROFILE)) {
-    const defaultProfile: ProfileInfo = {
-      name: "Sandesh K",
-      title: "Web Developer",
-      bio: "Passionate web developer with expertise in building modern, responsive web applications.",
-      email: "sandeshkullolli4@gmail.com",
-      phone: "+1 (555) 123-4567",
-      location: "Raghuvanahalli, Banagalore",
-      profileImage: "/placeholder.svg", // Default image, will be replaced by user
-    };
-    localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(defaultProfile));
-  }
-
-  // Social links
-  if (!localStorage.getItem(STORAGE_KEYS.SOCIAL_LINKS)) {
-    const defaultSocialLinks: SocialLink[] = [
-      {
-        id: generateId(),
-        platform: "GitHub",
-        url: "https://github.com/iamsandeshk",
-        icon: "Github",
-      },
-      {
-        id: generateId(),
-        platform: "LinkedIn",
-        url: "https://linkedin.com/in/sandesh-kullolli",
-        icon: "Linkedin",
-      },
-      {
-        id: generateId(),
-        platform: "Twitter",
-        url: "https://twitter.com/The1UX",
-        icon: "Twitter",
-      },
-    ];
-    localStorage.setItem(
-      STORAGE_KEYS.SOCIAL_LINKS,
-      JSON.stringify(defaultSocialLinks)
-    );
-  }
-
-  // Projects
-  if (!localStorage.getItem(STORAGE_KEYS.PROJECTS)) {
-    const defaultProjects: Project[] = [
-      {
-        id: generateId(),
-        title: "E-commerce Platform",
-        description:
-          "A full-featured e-commerce platform with product listings, cart, and secure checkout.",
-        image: "/placeholder.svg",
-        category: "Web Development",
-        tags: ["React", "Node.js", "MongoDB", "Stripe"],
-        url: "https://example.com/ecommerce",
-        github: "https://github.com/iamsandeshk/ecommerce",
-        pinned: true,
-      },
-      {
-        id: generateId(),
-        title: "Task Management App",
-        description:
-          "A productivity app for managing tasks, projects, and team collaboration.",
-        image: "/placeholder.svg",
-        category: "Web App",
-        tags: ["React", "Firebase", "Material UI"],
-        url: "https://example.com/taskapp",
-        github: "https://github.com/sandeshk/taskapp",
-        pinned: true,
-      },
-      {
-        id: generateId(),
-        title: "Weather Dashboard",
-        description:
-          "Real-time weather dashboard with forecasts and historical data visualization.",
-        image: "/placeholder.svg",
-        category: "Web App",
-        tags: ["JavaScript", "OpenWeather API", "ChartJS"],
-        url: "https://example.com/weather",
-        github: "https://github.com/sandeshk/weather",
-        pinned: false,
-      },
-    ];
-    localStorage.setItem(
-      STORAGE_KEYS.PROJECTS,
-      JSON.stringify(defaultProjects)
-    );
-  }
-
-  // Certificates
-  if (!localStorage.getItem(STORAGE_KEYS.CERTIFICATES)) {
-    const defaultCertificates: Certificate[] = [
-      {
-        id: generateId(),
-        title: "React Certification",
-        issuer: "Meta",
-        date: "2023-06-15",
-        url: "https://example.com/cert1",
-      },
-      {
-        id: generateId(),
-        title: "Advanced JavaScript",
-        issuer: "Udemy",
-        date: "2022-09-10",
-        url: "https://example.com/cert2",
-      },
-      {
-        id: generateId(),
-        title: "UI/UX Design Fundamentals",
-        issuer: "Coursera",
-        date: "2022-03-22",
-        url: "https://example.com/cert3",
-      },
-    ];
-    localStorage.setItem(
-      STORAGE_KEYS.CERTIFICATES,
-      JSON.stringify(defaultCertificates)
-    );
-  }
-
-  // Tasks
-  if (!localStorage.getItem(STORAGE_KEYS.TASKS)) {
-    const defaultTasks: Task[] = [
-      {
-        id: generateId(),
-        title: "Redesign Portfolio",
-        description: "Update the design of my personal portfolio website",
-        completed: true,
-        dueDate: "2023-12-15",
-        priority: "high",
-      },
-      {
-        id: generateId(),
-        title: "Learn GraphQL",
-        description: "Complete the GraphQL course and build a sample project",
-        completed: false,
-        dueDate: "2024-02-28",
-        priority: "medium",
-      },
-      {
-        id: generateId(),
-        title: "Contribute to Open Source",
-        description: "Make meaningful contributions to open source projects",
-        completed: false,
-        dueDate: "2024-03-30",
-        priority: "low",
-      },
-    ];
-    localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(defaultTasks));
-  }
-
-  // Skills
-  if (!localStorage.getItem(STORAGE_KEYS.SKILLS)) {
-    const defaultSkills: Skill[] = [
-      {
-        id: generateId(),
-        name: "React",
-        level: 5,
-        category: "Frontend",
-      },
-      {
-        id: generateId(),
-        name: "TypeScript",
-        level: 4,
-        category: "Frontend",
-      },
-      {
-        id: generateId(),
-        name: "Node.js",
-        level: 4,
-        category: "Backend",
-      },
-      {
-        id: generateId(),
-        name: "MongoDB",
-        level: 3,
-        category: "Database",
-      },
-      {
-        id: generateId(),
-        name: "AWS",
-        level: 3,
-        category: "DevOps",
-      },
-      {
-        id: generateId(),
-        name: "UI/UX Design",
-        level: 4,
-        category: "Design",
-      },
-    ];
-    localStorage.setItem(STORAGE_KEYS.SKILLS, JSON.stringify(defaultSkills));
-  }
-
-  // Education
-  if (!localStorage.getItem(STORAGE_KEYS.EDUCATION)) {
-    const defaultEducation: Education[] = [
-      {
-        id: generateId(),
-        institution: "K S INSTITUTE OF TECHNOLOGY",
-        degree: "Bachelor Degree",
-        field: "Computer Science & Engineering",
-        startDate: "2022-11-01",
-        endDate: "2026-07-30",
-        description:
-          "Focused on software engineering and artificial intelligence.",
-      },
-     
-    ];
-    localStorage.setItem(
-      STORAGE_KEYS.EDUCATION,
-      JSON.stringify(defaultEducation)
-    );
-  }
-
-  // Experience
-  if (!localStorage.getItem(STORAGE_KEYS.EXPERIENCE)) {
-    const defaultExperience: Experience[] = [
-      {
-        id: generateId(),
-        company: "Tech Innovations Inc.",
-        position: "Senior Frontend Developer",
-        startDate: "2021-03-01",
-        endDate: "Present",
-        description:
-          "Leading the frontend development team in creating responsive web applications using React and TypeScript.",
-        technologies: ["React", "TypeScript", "Redux", "Tailwind CSS"],
-      },
-      {
-        id: generateId(),
-        company: "Digital Solutions LLC",
-        position: "Full Stack Developer",
-        startDate: "2018-07-01",
-        endDate: "2021-02-28",
-        description:
-          "Developed and maintained full-stack web applications for clients in various industries.",
-        technologies: ["JavaScript", "Node.js", "Express", "MongoDB", "React"],
-      },
-    ];
-    localStorage.setItem(
-      STORAGE_KEYS.EXPERIENCE,
-      JSON.stringify(defaultExperience)
-    );
-  }
-
-  // Feedback
-  if (!localStorage.getItem(STORAGE_KEYS.FEEDBACK)) {
-    const defaultFeedback: Feedback[] = [
-      {
-        id: generateId(),
-        name: "John Smith",
-        email: "john@example.com",
-        rating: 5,
-        comment: "Excellent portfolio! Your projects are impressive.",
-        date: "2023-11-15T14:30:00Z",
-      },
-      {
-        id: generateId(),
-        name: "Emily Johnson",
-        email: "emily@example.com",
-        rating: 4,
-        comment: "Very nice design and great showcase of your skills.",
-        date: "2023-10-20T09:15:00Z",
-      },
-    ];
-    localStorage.setItem(STORAGE_KEYS.FEEDBACK, JSON.stringify(defaultFeedback));
-  }
-
-  // Contact info
-  if (!localStorage.getItem(STORAGE_KEYS.CONTACT)) {
-    const defaultContact: ContactInfo = {
-      email: "sandeshkullolli4@gmail.com",
-      phone: "+1 (555) 123-4567",
-      address: "Raghuvanahalli",
-      location: "Bangalore-560109",
-    };
-    localStorage.setItem(STORAGE_KEYS.CONTACT, JSON.stringify(defaultContact));
-  }
-
-  // Admin password (default: admin123)
-  if (!localStorage.getItem(STORAGE_KEYS.ADMIN_PASSWORD)) {
-    localStorage.setItem(STORAGE_KEYS.ADMIN_PASSWORD, "@#Sandesh58");
-  }
+// Static data (no localStorage dependency)
+const profile: ProfileInfo = {
+  name: "Sandesh K",
+  title: "Computer Science Student",
+  bio: "Passionate about web development and UI/UX design with interest in building modern, responsive web applications.",
+  email: "sandeshkullolli4@gmail.com",
+  location: "Raghuvanahalli, Bangalore - 590109",
+  dateOfBirth: "19 July 2004",
+  languages: ["Kannada", "Hindi", "English"],
+  hobbies: ["Anime", "Making Concepts", "Gaming sometimes"],
+  profileImage: "/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png",
 };
 
-// Call the init function
-initializeStorage();
+const socialLinks: SocialLink[] = [
+  {
+    id: "social1",
+    platform: "LinkedIn",
+    url: "https://www.linkedin.com/in/sandesh-kullolli-155b92259",
+    icon: "Linkedin",
+  },
+  {
+    id: "social2",
+    platform: "GitHub",
+    url: "https://github.com/iamsandeshk",
+    icon: "Github",
+  },
+  {
+    id: "social3",
+    platform: "YouTube",
+    url: "https://youtube.com/@uiconcept?si=dGSPvu14BSPC1Pi_",
+    icon: "Youtube",
+  },
+  {
+    id: "social4",
+    platform: "Twitter",
+    url: "https://x.com/The1UX?t=rtFCxTr86h5JHVm9tc-jqg&s=09",
+    icon: "Twitter",
+  },
+];
 
-// CRUD operations for profile
+const projects: Project[] = [
+  {
+    id: "project1",
+    title: "Hostel Booking System",
+    description: "Hostel booking website for tourists to book rooms with pricing info.",
+    image: "/placeholder.svg",
+    category: "Web Development",
+    tags: ["HTML", "CSS", "JavaScript"],
+    url: "https://iamsandeshk.github.io/HotelBokking/",
+    github: "https://github.com/iamsandeshk/HotelBokking.git",
+    pinned: true,
+  },
+  {
+    id: "project2",
+    title: "Stop Watch",
+    description: "Stopwatch with start, pause, lap, and reset features.",
+    image: "/placeholder.svg",
+    category: "Web App",
+    tags: ["HTML", "CSS", "JavaScript"],
+    url: "https://iamsandeshk.github.io/Stopwatch1/",
+    github: "https://github.com/iamsandeshk/Stopwatch1.git",
+    pinned: true,
+  },
+  {
+    id: "project3",
+    title: "Bus Booking",
+    description: "Bus seat/sleeper selection with pricing.",
+    image: "/placeholder.svg",
+    category: "Web App",
+    tags: ["HTML", "CSS", "JavaScript"],
+    url: "https://iamsandeshk.github.io/bus-booking/",
+    github: "https://github.com/iamsandeshk/bus-booking.git",
+    pinned: false,
+  },
+  {
+    id: "project4",
+    title: "Vexora-Anime",
+    description: "Anime site for episode countdown and trailers.",
+    image: "/placeholder.svg",
+    category: "Web App",
+    tags: ["TypeScript", "CSS"],
+    url: "https://vexoanime.netlify.app",
+    github: "https://github.com/iamsandeshk/Vaxora-Anime.git",
+    pinned: false,
+  },
+  {
+    id: "project5",
+    title: "Movie Bot",
+    description: "A chatbot that suggests movies.",
+    image: "/placeholder.svg",
+    category: "Web App",
+    tags: ["HTML", "CSS", "JavaScript"],
+    url: "https://iamsandeshk.github.io/MovieBot/",
+    github: "https://github.com/iamsandeshk/MovieBot.git",
+    pinned: false,
+  }
+];
+
+const certificates: Certificate[] = [
+  {
+    id: "cert1",
+    title: "AI/ML Internship",
+    issuer: "InternPe",
+    date: "2025-03-16",
+  },
+  {
+    id: "cert2",
+    title: "Internship at Corizo",
+    issuer: "Corizo",
+    date: "2024-07-30",
+  },
+  {
+    id: "cert3",
+    title: "ADA",
+    issuer: "Infosys Springboard",
+    date: "2024-07-15",
+  },
+  {
+    id: "cert4",
+    title: "Microcontroller",
+    issuer: "Infosys Springboard",
+    date: "2024-07-12",
+  },
+  {
+    id: "cert5",
+    title: "UHV",
+    issuer: "KSIT",
+    date: "2024-03-14",
+  },
+  {
+    id: "cert6",
+    title: "Java",
+    issuer: "Infosys Springboard",
+    date: "2024-01-30",
+  },
+  {
+    id: "cert7",
+    title: "SCR",
+    issuer: "KSIT",
+    date: "2024-01-30",
+  },
+  {
+    id: "cert8",
+    title: "Cloud Computing",
+    issuer: "Infosys Springboard",
+    date: "2024-09-22",
+  },
+  {
+    id: "cert9",
+    title: "Python",
+    issuer: "Infosys Springboard",
+    date: "2024-09-25",
+  }
+];
+
+const tasks: Task[] = [
+  {
+    id: "task1",
+    title: "Update the design of Portfolio website",
+    description: "Redesign and improve portfolio website UI/UX",
+    completed: false,
+    dueDate: "2025-07-19",
+    priority: "medium",
+  },
+  {
+    id: "task2",
+    title: "AI Interview Assistant",
+    description: "Develop an AI-based interview assistant tool",
+    completed: false,
+    dueDate: "2025-11-20",
+    priority: "high",
+  },
+  {
+    id: "task3",
+    title: "Learn Backend Node.js and PHP",
+    description: "Complete courses and build projects with Node.js and PHP",
+    completed: false,
+    dueDate: "2025-09-20",
+    priority: "medium",
+  }
+];
+
+// Skills categorized
+const frontendSkills: Skill[] = [
+  { id: "skill1", name: "HTML", level: 5, category: "Frontend" },
+  { id: "skill2", name: "CSS", level: 3, category: "Frontend" },
+  { id: "skill3", name: "JavaScript", level: 2, category: "Frontend" },
+  { id: "skill4", name: "React", level: 1, category: "Frontend" },
+  { id: "skill5", name: "TypeScript", level: 1, category: "Frontend" },
+];
+
+const backendSkills: Skill[] = [
+  { id: "skill6", name: "Node.js", level: 3, category: "Backend" },
+  { id: "skill7", name: "Java", level: 2, category: "Backend" },
+  { id: "skill8", name: "C", level: 4, category: "Backend" },
+  { id: "skill9", name: "Python", level: 4, category: "Backend" },
+  { id: "skill10", name: "MongoDB", level: 3, category: "Backend" },
+];
+
+const otherSkills: Skill[] = [
+  { id: "skill11", name: "UI/UX Design", level: 5, category: "Design" },
+  { id: "skill12", name: "AWS", level: 2, category: "DevOps" },
+];
+
+const skills: Skill[] = [
+  ...frontendSkills,
+  ...backendSkills,
+  ...otherSkills
+];
+
+const education: Education[] = [
+  {
+    id: "edu1",
+    institution: "K S INSTITUTE OF TECHNOLOGY",
+    degree: "B.E",
+    field: "Computer Science and Engineering",
+    startDate: "2022-11-01",
+    endDate: "2026-07-30",
+    description: "Studied computer architecture, software development, and mathematics.",
+  }
+];
+
+const experience: Experience[] = []; // No experience provided
+
+const contact: ContactInfo = {
+  email: "sandeshkullolli4@gmail.com",
+  location: "Raghuvanahalli, Bangalore - 590109",
+};
+
+// CRUD operations but with static data (no localStorage)
 export const getProfile = (): ProfileInfo => {
-  const profile = localStorage.getItem(STORAGE_KEYS.PROFILE);
-  return profile ? JSON.parse(profile) : null;
+  return profile;
 };
 
-export const updateProfile = (profile: ProfileInfo): void => {
-  localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(profile));
+export const updateProfile = (updatedProfile: ProfileInfo): void => {
+  // In a real app, this would update the database
+  console.log("Profile update requested:", updatedProfile);
 };
 
-// CRUD operations for social links
 export const getSocialLinks = (): SocialLink[] => {
-  const links = localStorage.getItem(STORAGE_KEYS.SOCIAL_LINKS);
-  return links ? JSON.parse(links) : [];
+  return socialLinks;
 };
 
 export const addSocialLink = (link: Omit<SocialLink, "id">): SocialLink => {
   const newLink = { ...link, id: generateId() };
-  const links = getSocialLinks();
-  links.push(newLink);
-  localStorage.setItem(STORAGE_KEYS.SOCIAL_LINKS, JSON.stringify(links));
+  console.log("Add social link requested:", newLink);
   return newLink;
 };
 
 export const updateSocialLink = (link: SocialLink): void => {
-  const links = getSocialLinks();
-  const index = links.findIndex((l) => l.id === link.id);
-  if (index !== -1) {
-    links[index] = link;
-    localStorage.setItem(STORAGE_KEYS.SOCIAL_LINKS, JSON.stringify(links));
-  }
+  console.log("Update social link requested:", link);
 };
 
 export const deleteSocialLink = (id: string): void => {
-  const links = getSocialLinks();
-  const filteredLinks = links.filter((link) => link.id !== id);
-  localStorage.setItem(STORAGE_KEYS.SOCIAL_LINKS, JSON.stringify(filteredLinks));
+  console.log("Delete social link requested:", id);
 };
 
-// CRUD operations for projects
 export const getProjects = (): Project[] => {
-  const projects = localStorage.getItem(STORAGE_KEYS.PROJECTS);
-  return projects ? JSON.parse(projects) : [];
+  return projects;
 };
 
 export const getProjectById = (id: string): Project | undefined => {
-  const projects = getProjects();
   return projects.find((project) => project.id === id);
 };
 
 export const addProject = (project: Omit<Project, "id">): Project => {
   const newProject = { ...project, id: generateId() };
-  const projects = getProjects();
-  projects.push(newProject);
-  localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+  console.log("Add project requested:", newProject);
   return newProject;
 };
 
 export const updateProject = (project: Project): void => {
-  const projects = getProjects();
-  const index = projects.findIndex((p) => p.id === project.id);
-  if (index !== -1) {
-    projects[index] = project;
-    localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
-  }
+  console.log("Update project requested:", project);
 };
 
 export const deleteProject = (id: string): void => {
-  const projects = getProjects();
-  const filteredProjects = projects.filter((project) => project.id !== id);
-  localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(filteredProjects));
+  console.log("Delete project requested:", id);
 };
 
-// CRUD operations for certificates
 export const getCertificates = (): Certificate[] => {
-  const certificates = localStorage.getItem(STORAGE_KEYS.CERTIFICATES);
-  return certificates ? JSON.parse(certificates) : [];
+  return certificates;
 };
 
 export const addCertificate = (certificate: Omit<Certificate, "id">): Certificate => {
   const newCertificate = { ...certificate, id: generateId() };
-  const certificates = getCertificates();
-  certificates.push(newCertificate);
-  localStorage.setItem(STORAGE_KEYS.CERTIFICATES, JSON.stringify(certificates));
+  console.log("Add certificate requested:", newCertificate);
   return newCertificate;
 };
 
 export const updateCertificate = (certificate: Certificate): void => {
-  const certificates = getCertificates();
-  const index = certificates.findIndex((c) => c.id === certificate.id);
-  if (index !== -1) {
-    certificates[index] = certificate;
-    localStorage.setItem(STORAGE_KEYS.CERTIFICATES, JSON.stringify(certificates));
-  }
+  console.log("Update certificate requested:", certificate);
 };
 
 export const deleteCertificate = (id: string): void => {
-  const certificates = getCertificates();
-  const filteredCertificates = certificates.filter((certificate) => certificate.id !== id);
-  localStorage.setItem(STORAGE_KEYS.CERTIFICATES, JSON.stringify(filteredCertificates));
+  console.log("Delete certificate requested:", id);
 };
 
-// CRUD operations for tasks
 export const getTasks = (): Task[] => {
-  const tasks = localStorage.getItem(STORAGE_KEYS.TASKS);
-  return tasks ? JSON.parse(tasks) : [];
+  return tasks;
 };
 
 export const addTask = (task: Omit<Task, "id">): Task => {
   const newTask = { ...task, id: generateId() };
-  const tasks = getTasks();
-  tasks.push(newTask);
-  localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
+  console.log("Add task requested:", newTask);
   return newTask;
 };
 
 export const updateTask = (task: Task): void => {
-  const tasks = getTasks();
-  const index = tasks.findIndex((t) => t.id === task.id);
-  if (index !== -1) {
-    tasks[index] = task;
-    localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
-  }
+  console.log("Update task requested:", task);
 };
 
 export const deleteTask = (id: string): void => {
-  const tasks = getTasks();
-  const filteredTasks = tasks.filter((task) => task.id !== id);
-  localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(filteredTasks));
+  console.log("Delete task requested:", id);
 };
 
-// CRUD operations for skills
 export const getSkills = (): Skill[] => {
-  const skills = localStorage.getItem(STORAGE_KEYS.SKILLS);
-  return skills ? JSON.parse(skills) : [];
+  return skills;
 };
 
 export const addSkill = (skill: Omit<Skill, "id">): Skill => {
   const newSkill = { ...skill, id: generateId() };
-  const skills = getSkills();
-  skills.push(newSkill);
-  localStorage.setItem(STORAGE_KEYS.SKILLS, JSON.stringify(skills));
+  console.log("Add skill requested:", newSkill);
   return newSkill;
 };
 
 export const updateSkill = (skill: Skill): void => {
-  const skills = getSkills();
-  const index = skills.findIndex((s) => s.id === skill.id);
-  if (index !== -1) {
-    skills[index] = skill;
-    localStorage.setItem(STORAGE_KEYS.SKILLS, JSON.stringify(skills));
-  }
+  console.log("Update skill requested:", skill);
 };
 
 export const deleteSkill = (id: string): void => {
-  const skills = getSkills();
-  const filteredSkills = skills.filter((skill) => skill.id !== id);
-  localStorage.setItem(STORAGE_KEYS.SKILLS, JSON.stringify(filteredSkills));
+  console.log("Delete skill requested:", id);
 };
 
-// CRUD operations for education
 export const getEducation = (): Education[] => {
-  const education = localStorage.getItem(STORAGE_KEYS.EDUCATION);
-  return education ? JSON.parse(education) : [];
+  return education;
 };
 
-export const addEducation = (education: Omit<Education, "id">): Education => {
-  const newEducation = { ...education, id: generateId() };
-  const educationList = getEducation();
-  educationList.push(newEducation);
-  localStorage.setItem(STORAGE_KEYS.EDUCATION, JSON.stringify(educationList));
+export const addEducation = (educationItem: Omit<Education, "id">): Education => {
+  const newEducation = { ...educationItem, id: generateId() };
+  console.log("Add education requested:", newEducation);
   return newEducation;
 };
 
-export const updateEducation = (education: Education): void => {
-  const educationList = getEducation();
-  const index = educationList.findIndex((e) => e.id === education.id);
-  if (index !== -1) {
-    educationList[index] = education;
-    localStorage.setItem(STORAGE_KEYS.EDUCATION, JSON.stringify(educationList));
-  }
+export const updateEducation = (educationItem: Education): void => {
+  console.log("Update education requested:", educationItem);
 };
 
 export const deleteEducation = (id: string): void => {
-  const educationList = getEducation();
-  const filteredEducation = educationList.filter((education) => education.id !== id);
-  localStorage.setItem(STORAGE_KEYS.EDUCATION, JSON.stringify(filteredEducation));
+  console.log("Delete education requested:", id);
 };
 
-// CRUD operations for experience
 export const getExperience = (): Experience[] => {
-  const experience = localStorage.getItem(STORAGE_KEYS.EXPERIENCE);
-  return experience ? JSON.parse(experience) : [];
+  return experience;
 };
 
-export const addExperience = (experience: Omit<Experience, "id">): Experience => {
-  const newExperience = { ...experience, id: generateId() };
-  const experienceList = getExperience();
-  experienceList.push(newExperience);
-  localStorage.setItem(STORAGE_KEYS.EXPERIENCE, JSON.stringify(experienceList));
+export const addExperience = (experienceItem: Omit<Experience, "id">): Experience => {
+  const newExperience = { ...experienceItem, id: generateId() };
+  console.log("Add experience requested:", newExperience);
   return newExperience;
 };
 
-export const updateExperience = (experience: Experience): void => {
-  const experienceList = getExperience();
-  const index = experienceList.findIndex((e) => e.id === experience.id);
-  if (index !== -1) {
-    experienceList[index] = experience;
-    localStorage.setItem(STORAGE_KEYS.EXPERIENCE, JSON.stringify(experienceList));
-  }
+export const updateExperience = (experienceItem: Experience): void => {
+  console.log("Update experience requested:", experienceItem);
 };
 
 export const deleteExperience = (id: string): void => {
-  const experienceList = getExperience();
-  const filteredExperience = experienceList.filter((experience) => experience.id !== id);
-  localStorage.setItem(STORAGE_KEYS.EXPERIENCE, JSON.stringify(filteredExperience));
+  console.log("Delete experience requested:", id);
 };
 
-// CRUD operations for feedback
 export const getFeedback = (): Feedback[] => {
-  const feedback = localStorage.getItem(STORAGE_KEYS.FEEDBACK);
-  return feedback ? JSON.parse(feedback) : [];
+  return [];
 };
 
 export const addFeedback = (feedback: Omit<Feedback, "id" | "date">): Feedback => {
@@ -630,42 +477,35 @@ export const addFeedback = (feedback: Omit<Feedback, "id" | "date">): Feedback =
     id: generateId(), 
     date: new Date().toISOString() 
   };
-  const feedbackList = getFeedback();
-  feedbackList.push(newFeedback);
-  localStorage.setItem(STORAGE_KEYS.FEEDBACK, JSON.stringify(feedbackList));
+  console.log("Add feedback requested:", newFeedback);
   return newFeedback;
 };
 
 export const deleteFeedback = (id: string): void => {
-  const feedbackList = getFeedback();
-  const filteredFeedback = feedbackList.filter((feedback) => feedback.id !== id);
-  localStorage.setItem(STORAGE_KEYS.FEEDBACK, JSON.stringify(filteredFeedback));
+  console.log("Delete feedback requested:", id);
 };
 
-// CRUD operations for contact
 export const getContact = (): ContactInfo => {
-  const contact = localStorage.getItem(STORAGE_KEYS.CONTACT);
-  return contact ? JSON.parse(contact) : null;
+  return contact;
 };
 
-export const updateContact = (contact: ContactInfo): void => {
-  localStorage.setItem(STORAGE_KEYS.CONTACT, JSON.stringify(contact));
+export const updateContact = (updatedContact: ContactInfo): void => {
+  console.log("Contact update requested:", updatedContact);
 };
 
-// Admin authentication
+// Admin authentication - simplified version without localStorage
 export const verifyAdminPassword = (password: string): boolean => {
-  const storedPassword = localStorage.getItem(STORAGE_KEYS.ADMIN_PASSWORD);
-  return password === storedPassword;
+  return password === "@#Sandesh58"; // Hardcoded password as in the original code
 };
 
 export const updateAdminPassword = (newPassword: string): void => {
-  localStorage.setItem(STORAGE_KEYS.ADMIN_PASSWORD, newPassword);
+  console.log("Admin password update requested:", newPassword);
 };
 
 export const setAdminStatus = (isAdmin: boolean): void => {
-  localStorage.setItem(STORAGE_KEYS.IS_ADMIN, isAdmin.toString());
+  console.log("Admin status change requested:", isAdmin);
 };
 
 export const getAdminStatus = (): boolean => {
-  return localStorage.getItem(STORAGE_KEYS.IS_ADMIN) === "true";
+  return true; // Always return true for demo purposes
 };

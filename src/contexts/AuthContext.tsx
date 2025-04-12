@@ -11,11 +11,11 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Hardcoded admin password (for demonstration only)
+// Hardcoded admin password
 const DEMO_PASSWORD = "@#Sandesh58";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Always default to true for demo purposes (removed localStorage dependency)
+  // Always default to true for demo purposes
   const [isAdmin, setIsAdmin] = useState<boolean>(true);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();

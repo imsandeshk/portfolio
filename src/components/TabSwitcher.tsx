@@ -23,7 +23,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
 
   return (
     <div className="flex flex-wrap justify-center gap-4 mb-10 px-2 sm:px-0">
-      <div className={`backdrop-blur-md bg-white/5 p-1.5 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ${isMobile ? 'w-full grid grid-cols-3 gap-1' : 'flex'}`}>
+      <div className={`backdrop-blur-md bg-white/5 p-1.5 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ${isMobile ? 'w-full grid grid-cols-2 gap-1' : 'flex'}`}>
         {tabs.map((tab) => {
           const isActive = tab.id === activeTab;
           
