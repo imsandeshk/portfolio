@@ -23,7 +23,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
 
   return (
     <div className="flex flex-wrap justify-center gap-4 mb-10 px-2 sm:px-0">
-      <div className={`backdrop-blur-md bg-black/40 p-1.5 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ${isMobile ? 'w-full grid grid-cols-2 gap-1' : 'flex'}`}>
+      <div className={`backdrop-blur-md bg-white/5 p-1.5 rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)] ${isMobile ? 'w-full grid grid-cols-2 gap-1' : 'flex'}`}>
         {tabs.map((tab) => {
           const isActive = tab.id === activeTab;
           
@@ -41,7 +41,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               {/* Background */}
               {isActive && (
                 <motion.span
-                  className="absolute inset-0 bg-gradient-to-br from-white to-white/90 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                  className="absolute inset-0 bg-gradient-to-br from-white to-white/80 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
                   layoutId="tabBackground"
                   transition={{ 
                     type: "spring", 
@@ -61,7 +61,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                 transition={{ duration: 0.2 }}
               >
                 {tab.icon && <span className={`${isActive ? 'text-accent' : ''}`}>{tab.icon}</span>}
-                <span className={`${isActive ? 'font-montserrat' : 'font-poppins'}`}>{tab.label}</span>
+                {tab.label}
               </motion.span>
             </motion.button>
           );

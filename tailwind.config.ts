@@ -19,12 +19,6 @@ export default {
 			}
 		},
 		extend: {
-			fontFamily: {
-				'playfair': ['Playfair Display', 'serif'],
-				'poppins': ['Poppins', 'sans-serif'],
-				'montserrat': ['Montserrat', 'sans-serif'],
-				'roboto': ['Roboto', 'sans-serif']
-			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

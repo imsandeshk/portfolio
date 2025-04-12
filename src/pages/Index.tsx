@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
-import { Helmet } from "react-helmet";
 import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
 import ProjectsSection from "@/components/sections/projects/ProjectsSection";
@@ -80,12 +79,6 @@ const Index = () => {
 
   return (
     <div className="bg-background min-h-screen">
-      <Helmet>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
-      </Helmet>
-      
       <ParticlesBackground />
       
       {/* Hero Section with staggered animation */}

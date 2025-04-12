@@ -11,7 +11,6 @@ interface CertificateCardProps {
   isAdmin?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
-  index?: number;
 }
 
 const CertificateCard: React.FC<CertificateCardProps> = ({
@@ -19,7 +18,6 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
   isAdmin = false,
   onEdit,
   onDelete,
-  index = 0
 }) => {
   const formatDate = (dateString: string) => {
     try {
@@ -31,49 +29,52 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-black/80 border border-accent/20 shadow-xl hover:shadow-accent/10"
+      className="glass-card rounded-xl p-4 hover-glow border-l-4 border-l-accent"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      transition={{ duration: 0.4 }}
       viewport={{ once: true, margin: "-50px" }}
       whileHover={{
-        scale: 1.02,
-        borderColor: "rgba(255, 87, 51, 0.4)",
+        y: -5,
+        boxShadow: "0 10px 30px rgba(255, 87, 51, 0.2)",
         transition: { duration: 0.3, ease: "easeOut" }
       }}
     >
-      {/* Certificate icon */}
-      <div className="absolute top-4 left-4">
-        <div className="bg-accent/20 p-2.5 rounded-full flex-shrink-0">
-          <Award className="text-accent" size={20} />
+      <div className="flex justify-between items-start mb-2">
+        <div className="flex items-start gap-2">
+          <div className="bg-accent/20 p-1.5 rounded-full mt-1 flex-shrink-0">
+            <Award className="text-accent" size={16} />
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-base md:text-lg font-semibold text-gradient truncate">{certificate.title}</h3>
+            <p className="text-muted-foreground text-xs md:text-sm mt-0.5 flex flex-wrap items-center gap-1">
+              <span className="truncate max-w-[100px]">{certificate.issuer}</span>
+              <span className="mx-0.5 hidden md:inline">•</span>
+              <span className="flex items-center gap-1 whitespace-nowrap">
+                <Calendar size={10} className="opacity-70" />
+                {formatDate(certificate.date)}
+              </span>
+            </p>
+          </div>
         </div>
-      </div>
-
-      {/* Admin controls */}
-      {isAdmin && onEdit && onDelete && (
-        <div className="absolute top-4 right-4">
-          <EditControls onEdit={onEdit} onDelete={onDelete} />
-        </div>
-      )}
-
-      {/* Certificate content with proper padding */}
-      <div className="pt-16 pb-6 px-6">
-        <h3 className="font-poppins text-lg md:text-xl font-semibold text-gradient mb-1">{certificate.title}</h3>
-        <p className="text-muted-foreground text-xs md:text-sm flex flex-wrap items-center gap-1 mb-4">
-          <span className="truncate max-w-[150px]">{certificate.issuer}</span>
-          <span className="mx-1">•</span>
-          <span className="flex items-center gap-1">
-            <Calendar size={12} className="opacity-70" />
-            {formatDate(certificate.date)}
-          </span>
-        </p>
         
-        {certificate.url && (
+        {isAdmin && onEdit && onDelete && (
+          <EditControls onEdit={onEdit} onDelete={onDelete} />
+        )}
+      </div>
+      
+      {certificate.url && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.3 }}
+          className="mt-3 ml-8"
+        >
           <Button 
             variant="outline" 
             size="sm" 
             asChild
-            className="text-xs bg-black/40 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+            className="text-xs bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
           >
             <a 
               href={certificate.url} 
@@ -85,8 +86,8 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
               View Certificate
             </a>
           </Button>
-        )}
-      </div>
+        </motion.div>
+      )}
     </motion.div>
   );
 };

@@ -32,8 +32,8 @@ const ParticlesBackground: React.FC = () => {
             color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: 0.25,
-            width: 0.8,
+            opacity: 0.15,
+            width: 0.5,
           },
           collisions: {
             enable: false,
@@ -45,7 +45,7 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: 1.2,
+            speed: 0.8,
             straight: false,
             attract: {
               enable: false,
@@ -58,17 +58,17 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 800,
             },
-            value: 140,
+            value: 120,
           },
           opacity: {
             value: {
-              min: 0.1,
-              max: 0.4,
+              min: 0.05,
+              max: 0.2,
             },
             animation: {
               enable: true,
               speed: 1,
-              minimumValue: 0.1,
+              minimumValue: 0.05,
             },
           },
           shape: {
@@ -76,8 +76,8 @@ const ParticlesBackground: React.FC = () => {
           },
           size: {
             value: {
-              min: 0.8,
-              max: 2.5,
+              min: 0.5,
+              max: 1.5,
             },
             animation: {
               enable: true,
@@ -100,7 +100,7 @@ const ParticlesBackground: React.FC = () => {
               mode: "repulse",
               parallax: {
                 enable: true,
-                force: 60,
+                force: 40,
                 smooth: 20,
               },
             },
@@ -112,16 +112,16 @@ const ParticlesBackground: React.FC = () => {
           },
           modes: {
             push: {
-              quantity: 8,
+              quantity: 6,
             },
             repulse: {
-              distance: 120,
+              distance: 100,
               duration: 0.4,
             },
             grab: {
               distance: 100,
               links: {
-                opacity: 0.7,
+                opacity: 0.5,
               },
             },
           },

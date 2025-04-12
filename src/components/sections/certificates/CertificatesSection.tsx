@@ -117,16 +117,15 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
           </motion.div>
         )}
         
-        {/* Certificates Grid - Improved layout with even spacing */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mt-8 px-2">
-          {sortedCertificates.map((certificate, index) => (
+        {/* Certificates Grid - Improved for mobile with 2 columns */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-8">
+          {sortedCertificates.map((certificate) => (
             <CertificateCard
               key={certificate.id}
               certificate={certificate}
               isAdmin={isAdmin}
               onEdit={isAdmin ? () => handleEditCertificate(certificate) : undefined}
               onDelete={isAdmin ? () => handleDeleteCertificate(certificate) : undefined}
-              index={index}
             />
           ))}
         </div>
