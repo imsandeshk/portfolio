@@ -21,7 +21,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 }) => {
   const formatDate = (dateString: string) => {
     try {
-      return format(new Date(dateString), "MMMM yyyy");
+      return format(new Date(dateString), "MMM yyyy");
     } catch (error) {
       return dateString;
     }
@@ -29,7 +29,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
   return (
     <motion.div
-      className="glass-card rounded-xl p-5 hover-glow border-l-4 border-l-accent"
+      className="glass-card rounded-xl p-4 hover-glow border-l-4 border-l-accent"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
@@ -40,18 +40,18 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         transition: { duration: 0.3, ease: "easeOut" }
       }}
     >
-      <div className="flex justify-between items-start mb-3">
-        <div className="flex items-start gap-3">
-          <div className="bg-accent/20 p-2 rounded-full mt-1">
-            <Award className="text-accent" size={18} />
+      <div className="flex justify-between items-start mb-2">
+        <div className="flex items-start gap-2">
+          <div className="bg-accent/20 p-1.5 rounded-full mt-1 flex-shrink-0">
+            <Award className="text-accent" size={16} />
           </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gradient">{certificate.title}</h3>
-            <p className="text-muted-foreground text-sm mt-1 flex items-center gap-1">
-              <span>{certificate.issuer}</span>
-              <span className="mx-1">•</span>
-              <span className="flex items-center gap-1">
-                <Calendar size={12} className="opacity-70" />
+          <div className="min-w-0">
+            <h3 className="text-base md:text-lg font-semibold text-gradient truncate">{certificate.title}</h3>
+            <p className="text-muted-foreground text-xs md:text-sm mt-0.5 flex flex-wrap items-center gap-1">
+              <span className="truncate max-w-[100px]">{certificate.issuer}</span>
+              <span className="mx-0.5 hidden md:inline">•</span>
+              <span className="flex items-center gap-1 whitespace-nowrap">
+                <Calendar size={10} className="opacity-70" />
                 {formatDate(certificate.date)}
               </span>
             </p>
@@ -68,7 +68,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.3 }}
-          className="mt-4 ml-11"
+          className="mt-3 ml-8"
         >
           <Button 
             variant="outline" 

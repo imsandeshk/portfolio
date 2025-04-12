@@ -106,7 +106,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
   return (
     <section id="projects" className="py-16 min-h-screen">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4">
         <SectionHeading 
           title="Projects" 
           subtitle="Check out some of the projects I've worked on."
@@ -126,8 +126,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           </motion.div>
         )}
         
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        {/* Projects Grid - Updated for 2 columns on mobile */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-8">
           {projects.map((project) => (
             <ProjectCard
               key={project.id}

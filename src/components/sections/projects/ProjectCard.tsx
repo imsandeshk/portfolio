@@ -9,8 +9,6 @@ import {
   Github, 
   Star, 
   Maximize2,
-  Calendar,
-  Code
 } from 'lucide-react';
 import EditControls from '@/components/EditControls';
 
@@ -47,7 +45,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       }}
     >
       {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-32 sm:h-36 md:h-48 overflow-hidden">
         <motion.img
           src={project.image || "/placeholder.svg"}
           alt={project.title}
@@ -62,12 +60,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         {/* Pinned indicator */}
         {project.pinned && (
           <motion.div 
-            className="absolute top-3 right-3 text-accent"
+            className="absolute top-2 right-2 text-accent"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <Star className="fill-accent drop-shadow-glow" size={22} />
+            <Star className="fill-accent drop-shadow-glow" size={16} />
           </motion.div>
         )}
         
@@ -83,63 +81,61 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white">
-              <Maximize2 className="mr-2 h-4 w-4" />
-              View Details
+            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white text-xs md:text-sm px-2 md:px-3">
+              <Maximize2 className="mr-1 h-3 w-3 md:h-4 md:w-4" />
+              View
             </Button>
           </motion.div>
         </motion.div>
       </div>
 
       {/* Content */}
-      <div className="p-5 bg-gradient-to-b from-black/40 to-black/60">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-bold text-gradient">{project.title}</h3>
+      <div className="p-3 md:p-5 bg-gradient-to-b from-black/40 to-black/60">
+        <div className="flex justify-between items-start mb-1 md:mb-2">
+          <h3 className="text-sm md:text-lg font-bold text-gradient truncate max-w-[80%]">{project.title}</h3>
           
           {isAdmin && onEdit && onDelete && (
             <EditControls onEdit={onEdit} onDelete={onDelete} />
           )}
         </div>
         
-        <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
+        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2 mb-2 md:mb-4 hidden sm:block">
           {project.description}
         </p>
         
         {/* Tags */}
-        <div className="flex flex-wrap gap-1 mb-4">
+        <div className="flex flex-wrap gap-1 mb-2 md:mb-4 hidden sm:flex">
           {project.tags && project.tags.length > 0 ? (
             <>
-              {project.tags.slice(0, 3).map((tag, index) => (
+              {project.tags.slice(0, 2).map((tag, index) => (
                 <Badge 
                   key={index} 
                   variant="outline" 
-                  className="text-xs bg-white/5 hover:bg-white/10 transition-colors"
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors"
                 >
                   {tag}
                 </Badge>
               ))}
-              {project.tags.length > 3 && (
+              {project.tags.length > 2 && (
                 <Badge 
                   variant="outline" 
-                  className="text-xs bg-white/5 hover:bg-white/10 transition-colors"
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors"
                 >
-                  +{project.tags.length - 3}
+                  +{project.tags.length - 2}
                 </Badge>
               )}
             </>
-          ) : (
-            <Badge variant="outline" className="text-xs">No tags</Badge>
-          )}
+          ) : null}
         </div>
         
         {/* Links */}
-        <div className="flex gap-2">
+        <div className="flex gap-1 sm:gap-2 mt-2 sm:mt-0">
           {project.url && (
             <Button 
               size="sm" 
               variant="outline" 
               asChild
-              className="text-xs bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+              className="text-[10px] md:text-xs px-1.5 py-0.5 h-auto min-h-0 md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -148,8 +144,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <ExternalLink className="mr-1 h-3 w-3" />
-                Live Demo
+                <ExternalLink className="mr-0.5 h-2 w-2 md:h-3 md:w-3" />
+                <span className="hidden sm:inline">Live</span>
               </a>
             </Button>
           )}
@@ -159,7 +155,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-xs bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+              className="text-[10px] md:text-xs px-1.5 py-0.5 h-auto min-h-0 md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -168,8 +164,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <Github className="mr-1 h-3 w-3" />
-                Code
+                <Github className="mr-0.5 h-2 w-2 md:h-3 md:w-3" />
+                <span className="hidden sm:inline">Code</span>
               </a>
             </Button>
           )}
