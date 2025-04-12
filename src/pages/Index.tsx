@@ -78,7 +78,7 @@ const Index = () => {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-transparent min-h-screen"> {/* Changed from bg-background to bg-transparent */}
       <ParticlesBackground />
       
       {/* Hero Section with staggered animation */}
@@ -86,6 +86,7 @@ const Index = () => {
         initial={isInitialLoad ? "hidden" : false}
         animate="visible"
         variants={sectionVariants}
+        className="relative z-10" {/* Added relative and z-10 to ensure content appears above particles */}
       >
         <motion.div variants={itemVariants}>
           <Hero profile={profile} socialLinks={socialLinks} />
@@ -142,6 +143,7 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
+        className="relative z-10" {/* Added relative and z-10 to ensure content appears above particles */}
       >
         <Footer socialLinks={socialLinks} />
       </motion.div>

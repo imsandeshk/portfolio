@@ -15,14 +15,14 @@ const ParticlesBackground: React.FC = () => {
       init={particlesInit}
       options={{
         fpsLimit: 60,
-        background: {
-          color: {
-            value: "#000000",
-          },
-        },
         fullScreen: {
           enable: true,
           zIndex: -1,
+        },
+        background: {
+          color: {
+            value: "transparent", // Changed from #000000 to transparent to prevent black background layer
+          },
         },
         particles: {
           color: {
@@ -32,8 +32,8 @@ const ParticlesBackground: React.FC = () => {
             color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: 0.15,
-            width: 0.5,
+            opacity: 0.25, // Increased from 0.15 for better visibility
+            width: 0.6, // Slightly increased width
           },
           collisions: {
             enable: false,
@@ -45,7 +45,7 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: 0.8,
+            speed: 1.2, // Increased speed for better visibility
             straight: false,
             attract: {
               enable: false,
@@ -58,17 +58,17 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 800,
             },
-            value: 120,
+            value: 160, // Increased from 120 for more particles
           },
           opacity: {
             value: {
-              min: 0.05,
-              max: 0.2,
+              min: 0.1, // Increased minimum opacity
+              max: 0.5, // Increased maximum opacity
             },
             animation: {
               enable: true,
               speed: 1,
-              minimumValue: 0.05,
+              minimumValue: 0.1,
             },
           },
           shape: {
@@ -77,7 +77,7 @@ const ParticlesBackground: React.FC = () => {
           size: {
             value: {
               min: 0.5,
-              max: 1.5,
+              max: 2.0, // Increased max size for better visibility
             },
             animation: {
               enable: true,
@@ -100,7 +100,7 @@ const ParticlesBackground: React.FC = () => {
               mode: "repulse",
               parallax: {
                 enable: true,
-                force: 40,
+                force: 50, // Increased force for more visible interaction
                 smooth: 20,
               },
             },
@@ -112,10 +112,10 @@ const ParticlesBackground: React.FC = () => {
           },
           modes: {
             push: {
-              quantity: 6,
+              quantity: 8, // Increased from 6 for more dramatic effect
             },
             repulse: {
-              distance: 100,
+              distance: 150, // Increased from 100 for wider effect
               duration: 0.4,
             },
             grab: {
