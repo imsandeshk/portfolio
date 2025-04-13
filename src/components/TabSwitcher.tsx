@@ -65,7 +65,9 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                     {tab.icon}
                   </span>
                 )}
-                <span>{tab.label}</span>
+                <span className={isMobile ? (tab.id === "certificates" ? "text-xs" : "") : ""}>
+                  {tab.label}
+                </span>
               </motion.span>
             </motion.button>
           );
