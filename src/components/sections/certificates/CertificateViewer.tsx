@@ -1,10 +1,12 @@
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Certificate } from "@/services/storageService";
 import { Button } from "@/components/ui/button";
-import { Download, X } from "lucide-react";
+import { Download, X, Certificate as CertIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "@/components/ui/image";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 interface CertificateViewerProps {
   isOpen: boolean;
@@ -30,21 +32,26 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl w-[90vw] p-0 bg-black/90 border-white/10 overflow-hidden">
-        <DialogHeader className="p-4 text-center relative z-10">
+      <DialogContent className="max-w-4xl w-[90vw] p-0 bg-black/95 border-white/10 overflow-hidden">
+        <DialogHeader className="p-4 text-center relative z-10 border-b border-white/10">
           <Button 
             variant="ghost" 
             size="icon" 
-            className="absolute right-2 top-2 text-white"
+            className="absolute right-2 top-2 text-white/60 hover:text-white hover:bg-white/10"
             onClick={onClose}
           >
             <X size={18} />
           </Button>
-          <DialogTitle className="text-xl font-playfair text-gradient">{certificate.title}</DialogTitle>
-          <p className="text-sm text-white/70">{certificate.issuer}</p>
+          <DialogTitle className="text-xl font-playfair text-gradient flex items-center justify-center gap-2">
+            <CertIcon size={18} className="text-accent" />
+            {certificate.title}
+          </DialogTitle>
+          <DialogDescription className="text-sm text-white/70">
+            Issued by {certificate.issuer}
+          </DialogDescription>
         </DialogHeader>
         
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden p-6">
           <AnimatePresence>
             {isOpen && (
               <motion.div
@@ -56,22 +63,24 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                   stiffness: 300, 
                   damping: 30 
                 }}
-                className="p-4"
+                className="flex flex-col items-center"
               >
-                <div className="relative w-full aspect-[1.414/1] bg-gradient-to-b from-accent/5 to-transparent rounded-lg overflow-hidden shadow-lg">
+                <div className="relative w-full max-w-3xl mx-auto aspect-[1.414/1] bg-gradient-to-b from-accent/5 to-transparent rounded-lg overflow-hidden shadow-lg border border-white/10">
                   {certificate.image && (
-                    <img 
-                      src={certificate.image} 
-                      alt={`${certificate.title} Certificate`}
-                      className="w-full h-full object-contain"
-                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <img 
+                        src={certificate.image} 
+                        alt={`${certificate.title} Certificate`}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
                   )}
                 </div>
                 
-                <div className="flex justify-center mt-4">
+                <div className="flex justify-center mt-6">
                   <Button 
                     variant="outline"
-                    className="bg-white/5 hover:bg-white/20 border-white/20 text-white gap-2"
+                    className="bg-white/5 hover:bg-accent hover:text-white border-white/20 text-white gap-2 transition-all duration-300"
                     onClick={handleDownload}
                   >
                     <Download size={16} />

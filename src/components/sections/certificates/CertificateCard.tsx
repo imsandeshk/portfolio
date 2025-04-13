@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Certificate } from "@/services/storageService";
-import { ExternalLink, Award, Calendar, Image } from "lucide-react";
+import { ExternalLink, Award, Calendar, Eye } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import EditControls from "@/components/EditControls";
@@ -79,9 +79,9 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
               variant="outline" 
               size="sm" 
               onClick={() => setShowViewer(true)}
-              className="text-xs bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+              className="text-xs bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 flex items-center"
             >
-              <Image className="mr-1 h-3 w-3" />
+              <Eye className="mr-1 h-3 w-3" />
               View Certificate
             </Button>
           )}
