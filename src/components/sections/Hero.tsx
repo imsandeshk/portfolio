@@ -64,13 +64,13 @@ const Hero: React.FC<HeroProps> = ({
           animate="visible" 
         >
           <motion.div variants={itemVariants} className="mb-6">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-transparent leading-tight">
+            <h1 className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-transparent leading-tight">
               {profile.name}
             </h1>
           </motion.div>
           
           <motion.div variants={itemVariants}>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium mb-6 text-accent/90">
+            <h2 className="font-playfair text-2xl md:text-3xl lg:text-4xl font-medium mb-6 text-accent/90">
               {profile.title}
             </h2>
           </motion.div>

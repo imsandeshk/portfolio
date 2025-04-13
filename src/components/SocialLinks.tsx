@@ -17,17 +17,46 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   iconSize = 24,
   showLabels = false 
 }) => {
-  // Helper function to get icon component by name
-  const getIconByName = (iconName: string): LucideIcon => {
-    // Check if the icon exists in the Icons object
-    if (iconName && typeof iconName === 'string' && iconName in Icons) {
-      // Only access valid icon components, not helper functions or other properties
-      const IconComponent = Icons[iconName as keyof typeof Icons];
-      // Check if it's a valid icon component (not a function like createIcon)
+  // Helper function to get platform-specific icon
+  const getPlatformIcon = (platform: string): LucideIcon => {
+    // Map common social platforms to their icons
+    const iconMapping: Record<string, keyof typeof Icons> = {
+      facebook: "Facebook",
+      twitter: "Twitter",
+      x: "Twitter", // For "X" (formerly Twitter)
+      linkedin: "Linkedin",
+      github: "Github",
+      instagram: "Instagram",
+      youtube: "Youtube",
+      dribbble: "Dribbble",
+      behance: "Figma", // Using Figma as closest substitute
+      medium: "FileText", // Using FileText as substitute
+      discord: "MessageSquare",
+      telegram: "Send",
+      whatsapp: "Phone",
+      email: "Mail"
+    };
+
+    // Convert platform to lowercase for case-insensitive matching
+    const platformLower = platform.toLowerCase();
+    
+    // Find the corresponding icon or use a default
+    const iconName = Object.keys(iconMapping).find(key => 
+      platformLower.includes(key)
+    );
+    
+    if (iconName) {
+      return Icons[iconMapping[iconName]] as LucideIcon;
+    }
+    
+    // If we have an explicit icon name specified
+    if (platform && typeof platform === 'string' && platform in Icons) {
+      const IconComponent = Icons[platform as keyof typeof Icons];
       if (typeof IconComponent === 'function' && 'displayName' in IconComponent) {
         return IconComponent as LucideIcon;
       }
     }
+    
     // Fallback to Link icon
     return Icons.Link;
   };
@@ -79,7 +108,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
       animate="show"
     >
       {links.map((link, index) => {
-        const IconComponent = getIconByName(link.icon);
+        const IconComponent = getPlatformIcon(link.platform);
         
         return (
           <motion.a

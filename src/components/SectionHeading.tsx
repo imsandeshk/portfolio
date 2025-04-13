@@ -35,7 +35,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         once: true
       }}
     >
-      <h2 className="text-3xl text-gradient mb-3 font-bold md:text-5xl">
+      <h2 className="font-playfair text-3xl text-gradient mb-3 font-bold md:text-5xl">
         {title}
       </h2>
       {subtitle && <p className="text-muted-foreground max-w-2xl">{subtitle}</p>}
