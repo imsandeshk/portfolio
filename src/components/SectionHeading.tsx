@@ -38,7 +38,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
       <h2 className="font-playfair text-3xl text-gradient mb-3 font-bold md:text-5xl">
         {title}
       </h2>
-      {subtitle && <p className="text-muted-foreground max-w-2xl">{subtitle}</p>}
+      {subtitle && <p className="text-muted-foreground max-w-2xl font-light">{subtitle}</p>}
     </motion.div>
   );
 };

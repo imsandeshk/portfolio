@@ -32,8 +32,8 @@ const ParticlesBackground: React.FC = () => {
             color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: 0.2,
-            width: 0.6,
+            opacity: 0.1,
+            width: 0.5,
           },
           collisions: {
             enable: false,
@@ -45,30 +45,26 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: 0.6, // Reduced speed for calmer motion
+            speed: 0.4, // Further reduced speed for calmer motion
             straight: false,
-            attract: {
-              enable: true, // Enable attraction
-              rotateX: 600,
-              rotateY: 1200,
-            },
           },
           number: {
             density: {
               enable: true,
-              area: 1500, // Increased area to further reduce particle density
+              area: 2000, // Increased area to further reduce particle density
             },
-            value: 70, // Reduced from 100 to 70 particles
+            value: 50, // Reduced number of particles
+            limit: 60, // Add a limit to prevent too many particles
           },
           opacity: {
             value: {
-              min: 0.1,
-              max: 0.3, // Reduced maximum opacity for even subtler effect
+              min: 0.05,
+              max: 0.2, // Reduced maximum opacity for even subtler effect
             },
             animation: {
               enable: true,
-              speed: 0.8,
-              minimumValue: 0.1,
+              speed: 0.5,
+              minimumValue: 0.05,
             },
           },
           shape: {
@@ -77,19 +73,14 @@ const ParticlesBackground: React.FC = () => {
           size: {
             value: {
               min: 0.5,
-              max: 1.2, // Reduced max size for subtlety
-            },
-            animation: {
-              enable: true,
-              speed: 0.8,
-              minimumValue: 0.1,
+              max: 1, // Reduced max size for subtlety
             },
           },
           twinkle: {
             particles: {
               enable: true,
-              frequency: 0.05,
-              opacity: 0.8,
+              frequency: 0.03,
+              opacity: 0.5,
             },
           },
         },
@@ -97,11 +88,11 @@ const ParticlesBackground: React.FC = () => {
           events: {
             onHover: {
               enable: true,
-              mode: "attract", // Changed to "attract" to pull particles toward cursor
+              mode: "grab", // Changed to "grab" for a more subtle interaction
               parallax: {
                 enable: true,
-                force: 20, // Reduced force for more subtle interaction
-                smooth: 10,
+                force: 10, // Reduced force for more subtle interaction
+                smooth: 20,
               },
             },
             onClick: {
@@ -111,16 +102,16 @@ const ParticlesBackground: React.FC = () => {
             resize: true,
           },
           modes: {
-            attract: {
-              distance: 200,
-              duration: 0.4,
-              easing: "ease-out-quad",
-              factor: 3,
-              maxSpeed: 50,
-              speed: 1
+            grab: {
+              distance: 120,
+              links: {
+                opacity: 0.3,
+                color: "#ffffff",
+              }
             },
             push: {
-              quantity: 3, // Reduced from 4 to 3 for subtler effect
+              quantity: 2, // Reduced from 3 to 2 for subtler effect
+              limit: 5, // Limit the number of particles that can be added on click
             },
             repulse: {
               distance: 100,

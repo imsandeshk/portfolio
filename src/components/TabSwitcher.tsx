@@ -32,7 +32,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`
-                relative flex-1 px-1 sm:px-4 py-2 sm:py-3 rounded-xl text-xs sm:text-sm font-medium transition-all
+                relative flex-1 px-3 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center justify-center
                 ${isActive ? 'text-black' : 'text-white/80 hover:text-white'}
               `}
               whileHover={{ scale: isActive ? 1 : 1.05 }}
@@ -54,14 +54,18 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               
               {/* Content */}
               <motion.span 
-                className="relative flex items-center justify-center gap-1 sm:gap-2 z-10"
+                className="relative flex items-center justify-center gap-2 z-10"
                 animate={{ 
                   scale: isActive ? 1.05 : 1
                 }}
                 transition={{ duration: 0.2 }}
               >
-                {tab.icon && <span className={`${isActive ? 'text-accent' : ''}`}>{tab.icon}</span>}
-                {tab.label}
+                {tab.icon && (
+                  <span className={`${isActive ? 'text-accent' : ''} flex items-center`}>
+                    {tab.icon}
+                  </span>
+                )}
+                <span>{tab.label}</span>
               </motion.span>
             </motion.button>
           );
