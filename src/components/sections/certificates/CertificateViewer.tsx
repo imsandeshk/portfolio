@@ -2,7 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Certificate } from "@/services/storageService";
 import { Button } from "@/components/ui/button";
-import { Download, X, Certificate as CertIcon } from "lucide-react";
+import { Download, X, Award } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "@/components/ui/image";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
@@ -43,7 +43,7 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
             <X size={18} />
           </Button>
           <DialogTitle className="text-xl font-playfair text-gradient flex items-center justify-center gap-2">
-            <CertIcon size={18} className="text-accent" />
+            <Award size={18} className="text-accent" />
             {certificate.title}
           </DialogTitle>
           <DialogDescription className="text-sm text-white/70">
