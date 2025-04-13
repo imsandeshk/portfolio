@@ -18,9 +18,9 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
   certificate
 }) => {
   const handleDownload = () => {
-    if (certificate.imageUrl) {
+    if (certificate.image) {
       const link = document.createElement('a');
-      link.href = certificate.imageUrl;
+      link.href = certificate.image;
       link.download = `${certificate.title} - ${certificate.issuer}.jpg`;
       document.body.appendChild(link);
       link.click();
@@ -59,9 +59,9 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                 className="p-4"
               >
                 <div className="relative w-full aspect-[1.414/1] bg-gradient-to-b from-accent/5 to-transparent rounded-lg overflow-hidden shadow-lg">
-                  {certificate.imageUrl && (
+                  {certificate.image && (
                     <img 
-                      src={certificate.imageUrl} 
+                      src={certificate.image} 
                       alt={`${certificate.title} Certificate`}
                       className="w-full h-full object-contain"
                     />

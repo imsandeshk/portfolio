@@ -74,7 +74,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
           transition={{ delay: 0.2, duration: 0.3 }}
           className="mt-3 ml-8 flex flex-wrap gap-2"
         >
-          {certificate.imageUrl && (
+          {certificate.image && (
             <Button 
               variant="outline" 
               size="sm" 
@@ -107,7 +107,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
         </motion.div>
       </motion.div>
       
-      {certificate.imageUrl && (
+      {certificate.image && (
         <CertificateViewer 
           isOpen={showViewer} 
           onClose={() => setShowViewer(false)} 
