@@ -12,6 +12,7 @@ import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
+import LandingAnimation from "@/components/LandingAnimation";
 import {
   getProfile,
   getSocialLinks,
@@ -36,9 +37,11 @@ const Index = () => {
   const experience = getExperience();
   const contact = getContact();
 
-  // Tab state for the content switcher
+  // States for animation and UI control
   const [activeTab, setActiveTab] = useState("projects");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [showLandingAnimation, setShowLandingAnimation] = useState(true);
+  const [mainContentVisible, setMainContentVisible] = useState(false);
   
   const tabs = [
     { id: "projects", label: "Projects", icon: <Code size={16} /> },
@@ -51,10 +54,31 @@ const Index = () => {
     setActiveTab(tabId);
   };
 
-  // Set initial load to false after component mount
+  // Disable initial load animation if coming back to the page
   useEffect(() => {
-    setIsInitialLoad(false);
+    // Check if user has already seen the animation
+    const hasSeenAnimation = sessionStorage.getItem("hasSeenAnimation");
+    
+    if (hasSeenAnimation) {
+      setShowLandingAnimation(false);
+      setMainContentVisible(true);
+      setIsInitialLoad(false);
+    } else {
+      // First visit, show animation and set flag
+      sessionStorage.setItem("hasSeenAnimation", "true");
+    }
   }, []);
+
+  // Handle animation completion
+  const handleAnimationComplete = () => {
+    setShowLandingAnimation(false);
+    setMainContentVisible(true);
+    
+    // Small delay to ensure proper animation sequence
+    setTimeout(() => {
+      setIsInitialLoad(false);
+    }, 500);
+  };
 
   // Page scroll animation variants
   const sectionVariants = {
@@ -79,78 +103,96 @@ const Index = () => {
 
   return (
     <div className="bg-transparent min-h-screen">
-      <ParticlesBackground />
+      {/* Landing animation */}
+      {showLandingAnimation && (
+        <LandingAnimation onAnimationComplete={handleAnimationComplete} />
+      )}
       
-      {/* Hero Section with staggered animation */}
-      <motion.div
-        initial={isInitialLoad ? "hidden" : false}
-        animate="visible"
-        variants={sectionVariants}
-        className="relative z-10"
-      >
-        <motion.div variants={itemVariants}>
-          <Hero profile={profile} socialLinks={socialLinks} />
-        </motion.div>
-      
-        {/* Content Tabs Section */}
-        <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
-          <div className="container mx-auto px-4">
-            <TabSwitcher
-              tabs={tabs}
-              activeTab={activeTab}
-              onTabChange={handleTabChange}
-            />
+      {/* Main content with animated entrance */}
+      <AnimatePresence mode="wait">
+        {mainContentVisible && (
+          <motion.div
+            key="main-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2 }}
+            className="w-full"
+          >
+            <ParticlesBackground />
             
-            {/* Tab Content with AnimatePresence for smooth transitions */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ 
-                  duration: 0.5, 
-                  ease: [0.22, 1, 0.36, 1] 
-                }}
-                className="min-h-[400px]"
-              >
-                {activeTab === "projects" && <ProjectsSection projects={projects} />}
-                {activeTab === "certificates" && (
-                  <div className="grid grid-cols-1 gap-6">
-                    <CertificatesSection certificates={certificates} />
-                  </div>
-                )}
-                {activeTab === "tasks" && <TasksSection tasks={tasks} />}
+            {/* Hero Section with staggered animation */}
+            <motion.div
+              initial={isInitialLoad ? "hidden" : false}
+              animate="visible"
+              variants={sectionVariants}
+              className="relative z-10"
+            >
+              <motion.div variants={itemVariants}>
+                <Hero profile={profile} socialLinks={socialLinks} />
               </motion.div>
-            </AnimatePresence>
-          </div>
-        </motion.section>
-        
-        {/* Skills Section */}
-        <motion.div variants={itemVariants}>
-          <SkillsSection skills={skills} />
-        </motion.div>
-        
-        {/* Education Section */}
-        <motion.div variants={itemVariants}>
-          <EducationSection education={education} />
-        </motion.div>
-        
-        {/* Contact Section */}
-        <motion.div variants={itemVariants}>
-          <ContactSection contact={contact} />
-        </motion.div>
-      </motion.div>
-      
-      {/* Footer with fade in animation */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="relative z-10"
-      >
-        <Footer socialLinks={socialLinks} />
-      </motion.div>
+            
+              {/* Content Tabs Section */}
+              <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
+                <div className="container mx-auto px-4">
+                  <TabSwitcher
+                    tabs={tabs}
+                    activeTab={activeTab}
+                    onTabChange={handleTabChange}
+                  />
+                  
+                  {/* Tab Content with AnimatePresence for smooth transitions */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeTab}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ 
+                        duration: 0.5, 
+                        ease: [0.22, 1, 0.36, 1] 
+                      }}
+                      className="min-h-[400px]"
+                    >
+                      {activeTab === "projects" && <ProjectsSection projects={projects} />}
+                      {activeTab === "certificates" && (
+                        <div className="grid grid-cols-1 gap-6">
+                          <CertificatesSection certificates={certificates} />
+                        </div>
+                      )}
+                      {activeTab === "tasks" && <TasksSection tasks={tasks} />}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </motion.section>
+              
+              {/* Skills Section */}
+              <motion.div variants={itemVariants}>
+                <SkillsSection skills={skills} />
+              </motion.div>
+              
+              {/* Education Section */}
+              <motion.div variants={itemVariants}>
+                <EducationSection education={education} />
+              </motion.div>
+              
+              {/* Contact Section */}
+              <motion.div variants={itemVariants}>
+                <ContactSection contact={contact} />
+              </motion.div>
+            </motion.div>
+            
+            {/* Footer with fade in animation */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="relative z-10"
+            >
+              <Footer socialLinks={socialLinks} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
