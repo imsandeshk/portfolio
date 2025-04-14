@@ -12,7 +12,6 @@ import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
-import LandingAnimation from "@/components/LandingAnimation";
 import {
   getProfile,
   getSocialLinks,
@@ -108,10 +107,6 @@ const Index = () => {
 
   return (
     <div className="bg-transparent min-h-screen">
-      {/* Landing animation */}
-      {showLandingAnimation && (
-        <LandingAnimation onAnimationComplete={handleAnimationComplete} />
-      )}
       
       {/* Main content with animated entrance */}
       <AnimatePresence mode="wait">
