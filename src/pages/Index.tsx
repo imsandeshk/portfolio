@@ -165,12 +165,7 @@ const Index = () => {
                 </div>
               </motion.section>
               
-              {/* Skills Section */}
-              <motion.div variants={itemVariants}>
-                <SkillsSection skills={skills} />
-              </motion.div>
-              
-              {/* Education Section */}
+              {/* Skills Section integrated with Education (no separate SkillsSection) */}
               <motion.div variants={itemVariants}>
                 <EducationSection education={education} />
               </motion.div>

@@ -9,13 +9,15 @@ interface SocialLinksProps {
   className?: string;
   iconSize?: number;
   showLabels?: boolean;
+  infiniteScroll?: boolean;
 }
 
 const SocialLinks: React.FC<SocialLinksProps> = ({ 
   links, 
   className = "",
   iconSize = 24,
-  showLabels = false 
+  showLabels = false,
+  infiniteScroll = false
 }) => {
   // Helper function to get platform-specific icon
   const getPlatformIcon = (platform: string): LucideIcon => {
@@ -61,6 +63,27 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     return Icons.Link;
   };
 
+  // Get platform-specific colors
+  const getPlatformColor = (platform: string): string => {
+    const platformLower = platform.toLowerCase();
+    
+    if (platformLower.includes("facebook")) return "#1877F2";
+    if (platformLower.includes("twitter") || platformLower.includes("x")) return "#1DA1F2";
+    if (platformLower.includes("linkedin")) return "#0A66C2";
+    if (platformLower.includes("github")) return "#333333";
+    if (platformLower.includes("instagram")) return "#E4405F";
+    if (platformLower.includes("youtube")) return "#FF0000";
+    if (platformLower.includes("dribbble")) return "#EA4C89";
+    if (platformLower.includes("behance")) return "#1769FF";
+    if (platformLower.includes("medium")) return "#000000";
+    if (platformLower.includes("discord")) return "#5865F2";
+    if (platformLower.includes("telegram")) return "#26A5E4";
+    if (platformLower.includes("whatsapp")) return "#25D366";
+    if (platformLower.includes("email") || platformLower.includes("mail")) return "#EA4335";
+    
+    return "#ffffff"; // Default color
+  };
+
   // Animation variants for the container
   const container = {
     hidden: { opacity: 0 },
@@ -100,6 +123,65 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     }
   };
 
+  // Duplicate links for infinite scroll effect
+  const displayLinks = infiniteScroll ? [...links, ...links] : links;
+
+  if (infiniteScroll) {
+    return (
+      <div className={`w-full overflow-hidden py-4 ${className}`}>
+        <motion.div 
+          className="flex"
+          animate={{ 
+            x: [0, -1500]
+          }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 20,
+              ease: "linear"
+            }
+          }}
+        >
+          {displayLinks.map((link, index) => {
+            const IconComponent = getPlatformIcon(link.platform);
+            const platformColor = getPlatformColor(link.platform);
+            
+            // Calculate opacity for fade effect on first and last items
+            const isFirstOrLast = index === 0 || index === displayLinks.length - 1;
+            const opacity = isFirstOrLast ? 0.5 : 1;
+            
+            return (
+              <motion.a
+                key={`${link.id || link.platform}-${index}`}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white mx-3 flex items-center justify-center"
+                style={{ opacity }}
+                whileHover={{ scale: 1.1, y: -5 }}
+              >
+                <div 
+                  className="w-12 h-12 rounded-full flex items-center justify-center"
+                  style={{ 
+                    backgroundColor: `${platformColor}20`,
+                    boxShadow: `0 0 15px ${platformColor}40`
+                  }}
+                >
+                  <IconComponent 
+                    size={iconSize} 
+                    color={platformColor} 
+                    strokeWidth={1.5} 
+                  />
+                </div>
+              </motion.a>
+            );
+          })}
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <motion.div 
       className={`flex flex-wrap items-center gap-4 ${className}`}
@@ -109,6 +191,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     >
       {links.map((link, index) => {
         const IconComponent = getPlatformIcon(link.platform);
+        const platformColor = getPlatformColor(link.platform);
         
         return (
           <motion.a
@@ -118,15 +201,19 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             rel="noopener noreferrer"
             className="text-white transition-all duration-300 flex items-center gap-2 
                       bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-md p-2.5 rounded-full 
-                      hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border border-white/10 hover:border-accent/40"
+                      hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border border-white/10"
             variants={item}
             whileHover="hover"
             initial="rest"
             title={link.platform}
+            style={{ 
+              borderColor: `${platformColor}30`,
+              boxShadow: `0 0 10px ${platformColor}20`
+            }}
           >
             <motion.div 
               variants={iconHover}
-              className="text-white group-hover:text-accent transition-colors duration-300"
+              style={{ color: platformColor }}
             >
               <IconComponent size={iconSize} />
             </motion.div>

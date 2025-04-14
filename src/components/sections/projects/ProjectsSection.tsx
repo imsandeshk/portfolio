@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Project } from "@/services/storageService";
@@ -19,6 +18,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Plus } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ProjectsSectionProps {
   projects: Project[];
@@ -42,9 +49,11 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
-  // Get a list of unique categories
-  const categories = Array.from(new Set(projects.map(project => project.category)));
+  // Get featured projects (pinned)
+  const featuredProjects = projects.filter(project => project.pinned);
+  const otherProjects = projects.filter(project => !project.pinned);
 
   // Handle project card click
   const handleProjectClick = (project: Project) => {
@@ -125,19 +134,172 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             </Button>
           </motion.div>
         )}
-        
-        {/* Projects Grid - Updated for 2 columns on mobile */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 mt-8">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              isAdmin={isAdmin}
-              onEdit={isAdmin ? () => handleEditProject(project) : undefined}
-              onDelete={isAdmin ? () => handleDeleteProject(project) : undefined}
-              onClick={() => handleProjectClick(project)}
-            />
-          ))}
+
+        {/* Featured Projects - Desktop View with Large Cards */}
+        {!isMobile && featuredProjects.length > 0 && (
+          <div className="mb-16">
+            <h3 className="text-2xl font-playfair font-medium mb-8 text-center md:text-left">
+              Featured Projects
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              {featuredProjects.map((project) => (
+                <motion.div
+                  key={project.id}
+                  className="relative group overflow-hidden rounded-xl bg-black/20 backdrop-blur-lg hover-glow border border-white/10"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  onClick={() => handleProjectClick(project)}
+                >
+                  <div className="relative h-[300px] md:h-[400px] overflow-hidden">
+                    <motion.div 
+                      className="bg-gradient-to-b from-transparent to-black/90 z-10 absolute inset-0 flex flex-col justify-end p-8"
+                      initial={{ opacity: 0.6 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="flex flex-col gap-4">
+                        <div>
+                          <h3 className="text-3xl md:text-4xl font-bold text-gradient mb-2">{project.title}</h3>
+                          <p className="text-white/80 text-lg mb-4 line-clamp-2">{project.description}</p>
+                        </div>
+
+                        <div className="flex gap-3 items-center justify-start">
+                          {project.url && (
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              asChild
+                              className="bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <a 
+                                href={project.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="flex items-center"
+                              >
+                                View Live
+                              </a>
+                            </Button>
+                          )}
+                          
+                          {project.github && (
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              asChild
+                              className="bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <a 
+                                href={project.github} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="flex items-center"
+                              >
+                                View Code
+                              </a>
+                            </Button>
+                          )}
+
+                          {isAdmin && (
+                            <div className="ml-auto">
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleEditProject(project);
+                                }}
+                                className="mr-2"
+                              >
+                                Edit
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant="destructive" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteProject(project);
+                                }}
+                              >
+                                Delete
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    <motion.img
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      initial={{ scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Featured Projects - Mobile View as Carousel */}
+        {isMobile && featuredProjects.length > 0 && (
+          <div className="mb-12">
+            <h3 className="text-xl font-playfair font-medium mb-6 text-center">
+              Featured Projects
+            </h3>
+            <Carousel className="w-full">
+              <CarouselContent>
+                {featuredProjects.map((project) => (
+                  <CarouselItem key={project.id} className="md:basis-1/1">
+                    <div 
+                      className="relative rounded-lg overflow-hidden h-[250px]"
+                      onClick={() => handleProjectClick(project)}
+                    >
+                      <img 
+                        src={project.image || "/placeholder.svg"} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent p-4 flex flex-col justify-end">
+                        <h4 className="text-xl font-bold">{project.title}</h4>
+                        <p className="text-sm text-white/70 line-clamp-2 my-1">{project.description}</p>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex justify-center mt-4">
+                <CarouselPrevious className="relative static translate-y-0 left-0 mr-4" />
+                <CarouselNext className="relative static translate-y-0 right-0" />
+              </div>
+            </Carousel>
+          </div>
+        )}
+
+        {/* Other Projects Grid */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-playfair font-medium mb-8 text-center md:text-left">
+            More Projects
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+            {otherProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                isAdmin={isAdmin}
+                onEdit={isAdmin ? () => handleEditProject(project) : undefined}
+                onDelete={isAdmin ? () => handleDeleteProject(project) : undefined}
+                onClick={() => handleProjectClick(project)}
+              />
+            ))}
+          </div>
         </div>
         
         {/* Project details modal (non-admin view) */}

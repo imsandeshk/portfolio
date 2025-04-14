@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { ProfileInfo, SocialLink } from "@/services/storageService";
 import SocialLinks from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ExternalLink } from "lucide-react";
+import { ArrowDown, ExternalLink, Briefcase } from "lucide-react";
+import TechIcons from "@/components/TechIcons";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HeroProps {
   profile: ProfileInfo;
@@ -22,6 +24,7 @@ const Hero: React.FC<HeroProps> = ({
   onEditSocial
 }) => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const handleContactClick = () => {
     const contactSection = document.getElementById("contact");
@@ -75,6 +78,23 @@ const Hero: React.FC<HeroProps> = ({
             </h2>
           </motion.div>
           
+          <motion.div variants={itemVariants} className="mb-6">
+            <div className="flex items-center justify-center md:justify-start gap-2">
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="flex items-center gap-2 bg-black/30 backdrop-blur-md border border-green-500/20 rounded-full px-4 py-1.5"
+              >
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <span className="text-green-400 text-sm font-medium">Open to Work</span>
+              </motion.div>
+            </div>
+          </motion.div>
+
           <motion.div variants={itemVariants}>
             <p className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
               {profile.bio}
@@ -141,6 +161,16 @@ const Hero: React.FC<HeroProps> = ({
           </div>
         </motion.div>
       </div>
+
+      {/* Tech Icons Scrolling Banner */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.8 }}
+        className="mt-6 md:mt-12 w-full overflow-hidden"
+      >
+        <TechIcons />
+      </motion.div>
       
       {/* Scroll indicator */}
       <motion.div 
