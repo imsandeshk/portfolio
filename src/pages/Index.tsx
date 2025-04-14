@@ -39,7 +39,6 @@ const Index = () => {
   // States for animation and UI control
   const [activeTab, setActiveTab] = useState("projects");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [showLandingAnimation, setShowLandingAnimation] = useState(true);
   const [mainContentVisible, setMainContentVisible] = useState(false);
   
   const tabs = [
@@ -59,7 +58,7 @@ const Index = () => {
     const hasSeenAnimation = sessionStorage.getItem("hasSeenAnimation");
     
     if (hasSeenAnimation) {
-      setShowLandingAnimation(false);
+     
       setMainContentVisible(true);
       setIsInitialLoad(false);
     } else {
