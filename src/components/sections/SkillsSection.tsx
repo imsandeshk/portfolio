@@ -112,20 +112,21 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
 const getSkillIcon = (skillName: string) => {
   const name = skillName.toLowerCase();
 
-  if (name.includes("html")) return <i className="fab fa-html5 text-orange-500 text-2xl" />;
-  if (name.includes("css")) return <i className="fab fa-css3-alt text-blue-500 text-2xl" />;
-  if (name.includes("javascript") || name.includes("js")) return <i className="fab fa-js text-yellow-400 text-2xl" />;
-  if (name.includes("react")) return <i className="fab fa-react text-cyan-400 text-2xl" />;
-  if (name.includes("node")) return <i className="fab fa-node text-green-500 text-2xl" />;
-  if (name.includes("java")) return <i className="fab fa-java text-red-600 text-2xl" />;
-  if (name.includes("python")) return <i className="fab fa-python text-yellow-500 text-2xl" />;
-  if (name.includes("php")) return <i className="fab fa-php text-indigo-500 text-2xl" />;
-  if (name.includes("aws")) return <i className="fab fa-aws text-orange-500 text-2xl" />;
-  if (name.includes("github")) return <i className="fab fa-github text-white text-2xl" />;
-  if (name.includes("figma")) return <i className="fab fa-figma text-pink-400 text-2xl" />;
-  
-  return <i className="fas fa-code text-white text-2xl" />; // fallback icon
+  if (name.includes("html")) return <i className="fab fa-html5 text-orange-500 text-2xl"></i>;
+  if (name.includes("css")) return <i className="fab fa-css3-alt text-blue-500 text-2xl"></i>;
+  if (name.includes("javascript") || name.includes("js")) return <i className="fab fa-js text-yellow-400 text-2xl"></i>;
+  if (name.includes("react")) return <i className="fab fa-react text-cyan-400 text-2xl"></i>;
+  if (name.includes("node")) return <i className="fab fa-node text-green-500 text-2xl"></i>;
+  if (name.includes("java")) return <i className="fab fa-java text-red-600 text-2xl"></i>;
+  if (name.includes("python")) return <i className="fab fa-python text-yellow-500 text-2xl"></i>;
+  if (name.includes("php")) return <i className="fab fa-php text-indigo-500 text-2xl"></i>;
+  if (name.includes("aws")) return <i className="fab fa-aws text-orange-500 text-2xl"></i>;
+  if (name.includes("github")) return <i className="fab fa-github text-white text-2xl"></i>;
+  if (name.includes("figma")) return <i className="fab fa-figma text-pink-400 text-2xl"></i>;
+
+  return <i className="fas fa-code text-white text-2xl"></i>;
 };
+
 
 
 
