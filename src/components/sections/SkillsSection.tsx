@@ -107,22 +107,27 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   };
 
   // Get icon for skill
-  const getSkillIcon = (skillName: string) => {
-    const name = skillName.toLowerCase();
-    
-    if (name.includes("ui") || name.includes("ux") || name.includes("design")) {
-      return <Copy className="h-8 w-8" />;
-    } else if (name.includes("web") || name.includes("html") || name.includes("css")) {
-      return <LayoutGrid className="h-8 w-8" />;
-    } else if (name.includes("framer") || name.includes("motion")) {
-      return <Framer className="h-8 w-8" />;
-    } else if (name.includes("photo") || name.includes("shop") || name.includes("design")) {
-      return <Figma className="h-8 w-8" />;
-    }
-    
-    // Default icon
-    return <LayoutGrid className="h-8 w-8" />;
-  };
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const getSkillIcon = (skillName: string) => {
+  const name = skillName.toLowerCase();
+
+  if (name.includes("html")) return <FontAwesomeIcon icon={["fab", "html5"]} className="h-8 w-8 text-orange-500" />;
+  if (name.includes("css")) return <FontAwesomeIcon icon={["fab", "css3"]} className="h-8 w-8 text-blue-500" />;
+  if (name.includes("javascript") || name.includes("js")) return <FontAwesomeIcon icon={["fab", "js"]} className="h-8 w-8 text-yellow-400" />;
+  if (name.includes("react")) return <FontAwesomeIcon icon={["fab", "react"]} className="h-8 w-8 text-cyan-400" />;
+  if (name.includes("node")) return <FontAwesomeIcon icon={["fab", "node"]} className="h-8 w-8 text-green-500" />;
+  if (name.includes("java")) return <FontAwesomeIcon icon={["fab", "java"]} className="h-8 w-8 text-red-600" />;
+  if (name.includes("python")) return <FontAwesomeIcon icon={["fab", "python"]} className="h-8 w-8 text-yellow-500" />;
+  if (name.includes("php")) return <FontAwesomeIcon icon={["fab", "php"]} className="h-8 w-8 text-purple-500" />;
+  if (name.includes("aws")) return <FontAwesomeIcon icon={["fab", "aws"]} className="h-8 w-8 text-orange-400" />;
+  if (name.includes("swift")) return <FontAwesomeIcon icon={["fab", "swift"]} className="h-8 w-8 text-orange-500" />;
+
+  // C doesn't exist in FA; fallback
+  if (name === "c") return <span className="text-white font-bold text-xl">C</span>;
+
+  return <FontAwesomeIcon icon={["fab", "github"]} className="h-8 w-8 text-white" />;
+};
 
   // Get color for skill level bar based on theme
   const getSkillLevelColor = (level: number): string => {
