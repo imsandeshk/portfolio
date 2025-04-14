@@ -53,24 +53,11 @@ const Index = () => {
   };
 
   // Disable initial load animation if coming back to the page
-  useEffect(() => {
-    // Check if user has already seen the animation
-    const hasSeenAnimation = sessionStorage.getItem("hasSeenAnimation");
-    
-    if (hasSeenAnimation) {
-     
-      setMainContentVisible(true);
-      setIsInitialLoad(false);
-    } else {
-      // First visit, show animation and set flag
-      sessionStorage.setItem("hasSeenAnimation", "true");
-      
-      // For shorter animation duration (5-6 seconds total)
-      setTimeout(() => {
-        handleAnimationComplete();
-      }, 5000);
-    }
-  }, []);
+useEffect(() => {
+  setMainContentVisible(true);
+  setIsInitialLoad(false);
+}, []);
+
 
   // Handle animation completion
   const handleAnimationComplete = () => {
