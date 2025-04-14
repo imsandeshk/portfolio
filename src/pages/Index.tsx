@@ -66,6 +66,11 @@ const Index = () => {
     } else {
       // First visit, show animation and set flag
       sessionStorage.setItem("hasSeenAnimation", "true");
+      
+      // For shorter animation duration (5-6 seconds total)
+      setTimeout(() => {
+        handleAnimationComplete();
+      }, 5000);
     }
   }, []);
 
@@ -165,7 +170,12 @@ const Index = () => {
                 </div>
               </motion.section>
               
-              {/* Skills Section integrated with Education (no separate SkillsSection) */}
+              {/* Skills Section */}
+              <motion.div variants={itemVariants}>
+                <SkillsSection skills={skills} />
+              </motion.div>
+              
+              {/* Education Section */}
               <motion.div variants={itemVariants}>
                 <EducationSection education={education} />
               </motion.div>

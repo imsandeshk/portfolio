@@ -58,6 +58,16 @@ const Hero: React.FC<HeroProps> = ({
 
   return (
     <section className="relative min-h-[100vh] flex flex-col justify-center px-6 overflow-hidden">
+      {/* Top social icon banner */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="absolute top-20 w-full overflow-hidden"
+      >
+        <SocialLinks links={socialLinks} iconSize={20} infiniteScroll={true} />
+      </motion.div>
+      
       <div className="container mx-auto max-w-6xl flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
         {/* Content */}
         <motion.div 
@@ -170,6 +180,16 @@ const Hero: React.FC<HeroProps> = ({
         className="mt-6 md:mt-12 w-full overflow-hidden"
       >
         <TechIcons />
+      </motion.div>
+      
+      {/* Bottom social icon banner */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="absolute bottom-24 w-full overflow-hidden"
+      >
+        <SocialLinks links={socialLinks} iconSize={20} infiniteScroll={true} />
       </motion.div>
       
       {/* Scroll indicator */}

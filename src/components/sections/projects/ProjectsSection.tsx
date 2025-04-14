@@ -53,6 +53,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
   // Get featured projects (pinned)
   const featuredProjects = projects.filter(project => project.pinned);
+  // Get other projects and make sure we have at least 3 for the display
   const otherProjects = projects.filter(project => !project.pinned);
 
   // Handle project card click
@@ -283,23 +284,110 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           </div>
         )}
 
-        {/* Other Projects Grid */}
+        {/* Other Projects with vertical layout for mobile */}
         <div className="mt-12">
-          <h3 className="text-2xl font-playfair font-medium mb-8 text-center md:text-left">
+          <h3 className="text-2xl font-playfair font-medium mb-8 text-center">
             More Projects
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
-            {otherProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                isAdmin={isAdmin}
-                onEdit={isAdmin ? () => handleEditProject(project) : undefined}
-                onDelete={isAdmin ? () => handleDeleteProject(project) : undefined}
-                onClick={() => handleProjectClick(project)}
-              />
-            ))}
-          </div>
+
+          {/* Desktop layout - Grid */}
+          {!isMobile && (
+            <div className="grid grid-cols-3 gap-6">
+              {otherProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  isAdmin={isAdmin}
+                  onEdit={isAdmin ? () => handleEditProject(project) : undefined}
+                  onDelete={isAdmin ? () => handleDeleteProject(project) : undefined}
+                  onClick={() => handleProjectClick(project)}
+                />
+              ))}
+            </div>
+          )}
+          
+          {/* Mobile layout - Vertical cards */}
+          {isMobile && (
+            <div className="flex flex-col space-y-6">
+              {otherProjects.map((project) => (
+                <div 
+                  key={project.id}
+                  className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
+                  onClick={() => handleProjectClick(project)}
+                >
+                  <div className="relative h-[180px] overflow-hidden">
+                    <img 
+                      src={project.image || "/placeholder.svg"} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h4 className="text-xl font-bold mb-2">{project.title}</h4>
+                    <p className="text-sm text-gray-300 mb-4 line-clamp-2">
+                      {project.description}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <div className="flex space-x-2">
+                        {project.url && (
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            asChild
+                            className="text-xs bg-white/5 border-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <a href={project.url} target="_blank" rel="noopener noreferrer">
+                              Live
+                            </a>
+                          </Button>
+                        )}
+                        {project.github && (
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            asChild
+                            className="text-xs bg-white/5 border-white/10"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <a href={project.github} target="_blank" rel="noopener noreferrer">
+                              Code
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                      {isAdmin && (
+                        <div className="flex space-x-2">
+                          <Button 
+                            size="sm" 
+                            variant="ghost"
+                            className="text-xs h-8"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEditProject(project);
+                            }}
+                          >
+                            Edit
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="destructive"
+                            className="text-xs h-8"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteProject(project);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         
         {/* Project details modal (non-admin view) */}

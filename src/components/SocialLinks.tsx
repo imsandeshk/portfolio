@@ -124,7 +124,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   };
 
   // Duplicate links for infinite scroll effect
-  const displayLinks = infiniteScroll ? [...links, ...links] : links;
+  const displayLinks = infiniteScroll ? [...links, ...links, ...links] : links;
 
   if (infiniteScroll) {
     return (
@@ -132,13 +132,13 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
         <motion.div 
           className="flex"
           animate={{ 
-            x: [0, -1500]
+            x: [0, -2000]
           }}
           transition={{
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 20,
+              duration: 30,
               ease: "linear"
             }
           }}
@@ -148,7 +148,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             const platformColor = getPlatformColor(link.platform);
             
             // Calculate opacity for fade effect on first and last items
-            const isFirstOrLast = index === 0 || index === displayLinks.length - 1;
+            const isFirstOrLast = index < 3 || index > displayLinks.length - 4;
             const opacity = isFirstOrLast ? 0.5 : 1;
             
             return (
@@ -157,14 +157,14 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white mx-3 flex items-center justify-center"
+                className="text-white mx-4 flex items-center justify-center"
                 style={{ opacity }}
                 whileHover={{ scale: 1.1, y: -5 }}
               >
                 <div 
                   className="w-12 h-12 rounded-full flex items-center justify-center"
                   style={{ 
-                    backgroundColor: `${platformColor}20`,
+                    backgroundColor: `${platformColor}30`,
                     boxShadow: `0 0 15px ${platformColor}40`
                   }}
                 >
@@ -182,6 +182,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     );
   }
 
+  // Regular social links display (non-scrolling)
   return (
     <motion.div 
       className={`flex flex-wrap items-center gap-4 ${className}`}

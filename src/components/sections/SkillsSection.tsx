@@ -124,12 +124,12 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     return <LayoutGrid className="h-8 w-8" />;
   };
 
-  // Get color for skill level bar
+  // Get color for skill level bar based on theme
   const getSkillLevelColor = (level: number): string => {
-    if (level >= 4.5) return "bg-purple-500";
-    if (level >= 3.5) return "bg-purple-500";
-    if (level >= 2.5) return "bg-purple-500";
-    return "bg-purple-500";
+    if (level >= 4.5) return "bg-blue-500";
+    if (level >= 3.5) return "bg-blue-400";
+    if (level >= 2.5) return "bg-blue-300";
+    return "bg-blue-200";
   };
 
   return (
@@ -160,11 +160,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
               viewport={{ once: true, margin: "-50px" }}
-              className="relative rounded-xl overflow-hidden bg-gray-900 p-5"
+              className="relative rounded-xl overflow-hidden bg-gray-900/50 backdrop-blur-sm p-5 border border-white/10"
             >
               <div className="flex flex-col items-center">
                 {/* Skill icon */}
-                <div className="bg-gray-800 rounded-lg p-3 mb-4">
+                <div className="bg-gray-800/70 rounded-lg p-3 mb-4">
                   {getSkillIcon(skill.name)}
                 </div>
                 
@@ -172,7 +172,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
                 <h3 className="text-lg font-medium text-center mb-3">{skill.name}</h3>
                 
                 {/* Skill level bar */}
-                <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div className="w-full h-1 bg-gray-800/50 rounded-full overflow-hidden">
                   <div 
                     className={`h-full ${getSkillLevelColor(skill.level)}`} 
                     style={{ width: `${skill.level / 5 * 100}%` }}
