@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import AdminPanel from "./pages/admin";
 import AdminLogin from "./pages/admin/login";
 import NotFound from "./pages/NotFound";
+import "@/lib/fontawesome"; // This runs only once!
 
 const queryClient = new QueryClient();
 
