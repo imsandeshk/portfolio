@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Skill } from "@/services/storageService";
@@ -8,8 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Edit, Plus, Trash } from "lucide-react";
+import { Copy, Edit, Figma, Framer, LayoutGrid, Plus, Trash } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+
 interface SkillsSectionProps {
   skills: Skill[];
   isAdmin?: boolean;
@@ -17,6 +19,7 @@ interface SkillsSectionProps {
   onUpdateSkill?: (skill: Skill) => void;
   onDeleteSkill?: (id: string) => void;
 }
+
 const SkillsSection: React.FC<SkillsSectionProps> = ({
   skills,
   isAdmin = false,
@@ -31,12 +34,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [level, setLevel] = useState(3);
-  const {
-    toast
-  } = useToast();
-
-  // Get unique categories
-  const categories = Array.from(new Set(skills.map(skill => skill.category)));
+  const { toast } = useToast();
 
   // Handle edit skill
   const handleEditSkill = (skill: Skill) => {
@@ -107,77 +105,104 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setCategory("");
     setLevel(3);
   };
-  return <section id="skills" className="py-16">
+
+  // Get icon for skill
+  const getSkillIcon = (skillName: string) => {
+    const name = skillName.toLowerCase();
+    
+    if (name.includes("ui") || name.includes("ux") || name.includes("design")) {
+      return <Copy className="h-8 w-8" />;
+    } else if (name.includes("web") || name.includes("html") || name.includes("css")) {
+      return <LayoutGrid className="h-8 w-8" />;
+    } else if (name.includes("framer") || name.includes("motion")) {
+      return <Framer className="h-8 w-8" />;
+    } else if (name.includes("photo") || name.includes("shop") || name.includes("design")) {
+      return <Figma className="h-8 w-8" />;
+    }
+    
+    // Default icon
+    return <LayoutGrid className="h-8 w-8" />;
+  };
+
+  // Get color for skill level bar
+  const getSkillLevelColor = (level: number): string => {
+    if (level >= 4.5) return "bg-purple-500";
+    if (level >= 3.5) return "bg-purple-500";
+    if (level >= 2.5) return "bg-purple-500";
+    return "bg-purple-500";
+  };
+
+  return (
+    <section id="skills" className="py-16">
       <div className="container mx-auto">
-        <SectionHeading title="Skills" subtitle="My technical expertise and proficiency levels." />
+        <SectionHeading title="Skills" subtitle="My technical expertise" />
         
-        {isAdmin && onAddSkill && <motion.div className="flex justify-center mb-8" initial={{
-        opacity: 0,
-        y: 20
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        duration: 0.5
-      }}>
+        {isAdmin && onAddSkill && (
+          <motion.div 
+            className="flex justify-center mb-8" 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5 }}
+          >
             <Button onClick={handleAddSkill}>
               <Plus className="mr-2 h-4 w-4" />
               Add Skill
             </Button>
-          </motion.div>}
+          </motion.div>
+        )}
         
-        {/* Skills by Category */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-          {categories.map(category => {
-          const categorySkills = skills.filter(skill => skill.category === category);
-          return <motion.div key={category} initial={{
-            opacity: 0,
-            y: 20
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            duration: 0.5
-          }} viewport={{
-            once: true,
-            margin: "-50px"
-          }} className="glass-card p-6 rounded-xl">
-                <h3 className="text-xl font-bold mb-4 text-gradient">{category}</h3>
-                
-                <div className="space-y-4">
-                  {categorySkills.map(skill => <div key={skill.id} className="relative">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="font-medium">{skill.name}</span>
-                        <span className="text-sm text-muted-foreground">
-                          {getLevelText(skill.level)}
-                        </span>
-                      </div>
-                      
-                      <div className="h-2 bg-secondary rounded overflow-hidden">
-                        <div className="h-full bg-accent" style={{
-                    width: `${skill.level / 5 * 100}%`
-                  }}></div>
-                      </div>
-                      
-                      {isAdmin && onUpdateSkill && onDeleteSkill && <div className="absolute -right-2 -top-2 flex gap-1">
-                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleEditSkill(skill)}>
-                            <Edit size={14} />
-                          </Button>
-                          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleDeleteSkill(skill)}>
-                            <Trash size={14} />
-                          </Button>
-                        </div>}
-                    </div>)}
+        {/* Skills grid - new design */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+          {skills.map((skill, index) => (
+            <motion.div
+              key={skill.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              viewport={{ once: true, margin: "-50px" }}
+              className="relative rounded-xl overflow-hidden bg-gray-900 p-5"
+            >
+              <div className="flex flex-col items-center">
+                {/* Skill icon */}
+                <div className="bg-gray-800 rounded-lg p-3 mb-4">
+                  {getSkillIcon(skill.name)}
                 </div>
-              </motion.div>;
-        })}
+                
+                {/* Skill name */}
+                <h3 className="text-lg font-medium text-center mb-3">{skill.name}</h3>
+                
+                {/* Skill level bar */}
+                <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full ${getSkillLevelColor(skill.level)}`} 
+                    style={{ width: `${skill.level / 5 * 100}%` }}
+                  />
+                </div>
+                
+                {/* Admin controls */}
+                {isAdmin && onUpdateSkill && onDeleteSkill && (
+                  <div className="absolute top-2 right-2 flex gap-1">
+                    <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleEditSkill(skill)}>
+                      <Edit size={14} />
+                    </Button>
+                    <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleDeleteSkill(skill)}>
+                      <Trash size={14} />
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
         </div>
         
         {/* Skill form dialog (admin view) */}
-        <Dialog open={isFormOpen} onOpenChange={open => {
-        setIsFormOpen(open);
-        if (!open) resetForm();
-      }}>
+        <Dialog 
+          open={isFormOpen} 
+          onOpenChange={open => {
+            setIsFormOpen(open);
+            if (!open) resetForm();
+          }}
+        >
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>
@@ -189,12 +214,24 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Skill Name</Label>
-                  <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="Enter skill name" required />
+                  <Input 
+                    id="name" 
+                    value={name} 
+                    onChange={e => setName(e.target.value)} 
+                    placeholder="Enter skill name" 
+                    required 
+                  />
                 </div>
                 
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
-                  <Input id="category" value={category} onChange={e => setCategory(e.target.value)} placeholder="E.g., Frontend, Backend, DevOps, etc." required />
+                  <Input 
+                    id="category" 
+                    value={category} 
+                    onChange={e => setCategory(e.target.value)} 
+                    placeholder="E.g., Frontend, Backend, DevOps, etc." 
+                    required 
+                  />
                 </div>
                 
                 <div className="space-y-2">
@@ -204,7 +241,14 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
                       {getLevelText(level)}
                     </span>
                   </div>
-                  <Slider id="level" value={[level]} min={1} max={5} step={1} onValueChange={value => setLevel(value[0])} />
+                  <Slider 
+                    id="level" 
+                    value={[level]} 
+                    min={1} 
+                    max={5} 
+                    step={1} 
+                    onValueChange={value => setLevel(value[0])} 
+                  />
                   <div className="flex justify-between text-xs text-muted-foreground">
                     <span>Beginner</span>
                     <span>Intermediate</span>
@@ -214,10 +258,14 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               </div>
               
               <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => {
-                setIsFormOpen(false);
-                resetForm();
-              }}>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => {
+                    setIsFormOpen(false);
+                    resetForm();
+                  }}
+                >
                   Cancel
                 </Button>
                 <Button type="submit">Save Skill</Button>
@@ -241,14 +289,18 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleConfirmDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              <AlertDialogAction 
+                onClick={handleConfirmDelete} 
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
                 Delete
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       </div>
-    </section>;
+    </section>
+  );
 };
 
 // Helper function to get text representation of level
@@ -268,4 +320,5 @@ const getLevelText = (level: number): string => {
       return "Intermediate";
   }
 };
+
 export default SkillsSection;

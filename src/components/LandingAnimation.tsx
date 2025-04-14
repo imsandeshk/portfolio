@@ -20,7 +20,7 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
   const [animationPhase, setAnimationPhase] = useState<"forming" | "glowing" | "dispersing" | "complete">("forming");
 
   useEffect(() => {
-    // Animation timing management
+    // Animation timing management - shortened to 5-6 seconds total
     let timeout1: ReturnType<typeof setTimeout>;
     let timeout2: ReturnType<typeof setTimeout>;
     let timeout3: ReturnType<typeof setTimeout>;
@@ -29,16 +29,16 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
     const setupTimers = () => {
       timeout1 = setTimeout(() => {
         setAnimationPhase("glowing");
-      }, 1500);
+      }, 1000); // Reduced from 1500ms
 
       timeout2 = setTimeout(() => {
         setAnimationPhase("dispersing");
-      }, 3500);
+      }, 3000); // Reduced from 3500ms
 
       timeout3 = setTimeout(() => {
         setAnimationPhase("complete");
         onAnimationComplete();
-      }, 6500);
+      }, 5500); // Reduced from 6500ms to match the requested 5-6 seconds
     };
 
     setupTimers();
@@ -118,13 +118,14 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
     // Responsive sizing
     const isMobile = window.innerWidth < 768;
     
-    // Canvas size and text setup
+    // Canvas size and text setup - increased for better text rendering
     canvas.width = isMobile ? 512 : 1024;
     canvas.height = isMobile ? 256 : 512;
     context.fillStyle = "black";
     context.fillRect(0, 0, canvas.width, canvas.height);
     
-    context.font = `bold ${isMobile ? '60px' : '110px'} "Playfair Display", serif`;
+    // Improved text rendering with larger font and better positioning
+    context.font = `bold ${isMobile ? '80px' : '130px'} "Playfair Display", serif`;
     context.fillStyle = "white";
     context.textAlign = "center";
     context.textBaseline = "middle";
@@ -136,26 +137,26 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
 
     // Create particles from white pixels
     const particles = [];
-    const particleCount = isMobile ? 7000 : 12000; // Decrease for mobile
+    const particleCount = isMobile ? 8000 : 14000; // Increased for more visible particles
     const particleSize = isMobile ? 3 : 4;
     
     const bufferSize = particleCount * 3; // 3 values per particle (x, y, z)
     particlePositionsRef.current = new Float32Array(bufferSize);
     originalPositionsRef.current = new Float32Array(bufferSize);
 
-    // Sample pixels from the text
+    // Sample pixels from the text - reduced stride for better text definition
     let particleIndex = 0;
-    const stride = isMobile ? 4 : 3; // Skip more pixels on mobile for performance
+    const stride = isMobile ? 3 : 2; // Reduced stride for more detailed particle text
     
     for (let y = 0; y < canvas.height && particleIndex < particleCount; y += stride) {
       for (let x = 0; x < canvas.width && particleIndex < particleCount; x += stride) {
         const index = (y * canvas.width + x) * 4; // RGBA, so 4 values per pixel
         
-        // If pixel is not black (text)
-        if (data[index] > 10) {
+        // If pixel is bright enough (part of the text)
+        if (data[index] > 20) { // Reduced threshold to capture more of the text
           // Calculate normalized position
-          const xPos = ((x / canvas.width) - 0.5) * (canvas.width / 300);
-          const yPos = (-(y / canvas.height) + 0.5) * (canvas.height / 300);
+          const xPos = ((x / canvas.width) - 0.5) * (canvas.width / 250); // Adjusted scale
+          const yPos = (-(y / canvas.height) + 0.5) * (canvas.height / 250);
           
           const i = particleIndex * 3;
           particlePositionsRef.current[i] = xPos * 15; // Scale for visibility
@@ -184,12 +185,12 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
     const vertices = new Float32Array(particles);
     geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
 
-    // Create particle material
+    // Create particle material - improved brightness and size
     const material = new THREE.PointsMaterial({
-      size: particleSize * 0.05,
+      size: particleSize * 0.06, // Increased size for better visibility
       color: 0xffffff,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.9, // Increased opacity
       blending: THREE.AdditiveBlending,
       sizeAttenuation: true,
     });
@@ -214,20 +215,21 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
       
       if (animationPhase === "forming") {
         // Move particles from random positions to form the text
-        positions[i3] += (originalPositionsRef.current[i3] - positions[i3]) * 0.08;
-        positions[i3 + 1] += (originalPositionsRef.current[i3 + 1] - positions[i3 + 1]) * 0.08;
-        positions[i3 + 2] += (originalPositionsRef.current[i3 + 2] - positions[i3 + 2]) * 0.08;
+        // Increased speed for faster formation
+        positions[i3] += (originalPositionsRef.current[i3] - positions[i3]) * 0.09;
+        positions[i3 + 1] += (originalPositionsRef.current[i3 + 1] - positions[i3 + 1]) * 0.09;
+        positions[i3 + 2] += (originalPositionsRef.current[i3 + 2] - positions[i3 + 2]) * 0.09;
       } 
       else if (animationPhase === "glowing") {
-        // Add subtle lightning pulse effect
-        const pulseStrength = Math.sin(elapsedTime * 5 + i * 0.1) * 0.05;
+        // Add enhanced lightning pulse effect
+        const pulseStrength = Math.sin(elapsedTime * 6 + i * 0.1) * 0.06;
         positions[i3] = originalPositionsRef.current[i3] + pulseStrength;
         positions[i3 + 1] = originalPositionsRef.current[i3 + 1] + pulseStrength;
 
         // Lightning effect - random particles jump outward briefly
-        if (Math.random() < 0.01) {
-          positions[i3] += (Math.random() - 0.5) * 0.5;
-          positions[i3 + 1] += (Math.random() - 0.5) * 0.5;
+        if (Math.random() < 0.015) {
+          positions[i3] += (Math.random() - 0.5) * 0.6;
+          positions[i3 + 1] += (Math.random() - 0.5) * 0.6;
         }
       } 
       else if (animationPhase === "dispersing") {
@@ -237,8 +239,8 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
         const dz = positions[i3 + 2] - 0;
         const dist = Math.sqrt(dx * dx + dy * dy + dz * dz) || 0.001;
         
-        // Normalize and apply force
-        const forceMagnitude = 0.2 * (1 + Math.sin(i * 0.1)); // Vary force for natural look
+        // Normalize and apply force - increased for faster dispersion
+        const forceMagnitude = 0.25 * (1 + Math.sin(i * 0.1)); // Increased force
         const fx = (dx / dist) * forceMagnitude;
         const fy = (dy / dist) * forceMagnitude;
         const fz = (dz / dist) * forceMagnitude;
@@ -250,8 +252,8 @@ const LandingAnimation: React.FC<LandingAnimationProps> = ({ onAnimationComplete
         
         // Fade out by reducing particle size
         const material = particlesRef.current.material as THREE.PointsMaterial;
-        material.size *= 0.995;
-        material.opacity *= 0.995;
+        material.size *= 0.99;
+        material.opacity *= 0.99;
       }
     }
 
