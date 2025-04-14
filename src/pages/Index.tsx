@@ -59,16 +59,7 @@ useEffect(() => {
 }, []);
 
 
-  // Handle animation completion
-  const handleAnimationComplete = () => {
-    setShowLandingAnimation(false);
-    setMainContentVisible(true);
-    
-    // Small delay to ensure proper animation sequence
-    setTimeout(() => {
-      setIsInitialLoad(false);
-    }, 500);
-  };
+
 
   // Page scroll animation variants
   const sectionVariants = {
