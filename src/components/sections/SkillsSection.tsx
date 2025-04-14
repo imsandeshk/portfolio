@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Skill } from "@/services/storageService";
@@ -9,8 +8,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Copy, Edit, Figma, Framer, LayoutGrid, Plus, Trash } from "lucide-react";
+import { Edit, Plus, Trash } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+
+// FontAwesome CDN icons
+const getSkillIcon = (skillName: string) => {
+  const name = skillName.toLowerCase();
+
+  if (name.includes("html")) return <i className="fab fa-html5 text-orange-500 text-base sm:text-xl"></i>;
+  if (name.includes("css")) return <i className="fab fa-css3-alt text-blue-500 text-base sm:text-xl"></i>;
+  if (name.includes("javascript") || name.includes("js")) return <i className="fab fa-js text-yellow-400 text-base sm:text-xl"></i>;
+  if (name.includes("react")) return <i className="fab fa-react text-cyan-400 text-base sm:text-xl"></i>;
+  if (name.includes("node")) return <i className="fab fa-node text-green-500 text-base sm:text-xl"></i>;
+  if (name.includes("java")) return <i className="fab fa-java text-red-600 text-base sm:text-xl"></i>;
+  if (name.includes("python")) return <i className="fab fa-python text-yellow-500 text-base sm:text-xl"></i>;
+  if (name.includes("php")) return <i className="fab fa-php text-indigo-500 text-base sm:text-xl"></i>;
+  if (name.includes("aws")) return <i className="fab fa-aws text-orange-500 text-base sm:text-xl"></i>;
+  if (name.includes("github")) return <i className="fab fa-github text-white text-base sm:text-xl"></i>;
+  if (name.includes("figma")) return <i className="fab fa-figma text-pink-400 text-base sm:text-xl"></i>;
+
+  return <i className="fas fa-code text-white text-base sm:text-xl"></i>;
+};
 
 interface SkillsSectionProps {
   skills: Skill[];
@@ -36,7 +54,6 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   const [level, setLevel] = useState(3);
   const { toast } = useToast();
 
-  // Handle edit skill
   const handleEditSkill = (skill: Skill) => {
     setSkillToEdit(skill);
     setName(skill.name);
@@ -45,13 +62,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setIsFormOpen(true);
   };
 
-  // Handle delete skill
   const handleDeleteSkill = (skill: Skill) => {
     setSkillToDelete(skill);
     setIsDeleteDialogOpen(true);
   };
 
-  // Handle confirm delete
   const handleConfirmDelete = () => {
     if (skillToDelete && onDeleteSkill) {
       onDeleteSkill(skillToDelete.id);
@@ -64,7 +79,6 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setSkillToDelete(null);
   };
 
-  // Handle save skill
   const handleSaveSkill = (e: React.FormEvent) => {
     e.preventDefault();
     const updatedSkill = {
@@ -92,13 +106,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     resetForm();
   };
 
-  // Handle add new skill
   const handleAddSkill = () => {
     resetForm();
     setIsFormOpen(true);
   };
 
-  // Reset form
   const resetForm = () => {
     setSkillToEdit(null);
     setName("");
@@ -106,31 +118,6 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setLevel(3);
   };
 
-  // Get icon for skill
-  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-const getSkillIcon = (skillName: string) => {
-  const name = skillName.toLowerCase();
-
-  if (name.includes("html")) return <i className="fab fa-html5 text-orange-500 text-2xl"></i>;
-  if (name.includes("css")) return <i className="fab fa-css3-alt text-blue-500 text-2xl"></i>;
-  if (name.includes("javascript") || name.includes("js")) return <i className="fab fa-js text-yellow-400 text-2xl"></i>;
-  if (name.includes("react")) return <i className="fab fa-react text-cyan-400 text-2xl"></i>;
-  if (name.includes("node")) return <i className="fab fa-node text-green-500 text-2xl"></i>;
-  if (name.includes("java")) return <i className="fab fa-java text-red-600 text-2xl"></i>;
-  if (name.includes("python")) return <i className="fab fa-python text-yellow-500 text-2xl"></i>;
-  if (name.includes("php")) return <i className="fab fa-php text-indigo-500 text-2xl"></i>;
-  if (name.includes("aws")) return <i className="fab fa-aws text-orange-500 text-2xl"></i>;
-  if (name.includes("github")) return <i className="fab fa-github text-white text-2xl"></i>;
-  if (name.includes("figma")) return <i className="fab fa-figma text-pink-400 text-2xl"></i>;
-
-  return <i className="fas fa-code text-white text-2xl"></i>;
-};
-
-
-
-
-  // Get color for skill level bar based on theme
   const getSkillLevelColor = (level: number): string => {
     if (level >= 4.5) return "bg-blue-500";
     if (level >= 3.5) return "bg-blue-400";
@@ -142,12 +129,12 @@ const getSkillIcon = (skillName: string) => {
     <section id="skills" className="py-16">
       <div className="container mx-auto">
         <SectionHeading title="Skills" subtitle="My technical expertise" />
-        
+
         {isAdmin && onAddSkill && (
-          <motion.div 
-            className="flex justify-center mb-8" 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            className="flex justify-center mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             <Button onClick={handleAddSkill}>
@@ -156,9 +143,8 @@ const getSkillIcon = (skillName: string) => {
             </Button>
           </motion.div>
         )}
-        
-        {/* Skills grid - new design */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+
+        <div className="grid grid-cols-4 gap-2 sm:gap-4">
           {skills.map((skill, index) => (
             <motion.div
               key={skill.id}
@@ -166,32 +152,40 @@ const getSkillIcon = (skillName: string) => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
               viewport={{ once: true, margin: "-50px" }}
-              className="relative rounded-xl overflow-hidden bg-gray-900/50 backdrop-blur-sm p-5 border border-white/10"
+              className="relative rounded-xl overflow-hidden bg-gray-900/50 backdrop-blur-sm p-3 sm:p-5 border border-white/10"
             >
               <div className="flex flex-col items-center">
-                {/* Skill icon */}
-                <div className="bg-gray-800/70 rounded-lg p-3 mb-4">
+                <div className="bg-gray-800/70 rounded-lg p-2 sm:p-3 mb-2">
                   {getSkillIcon(skill.name)}
                 </div>
-                
-                {/* Skill name */}
-                <h3 className="text-lg font-medium text-center mb-3">{skill.name}</h3>
-                
-                {/* Skill level bar */}
+
+                <h3 className="text-sm sm:text-base font-medium text-center mb-2">
+                  {skill.name}
+                </h3>
+
                 <div className="w-full h-1 bg-gray-800/50 rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full ${getSkillLevelColor(skill.level)}`} 
-                    style={{ width: `${skill.level / 5 * 100}%` }}
+                  <div
+                    className={`h-full ${getSkillLevelColor(skill.level)}`}
+                    style={{ width: `${(skill.level / 5) * 100}%` }}
                   />
                 </div>
-                
-                {/* Admin controls */}
+
                 {isAdmin && onUpdateSkill && onDeleteSkill && (
                   <div className="absolute top-2 right-2 flex gap-1">
-                    <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleEditSkill(skill)}>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="h-7 w-7"
+                      onClick={() => handleEditSkill(skill)}
+                    >
                       <Edit size={14} />
                     </Button>
-                    <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => handleDeleteSkill(skill)}>
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      className="h-7 w-7"
+                      onClick={() => handleDeleteSkill(skill)}
+                    >
                       <Trash size={14} />
                     </Button>
                   </div>
@@ -200,61 +194,32 @@ const getSkillIcon = (skillName: string) => {
             </motion.div>
           ))}
         </div>
-        
-        {/* Skill form dialog (admin view) */}
-        <Dialog 
-          open={isFormOpen} 
-          onOpenChange={open => {
-            setIsFormOpen(open);
-            if (!open) resetForm();
-          }}
-        >
+
+        <Dialog open={isFormOpen} onOpenChange={open => {
+          setIsFormOpen(open);
+          if (!open) resetForm();
+        }}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>
-                {skillToEdit ? "Edit Skill" : "Add New Skill"}
-              </DialogTitle>
+              <DialogTitle>{skillToEdit ? "Edit Skill" : "Add New Skill"}</DialogTitle>
             </DialogHeader>
-            
+
             <form onSubmit={handleSaveSkill} className="space-y-4">
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Skill Name</Label>
-                  <Input 
-                    id="name" 
-                    value={name} 
-                    onChange={e => setName(e.target.value)} 
-                    placeholder="Enter skill name" 
-                    required 
-                  />
+                  <Input id="name" value={name} onChange={e => setName(e.target.value)} required />
                 </div>
-                
                 <div className="space-y-2">
                   <Label htmlFor="category">Category</Label>
-                  <Input 
-                    id="category" 
-                    value={category} 
-                    onChange={e => setCategory(e.target.value)} 
-                    placeholder="E.g., Frontend, Backend, DevOps, etc." 
-                    required 
-                  />
+                  <Input id="category" value={category} onChange={e => setCategory(e.target.value)} required />
                 </div>
-                
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <Label htmlFor="level">Proficiency Level</Label>
-                    <span className="text-sm text-muted-foreground">
-                      {getLevelText(level)}
-                    </span>
+                    <span className="text-sm text-muted-foreground">{getLevelText(level)}</span>
                   </div>
-                  <Slider 
-                    id="level" 
-                    value={[level]} 
-                    min={1} 
-                    max={5} 
-                    step={1} 
-                    onValueChange={value => setLevel(value[0])} 
-                  />
+                  <Slider id="level" value={[level]} min={1} max={5} step={1} onValueChange={value => setLevel(value[0])} />
                   <div className="flex justify-between text-xs text-muted-foreground">
                     <span>Beginner</span>
                     <span>Intermediate</span>
@@ -262,41 +227,32 @@ const getSkillIcon = (skillName: string) => {
                   </div>
                 </div>
               </div>
-              
+
               <DialogFooter>
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => {
-                    setIsFormOpen(false);
-                    resetForm();
-                  }}
-                >
-                  Cancel
-                </Button>
+                <Button type="button" variant="outline" onClick={() => {
+                  setIsFormOpen(false);
+                  resetForm();
+                }}>Cancel</Button>
                 <Button type="submit">Save Skill</Button>
               </DialogFooter>
             </form>
           </DialogContent>
         </Dialog>
-        
-        {/* Delete confirmation dialog */}
+
         <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Are you sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This will permanently delete the skill 
-                <strong className="font-semibold">
-                  {skillToDelete ? ` "${skillToDelete.name}"` : ""}
-                </strong>. 
+                This will permanently delete the skill
+                <strong className="font-semibold">{skillToDelete ? ` "${skillToDelete.name}"` : ""}</strong>.
                 This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction 
-                onClick={handleConfirmDelete} 
+              <AlertDialogAction
+                onClick={handleConfirmDelete}
                 className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               >
                 Delete
@@ -309,21 +265,14 @@ const getSkillIcon = (skillName: string) => {
   );
 };
 
-// Helper function to get text representation of level
 const getLevelText = (level: number): string => {
   switch (level) {
-    case 1:
-      return "Beginner";
-    case 2:
-      return "Basic";
-    case 3:
-      return "Intermediate";
-    case 4:
-      return "Advanced";
-    case 5:
-      return "Expert";
-    default:
-      return "Intermediate";
+    case 1: return "Beginner";
+    case 2: return "Basic";
+    case 3: return "Intermediate";
+    case 4: return "Advanced";
+    case 5: return "Expert";
+    default: return "Intermediate";
   }
 };
 
