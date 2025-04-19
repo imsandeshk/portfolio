@@ -1,22 +1,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Spline from '@splinetool/react-spline';
+import dynamic from 'next/dynamic';
+
+// ✅ Dynamically import Spline with SSR disabled
+const Spline = dynamic(() => import('@splinetool/react-spline'), {
+  ssr: false,
+});
 
 export default function SplineBackground() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // ✅ Mobile-specific scale control
   const scale = isMobile ? 0.98 : 1.2;
-
-  // ✅ Fixed position behind name
   const top = isMobile ? '25%' : '38%';
   const left = isMobile ? '50%' : '25%';
 
@@ -32,6 +34,7 @@ export default function SplineBackground() {
           height: '600px',
         }}
       >
+        {/* ✅ Now works in production */}
         <Spline scene="https://prod.spline.design/lcYR6U6dKrDsG1dR/scene.splinecode" />
       </div>
     </div>
