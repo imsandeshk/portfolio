@@ -21,6 +21,7 @@ export default defineConfig({
       output: {
         manualChunks: undefined,
       },
+       external: ['@splinetool/react-spline'], 
     },
   },
 });
