@@ -2,10 +2,8 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-// ✅ Dynamically load Spline only on client
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
-  loading: () => <div>Loading 3D...</div>, // Optional
 });
 
 export default function SplineBackground() {
@@ -18,8 +16,8 @@ export default function SplineBackground() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const scale = isMobile ? 0.98 : 1.2;
-  const top = isMobile ? '25%' : '38%';
+  const scale = isMobile ? 0.9 : 1.1;
+  const top = isMobile ? '28%' : '40%';
   const left = isMobile ? '50%' : '25%';
 
   return (
@@ -30,8 +28,8 @@ export default function SplineBackground() {
           top,
           left,
           transform: `translate(-50%, -50%) scale(${scale})`,
-          width: '600px',
-          height: '600px',
+          width: '500px',
+          height: '500px',
         }}
       >
         <Spline scene="https://prod.spline.design/8qoypt8sRrMBuxAg/scene.splinecode" />
