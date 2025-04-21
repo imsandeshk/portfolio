@@ -1,23 +1,26 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-const Spline = dynamic(() => import('@splinetool/react-spline'), {
-  ssr: false,
-});
+// Dynamically import to prevent SSR issues in Next.js
+const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
 
 export default function SplineBackground() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    handleResize();
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize(); // Run once on load
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const scale = isMobile ? 0.9 : 1.1;
-  const top = isMobile ? '28%' : '40%';
+  const scale = isMobile ? 0.98 : 1.2;
+  const top = isMobile ? '25%' : '38%';
   const left = isMobile ? '50%' : '25%';
 
   return (
@@ -28,8 +31,8 @@ export default function SplineBackground() {
           top,
           left,
           transform: `translate(-50%, -50%) scale(${scale})`,
-          width: '500px',
-          height: '500px',
+          width: '600px',
+          height: '600px',
         }}
       >
         <Spline scene="https://prod.spline.design/8qoypt8sRrMBuxAg/scene.splinecode" />
