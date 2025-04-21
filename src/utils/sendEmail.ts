@@ -1,14 +1,12 @@
 import emailjs from 'emailjs-com';
 
-export const sendEmail = async (e: React.FormEvent) => {
+export const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
-  const form = e.target as HTMLFormElement;
-
   return emailjs.sendForm(
-    'service_onqx1k9',
-    'template_qju4y3q',
-    form,
-    'cJkElLvA6I3pUjvq2'
+    process.env.REACT_APP_EMAILJS_SERVICE_ID!,
+    process.env.REACT_APP_EMAILJS_TEMPLATE_ID!,
+    e.target as HTMLFormElement,
+    process.env.REACT_APP_EMAILJS_USER_ID!
   );
 };
