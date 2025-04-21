@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import to prevent SSR issues in Next.js
+// Dynamically import Spline to avoid SSR issues in Next.js
 const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false });
 
 export default function SplineBackground() {
@@ -14,23 +14,21 @@ export default function SplineBackground() {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize(); // Run once on load
+    handleResize(); // Initial check
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const scale = isMobile ? 0.98 : 1.2;
-  const top = isMobile ? '25%' : '38%';
-  const left = isMobile ? '50%' : '25%';
+  if (isMobile) return null; // ❌ Don't render on mobile
 
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
       <div
         style={{
           position: 'absolute',
-          top,
-          left,
-          transform: `translate(-50%, -50%) scale(${scale})`,
+          top: '38%',
+          left: '25%',
+          transform: 'translate(-50%, -50%) scale(1.2)',
           width: '600px',
           height: '600px',
         }}
