@@ -1,12 +1,19 @@
+'use client';
 import { useEffect, useState } from 'react';
-import Spline from '@splinetool/react-spline';
+import dynamic from 'next/dynamic';
+
+// ✅ Dynamically load Spline only on client
+const Spline = dynamic(() => import('@splinetool/react-spline'), {
+  ssr: false,
+  loading: () => <div>Loading 3D...</div>, // Optional
+});
 
 export default function SplineBackground() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -27,7 +34,7 @@ export default function SplineBackground() {
           height: '600px',
         }}
       >
-        <Spline scene="https://prod.spline.design/lcYR6U6dKrDsG1dR/scene.splinecode" />
+        <Spline scene="https://prod.spline.design/8qoypt8sRrMBuxAg/scene.splinecode" />
       </div>
     </div>
   );
