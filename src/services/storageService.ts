@@ -102,7 +102,7 @@ export const generateId = (): string => {
 const profile: ProfileInfo = {
   name: "Sandesh K",
   title: "Computer Science Student",
-  bio: "Passionate about web development and UI/UX design with interest in building modern, responsive web applications.",
+  bio: "Passionate about web development and UI/UX design.",
   email: "sandeshkullolli4@gmail.com",
   location: "Raghuvanahalli, Bangalore - 590109",
   dateOfBirth: "19 July 2004",
