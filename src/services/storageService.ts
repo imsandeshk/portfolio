@@ -206,6 +206,7 @@ const certificates: Certificate[] = [
   },
   {
     id: "cert2",
+    image:"/projects/Moviebot.png",
     title: "Internship at Corizo",
     issuer: "Corizo",
     date: "2024-07-30",
