@@ -82,7 +82,14 @@ const Hero: React.FC<HeroProps> = ({
         >
           <motion.div variants={nameVariants} className="mb-6 overflow-hidden">
             <motion.h1 
-              className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold text-gradient leading-tight"
+              className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight"
+              style={{
+                backgroundSize: "300% 300%",
+                backgroundImage: "linear-gradient(90deg, #ffffff, #d1d1d1, #ffffff)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
               }}
@@ -91,12 +98,10 @@ const Hero: React.FC<HeroProps> = ({
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              style={{
-                backgroundSize: "300% 300%",
-                backgroundImage: "linear-gradient(90deg, #ffffff, #d1d1d1, #ffffff)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+              whileHover={{
+                textShadow: "0 0 15px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.4)",
+                scale: 1.02,
+                transition: { duration: 0.3 }
               }}
             >
               {profile.name}
@@ -104,7 +109,7 @@ const Hero: React.FC<HeroProps> = ({
           </motion.div>
           
           <motion.div variants={itemVariants}>
-            <h2 className={`font-playfair ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 text-accent/90`}>
+            <h2 className={`font-playfair ${isMobile ? 'text-lg' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 text-accent/90`}>
               {profile.title}
             </h2>
           </motion.div>
@@ -127,7 +132,7 @@ const Hero: React.FC<HeroProps> = ({
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <p className={`${isMobile ? 'text-base' : 'text-lg'} text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed`}>
+            <p className={`${isMobile ? 'text-sm' : 'text-lg'} text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed`}>
               {profile.bio}
             </p>
           </motion.div>
