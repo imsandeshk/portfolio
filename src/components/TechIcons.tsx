@@ -38,7 +38,7 @@ const TechIcons = () => {
             whileHover={{ 
               y: -5, 
               scale: 1.1,
-              boxShadow: "0 0 15px rgba(255,255,255,0.5)",
+              boxShadow: "0 0 20px rgba(255,255,255,0.7)",
             }}
             transition={{ 
               duration: 0.3,
@@ -46,8 +46,8 @@ const TechIcons = () => {
             }}
           >
             <motion.div 
-              className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4"
-              whileHover={{ borderColor: "rgba(255,255,255,0.3)" }}
+              className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4 overflow-hidden"
+              whileHover={{ borderColor: "rgba(255,255,255,0.5)" }}
               transition={{ duration: 0.2 }}
             >
               <img 
@@ -57,23 +57,22 @@ const TechIcons = () => {
               />
               <span className="text-sm font-medium">{icon.name}</span>
 
-              {/* Shine effect overlay */}
+              {/* Continuous flash-slide animation */}
               <motion.div
-                className="absolute inset-0 rounded-full overflow-hidden z-10 opacity-0 group-hover:opacity-100"
+                className="absolute inset-0 rounded-full overflow-hidden"
                 initial={false}
-                transition={{ duration: 0.5 }}
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
                   animate={{
-                    x: ["calc(-100% - 50px)", "calc(100% + 50px)"]
+                    x: ["-100%", "200%"]
                   }}
                   transition={{
-                    duration: 1.2,
+                    duration: 1.5,
                     repeat: Infinity,
                     repeatType: "loop",
                     ease: "easeInOut",
-                    repeatDelay: 0.5
+                    repeatDelay: 1
                   }}
                 />
               </motion.div>

@@ -25,7 +25,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
     <div className="flex justify-center mb-10 px-2 sm:px-0">
       <div className={`
         backdrop-blur-md bg-black/30 p-1.5 rounded-xl border border-white/10 
-        shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex 
+        shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex overflow-hidden
         ${isMobile 
           ? 'w-full max-w-[90vw]' 
           : 'w-full max-w-md'
@@ -42,7 +42,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                 relative flex-1 px-3 py-2 rounded-lg text-sm font-medium 
                 transition-all flex items-center justify-center
                 ${isActive ? 'text-white' : 'text-white/70 hover:text-white'}
-                ${isMobile ? 'text-xs md:text-sm' : ''}
+                ${isMobile ? 'text-[11px] md:text-sm' : ''}
               `}
               whileHover={{ scale: isActive ? 1 : 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -74,7 +74,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                     {tab.icon}
                   </span>
                 )}
-                <span className={isMobile ? 'text-xs' : ''}>
+                <span>
                   {tab.label}
                 </span>
               </motion.span>

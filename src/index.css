@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -170,6 +171,32 @@
     );
     animation: badgeGlow 2s ease-in-out infinite;
   }
+  
+  /* New: Name animation with flash-slide */
+  .name-animation {
+    @apply relative overflow-hidden;
+  }
+  
+  .name-animation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    animation: nameFlash 3s ease-in-out infinite;
+  }
+  
+  .name-animation:hover {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.4);
+    transition: text-shadow 0.3s ease;
+  }
 }
 
 .story-link * {
@@ -242,10 +269,7 @@ section {
     background-position: 100% 50%;
   }
 }
-html,
-body {
-   scroll-behavior: smooth;
-  }
+
 @keyframes float {
   0% {
     transform: translateY(0px) rotate(0deg);
@@ -299,6 +323,15 @@ body {
   }
 }
 
+@keyframes nameFlash {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 200%;
+  }
+}
+
 @keyframes spotlight {
   0%, 100% {
     opacity: 0.1;
@@ -306,6 +339,11 @@ body {
   50% {
     opacity: 0.5;
   }
+}
+
+html,
+body {
+   scroll-behavior: smooth;
 }
 
 /* Media queries for better mobile responsiveness */
@@ -338,6 +376,11 @@ body {
   
   button[role="tab"] {
     @apply px-3 py-2 text-xs;
+  }
+  
+  /* Reduced font size for student text in mobile */
+  .student-text {
+    @apply text-sm;
   }
 }
 
