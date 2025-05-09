@@ -14,7 +14,7 @@ const ParticlesBackground: React.FC = () => {
       id="tsparticles"
       init={particlesInit}
       options={{
-        fpsLimit: 120,
+        fpsLimit: 60,
         fullScreen: {
           enable: true,
           zIndex: -1,
@@ -32,15 +32,11 @@ const ParticlesBackground: React.FC = () => {
             color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: 0.25,
-            width: 1.2,
-            triangles: {
-              enable: true,
-              opacity: 0.05
-            }
+            opacity: 0.2, // Increased from 0.1 for better visibility
+            width: 0.8,  // Increased from 0.5 for better visibility
           },
           collisions: {
-            enable: true,
+            enable: true, // Changed to true for more dynamic movement
           },
           move: {
             direction: "none",
@@ -49,38 +45,26 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: 1.2,
+            speed: 0.6, // Slightly increased speed
             straight: false,
-            path: {
-              enable: true,
-              delay: {
-                value: 0.1
-              }
-            },
-            trail: {
-              enable: true,
-              fillColor: "#000000",
-              length: 3
-            }
           },
           number: {
             density: {
               enable: true,
-              area: 1500,
+              area: 1800, // Adjusted for slightly more particles
             },
-            value: 70,
-            limit: 90,
+            value: 60, // Increased from 50
+            limit: 80, // Increased limit
           },
           opacity: {
             value: {
-              min: 0.15,
-              max: 0.4,
+              min: 0.1, // Increased from 0.05 for better visibility
+              max: 0.3, // Increased from 0.2 for better visibility
             },
             animation: {
               enable: true,
-              speed: 0.8,
-              minimumValue: 0.1,
-              sync: false
+              speed: 0.7, // Increased for more dynamic appearance
+              minimumValue: 0.08,
             },
           },
           shape: {
@@ -88,24 +72,15 @@ const ParticlesBackground: React.FC = () => {
           },
           size: {
             value: {
-              min: 0.8,
-              max: 2.2,
+              min: 0.5,
+              max: 1.5, // Increased max size for better visibility
             },
-            animation: {
-              enable: true,
-              speed: 1,
-              minimumValue: 0.5,
-              sync: false
-            }
           },
           twinkle: {
             particles: {
               enable: true,
-              frequency: 0.08,
-              opacity: 0.8,
-              color: {
-                value: ["#ffffff", "#add8e6"]
-              }
+              frequency: 0.08, // Increased frequency
+              opacity: 0.7, // Increased opacity for more noticeable twinkle
             },
           },
         },
@@ -116,8 +91,8 @@ const ParticlesBackground: React.FC = () => {
               mode: "grab", 
               parallax: {
                 enable: true,
-                force: 20,
-                smooth: 10,
+                force: 15, // Increased force
+                smooth: 15, // Decreased for more responsive movement
               },
             },
             onClick: {
@@ -128,19 +103,18 @@ const ParticlesBackground: React.FC = () => {
           },
           modes: {
             grab: {
-              distance: 180,
+              distance: 150, // Increased from 120
               links: {
-                opacity: 0.6,
+                opacity: 0.5, // Increased from 0.3
                 color: "#ffffff",
-                blink: true
               }
             },
             push: {
-              quantity: 4,
-              limit: 10,
+              quantity: 3, // Increased from 2
+              limit: 8, // Increased limit
             },
             repulse: {
-              distance: 150,
+              distance: 120, // Increased from 100
               duration: 0.4,
             }
           },
