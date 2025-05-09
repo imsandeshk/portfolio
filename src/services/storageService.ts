@@ -199,7 +199,7 @@ const projects: Project[] = [
 const certificates: Certificate[] = [
   {
     id: "cert1",
-    image: "/projects/Moviebot.png",
+    image:"/projects/Moviebot.png",
     title: "AI/ML Internship",
     issuer: "InternPe",
     date: "2025-03-16",
@@ -210,48 +210,6 @@ const certificates: Certificate[] = [
     issuer: "Corizo",
     date: "2024-07-30",
   },
-  {
-    id: "cert3",
-    title: "ADA",
-    issuer: "Infosys Springboard",
-    date: "2024-07-15",
-  },
-  {
-    id: "cert4",
-    title: "Microcontroller",
-    issuer: "Infosys Springboard",
-    date: "2024-07-12",
-  },
-  {
-    id: "cert5",
-    title: "UHV",
-    issuer: "KSIT",
-    date: "2024-03-14",
-  },
-  {
-    id: "cert6",
-    title: "Java",
-    issuer: "Infosys Springboard",
-    date: "2024-01-30",
-  },
-  {
-    id: "cert7",
-    title: "SCR",
-    issuer: "KSIT",
-    date: "2024-01-30",
-  },
-  {
-    id: "cert8",
-    title: "Cloud Computing",
-    issuer: "Infosys Springboard",
-    date: "2024-09-22",
-  },
-  {
-    id: "cert9",
-    title: "Python",
-    issuer: "Infosys Springboard",
-    date: "2024-09-25",
-  }
 ];
 
 const tasks: Task[] = [
