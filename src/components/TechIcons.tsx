@@ -34,11 +34,11 @@ const TechIcons = () => {
         {techIcons.map((icon, index) => (
           <motion.div
             key={`${icon.name}-${index}`}
-            className="flex items-center justify-center mx-4 relative group"
+            className="flex items-center justify-center mx-4 relative group tech-icon-container"
             whileHover={{ 
               y: -5, 
               scale: 1.1,
-              boxShadow: "0 0 15px rgba(255,255,255,0.5)",
+              boxShadow: "0 0 20px rgba(255,255,255,0.7)",
             }}
             transition={{ 
               duration: 0.3,
@@ -46,8 +46,8 @@ const TechIcons = () => {
             }}
           >
             <motion.div 
-              className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4"
-              whileHover={{ borderColor: "rgba(255,255,255,0.3)" }}
+              className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4 tech-icon overflow-hidden"
+              whileHover={{ borderColor: "rgba(255,255,255,0.5)" }}
               transition={{ duration: 0.2 }}
             >
               <img 
@@ -57,14 +57,32 @@ const TechIcons = () => {
               />
               <span className="text-sm font-medium">{icon.name}</span>
 
-              {/* Shine effect overlay */}
+              {/* Continuous flash animation */}
               <motion.div
-                className="absolute inset-0 rounded-full overflow-hidden z-10 opacity-0 group-hover:opacity-100"
-                initial={false}
-                transition={{ duration: 0.5 }}
+                className="absolute inset-0 rounded-full overflow-hidden z-10"
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent icon-flash"
+                  initial={{ x: "-100%" }}
+                  animate={{
+                    x: ["calc(-100% - 50px)", "calc(100% + 50px)"]
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "linear",
+                    delay: index * 0.2, // Staggered delay based on index
+                  }}
+                />
+              </motion.div>
+
+              {/* Hover glow effect - only visible on hover */}
+              <motion.div
+                className="absolute inset-0 rounded-full overflow-hidden z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent"
                   animate={{
                     x: ["calc(-100% - 50px)", "calc(100% + 50px)"]
                   }}
@@ -73,7 +91,6 @@ const TechIcons = () => {
                     repeat: Infinity,
                     repeatType: "loop",
                     ease: "easeInOut",
-                    repeatDelay: 0.5
                   }}
                 />
               </motion.div>
