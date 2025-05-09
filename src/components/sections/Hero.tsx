@@ -80,9 +80,9 @@ const Hero: React.FC<HeroProps> = ({
           initial="hidden" 
           animate="visible" 
         >
-          <motion.div variants={nameVariants} className="mb-6 overflow-hidden name-container">
+          <motion.div variants={nameVariants} className="mb-6 overflow-hidden">
             <motion.h1 
-              className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold text-gradient leading-tight name-animation"
+              className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold text-gradient leading-tight"
               animate={{
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
               }}
@@ -104,7 +104,7 @@ const Hero: React.FC<HeroProps> = ({
           </motion.div>
           
           <motion.div variants={itemVariants}>
-            <h2 className={`font-playfair ${isMobile ? 'text-lg' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 text-accent/90`}>
+            <h2 className={`font-playfair ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 text-accent/90`}>
               {profile.title}
             </h2>
           </motion.div>

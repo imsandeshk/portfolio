@@ -58,12 +58,6 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                     damping: 30,
                     duration: 0.3
                   }}
-                  style={{ 
-                    // Ensuring the active tab background stays within bounds
-                    width: "100%",
-                    height: "100%",
-                    margin: "0px"
-                  }}
                 />
               )}
               
