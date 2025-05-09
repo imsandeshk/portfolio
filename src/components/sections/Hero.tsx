@@ -1,10 +1,10 @@
+
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ProfileInfo, SocialLink } from "@/services/storageService";
 import SocialLinks from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ExternalLink, Briefcase } from "lucide-react";
-import TechIcons from "@/components/TechIcons";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HeroProps {
@@ -34,7 +34,7 @@ const Hero: React.FC<HeroProps> = ({
     }
   };
 
-  // Animation variants
+  // Enhanced animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,6 +42,21 @@ const Hero: React.FC<HeroProps> = ({
       transition: {
         staggerChildren: 0.2,
         delayChildren: 0.3
+      }
+    }
+  };
+
+  const nameVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { 
+        duration: 0.9, 
+        ease: [0.22, 1, 0.36, 1],
+        type: "spring",
+        stiffness: 100,
+        damping: 10
       }
     }
   };
@@ -65,14 +80,31 @@ const Hero: React.FC<HeroProps> = ({
           initial="hidden" 
           animate="visible" 
         >
-          <motion.div variants={itemVariants} className="mb-6">
-            <h1 className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-transparent leading-tight">
+          <motion.div variants={nameVariants} className="mb-6 overflow-hidden">
+            <motion.h1 
+              className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold text-gradient leading-tight"
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              style={{
+                backgroundSize: "300% 300%",
+                backgroundImage: "linear-gradient(90deg, #ffffff, #d1d1d1, #ffffff)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
               {profile.name}
-            </h1>
+            </motion.h1>
           </motion.div>
           
           <motion.div variants={itemVariants}>
-            <h2 className="font-playfair text-2xl md:text-3xl lg:text-4xl font-medium mb-6 text-accent/90">
+            <h2 className={`font-playfair ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 text-accent/90`}>
               {profile.title}
             </h2>
           </motion.div>
@@ -95,7 +127,7 @@ const Hero: React.FC<HeroProps> = ({
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <p className="text-lg text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+            <p className={`${isMobile ? 'text-base' : 'text-lg'} text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed`}>
               {profile.bio}
             </p>
           </motion.div>

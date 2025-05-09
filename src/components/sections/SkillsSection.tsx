@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Skill } from "@/services/storageService";
@@ -99,7 +98,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setLevel(3);
   };
 
-  // Animation variants
+  // Enhanced animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -124,8 +123,9 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
       }
     },
     hover: {
-      scale: 1.05,
-      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
+      scale: 1.08,
+      boxShadow: "0 0 25px rgba(255, 255, 255, 0.5)",
+      borderColor: "rgba(255, 255, 255, 0.5)",
       transition: {
         type: "spring",
         stiffness: 400,
@@ -164,14 +164,95 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               key={skill.id}
               variants={skillVariants}
               whileHover="hover"
-              className="flex items-center gap-2 rounded-full px-4 py-2 bg-black/50 border border-white/10 backdrop-blur text-white text-sm font-medium"
+              className="group flex items-center gap-2 rounded-full px-4 py-2 bg-black/50 border border-white/10 backdrop-blur text-white text-sm font-medium overflow-hidden relative"
             >
               <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain" />
               {skill.name}
+              
+              {/* Shine effect overlay */}
+              <motion.div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                initial={false}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{
+                    x: ["-100%", "200%"],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    repeatDelay: 0.5,
+                  }}
+                />
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>
       </div>
+
+      {/* Dialog forms for admin actions */}
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{skillToEdit ? "Edit Skill" : "Add Skill"}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSaveSkill}>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="category" className="text-right">
+                  Category
+                </Label>
+                <Input id="category" value={category} onChange={(e) => setCategory(e.target.value)} className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="level" className="text-right">
+                  Level
+                </Label>
+                <Slider
+                  id="level"
+                  defaultValue={[level]}
+                  max={5}
+                  step={1}
+                  onValueChange={(value) => setLevel(value[0])}
+                  className="col-span-3"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">
+                {skillToEdit ? "Update Skill" : "Add Skill"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+      
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. Are you sure you want to delete <span className="font-medium">"{skillToDelete?.name}"</span>?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDelete}>
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </section>
   );
 };

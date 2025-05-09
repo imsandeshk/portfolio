@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -14,65 +14,73 @@ const TechIcons = () => {
   const isMobile = useIsMobile();
   
   const techIcons: TechIcon[] = [
-    { name: "HTML", color: "#E34F26", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "CSS", color: "#1572B6", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "JavaScript", color: "#F7DF1E", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "React", color: "#61DAFB", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "TypeScript", color: "#3178C6", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "Node.js", color: "#339933", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "Python", color: "#3776AB", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "Vue", color: "#4FC08D", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "Angular", color: "#DD0031", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "Swift", color: "#FA7343", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
-    { name: "Flutter", color: "#02569B", icon: "/lovable-uploads/54fc75ff-fd01-4c8c-88d9-14a4baef30aa.png" },
+    { name: "HTML", color: "#E34F26", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "CSS", color: "#1572B6", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "JavaScript", color: "#F7DF1E", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "React", color: "#61DAFB", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "TypeScript", color: "#3178C6", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "Node.js", color: "#339933", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "Python", color: "#3776AB", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "Java", color: "#f0931c", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "C", color: "#4285f4", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "MongoDB", color: "#13aa52", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "UI/UX Design", color: "#ff7262", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
+    { name: "AWS", color: "#ff9900", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
   ];
-
-  // Add more tech icons for smoother infinite scroll
-  const allIcons = [...techIcons, ...techIcons, ...techIcons];
 
   return (
     <div className="w-full overflow-hidden py-6" ref={containerRef}>
-      <motion.div 
-        className="flex"
-        animate={{ 
-          x: [0, isMobile ? -3000 : -4000]
-        }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 60,
-            ease: "linear"
-          }
-        }}
-      >
-        {allIcons.map((icon, index) => {
-          // Calculate opacity for fade effect on first and last items
-          const isFirstOrLast = index < 3 || index > allIcons.length - 4;
-          const opacity = isFirstOrLast ? 0.5 : 1;
-          
-          return (
-            <motion.div
-              key={`${icon.name}-${index}`}
-              className="flex items-center justify-center mx-4 relative"
-              whileHover={{ y: -5, scale: 1.1 }}
+      <div className="flex flex-wrap gap-4 justify-center">
+        {techIcons.map((icon, index) => (
+          <motion.div
+            key={`${icon.name}-${index}`}
+            className="flex items-center justify-center mx-4 relative group"
+            whileHover={{ 
+              y: -5, 
+              scale: 1.1,
+              boxShadow: "0 0 15px rgba(255,255,255,0.5)",
+            }}
+            transition={{ 
+              duration: 0.3,
+              boxShadow: { duration: 0.2 } 
+            }}
+          >
+            <motion.div 
+              className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4"
+              whileHover={{ borderColor: "rgba(255,255,255,0.3)" }}
               transition={{ duration: 0.2 }}
-              style={{ opacity }}
             >
-              <div 
-                className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-lg"
-                style={{ backgroundColor: `${icon.color}20` }}
+              <img 
+                src={icon.icon} 
+                alt={icon.name}
+                className="w-6 h-6 mr-2 object-contain"
+              />
+              <span className="text-sm font-medium">{icon.name}</span>
+
+              {/* Shine effect overlay */}
+              <motion.div
+                className="absolute inset-0 rounded-full overflow-hidden z-10 opacity-0 group-hover:opacity-100"
+                initial={false}
+                transition={{ duration: 0.5 }}
               >
-                <img 
-                  src={icon.icon} 
-                  alt={icon.name}
-                  className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{
+                    x: ["calc(-100% - 50px)", "calc(100% + 50px)"]
+                  }}
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "easeInOut",
+                    repeatDelay: 0.5
+                  }}
                 />
-              </div>
+              </motion.div>
             </motion.div>
-          );
-        })}
-      </motion.div>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };
