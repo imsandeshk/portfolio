@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Plus } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 interface TasksSectionProps {
   tasks: Task[];
@@ -133,36 +132,99 @@ const TasksSection: React.FC<TasksSectionProps> = ({
     setIsFormOpen(true);
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }
+    }
+  };
+
+  const tabVariants = {
+    inactive: { 
+      color: "rgba(255, 255, 255, 0.7)",
+      backgroundColor: "transparent" 
+    },
+    active: { 
+      color: "rgba(255, 255, 255, 1)",
+      backgroundColor: "rgba(255, 255, 255, 0.1)"
+    },
+  };
+
   return (
     <section id="tasks" className="py-16">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-4 md:px-6">
         <SectionHeading 
           title="Tasks & Goals" 
           subtitle="Current and upcoming activities on my roadmap."
         />
         
         <motion.div
-          className="flex flex-col items-center gap-6 mt-8"
+          className="flex flex-col items-center gap-6 mt-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="flex justify-between items-center w-full max-w-2xl">
-            <Tabs 
-              defaultValue="all" 
-              className="w-full"
-              value={filter}
-              onValueChange={(value) => setFilter(value as "all" | "active" | "completed")}
+            <motion.div 
+              className="flex justify-center w-full max-w-md mx-auto"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <TabsList className="grid grid-cols-3 w-full max-w-xs mx-auto">
-                <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="active">In Progress</TabsTrigger>
-                <TabsTrigger value="completed">Completed</TabsTrigger>
-              </TabsList>
-            </Tabs>
+              <div className="backdrop-blur-md bg-black/30 p-1 rounded-xl border border-white/10 flex w-full">
+                {["all", "active", "completed"].map((tab) => (
+                  <motion.button
+                    key={tab}
+                    onClick={() => setFilter(tab as "all" | "active" | "completed")}
+                    className={`
+                      relative flex-1 px-6 py-2.5 rounded-lg text-sm font-medium
+                      transition-all capitalize flex items-center justify-center
+                    `}
+                    animate={filter === tab ? "active" : "inactive"}
+                    variants={tabVariants}
+                    whileHover={{ scale: filter === tab ? 1 : 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {filter === tab && (
+                      <motion.span
+                        className="absolute inset-0 bg-white/10 rounded-lg"
+                        layoutId="taskTabBackground"
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 30,
+                          duration: 0.3
+                        }}
+                      />
+                    )}
+                    <span className="relative z-10">
+                      {tab === "active" ? "In Progress" : tab}
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
             
             {isAdmin && onAddTask && (
-              <Button onClick={handleAddTask} size="sm">
+              <Button onClick={handleAddTask} size="sm" className="ml-4">
                 <Plus className="mr-2 h-4 w-4" />
                 Add Task
               </Button>
@@ -170,24 +232,33 @@ const TasksSection: React.FC<TasksSectionProps> = ({
           </div>
           
           {/* Tasks List */}
-          <div className="w-full max-w-2xl space-y-4">
+          <motion.div 
+            className="w-full max-w-2xl space-y-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {sortedTasks.length > 0 ? (
               sortedTasks.map((task) => (
-                <TaskCard
-                  key={task.id}
-                  task={task}
-                  isAdmin={isAdmin}
-                  onEdit={isAdmin ? () => handleEditTask(task) : undefined}
-                  onDelete={isAdmin ? () => handleDeleteTask(task) : undefined}
-                  onToggleComplete={isAdmin ? handleToggleComplete : undefined}
-                />
+                <motion.div key={task.id} variants={itemVariants}>
+                  <TaskCard
+                    task={task}
+                    isAdmin={isAdmin}
+                    onEdit={isAdmin ? () => handleEditTask(task) : undefined}
+                    onDelete={isAdmin ? () => handleDeleteTask(task) : undefined}
+                    onToggleComplete={isAdmin ? handleToggleComplete : undefined}
+                  />
+                </motion.div>
               ))
             ) : (
-              <div className="text-center py-8 text-muted-foreground">
+              <motion.div 
+                className="text-center py-8 text-muted-foreground"
+                variants={itemVariants}
+              >
                 {filter === "all" ? "No tasks available." : `No ${filter} tasks available.`}
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         </motion.div>
         
         {/* Task form dialog (admin view) */}

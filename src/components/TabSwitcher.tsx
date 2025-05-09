@@ -24,7 +24,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
   return (
     <div className="flex justify-center mb-10 px-2 sm:px-0">
       <div className={`
-        backdrop-blur-md bg-white/5 p-1.5 rounded-2xl border border-white/10 
+        backdrop-blur-md bg-black/30 p-1 rounded-xl border border-white/10 
         shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex 
         ${isMobile 
           ? 'w-full max-w-[90vw]' 
@@ -39,9 +39,9 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`
-                relative flex-1 px-3 py-2.5 rounded-xl text-sm font-medium 
+                relative flex-1 px-3 py-2.5 rounded-lg text-sm font-medium 
                 transition-all flex items-center justify-center
-                ${isActive ? 'text-black' : 'text-white/80 hover:text-white'}
+                ${isActive ? 'text-white' : 'text-white/70 hover:text-white'}
                 ${isMobile ? 'text-xs' : ''}
               `}
               whileHover={{ scale: isActive ? 1 : 1.05 }}
@@ -50,7 +50,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               {/* Background */}
               {isActive && (
                 <motion.span
-                  className="absolute inset-0 bg-gradient-to-br from-white to-white/80 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                  className="absolute inset-0 bg-white/10 rounded-lg"
                   layoutId="tabBackground"
                   transition={{ 
                     type: "spring", 
@@ -87,4 +87,3 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
 };
 
 export default TabSwitcher;
-

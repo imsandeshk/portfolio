@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Skill } from "@/services/storageService";
@@ -98,34 +99,78 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setLevel(3);
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.08,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const skillVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }
+    },
+    hover: {
+      scale: 1.05,
+      boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10
+      }
+    }
+  };
+
   return (
     <section id="skills" className="py-16">
       <div className="container mx-auto">
         <SectionHeading title="Skills" subtitle="My technical expertise" />
 
         {isAdmin && onAddSkill && (
-          <motion.div className="flex justify-center mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <motion.div 
+            className="flex justify-center mb-8" 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5 }}
+          >
             <Button onClick={handleAddSkill}>
               <Plus className="mr-2 h-4 w-4" /> Add Skill
             </Button>
           </motion.div>
         )}
 
-        <div className="flex flex-wrap gap-4 justify-center">
-          {skills.map((skill, index) => (
+        <motion.div 
+          className="flex flex-wrap gap-4 justify-center"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          {skills.map((skill) => (
             <motion.div
               key={skill.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              viewport={{ once: true, margin: "-50px" }}
+              variants={skillVariants}
+              whileHover="hover"
               className="flex items-center gap-2 rounded-full px-4 py-2 bg-black/50 border border-white/10 backdrop-blur text-white text-sm font-medium"
             >
               <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain" />
               {skill.name}
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

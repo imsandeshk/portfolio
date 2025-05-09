@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
@@ -49,8 +50,13 @@ const Index = () => {
   ];
 
   useEffect(() => {
-    setMainContentVisible(true);
-    setIsInitialLoad(false);
+    // Show main content with a slight delay for better transition
+    const timer = setTimeout(() => {
+      setMainContentVisible(true);
+      setIsInitialLoad(false);
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const sectionVariants = {
@@ -58,25 +64,30 @@ const Index = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+        duration: 0.8,
+        ease: [0.25, 0.1, 0.25, 1.0], // Enhanced easing function for smoother animations
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+      transition: { 
+        duration: 0.7, 
+        ease: [0.22, 1, 0.36, 1] 
+      }
     }
   };
 
   return (
     <>
-  <SplineBackground />
-  <div className="fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black via-black/70 to-transparent z-[-9]" />
+      <SplineBackground />
+      <div className="fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black via-black/70 to-transparent z-[-9]" />
 
       <div className="relative z-10 bg-transparent min-h-screen">
         <AnimatePresence mode="wait">
@@ -85,7 +96,7 @@ const Index = () => {
               key="main-content"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1.2 }}
+              transition={{ duration: 1.0, ease: "easeOut" }}
               className="w-full"
             >
               <ParticlesBackground />
@@ -114,7 +125,7 @@ const Index = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{
-                          duration: 0.5,
+                          duration: 0.6,
                           ease: [0.22, 1, 0.36, 1],
                         }}
                         className="min-h-[400px]"
@@ -147,7 +158,7 @@ const Index = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
+                transition={{ delay: 1.0, duration: 0.8 }}
                 className="relative z-10"
               >
                 <Footer socialLinks={socialLinks} />
