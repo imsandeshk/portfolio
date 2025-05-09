@@ -199,14 +199,14 @@ const projects: Project[] = [
 const certificates: Certificate[] = [
   {
     id: "cert1",
-    image:"/projects/Moviebot.png",
+    image:"/certificates/Corizo.jpg",
     title: "AI/ML Internship",
     issuer: "InternPe",
     date: "2025-03-16",
   },
   {
     id: "cert2",
-    image:"/projects/Moviebot.png",
+    image:"/certificates/internpe.png",
     title: "Internship at Corizo",
     issuer: "Corizo",
     date: "2024-07-30",
