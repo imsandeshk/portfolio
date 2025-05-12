@@ -6,7 +6,6 @@ import {
   Database, 
   Code, 
   BarChart, 
-  Eye, 
   BrainCircuit, 
   Infinity, 
   Computer, 
@@ -75,7 +74,7 @@ const InterestsSection: React.FC = () => {
         <SectionHeading title="Interests" subtitle="What I'm passionate about" />
 
         <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto"
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto px-2 sm:px-0"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -86,18 +85,17 @@ const InterestsSection: React.FC = () => {
               key={interest.id}
               variants={interestVariants}
               whileHover="hover"
-              className="group relative overflow-hidden rounded-lg bg-black/40 border border-white/10 backdrop-blur-md p-4 flex items-center gap-4"
+              className="group relative overflow-hidden rounded-lg bg-black/40 border border-white/10 backdrop-blur-md p-3 flex items-center gap-3"
             >
               <div 
-                className="flex items-center justify-center w-12 h-12 rounded-full" 
+                className="flex items-center justify-center w-10 h-10 rounded-full" 
                 style={{ backgroundColor: `${interest.color}30` }}
               >
                 <span style={{ color: interest.color }}>
-                  {/* Render the icon component correctly */}
-                  {interest.icon && <interest.icon size={20} />}
+                  {interest.icon && <interest.icon size={18} />}
                 </span>
               </div>
-              <span className="text-lg font-medium">{interest.name}</span>
+              <span className="text-sm sm:text-base font-medium truncate">{interest.name}</span>
               
               {/* Continuous flash animation */}
               <motion.div

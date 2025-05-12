@@ -27,7 +27,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
         backdrop-blur-md bg-black/30 p-1.5 rounded-xl border border-white/10 
         shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex overflow-hidden
         ${isMobile 
-          ? 'w-full max-w-[90vw]' 
+          ? 'w-full max-w-[95vw] sm:max-w-[90vw]' 
           : 'w-full max-w-md'
         }
       `}>
@@ -39,10 +39,9 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`
-                relative flex-1 px-3 py-2 rounded-lg text-sm font-medium 
+                relative flex-1 px-2 py-2 rounded-lg text-xs sm:text-sm font-medium 
                 transition-all flex items-center justify-center
                 ${isActive ? 'text-white' : 'text-white/70 hover:text-white'}
-                ${isMobile ? 'text-[11px] md:text-sm' : ''}
               `}
               whileHover={{ scale: isActive ? 1 : 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -63,18 +62,18 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               
               {/* Content */}
               <motion.span 
-                className="relative flex items-center justify-center gap-2 z-10"
+                className="relative flex items-center justify-center gap-1 z-10"
                 animate={{ 
                   scale: isActive ? 1.05 : 1
                 }}
                 transition={{ duration: 0.2 }}
               >
                 {tab.icon && (
-                  <span className={`${isActive ? 'text-accent' : ''} flex items-center ${isMobile ? 'mr-1' : ''}`}>
+                  <span className={`${isActive ? 'text-accent' : ''} flex items-center`}>
                     {tab.icon}
                   </span>
                 )}
-                <span>
+                <span className="truncate">
                   {tab.label}
                 </span>
               </motion.span>
