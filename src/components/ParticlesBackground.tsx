@@ -110,8 +110,8 @@ const ParticlesBackground: React.FC = () => {
               }
             },
             push: {
-              quantity: 1, // Reduced from 4 to 1
-              limit: 5,    // Reduced from 10 to 5
+              quantity: 1, // Changed from 4 to 1 - only one particle created per click
+              limit: 5,    
             },
             repulse: {
               distance: 150,

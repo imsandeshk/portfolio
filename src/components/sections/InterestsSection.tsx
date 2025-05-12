@@ -2,7 +2,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
-import { Database, Code, BarChart, Eye, BrainCircuit, Infinity, Computer, TestTube } from "lucide-react";
+import { 
+  Database, 
+  Code, 
+  BarChart, 
+  Eye, 
+  BrainCircuit, 
+  Infinity, 
+  Computer, 
+  TestTube 
+} from "lucide-react";
 
 interface Interest {
   id: string;
