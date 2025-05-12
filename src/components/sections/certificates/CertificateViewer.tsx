@@ -31,6 +31,8 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
     }
   };
   
+  const imageUrl = certificate.image;
+  
   // On mobile, use Sheet component for better UX
   if (isMobile) {
     return (
@@ -69,10 +71,10 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                   className="flex flex-col items-center"
                 >
                   <div className="relative w-full aspect-[1.414/1] bg-gradient-to-b from-accent/5 to-transparent rounded-lg overflow-hidden shadow-lg border border-white/10">
-                    {certificate.image && (
+                    {imageUrl && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <img 
-                          src={certificate.image} 
+                          src={imageUrl} 
                           alt={`${certificate.title} Certificate`}
                           className="max-w-full max-h-full object-contain p-2"
                         />
@@ -136,10 +138,10 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                 className="flex flex-col items-center"
               >
                 <div className="relative w-full max-w-3xl mx-auto aspect-[1.414/1] bg-gradient-to-b from-accent/5 to-transparent rounded-lg overflow-hidden shadow-lg border border-white/10">
-                  {certificate.image && (
+                  {imageUrl && (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <img 
-                        src={certificate.image} 
+                        src={imageUrl} 
                         alt={`${certificate.title} Certificate`}
                         className="max-w-full max-h-full object-contain p-2"
                       />
