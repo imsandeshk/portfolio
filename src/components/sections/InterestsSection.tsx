@@ -16,7 +16,7 @@ import {
 interface Interest {
   id: string;
   name: string;
-  icon: LucideIcon; // Changed from React.ReactNode to LucideIcon
+  icon: LucideIcon;
   color: string;
 }
 
@@ -92,7 +92,7 @@ const InterestsSection: React.FC = () => {
                 style={{ backgroundColor: `${interest.color}30` }}
               >
                 <span style={{ color: interest.color }}>
-                  {interest.icon && <interest.icon size={18} />}
+                  <interest.icon size={18} />
                 </span>
               </div>
               <span className="text-sm sm:text-base font-medium truncate">{interest.name}</span>
