@@ -10,7 +10,7 @@ import ProjectsSection from "@/components/sections/projects/ProjectsSection";
 import CertificatesSection from "@/components/sections/certificates/CertificatesSection";
 import TasksSection from "@/components/sections/tasks/TasksSection";
 import SkillsSection from "@/components/sections/SkillsSection";
-import InterestsSection from "@/components/sections/InterestsSection";
+// import InterestsSection from "@/components/sections/InterestsSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
@@ -147,9 +147,7 @@ const Index = () => {
                   <SkillsSection skills={skills} />
                 </motion.div>
 
-                <motion.div variants={itemVariants}>
-                  <InterestsSection />
-                </motion.div>
+                {/* Removed InterestsSection */}
 
                 <motion.div variants={itemVariants}>
                   <EducationSection education={education} />
