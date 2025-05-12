@@ -127,7 +127,7 @@ const socialLinks: SocialLink[] = [
   {
     id: "social3",
     platform: "YouTube",
-    url: "https://youtube.com/@uiconcept?si=dGSPvu14BSPC1Pi_",
+    url: "https://youtube.com/@TheOneUI?si=dGSPvu14BSPC1Pi_",
     icon: "Youtube",
   },
   {
@@ -218,7 +218,7 @@ const tasks: Task[] = [
     id: "task1",
     title: "Update the design of Portfolio website",
     description: "Redesign and improve portfolio website UI/UX",
-    completed: false,
+    completed: true,
     dueDate: "2025-07-19",
     priority: "medium",
   },
