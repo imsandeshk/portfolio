@@ -10,26 +10,27 @@ import {
   BrainCircuit, 
   Infinity, 
   Computer, 
-  TestTube 
+  TestTube,
+  LucideIcon 
 } from "lucide-react";
 
 interface Interest {
   id: string;
   name: string;
-  icon: React.ReactNode;
+  icon: LucideIcon; // Changed from React.ReactNode to LucideIcon
   color: string;
 }
 
 const InterestsSection: React.FC = () => {
   const interests: Interest[] = [
-    { id: "web-dev", name: "Web Development", icon: <Code size={20} />, color: "#3498db" },
-    { id: "software-dev", name: "Software Development", icon: <Computer size={20} />, color: "#e74c3c" },
-    { id: "data-viz", name: "Data Visualization", icon: <BarChart size={20} />, color: "#2ecc71" },
-    { id: "game-dev", name: "Game Development", icon: <Code size={20} />, color: "#9b59b6" },
-    { id: "ai", name: "Artificial Intelligence", icon: <BrainCircuit size={20} />, color: "#f39c12" },
-    { id: "ml", name: "Machine Learning", icon: <Infinity size={20} />, color: "#1abc9c" },
-    { id: "fullstack", name: "Full Stack", icon: <Database size={20} />, color: "#e67e22" },
-    { id: "beta-testing", name: "Beta Testing", icon: <TestTube size={20} />, color: "#3498db" },
+    { id: "web-dev", name: "Web Development", icon: Code, color: "#3498db" },
+    { id: "software-dev", name: "Software Development", icon: Computer, color: "#e74c3c" },
+    { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#2ecc71" },
+    { id: "game-dev", name: "Game Development", icon: Code, color: "#9b59b6" },
+    { id: "ai", name: "Artificial Intelligence", icon: BrainCircuit, color: "#f39c12" },
+    { id: "ml", name: "Machine Learning", icon: Infinity, color: "#1abc9c" },
+    { id: "fullstack", name: "Full Stack", icon: Database, color: "#e67e22" },
+    { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#3498db" },
   ];
 
   // Enhanced animation variants
@@ -91,7 +92,10 @@ const InterestsSection: React.FC = () => {
                 className="flex items-center justify-center w-12 h-12 rounded-full" 
                 style={{ backgroundColor: `${interest.color}30` }}
               >
-                <span style={{ color: interest.color }}>{interest.icon}</span>
+                <span style={{ color: interest.color }}>
+                  {/* Render the icon component correctly */}
+                  {interest.icon && <interest.icon size={20} />}
+                </span>
               </div>
               <span className="text-lg font-medium">{interest.name}</span>
               
