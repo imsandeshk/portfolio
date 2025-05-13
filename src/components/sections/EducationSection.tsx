@@ -150,33 +150,6 @@ const EducationSection: React.FC<EducationSectionProps> = ({
     return new Date(b.endDate).getTime() - new Date(a.endDate).getTime();
   });
 
-  // Improved animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { 
-        staggerChildren: 0.15, 
-        delayChildren: 0.2,
-        duration: 0.8,
-      } 
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { 
-        type: "spring", 
-        damping: 15, 
-        stiffness: 150,
-        duration: 0.8
-      } 
-    }
-  };
-
   return (
     <section id="education" className="py-16">
       <div className="container mx-auto">
@@ -190,7 +163,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({
             className="flex justify-center mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5 }}
           >
             <Button onClick={handleAddEducation}>
               <Plus className="mr-2 h-4 w-4" />
@@ -199,48 +172,27 @@ const EducationSection: React.FC<EducationSectionProps> = ({
           </motion.div>
         )}
         
-        {/* Education Timeline with Enhanced UI */}
-        <motion.div 
-          className="relative max-w-3xl mx-auto mt-8 pl-8 border-l-2 border-accent/30"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
+        {/* Education Timeline */}
+        <div className="relative max-w-3xl mx-auto mt-8 pl-8 border-l-2 border-accent/30">
           {sortedEducation.map((edu, index) => (
             <motion.div
               key={edu.id}
               className="mb-10 relative"
-              variants={itemVariants}
-              whileHover={{ x: 5 }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 300, 
-                damping: 20 
-              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
             >
               {/* Timeline dot */}
-              <motion.div 
-                className="absolute -left-[2.15rem] bg-background border-2 border-accent rounded-full p-1"
-                whileHover={{ scale: 1.2, boxShadow: "0 0 10px rgba(255,87,51,0.6)" }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
+              <div className="absolute -left-[2.15rem] bg-background border-2 border-accent rounded-full p-1">
                 <GraduationCap className="h-5 w-5 text-accent" />
-              </motion.div>
+              </div>
               
               {/* Content */}
-              <motion.div 
-                className="glass-card-premium rounded-xl p-6 ml-4"
-                whileHover={{ 
-                  y: -5,
-                  boxShadow: "0 15px 30px rgba(0,0,0,0.4)", 
-                  borderColor: "rgba(255,255,255,0.3)" 
-                }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className="glass-card rounded-lg p-6 ml-4 hover-glow">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-xl font-bold text-gradient">{edu.degree}</h3>
+                    <h3 className="text-xl font-bold">{edu.degree}</h3>
                     <h4 className="text-lg text-accent mb-1">{edu.field}</h4>
                     <div className="flex items-center mb-2 text-sm text-muted-foreground">
                       <School className="h-4 w-4 mr-2" />
@@ -261,10 +213,10 @@ const EducationSection: React.FC<EducationSectionProps> = ({
                     />
                   )}
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
         
         {/* Education form dialog (admin view) */}
         <Dialog open={isFormOpen} onOpenChange={(open) => {
