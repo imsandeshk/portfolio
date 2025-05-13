@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Skill } from "@/services/storageService";
@@ -8,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Edit, Plus, Trash } from "lucide-react";
+import { Edit, Plus, Trash, MoreHorizontal } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface SkillsSectionProps {
@@ -137,7 +138,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   return (
     <section id="skills" className="py-16">
       <div className="container mx-auto">
-        <SectionHeading title="Skills" subtitle="My technical expertise" />
+        <SectionHeading title="Tools I Use" subtitle="My technical toolkit" />
 
         {isAdmin && onAddSkill && (
           <motion.div 
@@ -147,7 +148,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             transition={{ duration: 0.5 }}
           >
             <Button onClick={handleAddSkill}>
-              <Plus className="mr-2 h-4 w-4" /> Add Skill
+              <Plus className="mr-2 h-4 w-4" /> Add Tool
             </Button>
           </motion.div>
         )}
@@ -189,6 +190,35 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               </motion.div>
             </motion.div>
           ))}
+          
+          {/* More... button */}
+          <motion.div
+            variants={skillVariants}
+            whileHover="hover"
+            className="group flex items-center gap-2 rounded-full px-4 py-2 bg-black/60 border border-white/20 backdrop-blur text-white text-sm font-medium overflow-hidden relative"
+          >
+            <MoreHorizontal className="w-5 h-5" />
+            more...
+            
+            {/* Shine effect overlay */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              initial={false}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-accent/20 to-transparent"
+                animate={{
+                  x: ["-100%", "200%"],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: 0.5,
+                }}
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
 
@@ -196,7 +226,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>{skillToEdit ? "Edit Skill" : "Add Skill"}</DialogTitle>
+            <DialogTitle>{skillToEdit ? "Edit Tool" : "Add Tool"}</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSaveSkill}>
             <div className="grid gap-4 py-4">
@@ -228,7 +258,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             </div>
             <DialogFooter>
               <Button type="submit">
-                {skillToEdit ? "Update Skill" : "Add Skill"}
+                {skillToEdit ? "Update Tool" : "Add Tool"}
               </Button>
             </DialogFooter>
           </form>

@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Certificate } from "@/services/storageService";
 import SectionHeading from "@/components/SectionHeading";
 import CertificateCard from "./CertificateCard";
@@ -95,6 +95,33 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.2, 
+        delayChildren: 0.3,
+        duration: 0.8
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        type: "spring", 
+        damping: 15, 
+        stiffness: 150,
+        duration: 0.8
+      } 
+    }
+  };
+
   return (
     <section id="certificates" className="py-16">
       <div className="container mx-auto px-4">
@@ -108,27 +135,42 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
             className="flex justify-center mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7 }}
           >
-            <Button onClick={handleAddCertificate}>
+            <Button onClick={handleAddCertificate} className="bg-accent hover:bg-accent/90">
               <Plus className="mr-2 h-4 w-4" />
               Add Certificate
             </Button>
           </motion.div>
         )}
         
-        {/* Certificates List - Changed to 1 column */}
-        <div className="grid grid-cols-1 gap-4 mt-8 max-w-3xl mx-auto">
-          {sortedCertificates.map((certificate) => (
-            <CertificateCard
-              key={certificate.id}
-              certificate={certificate}
-              isAdmin={isAdmin}
-              onEdit={isAdmin ? () => handleEditCertificate(certificate) : undefined}
-              onDelete={isAdmin ? () => handleDeleteCertificate(certificate) : undefined}
-            />
-          ))}
-        </div>
+        {/* Certificates List with enhanced animations */}
+        <motion.div 
+          className="grid grid-cols-1 gap-6 mt-8 max-w-3xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: "-100px" }}
+        >
+          <AnimatePresence>
+            {sortedCertificates.map((certificate) => (
+              <motion.div
+                key={certificate.id}
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <CertificateCard
+                  certificate={certificate}
+                  isAdmin={isAdmin}
+                  onEdit={isAdmin ? () => handleEditCertificate(certificate) : undefined}
+                  onDelete={isAdmin ? () => handleDeleteCertificate(certificate) : undefined}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
         
         {/* Certificate form dialog (admin view) */}
         <CertificateForm
@@ -140,7 +182,7 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
         
         {/* Delete confirmation dialog */}
         <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-          <AlertDialogContent>
+          <AlertDialogContent className="glass-card-premium border border-white/10">
             <AlertDialogHeader>
               <AlertDialogTitle>Are you sure?</AlertDialogTitle>
               <AlertDialogDescription>

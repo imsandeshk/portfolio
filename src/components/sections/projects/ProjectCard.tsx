@@ -31,20 +31,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <motion.div
-      className="relative group glass-card rounded-xl overflow-hidden hover-glow border border-white/10 bg-black/30 backdrop-blur-sm"
+      className="relative group premium-card rounded-xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-lg"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.7 }}
       viewport={{ once: true, margin: "-100px" }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={onClick}
       whileHover={{
-        y: -5,
-        transition: { duration: 0.3, ease: "easeOut" }
+        y: -6,
+        transition: { duration: 0.4, ease: "easeOut" }
       }}
     >
-      {/* Image */}
+      {/* Image with enhanced effects */}
       <div className="relative h-40 sm:h-48 md:h-56 overflow-hidden">
         <motion.img
           src={project.image || "/placeholder.svg"}
@@ -52,66 +52,85 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           className="w-full h-full object-cover"
           initial={{ scale: 1 }}
           animate={{ 
-            scale: isHovered ? 1.05 : 1,
+            scale: isHovered ? 1.08 : 1,
+            filter: isHovered ? "brightness(0.8)" : "brightness(1)"
           }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         />
         
-        {/* Pinned indicator */}
+        {/* Pinned indicator with enhanced animation */}
         {project.pinned && (
           <motion.div 
             className="absolute top-2 right-2 text-accent"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            initial={{ scale: 0, rotate: -45 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 400, 
+              damping: 10,
+              delay: 0.1
+            }}
           >
-            <Star className="fill-accent drop-shadow-glow" size={16} />
+            <Star className="fill-accent drop-shadow-glow" size={18} />
           </motion.div>
         )}
         
-        {/* View details overlay */}
+        {/* View details overlay with improved animation */}
         <motion.div 
-          className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center"
+          className="absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.4 }}
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.2, delay: 0.1 }}
+            animate={{ 
+              scale: isHovered ? 1 : 0.8, 
+              opacity: isHovered ? 1 : 0  
+            }}
+            transition={{ 
+              duration: 0.3, 
+              delay: isHovered ? 0.1 : 0,
+              ease: [0.22, 1, 0.36, 1]
+            }}
           >
-            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white text-xs md:text-sm px-2 md:px-3">
-              <Maximize2 className="mr-1 h-3 w-3 md:h-4 md:w-4" />
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="hover:bg-accent hover:text-white border-white/30 text-white text-xs md:text-sm px-4 py-2 rounded-full"
+            >
+              <Maximize2 className="mr-2 h-3 w-3 md:h-4 md:w-4" />
               View Project
             </Button>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Content */}
-      <div className="p-4 md:p-5 bg-gradient-to-b from-black/30 to-black/60">
-        <div className="flex justify-between items-start mb-2 md:mb-3">
-          <h3 className="text-base md:text-lg font-bold text-white truncate max-w-[80%]">{project.title}</h3>
+      {/* Content with shine effect */}
+      <div className="p-5 bg-gradient-to-b from-black/40 to-black/60">
+        <div className="flex justify-between items-start mb-3">
+          <h3 className="text-base md:text-lg font-bold text-gradient truncate max-w-[80%]">
+            {project.title}
+          </h3>
           
           {isAdmin && onEdit && onDelete && (
             <EditControls onEdit={onEdit} onDelete={onDelete} />
           )}
         </div>
         
-        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2 mb-3 md:mb-4 hidden sm:block">
+        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2 mb-4 hidden sm:block">
           {project.description}
         </p>
         
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1 mb-3 md:mb-4 hidden sm:flex">
+        {/* Tags with improved styling */}
+        <div className="flex flex-wrap gap-1.5 mb-4 hidden sm:flex">
           {project.tags && project.tags.length > 0 ? (
             <>
               {project.tags.slice(0, 2).map((tag, index) => (
                 <Badge 
                   key={index} 
                   variant="outline" 
-                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors"
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors badge-glow"
                 >
                   {tag}
                 </Badge>
@@ -128,14 +147,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           ) : null}
         </div>
         
-        {/* Links */}
-        <div className="flex gap-2 sm:gap-3">
+        {/* Links with enhanced UI */}
+        <div className="flex gap-3">
           {project.url && (
             <Button 
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+              className="text-[10px] md:text-xs px-3 py-1.5 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-400 border-white/20 rounded-full"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -144,8 +163,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <ExternalLink className="mr-1 h-3 w-3 md:h-4 md:w-4" />
-                <span className="hidden sm:inline">Live</span>
+                <ExternalLink className="mr-1.5 h-3 w-3 md:h-4 md:w-4" />
+                <span className="hidden sm:inline">Live Demo</span>
+                <span className="sm:hidden">Demo</span>
               </a>
             </Button>
           )}
@@ -155,7 +175,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+              className="text-[10px] md:text-xs px-3 py-1.5 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-400 border-white/20 rounded-full"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -164,8 +184,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <Github className="mr-1 h-3 w-3 md:h-4 md:w-4" />
-                <span className="hidden sm:inline">Code</span>
+                <Github className="mr-1.5 h-3 w-3 md:h-4 md:w-4" />
+                <span className="hidden sm:inline">Source Code</span>
+                <span className="sm:hidden">Code</span>
               </a>
             </Button>
           )}
