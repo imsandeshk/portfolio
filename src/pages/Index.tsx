@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
 
 import ParticlesBackground from "@/components/ParticlesBackground";
@@ -15,6 +15,7 @@ import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
+import ScrollToTop from "@/components/ScrollToTop";
 
 import {
   getProfile,
@@ -43,6 +44,14 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("projects");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mainContentVisible, setMainContentVisible] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { 
+    stiffness: 100, 
+    damping: 30, 
+    restDelta: 0.001 
+  });
 
   const tabs = [
     { id: "projects", label: "Projects", icon: <Code size={16} /> },
@@ -57,7 +66,17 @@ const Index = () => {
       setIsInitialLoad(false);
     }, 100);
     
-    return () => clearTimeout(timer);
+    // Add scroll event listener to reset animations on scroll direction change
+    const handleScroll = () => {
+      setHasScrolled(true);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const sectionVariants = {
@@ -65,21 +84,21 @@ const Index = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-        duration: 0.8,
-        ease: [0.25, 0.1, 0.25, 1.0], // Enhanced easing function for smoother animations
+        staggerChildren: 0.3, // Increased for slower staggering
+        delayChildren: 0.15,
+        duration: 1.0, // Increased for slower animation
+        ease: [0.22, 1, 0.36, 1], // Enhanced easing function for smoother animations
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40 }, // Increased y offset for more noticeable animation
     visible: {
       opacity: 1,
       y: 0,
       transition: { 
-        duration: 0.7, 
+        duration: 1.0, // Increased for slower animation
         ease: [0.22, 1, 0.36, 1] 
       }
     }
@@ -89,6 +108,12 @@ const Index = () => {
     <>
       <SplineBackground />
       <div className="fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black via-black/70 to-transparent z-[-9]" />
+      
+      {/* Progress bar at the top */}
+      <motion.div 
+        className="fixed top-0 left-0 right-0 h-1 bg-accent z-50"
+        style={{ scaleX, transformOrigin: "0%" }}
+      />
 
       <div className="relative z-10 bg-transparent min-h-screen">
         <AnimatePresence mode="wait">
@@ -97,7 +122,7 @@ const Index = () => {
               key="main-content"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1.0, ease: "easeOut" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               className="w-full"
             >
               <ParticlesBackground />
@@ -126,7 +151,7 @@ const Index = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{
-                          duration: 0.6,
+                          duration: 0.8, // Increased for slower animation
                           ease: [0.22, 1, 0.36, 1],
                         }}
                         className="min-h-[400px]"
@@ -143,19 +168,39 @@ const Index = () => {
                   </div>
                 </motion.section>
 
-                <motion.div variants={itemVariants}>
+                <motion.div 
+                  variants={itemVariants}
+                  whileInView="visible"
+                  initial="hidden"
+                  viewport={{ once: false, amount: 0.2 }}
+                >
                   <SkillsSection skills={skills} />
                 </motion.div>
 
-                <motion.div variants={itemVariants}>
+                <motion.div 
+                  variants={itemVariants}
+                  whileInView="visible"
+                  initial="hidden"
+                  viewport={{ once: false, amount: 0.2 }}
+                >
                   <InterestsSection />
                 </motion.div>
 
-                <motion.div variants={itemVariants}>
+                <motion.div 
+                  variants={itemVariants}
+                  whileInView="visible"
+                  initial="hidden"
+                  viewport={{ once: false, amount: 0.2 }}
+                >
                   <EducationSection education={education} />
                 </motion.div>
 
-                <motion.div variants={itemVariants}>
+                <motion.div 
+                  variants={itemVariants}
+                  whileInView="visible"
+                  initial="hidden"
+                  viewport={{ once: false, amount: 0.2 }}
+                >
                   <ContactSection contact={contact} />
                 </motion.div>
               </motion.div>
@@ -168,6 +213,9 @@ const Index = () => {
               >
                 <Footer socialLinks={socialLinks} />
               </motion.div>
+              
+              {/* Add the ScrollToTop component */}
+              <ScrollToTop />
             </motion.div>
           )}
         </AnimatePresence>

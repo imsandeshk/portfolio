@@ -47,6 +47,7 @@
 
   html {
     @apply scroll-smooth;
+    scroll-behavior: smooth !important;
   }
 
   /* Responsive font size adjustments */
@@ -377,7 +378,7 @@ section {
 
 html,
 body {
-   scroll-behavior: smooth;
+   scroll-behavior: smooth !important;
 }
 
 /* Media queries for better mobile responsiveness */
