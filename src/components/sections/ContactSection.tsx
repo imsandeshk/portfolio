@@ -66,7 +66,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
     <section id="contact" className="py-16">
       <div className="container mx-auto">
         <SectionHeading
-          title="Contact Me"
+          title="Get in Touch"
           subtitle="Get in touch or leave your feedback."
         />
 
