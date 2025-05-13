@@ -1,7 +1,7 @@
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code, Award, CheckSquare, ArrowUp } from "lucide-react";
+import { Code, Award, CheckSquare } from "lucide-react";
 
 import ParticlesBackground from "@/components/ParticlesBackground";
 import SplineBackground from "@/components/SplineBackground";
@@ -15,7 +15,6 @@ import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
-import { Button } from "@/components/ui/button";
 
 import {
   getProfile,
@@ -44,10 +43,6 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("projects");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mainContentVisible, setMainContentVisible] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
-
-  // Reference for sections to observe
-  const sectionRefs = useRef<HTMLElement[]>([]);
 
   const tabs = [
     { id: "projects", label: "Projects", icon: <Code size={16} /> },
@@ -65,61 +60,26 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Show/hide scroll to top button
-      setShowScrollTop(window.scrollY > 500);
-
-      // Check if we should observe elements for animation
-      const sections = document.querySelectorAll('.animate-on-scroll');
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        const isVisible = rect.top <= window.innerHeight * 0.85 && rect.bottom >= window.innerHeight * 0.15;
-        
-        if (isVisible) {
-          section.classList.add('visible');
-        } else {
-          // Only remove the class if we're scrolling up, to maintain animations scrolling down
-          if (rect.top > window.innerHeight) {
-            section.classList.remove('visible');
-          }
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
-
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-        duration: 0.9,
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+        duration: 0.8,
         ease: [0.25, 0.1, 0.25, 1.0], // Enhanced easing function for smoother animations
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 35 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: { 
-        duration: 0.8, 
+        duration: 0.7, 
         ease: [0.22, 1, 0.36, 1] 
       }
     }
@@ -137,7 +97,7 @@ const Index = () => {
               key="main-content"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
+              transition={{ duration: 1.0, ease: "easeOut" }}
               className="w-full"
             >
               <ParticlesBackground />
@@ -148,11 +108,11 @@ const Index = () => {
                 variants={sectionVariants}
                 className="relative z-10"
               >
-                <motion.div variants={itemVariants} className="animate-on-scroll">
+                <motion.div variants={itemVariants}>
                   <Hero profile={profile} socialLinks={socialLinks} />
                 </motion.div>
 
-                <motion.section id="content-tabs" className="py-16 animate-on-scroll" variants={itemVariants}>
+                <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
                   <div className="container mx-auto px-4">
                     <TabSwitcher
                       tabs={tabs}
@@ -166,7 +126,7 @@ const Index = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{
-                          duration: 0.7,
+                          duration: 0.6,
                           ease: [0.22, 1, 0.36, 1],
                         }}
                         className="min-h-[400px]"
@@ -183,19 +143,19 @@ const Index = () => {
                   </div>
                 </motion.section>
 
-                <motion.div variants={itemVariants} className="animate-on-scroll">
+                <motion.div variants={itemVariants}>
                   <SkillsSection skills={skills} />
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="animate-on-scroll">
+                <motion.div variants={itemVariants}>
                   <InterestsSection />
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="animate-on-scroll">
+                <motion.div variants={itemVariants}>
                   <EducationSection education={education} />
                 </motion.div>
 
-                <motion.div variants={itemVariants} className="animate-on-scroll">
+                <motion.div variants={itemVariants}>
                   <ContactSection contact={contact} />
                 </motion.div>
               </motion.div>
@@ -209,24 +169,6 @@ const Index = () => {
                 <Footer socialLinks={socialLinks} />
               </motion.div>
             </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Quick Scroll to Top Button */}
-        <AnimatePresence>
-          {showScrollTop && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={scrollToTop}
-              className="scroll-up-button"
-              aria-label="Scroll to top"
-            >
-              <ArrowUp size={20} />
-            </motion.button>
           )}
         </AnimatePresence>
       </div>

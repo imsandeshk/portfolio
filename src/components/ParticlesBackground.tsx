@@ -10,54 +10,118 @@ const ParticlesBackground: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[-10]">
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          fpsLimit: 120,
-          particles: {
-            color: {
-              value: "#ffffff",
+    <Particles
+      id="tsparticles"
+      init={particlesInit}
+      options={{
+        fpsLimit: 60,
+        fullScreen: {
+          enable: true,
+          zIndex: -1,
+        },
+        background: {
+          color: {
+            value: "transparent", 
+          },
+        },
+        particles: {
+          color: {
+            value: "#ffffff",
+          },
+          links: {
+            color: "#ffffff",
+            distance: 150,
+            enable: true,
+            opacity: 0.25,
+            width: 1,
+          },
+          collisions: {
+            enable: true,
+          },
+          move: {
+            direction: "none",
+            enable: true,
+            outModes: {
+              default: "bounce",
             },
-            links: {
-              color: "#ffffff",
-              distance: 150,
+            random: true,
+            speed: 0.8,
+            straight: false,
+          },
+          number: {
+            density: {
               enable: true,
-              opacity: 0.15,
-              width: 1,
+              area: 1600,
             },
-            move: {
-              direction: "none",
+            value: 70,
+            limit: 90,
+          },
+          opacity: {
+            value: {
+              min: 0.15,
+              max: 0.4,
+            },
+            animation: {
               enable: true,
-              outModes: {
-                default: "bounce",
-              },
-              random: false,
-              speed: 0.4,
-              straight: false,
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 60,
-            },
-            opacity: {
-              value: 0.2,
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              value: { min: 1, max: 3 },
+              speed: 0.8,
+              minimumValue: 0.1,
             },
           },
+          shape: {
+            type: "circle",
+          },
+          size: {
+            value: {
+              min: 0.8,
+              max: 2.2,
+            },
+          },
+          twinkle: {
+            particles: {
+              enable: true,
+              frequency: 0.1,
+              opacity: 0.8,
+            },
+          },
+        },
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "grab", 
+              parallax: {
+                enable: true,
+                force: 20,
+                smooth: 10,
+              },
+            },
+            onClick: {
+              enable: true,
+              mode: "push",
+            },
+            resize: true,
+          },
+          modes: {
+            grab: {
+              distance: 180,
+              links: {
+                opacity: 0.6,
+                color: "#ffffff",
+              }
+            },
+            push: {
+              quantity: 1, // Only one particle created per click
+              limit: 5,    
+            },
+            repulse: {
+              distance: 150,
+              duration: 0.5,
+            }
+          },
           detectRetina: true,
-        }}
-      />
-    </div>
+        },
+      }}
+    />
   );
 };
 

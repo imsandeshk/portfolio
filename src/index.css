@@ -81,10 +81,6 @@
     @apply bg-card/40 backdrop-blur-md border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-white/20 transition-all duration-500;
   }
   
-  .glass-card-premium {
-    @apply bg-black/30 backdrop-blur-lg border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.4)] hover:border-white/25 transition-all duration-500;
-  }
-  
   .text-gradient {
     @apply bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent;
   }
@@ -93,25 +89,19 @@
     @apply bg-gradient-to-br from-accent via-accent/80 to-accent/60 bg-clip-text text-transparent;
   }
 
-  /* Rush font for name */
-  .font-rush {
-    font-family: 'Rush', sans-serif;
-    letter-spacing: 0.05em;
-  }
-
   /* Glowing accent effect */
   .glow-accent {
     @apply relative after:absolute after:inset-0 after:blur-md after:bg-accent/20 after:-z-10;
   }
 
-  /* Drop shadow glow */
+  /* New: Drop shadow glow */
   .drop-shadow-glow {
     filter: drop-shadow(0 0 8px rgba(255, 87, 51, 0.6));
   }
 
-  /* Enhanced floating animation */
+  /* Floating animation enhanced */
   .float {
-    animation: float 8s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite;
   }
 
   /* Enhanced shine effect */
@@ -151,16 +141,16 @@
   .stagger-card:nth-child(7) { animation-delay: 0.7s; }
   .stagger-card:nth-child(8) { animation-delay: 0.8s; }
 
-  /* Improved card hover transition */
+  /* New: Improved card hover transition */
   .card-hover-3d {
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .card-hover-3d:hover {
     transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
   }
   
-  /* Badge glow effect */
+  /* New: Badge glow effect */
   .badge-glow {
     @apply relative overflow-hidden;
   }
@@ -178,10 +168,10 @@
       rgba(255, 255, 255, 0.2),
       transparent
     );
-    animation: badgeGlow 2.5s ease-in-out infinite;
+    animation: badgeGlow 2s ease-in-out infinite;
   }
   
-  /* Name animation with flash-slide */
+  /* New: Name animation with flash-slide */
   .name-animation {
     @apply relative overflow-hidden;
   }
@@ -199,12 +189,12 @@
       rgba(255, 255, 255, 0.3),
       transparent
     );
-    animation: nameFlash 4s ease-in-out infinite;
+    animation: nameFlash 3s ease-in-out infinite;
   }
   
   .name-animation:hover {
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.4);
-    transition: text-shadow 0.5s ease;
+    transition: text-shadow 0.3s ease;
   }
   
   /* Auto-scrolling animations for interests section */
@@ -212,7 +202,7 @@
     overflow: hidden;
   }
   .auto-scroll-left > div {
-    animation: scrollLeft 60s linear infinite;
+    animation: scrollLeft 40s linear infinite;
     width: fit-content;
   }
   
@@ -220,15 +210,8 @@
     overflow: hidden;
   }
   .auto-scroll-right > div {
-    animation: scrollRight 60s linear infinite;
+    animation: scrollRight 40s linear infinite;
     width: fit-content;
-  }
-
-  /* Scroll up button */
-  .scroll-up-button {
-    @apply fixed bottom-6 right-6 p-3 rounded-full bg-accent/90 text-white shadow-lg z-50 
-    hover:bg-accent transition-all duration-300 transform hover:scale-110;
-    animation: pulse 2s infinite;
   }
   
   @keyframes scrollLeft {
@@ -247,47 +230,6 @@
     100% {
       transform: translateX(0);
     }
-  }
-
-  /* Detailed animations for scroll effects */
-  .animate-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  }
-  
-  .animate-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Premium card effects */
-  .premium-card {
-    @apply relative overflow-hidden bg-black/40 backdrop-blur-xl border border-white/15 
-    shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_15px_40px_rgba(255,87,51,0.2)];
-    transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
-  }
-  
-  .premium-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.06),
-      transparent
-    );
-    transition: 0.6s;
-    z-index: 0;
-  }
-  
-  .premium-card:hover::before {
-    left: 100%;
-    transition: 0.6s;
   }
 }
 
@@ -367,7 +309,7 @@ section {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-10px) rotate(1deg);
+    transform: translateY(-10px) rotate(2deg);
   }
   100% {
     transform: translateY(0px) rotate(0deg);
@@ -399,10 +341,10 @@ section {
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(255, 87, 51, 0.5), 0 0 10px rgba(255, 87, 51, 0.3);
+    text-shadow: 0 0 5px rgba(255,255,255,0.7), 0 0 10px rgba(255,255,255,0.5);
   }
   50% {
-    box-shadow: 0 0 15px rgba(255, 87, 51, 0.8), 0 0 25px rgba(255, 87, 51, 0.5);
+    text-shadow: 0 0 15px rgba(255,255,255,0.9), 0 0 25px rgba(255,255,255,0.7);
   }
 }
 
@@ -430,45 +372,6 @@ section {
   }
   50% {
     opacity: 0.5;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 87, 51, 0.7);
-  }
-  70% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(255, 87, 51, 0);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(255, 87, 51, 0);
-  }
-}
-
-@keyframes successButton {
-  0% {
-    background-color: hsl(var(--accent));
-  }
-  50% {
-    background-color: #4CAF50;
-  }
-  100% {
-    background-color: hsl(var(--accent));
-  }
-}
-
-@keyframes errorButton {
-  0% {
-    background-color: hsl(var(--accent));
-  }
-  50% {
-    background-color: hsl(var(--destructive));
-  }
-  100% {
-    background-color: hsl(var(--accent));
   }
 }
 
