@@ -14,6 +14,7 @@ import {
   Key,
   LucideIcon 
 } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Interest {
   id: string;
@@ -60,7 +61,7 @@ const InterestsSection: React.FC = () => {
       <div className="container mx-auto">
         <SectionHeading title="Interests" subtitle="What I'm passionate about" />
         
-        <div className="max-w-6xl mx-auto px-4 space-y-4">
+        <div className="max-w-6xl mx-auto px-4 space-y-8">
           {/* First row - scrolling left */}
           <div className="relative overflow-hidden">
             {/* Blur/fade effect at the edges */}
@@ -68,21 +69,21 @@ const InterestsSection: React.FC = () => {
             <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
             
             <div className="auto-scroll-left py-2">
-              <div className="flex gap-2 md:gap-4">
+              <div className="flex gap-4">
                 {interestsRow1.map((interest) => (
                   <div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-2 md:gap-3 min-w-[110px] md:min-w-[180px] h-[50px] md:h-[60px]"
+                    className="flex-shrink-0 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md p-3 flex items-center gap-3 min-w-[200px] h-[60px]"
                   >
                     <div 
-                      className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full" 
+                      className="flex items-center justify-center w-10 h-10 rounded-full" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
                       <span style={{ color: interest.color }}>
-                        <interest.icon size={18} />
+                        <interest.icon size={20} />
                       </span>
                     </div>
-                    <span className="text-xs md:text-sm font-medium whitespace-nowrap">{interest.name}</span>
+                    <span className="text-sm font-medium whitespace-nowrap">{interest.name}</span>
                   </div>
                 ))}
               </div>
@@ -96,21 +97,21 @@ const InterestsSection: React.FC = () => {
             <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
             
             <div className="auto-scroll-right py-2">
-              <div className="flex gap-2 md:gap-4">
+              <div className="flex gap-4">
                 {interestsRow2.map((interest) => (
                   <div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-2 md:gap-3 min-w-[110px] md:min-w-[180px] h-[50px] md:h-[60px]"
+                    className="flex-shrink-0 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md p-3 flex items-center gap-3 min-w-[200px] h-[60px]"
                   >
                     <div 
-                      className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full" 
+                      className="flex items-center justify-center w-10 h-10 rounded-full" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
                       <span style={{ color: interest.color }}>
-                        <interest.icon size={18} />
+                        <interest.icon size={20} />
                       </span>
                     </div>
-                    <span className="text-xs md:text-sm font-medium whitespace-nowrap">{interest.name}</span>
+                    <span className="text-sm font-medium whitespace-nowrap">{interest.name}</span>
                   </div>
                 ))}
               </div>
@@ -119,51 +120,34 @@ const InterestsSection: React.FC = () => {
         </div>
       </div>
       
-      <style jsx global>{`
+      {/* CSS for auto-scrolling animation */}
+      <style jsx>{`
         .auto-scroll-left {
           overflow: hidden;
         }
         .auto-scroll-left > div {
-          animation: scrollLeft 30s linear infinite;
+          animation: scrollLeft 40s linear infinite;
         }
         .auto-scroll-right {
           overflow: hidden;
         }
         .auto-scroll-right > div {
-          animation: scrollRight 30s linear infinite;
+          animation: scrollRight 40s linear infinite;
         }
         @keyframes scrollLeft {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-110px * 8 - 8px * 8));
+            transform: translateX(calc(-200px * 8 - 32px * 8)); /* width of items plus gap */
           }
         }
         @keyframes scrollRight {
           0% {
-            transform: translateX(calc(-110px * 8 - 8px * 8));
+            transform: translateX(calc(-200px * 8 - 32px * 8)); /* width of items plus gap */
           }
           100% {
             transform: translateX(0);
-          }
-        }
-        @media (min-width: 768px) {
-          @keyframes scrollLeft {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(calc(-180px * 8 - 16px * 8));
-            }
-          }
-          @keyframes scrollRight {
-            0% {
-              transform: translateX(calc(-180px * 8 - 16px * 8));
-            }
-            100% {
-              transform: translateX(0);
-            }
           }
         }
       `}</style>
