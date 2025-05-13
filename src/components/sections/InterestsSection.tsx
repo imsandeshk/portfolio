@@ -1,5 +1,5 @@
 
-import { motion } from "framer-motion";
+import React from "react";
 import SectionHeading from "@/components/SectionHeading";
 import { 
   Code2, 
@@ -60,7 +60,7 @@ const InterestsSection: React.FC = () => {
       <div className="container mx-auto">
         <SectionHeading title="Interests" subtitle="What I'm passionate about" />
         
-        <div className="max-w-6xl mx-auto px-4 space-y-4">
+        <div className="max-w-6xl mx-auto px-4 space-y-2">
           {/* First row - scrolling left */}
           <div className="relative overflow-hidden">
             {/* Blur/fade effect at the edges */}
@@ -68,21 +68,21 @@ const InterestsSection: React.FC = () => {
             <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
             
             <div className="auto-scroll-left py-2">
-              <div className="flex gap-2 md:gap-4">
+              <div className="flex gap-1 md:gap-4">
                 {interestsRow1.map((interest) => (
                   <div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-2 md:gap-3 min-w-[110px] md:min-w-[180px] h-[50px] md:h-[60px]"
+                    className="flex-shrink-0 rounded-[1.2rem] bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
                   >
                     <div 
-                      className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full" 
+                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
                       <span style={{ color: interest.color }}>
-                        <interest.icon size={18} />
+                        <interest.icon size={16} />
                       </span>
                     </div>
-                    <span className="text-xs md:text-sm font-medium whitespace-nowrap">{interest.name}</span>
+                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate">{interest.name}</span>
                   </div>
                 ))}
               </div>
@@ -96,21 +96,21 @@ const InterestsSection: React.FC = () => {
             <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
             
             <div className="auto-scroll-right py-2">
-              <div className="flex gap-2 md:gap-4">
+              <div className="flex gap-1 md:gap-4">
                 {interestsRow2.map((interest) => (
                   <div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-3xl bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-2 md:gap-3 min-w-[110px] md:min-w-[180px] h-[50px] md:h-[60px]"
+                    className="flex-shrink-0 rounded-[1.2rem] bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
                   >
                     <div 
-                      className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full" 
+                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
                       <span style={{ color: interest.color }}>
-                        <interest.icon size={18} />
+                        <interest.icon size={16} />
                       </span>
                     </div>
-                    <span className="text-xs md:text-sm font-medium whitespace-nowrap">{interest.name}</span>
+                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate">{interest.name}</span>
                   </div>
                 ))}
               </div>
@@ -119,30 +119,30 @@ const InterestsSection: React.FC = () => {
         </div>
       </div>
       
-      <style jsx global>{`
+      <style>{`
         .auto-scroll-left {
           overflow: hidden;
         }
         .auto-scroll-left > div {
-          animation: scrollLeft 30s linear infinite;
+          animation: scrollLeft 20s linear infinite;
         }
         .auto-scroll-right {
           overflow: hidden;
         }
         .auto-scroll-right > div {
-          animation: scrollRight 30s linear infinite;
+          animation: scrollRight 20s linear infinite;
         }
         @keyframes scrollLeft {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-110px * 8 - 8px * 8));
+            transform: translateX(calc(-90px * 8 - 8px * 8));
           }
         }
         @keyframes scrollRight {
           0% {
-            transform: translateX(calc(-110px * 8 - 8px * 8));
+            transform: translateX(calc(-90px * 8 - 8px * 8));
           }
           100% {
             transform: translateX(0);
