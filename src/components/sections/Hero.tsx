@@ -85,23 +85,8 @@ const Hero: React.FC<HeroProps> = ({
           <motion.div variants={nameVariants} className="mb-6 overflow-hidden">
             <motion.h1 
               className={`font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold ${
-                theme === 'dark' ? 'text-gradient' : 'text-gray-900'
+                theme === 'dark' ? 'text-gradient' : 'text-gray-800'
               } leading-tight`}
-              animate={theme === 'dark' ? {
-                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-              } : {}}
-              transition={{
-                duration: 15,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-              style={theme === 'dark' ? {
-                backgroundSize: "300% 300%",
-                backgroundImage: "linear-gradient(90deg, #ffffff, #d1d1d1, #ffffff)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              } : {}}
             >
               {profile.name}
             </motion.h1>
@@ -186,7 +171,7 @@ const Hero: React.FC<HeroProps> = ({
           <div className="relative max-w-md mx-auto">
             <motion.div 
               className={`aspect-square rounded-full overflow-hidden border-2 ${
-                theme === 'dark' ? 'border-white/10' : 'border-gray-200'
+                theme === 'dark' ? 'border-white/10' : 'border-gray-300'
               }`}
               initial={{ boxShadow: "0 0 0 rgba(255,255,255,0)" }}
               animate={{ 
