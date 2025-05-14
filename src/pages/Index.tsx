@@ -16,6 +16,8 @@ import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import ScrollToTop from "@/components/ScrollToTop";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTheme } from "@/contexts/ThemeContext";
 
 import {
   getProfile,
@@ -30,6 +32,9 @@ import {
 } from "@/services/storageService";
 
 const Index = () => {
+  // Get theme information
+  const { theme } = useTheme();
+  
   // Fetch all stored data
   const profile = getProfile();
   const socialLinks = getSocialLinks();
@@ -107,13 +112,27 @@ const Index = () => {
   return (
     <>
       <SplineBackground />
-      <div className="fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black via-black/70 to-transparent z-[-9]" />
+      <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black ${
+        theme === 'light' ? 'via-black/20 to-transparent' : 'via-black/70 to-transparent'
+      } z-[-9]`} />
+      
+      {/* Theme-specific gradient blur background */}
+      <div className={`fixed inset-0 z-[-10] ${
+        theme === 'light' 
+          ? 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
+          : 'bg-gradient-to-br from-gray-950 via-gray-900 to-black'
+      } opacity-80`} />
       
       {/* Progress bar at the top */}
       <motion.div 
         className="fixed top-0 left-0 right-0 h-1 bg-accent z-50"
         style={{ scaleX, transformOrigin: "0%" }}
       />
+
+      {/* Theme toggle positioned in top-right corner */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
 
       <div className="relative z-10 bg-transparent min-h-screen">
         <AnimatePresence mode="wait">

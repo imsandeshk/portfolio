@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import * as Icons from "lucide-react";
 import { SocialLink } from "@/services/storageService";
 import { LucideIcon } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface SocialLinksProps {
   links: SocialLink[];
@@ -19,6 +20,8 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   showLabels = false,
   infiniteScroll = false
 }) => {
+  const { theme } = useTheme();
+  
   // Helper function to get platform-specific icon
   const getPlatformIcon = (platform: string): LucideIcon => {
     // Map common social platforms to their icons
@@ -70,7 +73,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     if (platformLower.includes("facebook")) return "#1877F2";
     if (platformLower.includes("twitter") || platformLower.includes("x")) return "#1DA1F2";
     if (platformLower.includes("linkedin")) return "#0A66C2";
-    if (platformLower.includes("github")) return "#333333";
+    if (platformLower.includes("github")) return theme === "dark" ? "#ffffff" : "#333333";
     if (platformLower.includes("instagram")) return "#E4405F";
     if (platformLower.includes("youtube")) return "#FF0000";
     if (platformLower.includes("dribbble")) return "#EA4C89";
@@ -81,7 +84,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     if (platformLower.includes("whatsapp")) return "#25D366";
     if (platformLower.includes("email") || platformLower.includes("mail")) return "#EA4335";
     
-    return "#ffffff"; // Default color
+    return theme === "dark" ? "#ffffff" : "#333333"; // Default color
   };
 
   // Animation variants for the container
@@ -171,7 +174,8 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
                   <IconComponent 
                     size={iconSize} 
                     color={platformColor} 
-                    strokeWidth={1.5} 
+                    strokeWidth={1.5}
+                    className={link.platform.toLowerCase().includes("github") ? "github-icon" : ""}
                   />
                 </div>
               </motion.a>
@@ -200,9 +204,11 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white transition-all duration-300 flex items-center gap-2 
-                      bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-md p-2.5 rounded-full 
-                      hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border border-white/10"
+            className={`text-white transition-all duration-300 flex items-center gap-2 
+                      backdrop-blur-md p-2.5 rounded-full 
+                      hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border 
+                      ${theme === 'dark' ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' : 
+                      'bg-gradient-to-br from-white/60 to-white/40 border-black/10'}`}
             variants={item}
             whileHover="hover"
             initial="rest"
@@ -216,7 +222,10 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
               variants={iconHover}
               style={{ color: platformColor }}
             >
-              <IconComponent size={iconSize} />
+              <IconComponent 
+                size={iconSize} 
+                className={link.platform.toLowerCase().includes("github") ? "github-icon" : ""}
+              />
             </motion.div>
             {showLabels && (
               <span className="text-sm hidden md:inline pr-2">{link.platform}</span>

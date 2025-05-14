@@ -3,8 +3,11 @@ import React, { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { Engine } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const ParticlesBackground: React.FC = () => {
+  const { theme } = useTheme();
+  
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
@@ -26,13 +29,13 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: "#ffffff",
+            value: theme === "dark" ? "#ffffff" : "#333333",
           },
           links: {
-            color: "#ffffff",
+            color: theme === "dark" ? "#ffffff" : "#333333",
             distance: 150,
             enable: true,
-            opacity: 0.25,
+            opacity: theme === "dark" ? 0.25 : 0.4,
             width: 1,
           },
           collisions: {
@@ -58,13 +61,13 @@ const ParticlesBackground: React.FC = () => {
           },
           opacity: {
             value: {
-              min: 0.15,
-              max: 0.4,
+              min: theme === "dark" ? 0.15 : 0.3,
+              max: theme === "dark" ? 0.4 : 0.6,
             },
             animation: {
               enable: true,
               speed: 0.8,
-              minimumValue: 0.1,
+              minimumValue: theme === "dark" ? 0.1 : 0.2,
             },
           },
           shape: {
@@ -105,8 +108,8 @@ const ParticlesBackground: React.FC = () => {
             grab: {
               distance: 180,
               links: {
-                opacity: 0.6,
-                color: "#ffffff",
+                opacity: theme === "dark" ? 0.6 : 0.8,
+                color: theme === "dark" ? "#ffffff" : "#333333",
               }
             },
             push: {
