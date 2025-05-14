@@ -113,15 +113,15 @@ const Index = () => {
     <>
       <SplineBackground />
       <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black ${
-        theme === 'light' ? 'via-black/20 to-transparent' : 'via-black/70 to-transparent'
+        theme === 'light' ? 'via-black/5 to-transparent' : 'via-black/70 to-transparent'
       } z-[-9]`} />
       
       {/* Theme-specific gradient blur background */}
       <div className={`fixed inset-0 z-[-10] ${
         theme === 'light' 
-          ? 'bg-gradient-to-br from-blue-50 via-white to-purple-50'
-          : 'bg-gradient-to-br from-gray-950 via-gray-900 to-black'
-      } opacity-80`} />
+          ? 'bg-gradient-to-br from-blue-50/80 via-white/70 to-purple-50/80'
+          : 'bg-gradient-to-br from-black via-gray-900 to-black'
+      } opacity-90`} />
       
       {/* Progress bar at the top */}
       <motion.div 

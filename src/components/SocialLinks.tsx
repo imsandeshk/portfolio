@@ -207,15 +207,16 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             className={`transition-all duration-300 flex items-center gap-2 
                       backdrop-blur-md p-2.5 rounded-full 
                       hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border 
-                      ${theme === 'dark' ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' : 
-                      'bg-gradient-to-br from-white/70 to-white/50 border-black/10'}`}
+                      ${theme === 'dark' 
+                        ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' 
+                        : 'bg-gradient-to-br from-white/90 to-white/70 border-black/10 shadow-md'}`}
             variants={item}
             whileHover="hover"
             initial="rest"
             title={link.platform}
             style={{ 
               borderColor: `${platformColor}30`,
-              boxShadow: `0 0 10px ${platformColor}20`
+              boxShadow: `0 0 10px ${platformColor}${theme === 'dark' ? '20' : '40'}`
             }}
           >
             <motion.div 
@@ -225,6 +226,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
               <IconComponent 
                 size={iconSize} 
                 className={link.platform.toLowerCase().includes("github") ? "github-icon" : ""}
+                strokeWidth={theme === 'dark' ? 1.5 : 2}
               />
             </motion.div>
             {showLabels && (

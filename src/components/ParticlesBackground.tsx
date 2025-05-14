@@ -29,14 +29,14 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: theme === "dark" ? "#ffffff" : "#6366F1",
+            value: theme === "dark" ? "#ffffff" : "#3b82f6",
           },
           links: {
-            color: theme === "dark" ? "#ffffff" : "#6366F1",
+            color: theme === "dark" ? "#ffffff" : "#3b82f6",
             distance: 150,
             enable: true,
             opacity: theme === "dark" ? 0.25 : 0.4,
-            width: 1,
+            width: theme === "dark" ? 1 : 1.2,
           },
           collisions: {
             enable: true,
@@ -56,18 +56,18 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 1600,
             },
-            value: 70,
-            limit: 90,
+            value: theme === "dark" ? 70 : 50,
+            limit: theme === "dark" ? 90 : 70,
           },
           opacity: {
             value: {
-              min: theme === "dark" ? 0.15 : 0.3,
-              max: theme === "dark" ? 0.4 : 0.6,
+              min: theme === "dark" ? 0.15 : 0.2,
+              max: theme === "dark" ? 0.4 : 0.5,
             },
             animation: {
               enable: true,
               speed: 0.8,
-              minimumValue: theme === "dark" ? 0.1 : 0.2,
+              minimumValue: theme === "dark" ? 0.1 : 0.15,
             },
           },
           shape: {
@@ -76,7 +76,7 @@ const ParticlesBackground: React.FC = () => {
           size: {
             value: {
               min: 0.8,
-              max: 2.2,
+              max: theme === "dark" ? 2.2 : 2.5,
             },
           },
           twinkle: {
@@ -108,12 +108,12 @@ const ParticlesBackground: React.FC = () => {
             grab: {
               distance: 180,
               links: {
-                opacity: theme === "dark" ? 0.6 : 0.8,
-                color: theme === "dark" ? "#ffffff" : "#6366F1",
+                opacity: theme === "dark" ? 0.6 : 0.7,
+                color: theme === "dark" ? "#ffffff" : "#3b82f6",
               }
             },
             push: {
-              quantity: 1, // Only one particle created per click
+              quantity: 1,
               limit: 5,    
             },
             repulse: {

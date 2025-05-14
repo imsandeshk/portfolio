@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light';
@@ -24,6 +25,15 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Update the data-theme attribute on the document element
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
+    
+    // Apply or remove a class to trigger other CSS changes
+    if (theme === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+      document.body.classList.add('light-mode');
+    }
     
     // Save theme preference to localStorage
     localStorage.setItem('theme', theme);

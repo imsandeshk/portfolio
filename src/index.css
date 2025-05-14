@@ -36,23 +36,23 @@
   }
 
   :root[data-theme="light"] {
-    --background: 216 45% 98%;
-    --foreground: 220 10% 15%;
+    --background: 220 35% 97%;
+    --foreground: 220 25% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 10% 15%;
+    --card-foreground: 220 25% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 15%;
+    --popover-foreground: 220 25% 20%;
 
-    --primary: 220 10% 15%;
+    --primary: 220 25% 20%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 20% 92%;
-    --secondary-foreground: 220 10% 20%;
+    --secondary: 210 15% 90%;
+    --secondary-foreground: 220 25% 20%;
 
-    --muted: 210 20% 92%;
-    --muted-foreground: 220 5% 40%;
+    --muted: 210 15% 90%;
+    --muted-foreground: 220 10% 40%;
 
     --accent: 12 90% 60%;
     --accent-foreground: 0 0% 98%;
@@ -515,9 +515,66 @@ body {
 }
 
 [data-theme="dark"] .github-icon {
-  @apply text-white opacity-80 hover:opacity-100;
+  @apply text-white opacity-90 hover:opacity-100;
 }
   
 [data-theme="light"] .github-icon {
-  @apply text-[#24292e] opacity-90 hover:opacity-100;
+  @apply text-[#24292e] opacity-100 hover:opacity-100;
+}
+
+/* Add premium light mode styles */
+.light-mode {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.light-mode .glass-card {
+  @apply bg-white/50 border-white/30 shadow-lg;
+}
+
+.light-mode .text-gradient {
+  @apply bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent;
+}
+
+/* Dark mode enhancements */
+.dark-mode {
+  background: linear-gradient(to bottom, #000000, #000000);
+}
+
+.dark-mode .glass-card {
+  @apply bg-black/40 border-white/10;
+}
+
+/* Light theme contact button enhancement */
+[data-theme="light"] button.bg-white {
+  @apply bg-primary text-white shadow-md hover:bg-primary/90;
+}
+
+/* Light theme adjustments for better contrast */
+[data-theme="light"] .text-muted-foreground {
+  @apply text-gray-600;
+}
+
+/* Light theme social icon adjustments */
+[data-theme="light"] .social-icon {
+  @apply bg-white/70 shadow-md;
+}
+
+/* Profile image enhancement */
+.profile-image {
+  filter: grayscale(80%);
+  transition: transform 0.8s ease-out, filter 0.8s ease-out;
+}
+
+.profile-image:hover {
+  transform: scale(1.03);
+  filter: grayscale(0%);
+}
+
+[data-theme="light"] .profile-image {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Premium feature - glow effect for light theme */
+[data-theme="light"] .premium-glow {
+  box-shadow: 0 0 25px rgba(100, 100, 255, 0.15);
 }
