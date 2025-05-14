@@ -89,21 +89,21 @@ const Index = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3, // Increased for slower staggering
+        staggerChildren: 0.3,
         delayChildren: 0.15,
-        duration: 1.0, // Increased for slower animation
-        ease: [0.22, 1, 0.36, 1], // Enhanced easing function for smoother animations
+        duration: 1.0,
+        ease: [0.22, 1, 0.36, 1],
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 }, // Increased y offset for more noticeable animation
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
       transition: { 
-        duration: 1.0, // Increased for slower animation
+        duration: 1.0,
         ease: [0.22, 1, 0.36, 1] 
       }
     }
@@ -112,15 +112,15 @@ const Index = () => {
   return (
     <>
       <SplineBackground />
-      <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black ${
-        theme === 'light' ? 'via-black/5 to-transparent' : 'via-black/70 to-transparent'
+      <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b ${
+        theme === 'light' ? 'from-gray-100 via-gray-50/5 to-transparent' : 'from-black via-black/70 to-transparent'
       } z-[-9]`} />
       
-      {/* Theme-specific gradient blur background */}
+      {/* Theme-specific background */}
       <div className={`fixed inset-0 z-[-10] ${
         theme === 'light' 
-          ? 'bg-gradient-to-br from-blue-50/80 via-white/70 to-purple-50/80'
-          : 'bg-gradient-to-br from-black via-gray-900 to-black'
+          ? 'bg-[#f8fafc]'
+          : 'bg-black'
       } opacity-90`} />
       
       {/* Progress bar at the top */}

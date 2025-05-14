@@ -36,7 +36,7 @@
   }
 
   :root[data-theme="light"] {
-    --background: 220 35% 97%;
+    --background: 210 40% 98%;
     --foreground: 220 25% 20%;
 
     --card: 0 0% 100%;
@@ -559,6 +559,28 @@ body {
   @apply bg-white/70 shadow-md;
 }
 
+/* Add premium light mode styles */
+.light-mode {
+  background: #f8fafc;
+}
+
+.light-mode .glass-card {
+  @apply bg-white/60 border-gray-200 shadow-md;
+}
+
+.light-mode .text-gradient {
+  @apply bg-gradient-to-br from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent;
+}
+
+/* Dark mode enhancements */
+.dark-mode {
+  background: #000000;
+}
+
+.dark-mode .glass-card {
+  @apply bg-black/40 border-white/10;
+}
+
 /* Profile image enhancement */
 .profile-image {
   filter: grayscale(80%);
@@ -574,7 +596,27 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Premium feature - glow effect for light theme */
-[data-theme="light"] .premium-glow {
-  box-shadow: 0 0 25px rgba(100, 100, 255, 0.15);
+/* Light theme text adjustments for better visibility */
+[data-theme="light"] h1, 
+[data-theme="light"] h2, 
+[data-theme="light"] h3 {
+  @apply text-gray-800;
+}
+
+[data-theme="light"] p {
+  @apply text-gray-700;
+}
+
+[data-theme="light"] .badge {
+  @apply bg-gray-200 text-gray-800;
+}
+
+/* Light theme card adjustments */
+[data-theme="light"] .card-hover {
+  @apply shadow-md hover:shadow-lg;
+}
+
+/* Light theme name styling for better visibility */
+[data-theme="light"] .text-gradient {
+  @apply text-gray-900 font-bold;
 }

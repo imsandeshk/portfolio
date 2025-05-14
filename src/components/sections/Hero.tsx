@@ -6,6 +6,7 @@ import SocialLinks from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ExternalLink, Briefcase } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface HeroProps {
   profile: ProfileInfo;
@@ -24,6 +25,7 @@ const Hero: React.FC<HeroProps> = ({
 }) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { theme } = useTheme();
 
   const handleContactClick = () => {
     const contactSection = document.getElementById("contact");
@@ -82,29 +84,33 @@ const Hero: React.FC<HeroProps> = ({
         >
           <motion.div variants={nameVariants} className="mb-6 overflow-hidden">
             <motion.h1 
-              className="font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold text-gradient leading-tight"
-              animate={{
+              className={`font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold ${
+                theme === 'dark' ? 'text-gradient' : 'text-gray-900'
+              } leading-tight`}
+              animate={theme === 'dark' ? {
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-              }}
+              } : {}}
               transition={{
                 duration: 15,
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
-              style={{
+              style={theme === 'dark' ? {
                 backgroundSize: "300% 300%",
                 backgroundImage: "linear-gradient(90deg, #ffffff, #d1d1d1, #ffffff)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-              }}
+              } : {}}
             >
               {profile.name}
             </motion.h1>
           </motion.div>
           
           <motion.div variants={itemVariants}>
-            <h2 className={`font-playfair ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 text-accent/90`}>
+            <h2 className={`font-playfair ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 ${
+              theme === 'dark' ? 'text-accent/90' : 'text-accent'
+            }`}>
               {profile.title}
             </h2>
           </motion.div>
@@ -115,19 +121,25 @@ const Hero: React.FC<HeroProps> = ({
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.5 }}
-                className="flex items-center gap-2 bg-black/30 backdrop-blur-md border border-green-500/20 rounded-full px-4 py-1.5"
+                className={`flex items-center gap-2 ${
+                  theme === 'dark' 
+                    ? 'bg-black/30 backdrop-blur-md border border-green-500/20' 
+                    : 'bg-white backdrop-blur-md border border-green-500/20 shadow-sm'
+                } rounded-full px-4 py-1.5`}
               >
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <span className="text-green-400 text-sm font-medium">Open to Work</span>
+                <span className="text-green-500 text-sm font-medium">Open to Work</span>
               </motion.div>
             </div>
           </motion.div>
 
           <motion.div variants={itemVariants}>
-            <p className={`${isMobile ? 'text-base' : 'text-lg'} text-muted-foreground mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed`}>
+            <p className={`${isMobile ? 'text-base' : 'text-lg'} ${
+              theme === 'dark' ? 'text-muted-foreground' : 'text-gray-600'
+            } mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed`}>
               {profile.bio}
             </p>
           </motion.div>
@@ -153,7 +165,11 @@ const Hero: React.FC<HeroProps> = ({
             <Button 
               onClick={handleContactClick} 
               size="lg" 
-              className="mt-2 sm:mt-0 text-black bg-white hover:bg-white/90 rounded-xl text-base font-semibold transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+              className={`mt-2 sm:mt-0 text-base font-semibold transition-all duration-300 rounded-xl ${
+                theme === 'dark'
+                  ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.5)]'
+                  : 'bg-primary text-white hover:bg-primary/90 shadow-md'
+              }`}
             >
               Contact Me
             </Button>
@@ -169,9 +185,15 @@ const Hero: React.FC<HeroProps> = ({
         >
           <div className="relative max-w-md mx-auto">
             <motion.div 
-              className="aspect-square rounded-full overflow-hidden border-2 border-white/10"
+              className={`aspect-square rounded-full overflow-hidden border-2 ${
+                theme === 'dark' ? 'border-white/10' : 'border-gray-200'
+              }`}
               initial={{ boxShadow: "0 0 0 rgba(255,255,255,0)" }}
-              animate={{ boxShadow: "0 0 40px rgba(255,255,255,0.2)" }}
+              animate={{ 
+                boxShadow: theme === 'dark' 
+                  ? "0 0 40px rgba(255,255,255,0.2)" 
+                  : "0 0 40px rgba(0,0,0,0.1)" 
+              }}
               transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
             >
               <img 
@@ -195,7 +217,9 @@ const Hero: React.FC<HeroProps> = ({
       
       {/* Scroll indicator */}
       <motion.div 
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2" 
+        className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 ${
+          theme === 'dark' ? 'text-white/50' : 'text-gray-500'
+        }`}
         initial={{ opacity: 0, y: -10 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ 
@@ -205,12 +229,16 @@ const Hero: React.FC<HeroProps> = ({
           repeatType: "reverse" 
         }}
       >
-        <ArrowDown className="w-8 h-8 text-white/50" />
+        <ArrowDown className="w-8 h-8" />
       </motion.div>
 
       {/* Glow effects */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 filter blur-[80px] -z-0 animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500/10 filter blur-[100px] -z-0 animate-pulse" style={{ animationDelay: '1s' }} />
+      {theme === 'dark' && (
+        <>
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 filter blur-[80px] -z-0 animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500/10 filter blur-[100px] -z-0 animate-pulse" style={{ animationDelay: '1s' }} />
+        </>
+      )}
     </section>
   );
 };

@@ -73,12 +73,12 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     if (platformLower.includes("facebook")) return "#1877F2";
     if (platformLower.includes("twitter") || platformLower.includes("x")) return "#1DA1F2";
     if (platformLower.includes("linkedin")) return "#0A66C2";
-    if (platformLower.includes("github")) return theme === "dark" ? "#ffffff" : "#24292e";
+    if (platformLower.includes("github")) return theme === "dark" ? "#ffffff" : "#333333";
     if (platformLower.includes("instagram")) return "#E4405F";
     if (platformLower.includes("youtube")) return "#FF0000";
     if (platformLower.includes("dribbble")) return "#EA4C89";
     if (platformLower.includes("behance")) return "#1769FF";
-    if (platformLower.includes("medium")) return theme === "dark" ? "#ffffff" : "#000000";
+    if (platformLower.includes("medium")) return theme === "dark" ? "#ffffff" : "#333333";
     if (platformLower.includes("discord")) return "#5865F2";
     if (platformLower.includes("telegram")) return "#26A5E4";
     if (platformLower.includes("whatsapp")) return "#25D366";
@@ -209,14 +209,14 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
                       hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border 
                       ${theme === 'dark' 
                         ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' 
-                        : 'bg-gradient-to-br from-white/90 to-white/70 border-black/10 shadow-md'}`}
+                        : 'bg-white border-gray-200 shadow-md'}`}
             variants={item}
             whileHover="hover"
             initial="rest"
             title={link.platform}
             style={{ 
               borderColor: `${platformColor}30`,
-              boxShadow: `0 0 10px ${platformColor}${theme === 'dark' ? '20' : '40'}`
+              boxShadow: `0 0 10px ${platformColor}${theme === 'dark' ? '20' : '10'}`
             }}
           >
             <motion.div 

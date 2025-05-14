@@ -35,8 +35,8 @@ const ParticlesBackground: React.FC = () => {
             color: theme === "dark" ? "#ffffff" : "#3b82f6",
             distance: 150,
             enable: true,
-            opacity: theme === "dark" ? 0.25 : 0.4,
-            width: theme === "dark" ? 1 : 1.2,
+            opacity: theme === "dark" ? 0.25 : 0.3,
+            width: theme === "dark" ? 1 : 1,
           },
           collisions: {
             enable: true,
@@ -48,7 +48,7 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: 0.8,
+            speed: theme === "dark" ? 0.8 : 0.6,
             straight: false,
           },
           number: {
@@ -56,18 +56,18 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 1600,
             },
-            value: theme === "dark" ? 70 : 50,
-            limit: theme === "dark" ? 90 : 70,
+            value: theme === "dark" ? 70 : 40,
+            limit: theme === "dark" ? 90 : 60,
           },
           opacity: {
             value: {
-              min: theme === "dark" ? 0.15 : 0.2,
-              max: theme === "dark" ? 0.4 : 0.5,
+              min: theme === "dark" ? 0.15 : 0.1,
+              max: theme === "dark" ? 0.4 : 0.3,
             },
             animation: {
               enable: true,
               speed: 0.8,
-              minimumValue: theme === "dark" ? 0.1 : 0.15,
+              minimumValue: theme === "dark" ? 0.1 : 0.05,
             },
           },
           shape: {
@@ -76,14 +76,14 @@ const ParticlesBackground: React.FC = () => {
           size: {
             value: {
               min: 0.8,
-              max: theme === "dark" ? 2.2 : 2.5,
+              max: theme === "dark" ? 2.2 : 1.8,
             },
           },
           twinkle: {
             particles: {
               enable: true,
               frequency: 0.1,
-              opacity: 0.8,
+              opacity: theme === "dark" ? 0.8 : 0.5,
             },
           },
         },
@@ -108,7 +108,7 @@ const ParticlesBackground: React.FC = () => {
             grab: {
               distance: 180,
               links: {
-                opacity: theme === "dark" ? 0.6 : 0.7,
+                opacity: theme === "dark" ? 0.6 : 0.4,
                 color: theme === "dark" ? "#ffffff" : "#3b82f6",
               }
             },

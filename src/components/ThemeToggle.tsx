@@ -10,15 +10,16 @@ export function ThemeToggle() {
     <motion.button
       onClick={toggleTheme}
       className={`flex items-center justify-center rounded-full w-10 h-10 p-2 
-        transition-all duration-300 shadow-lg
+        transition-all duration-300 shadow-md
         ${theme === 'dark' 
           ? 'bg-background/40 backdrop-blur-md border border-white/10 hover:bg-background/60'
-          : 'bg-white/60 backdrop-blur-md border border-black/10 hover:bg-white/80'}`}
+          : 'bg-white backdrop-blur-md border border-gray-200 hover:bg-gray-50'}`}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       initial={{ opacity: 0, rotate: -20 }}
       animate={{ opacity: 1, rotate: 0 }}
       transition={{ duration: 0.3 }}
+      aria-label="Toggle theme"
     >
       <motion.div
         key={theme}
