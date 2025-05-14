@@ -29,10 +29,10 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: theme === "dark" ? "#ffffff" : "#333333",
+            value: theme === "dark" ? "#ffffff" : "#6366F1",
           },
           links: {
-            color: theme === "dark" ? "#ffffff" : "#333333",
+            color: theme === "dark" ? "#ffffff" : "#6366F1",
             distance: 150,
             enable: true,
             opacity: theme === "dark" ? 0.25 : 0.4,
@@ -109,7 +109,7 @@ const ParticlesBackground: React.FC = () => {
               distance: 180,
               links: {
                 opacity: theme === "dark" ? 0.6 : 0.8,
-                color: theme === "dark" ? "#ffffff" : "#333333",
+                color: theme === "dark" ? "#ffffff" : "#6366F1",
               }
             },
             push: {

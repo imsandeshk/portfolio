@@ -8,7 +8,11 @@ export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   
   return (
-    <div className="flex items-center gap-2 bg-background/30 backdrop-blur-md rounded-full p-2 border border-white/10">
+    <div className={`flex items-center gap-2 ${
+      theme === 'dark' 
+        ? 'bg-background/30 backdrop-blur-md border border-white/10'
+        : 'bg-white/40 backdrop-blur-md border border-black/10'
+      } rounded-full p-2`}>
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -19,12 +23,12 @@ export function ThemeToggle() {
           id="theme-toggle" 
           checked={theme === 'light'}
           onCheckedChange={toggleTheme}
-          className="data-[state=checked]:bg-white data-[state=unchecked]:bg-secondary"
+          className={`data-[state=checked]:bg-accent data-[state=unchecked]:bg-secondary`}
         />
         <span className="sr-only">Toggle theme</span>
         
         <motion.div 
-          className="ml-2 text-white"
+          className={`ml-2 ${theme === 'dark' ? 'text-white' : 'text-primary'}`}
           key={theme}
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

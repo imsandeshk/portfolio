@@ -73,12 +73,12 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     if (platformLower.includes("facebook")) return "#1877F2";
     if (platformLower.includes("twitter") || platformLower.includes("x")) return "#1DA1F2";
     if (platformLower.includes("linkedin")) return "#0A66C2";
-    if (platformLower.includes("github")) return theme === "dark" ? "#ffffff" : "#333333";
+    if (platformLower.includes("github")) return theme === "dark" ? "#ffffff" : "#24292e";
     if (platformLower.includes("instagram")) return "#E4405F";
     if (platformLower.includes("youtube")) return "#FF0000";
     if (platformLower.includes("dribbble")) return "#EA4C89";
     if (platformLower.includes("behance")) return "#1769FF";
-    if (platformLower.includes("medium")) return "#000000";
+    if (platformLower.includes("medium")) return theme === "dark" ? "#ffffff" : "#000000";
     if (platformLower.includes("discord")) return "#5865F2";
     if (platformLower.includes("telegram")) return "#26A5E4";
     if (platformLower.includes("whatsapp")) return "#25D366";
@@ -204,11 +204,11 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`text-white transition-all duration-300 flex items-center gap-2 
+            className={`transition-all duration-300 flex items-center gap-2 
                       backdrop-blur-md p-2.5 rounded-full 
                       hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border 
                       ${theme === 'dark' ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' : 
-                      'bg-gradient-to-br from-white/60 to-white/40 border-black/10'}`}
+                      'bg-gradient-to-br from-white/70 to-white/50 border-black/10'}`}
             variants={item}
             whileHover="hover"
             initial="rest"
@@ -228,7 +228,9 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
               />
             </motion.div>
             {showLabels && (
-              <span className="text-sm hidden md:inline pr-2">{link.platform}</span>
+              <span className={`text-sm hidden md:inline pr-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                {link.platform}
+              </span>
             )}
             {!showLabels && <span className="sr-only">{link.platform}</span>}
           </motion.a>
