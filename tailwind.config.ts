@@ -79,6 +79,17 @@ export default {
 					800: "#1f2937",
 					900: "#111827",
 					950: "#030712",
+				},
+				dark: {
+					100: "#0a0a0a",
+					200: "#111111",
+					300: "#161616",
+					400: "#1a1a1a",
+					500: "#222222",
+					600: "#2a2a2a",
+					700: "#333333",
+					800: "#3d3d3d",
+					900: "#454545",
 				}
 			},
 			borderRadius: {
@@ -88,20 +99,12 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				},
 				'fade-in': {
 					'0%': {
@@ -144,6 +147,19 @@ export default {
 				'slide-out-right': {
 					'0%': { transform: 'translateX(0)' },
 					'100%': { transform: 'translateX(100%)' }
+				},
+				'gradient-x': {
+					'0%, 100%': {
+						'background-position': '0% 50%'
+					},
+					'50%': {
+						'background-position': '100% 50%'
+					}
+				},
+				'gradient-animation': {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' }
 				}
 			},
 			animation: {
@@ -156,8 +172,16 @@ export default {
 				'slide-in-right': 'slide-in-right 0.3s ease-out',
 				'slide-out-right': 'slide-out-right 0.3s ease-out',
 				'enter': 'fade-in 0.3s ease-out, scale-in 0.2s ease-out',
-				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out'
-			}
+				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out',
+				'gradient-x': 'gradient-x 2s ease infinite',
+				'gradient': 'gradient-animation 15s ease infinite'
+			},
+			backgroundImage: {
+				'gradient-animated': 'linear-gradient(-45deg, #111111, #191919, #161616, #121212)',
+			},
+			backgroundSize: {
+				'animated-gradient': '400% 400%',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

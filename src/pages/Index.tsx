@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
 
 import ParticlesBackground from "@/components/ParticlesBackground";
@@ -51,19 +51,6 @@ const Index = () => {
   const [mainContentVisible, setMainContentVisible] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { 
-    stiffness: 100, 
-    damping: 30, 
-    restDelta: 0.001 
-  });
-
-  const tabs = [
-    { id: "projects", label: "Projects", icon: <Code size={16} /> },
-    { id: "certificates", label: "Certificates", icon: <Award size={16} /> },
-    { id: "tasks", label: "Tasks", icon: <CheckSquare size={16} /> },
-  ];
-
   useEffect(() => {
     // Show main content with a slight delay for better transition
     const timer = setTimeout(() => {
@@ -113,21 +100,15 @@ const Index = () => {
     <>
       <SplineBackground />
       <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b ${
-        theme === 'light' ? 'from-gray-100 via-gray-50/5 to-transparent' : 'from-black via-black/70 to-transparent'
+        theme === 'light' ? 'from-black via-black/5 to-transparent' : 'from-black via-black/70 to-transparent'
       } z-[-9]`} />
       
       {/* Theme-specific background */}
       <div className={`fixed inset-0 z-[-10] ${
         theme === 'light' 
-          ? 'bg-[#f8fafc]'
+          ? 'bg-[#111111]'
           : 'bg-black'
       } opacity-90`} />
-      
-      {/* Progress bar at the top */}
-      <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-accent z-50"
-        style={{ scaleX, transformOrigin: "0%" }}
-      />
 
       {/* Theme toggle positioned in top-right corner */}
       <div className="fixed top-4 right-4 z-50">
@@ -242,5 +223,11 @@ const Index = () => {
     </>
   );
 };
+
+const tabs = [
+  { id: "projects", label: "Projects", icon: <Code size={16} /> },
+  { id: "certificates", label: "Certificates", icon: <Award size={16} /> },
+  { id: "tasks", label: "Tasks", icon: <CheckSquare size={16} /> },
+];
 
 export default Index;

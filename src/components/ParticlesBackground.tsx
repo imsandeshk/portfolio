@@ -29,13 +29,13 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: theme === "dark" ? "#ffffff" : "#3b82f6",
+            value: theme === "dark" ? "#ffffff" : "#ffffff",
           },
           links: {
-            color: theme === "dark" ? "#ffffff" : "#3b82f6",
+            color: theme === "dark" ? "#ffffff" : "#ffffff",
             distance: 150,
             enable: true,
-            opacity: theme === "dark" ? 0.25 : 0.3,
+            opacity: theme === "dark" ? 0.25 : 0.2,
             width: theme === "dark" ? 1 : 1,
           },
           collisions: {
@@ -56,13 +56,13 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 1600,
             },
-            value: theme === "dark" ? 70 : 40,
+            value: theme === "dark" ? 70 : 50,
             limit: theme === "dark" ? 90 : 60,
           },
           opacity: {
             value: {
               min: theme === "dark" ? 0.15 : 0.1,
-              max: theme === "dark" ? 0.4 : 0.3,
+              max: theme === "dark" ? 0.4 : 0.25,
             },
             animation: {
               enable: true,
@@ -109,7 +109,7 @@ const ParticlesBackground: React.FC = () => {
               distance: 180,
               links: {
                 opacity: theme === "dark" ? 0.6 : 0.4,
-                color: theme === "dark" ? "#ffffff" : "#3b82f6",
+                color: theme === "dark" ? "#ffffff" : "#ffffff",
               }
             },
             push: {

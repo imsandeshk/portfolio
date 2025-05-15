@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Edit, Plus, Trash } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface SkillsSectionProps {
   skills: Skill[];
@@ -35,6 +36,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   const [category, setCategory] = useState("");
   const [level, setLevel] = useState(3);
   const { toast } = useToast();
+  const { theme } = useTheme();
 
   const getIconUrl = (skillName: string) => {
     const name = skillName.toLowerCase();
@@ -46,6 +48,43 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${name}/${name}-original.svg`;
   };
 
+  // Enhanced animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.08,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const skillVariants = {
+    hidden: { opacity: 0, y: 20, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }
+    },
+    hover: {
+      scale: 1.08,
+      boxShadow: "0 0 25px rgba(255, 255, 255, 0.5)",
+      borderColor: "rgba(255, 255, 255, 0.5)",
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10
+      }
+    }
+  };
+
+  // Handle admin actions
   const handleEditSkill = (skill: Skill) => {
     setSkillToEdit(skill);
     setName(skill.name);
@@ -99,42 +138,6 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setLevel(3);
   };
 
-  // Enhanced animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.08,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const skillVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20
-      }
-    },
-    hover: {
-      scale: 1.08,
-      boxShadow: "0 0 25px rgba(255, 255, 255, 0.5)",
-      borderColor: "rgba(255, 255, 255, 0.5)",
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
-    }
-  };
-
   return (
     <section id="skills" className="py-16">
       <div className="container mx-auto">
@@ -165,7 +168,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               key={skill.id}
               variants={skillVariants}
               whileHover="hover"
-              className="group flex items-center gap-2 rounded-full px-4 py-2 bg-black/50 border border-white/10 backdrop-blur text-white text-sm font-medium overflow-hidden relative"
+              className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
+                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+              }}
             >
               <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain" />
               {skill.name}
@@ -195,7 +202,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
           <motion.div
             variants={skillVariants}
             whileHover="hover"
-            className="group flex items-center gap-2 rounded-full px-4 py-2 bg-black/50 border border-white/10 backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
+            className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
+            style={{
+              backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
+              borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+            }}
           >
             more...
             

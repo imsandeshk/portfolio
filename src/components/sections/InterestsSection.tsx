@@ -1,6 +1,7 @@
 
 import React from "react";
 import SectionHeading from "@/components/SectionHeading";
+import { motion } from "framer-motion";
 import { 
   Code2, 
   Monitor, 
@@ -14,6 +15,7 @@ import {
   Key,
   LucideIcon 
 } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface Interest {
   id: string;
@@ -23,6 +25,9 @@ interface Interest {
 }
 
 const InterestsSection: React.FC = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   // First row of interests
   const interestsRow1: Interest[] = [
     { id: "web-dev", name: "Web Development", icon: Code2, color: "#3498db" },
@@ -70,9 +75,14 @@ const InterestsSection: React.FC = () => {
             <div className="auto-scroll-left py-2">
               <div className="flex gap-1 md:gap-4">
                 {interestsRow1.map((interest) => (
-                  <div
+                  <motion.div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-[1.2rem] bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                    style={{
+                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(20,20,20,0.9)',
+                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                    }}
                   >
                     <div 
                       className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
@@ -82,8 +92,10 @@ const InterestsSection: React.FC = () => {
                         <interest.icon size={16} />
                       </span>
                     </div>
-                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate">{interest.name}</span>
-                  </div>
+                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white">
+                      {interest.name}
+                    </span>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -98,9 +110,14 @@ const InterestsSection: React.FC = () => {
             <div className="auto-scroll-right py-2">
               <div className="flex gap-1 md:gap-4">
                 {interestsRow2.map((interest) => (
-                  <div
+                  <motion.div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-[1.2rem] bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                    style={{
+                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(20,20,20,0.9)',
+                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                    }}
                   >
                     <div 
                       className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
@@ -110,8 +127,10 @@ const InterestsSection: React.FC = () => {
                         <interest.icon size={16} />
                       </span>
                     </div>
-                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate">{interest.name}</span>
-                  </div>
+                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white">
+                      {interest.name}
+                    </span>
+                  </motion.div>
                 ))}
               </div>
             </div>

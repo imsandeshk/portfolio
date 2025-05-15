@@ -29,8 +29,8 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
     <div className="flex justify-center mb-10 px-2 sm:px-0">
       <div className={`
         ${isDark 
-          ? 'backdrop-blur-md bg-black/30 border-white/10' 
-          : 'backdrop-blur-md bg-gray-300/80 border-gray-400/50 shadow-[0_8px_32px_rgba(0,0,0,0.15)]'
+          ? 'backdrop-blur-md bg-black/40 border-white/10' 
+          : 'backdrop-blur-md bg-[#222222]/90 border-black/30 shadow-[0_8px_32px_rgba(0,0,0,0.25)]'
         }
         p-1.5 rounded-xl border shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex overflow-hidden
         ${isMobile 
@@ -50,7 +50,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                 transition-all flex items-center justify-center
                 ${isDark
                   ? (isActive ? 'text-white' : 'text-white/70 hover:text-white')
-                  : (isActive ? 'text-gray-800' : 'text-gray-600 hover:text-gray-800')
+                  : (isActive ? 'text-white' : 'text-gray-300 hover:text-white')
                 }
               `}
               whileHover={{ scale: isActive ? 1 : 1.05 }}
@@ -60,7 +60,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               {isActive && (
                 <motion.span
                   className={`absolute inset-0 rounded-lg ${
-                    isDark ? 'bg-white/10' : 'bg-gray-200/90'
+                    isDark ? 'bg-white/10' : 'bg-[#181818]'
                   }`}
                   layoutId="tabBackground"
                   transition={{ 
