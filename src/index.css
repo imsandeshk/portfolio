@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,23 +36,23 @@
   }
 
   :root[data-theme="light"] {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 100%;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 0%;
 
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 0 0% 100%;
+    --primary: 0 0% 0%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
     --accent: 12 90% 60%;
     --accent-foreground: 0 0% 98%;
@@ -59,9 +60,9 @@
     --destructive: 0 85% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 40%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 80%;
     --radius: 0.5rem;
   }
   
@@ -150,7 +151,7 @@
   }
   
   [data-theme="light"] .glass-card {
-    @apply bg-black/70 border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)];
+    @apply bg-black/90 border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)];
   }
 
   .text-gradient {
@@ -528,13 +529,13 @@ body {
   @apply text-white opacity-100 hover:opacity-100;
 }
 
-/* Light mode styles - updated for darker look */
+/* Light mode styles - updated for more whitish background */
 .light-mode {
-  background: #111111;
+  background: #fbfbfb;
 }
 
 .light-mode .glass-card {
-  @apply bg-black/70 border-white/10 shadow-md;
+  @apply bg-black/90 border-white/10 shadow-md;
 }
 
 .light-mode .text-gradient {
@@ -550,89 +551,9 @@ body {
   @apply bg-black/40 border-white/10;
 }
 
-/* Light theme text adjustments for better visibility */
-[data-theme="light"] h1, 
-[data-theme="light"] h2, 
-[data-theme="light"] h3 {
-  @apply text-white;
-}
-
-[data-theme="light"] p {
-  @apply text-gray-200;
-}
-
-[data-theme="light"] .badge {
-  @apply bg-black/50 text-white;
-}
-
-/* Light theme tabs and buttons - darkened */
-[data-theme="light"] button[role="tab"] {
-  @apply text-gray-200 bg-black/50 hover:bg-black/60;
-}
-
-[data-theme="light"] button[role="tab"][aria-selected="true"] {
-  @apply bg-black/80 text-white shadow-md;
-}
-
-/* Enhanced GitHub icon visibility */
-.github-icon {
-  @apply transition-all duration-300;
-}
-
-[data-theme="dark"] .github-icon {
-  @apply text-white opacity-90 hover:opacity-100;
-}
-  
-[data-theme="light"] .github-icon {
-  @apply text-white opacity-100 hover:opacity-100;
-}
-
-/* Light theme card adjustments */
-[data-theme="light"] .glass-card {
-  @apply bg-black/80 shadow-md border border-white/10;
-}
-
-/* Project cards in light mode */
-[data-theme="light"] .project-card {
-  @apply bg-black/80 text-white shadow-md;
-}
-
-[data-theme="light"] .project-card h3 {
-  @apply text-white;
-}
-
-[data-theme="light"] .project-card p {
-  @apply text-gray-200;
-}
-
-/* Certificate cards in light mode */
-[data-theme="light"] .certificate-card {
-  @apply bg-black/80 border-white/10;
-}
-
-/* Task cards in light mode */
-[data-theme="light"] .task-card {
-  @apply bg-black/80 border-white/10 text-white;
-}
-
-/* Skills section in light mode */
-[data-theme="light"] .skill-badge {
-  @apply bg-black/80 text-white shadow-sm;
-}
-
-/* Interests badges in light mode */
-[data-theme="light"] .interest-badge {
-  @apply bg-black/80 text-white;
-}
-
-/* Tab switcher - darkened for light theme */
-[data-theme="light"] .tab-switcher-container {
-  @apply bg-black/80 border-white/10;
-}
-
-/* Animated gradient background */
+/* Animated gradient background for light mode */
 .animated-gradient {
-  background: linear-gradient(-45deg, #111111, #191919, #161616, #121212);
+  background: linear-gradient(-45deg, #f9f9f9, #ffffff, #f5f5f5, #fafafa);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -647,4 +568,116 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Light theme text adjustments for better visibility */
+[data-theme="light"] h1, 
+[data-theme="light"] h2, 
+[data-theme="light"] h3 {
+  @apply text-black;
+}
+
+[data-theme="light"] .project-card h1,
+[data-theme="light"] .project-card h2,
+[data-theme="light"] .project-card h3,
+[data-theme="light"] .certificate-card h1,
+[data-theme="light"] .certificate-card h2,
+[data-theme="light"] .certificate-card h3,
+[data-theme="light"] .task-card h1,
+[data-theme="light"] .task-card h2,
+[data-theme="light"] .task-card h3,
+[data-theme="light"] .glass-card h1,
+[data-theme="light"] .glass-card h2,
+[data-theme="light"] .glass-card h3 {
+  @apply text-white;
+}
+
+[data-theme="light"] p {
+  @apply text-gray-800;
+}
+
+[data-theme="light"] .project-card p,
+[data-theme="light"] .certificate-card p,
+[data-theme="light"] .task-card p,
+[data-theme="light"] .glass-card p {
+  @apply text-gray-200;
+}
+
+[data-theme="light"] .badge {
+  @apply bg-black/90 text-white;
+}
+
+/* Light theme tabs and buttons - darkened */
+[data-theme="light"] button[role="tab"] {
+  @apply text-gray-200 bg-black/90 hover:bg-black/100;
+}
+
+[data-theme="light"] button[role="tab"][aria-selected="true"] {
+  @apply bg-black text-white shadow-md;
+}
+
+/* Light theme card adjustments */
+[data-theme="light"] .glass-card {
+  @apply bg-black/90 shadow-md border border-white/10;
+}
+
+/* Project cards in light mode */
+[data-theme="light"] .project-card {
+  @apply bg-black/90 text-white shadow-md;
+}
+
+[data-theme="light"] .project-card h3 {
+  @apply text-white;
+}
+
+[data-theme="light"] .project-card p {
+  @apply text-gray-200;
+}
+
+/* Certificate cards in light mode */
+[data-theme="light"] .certificate-card {
+  @apply bg-black/90 border-white/10;
+}
+
+/* Task cards in light mode */
+[data-theme="light"] .task-card {
+  @apply bg-black/90 border-white/10 text-white;
+}
+
+/* Skills section in light mode */
+[data-theme="light"] .skill-badge {
+  @apply bg-black/90 text-white shadow-sm;
+}
+
+/* Interests badges in light mode */
+[data-theme="light"] .interest-badge {
+  @apply bg-black/90 text-white;
+}
+
+/* Tab switcher - darkened for light theme */
+[data-theme="light"] .tab-switcher-container {
+  @apply bg-black/90 border-white/10;
+}
+
+/* Fix for white text on white background in light theme */
+[data-theme="light"] .white-text {
+  @apply text-black;
+}
+
+/* Fix for contact section in light mode */
+[data-theme="light"] .contact-section {
+  @apply bg-transparent;
+}
+
+[data-theme="light"] .contact-form {
+  @apply bg-black/90 border border-white/10;
+}
+
+[data-theme="light"] .contact-info {
+  @apply bg-black/90 border border-white/10 text-white;
+}
+
+/* Social links fixes for light mode */
+[data-theme="light"] .social-links a {
+  @apply bg-black/90 text-white border-white/10;
 }

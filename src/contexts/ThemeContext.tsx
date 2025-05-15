@@ -25,42 +25,15 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
     
-    // Apply animated gradient background for light mode
-    // Regular dark background for dark mode
+    // Apply appropriate background for each mode
     if (theme === 'dark') {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
+      document.body.classList.remove('animated-gradient');
     } else {
       document.body.classList.remove('dark-mode');
       document.body.classList.add('light-mode');
-      
-      // Add animated gradient background effect for light mode
-      const animateGradient = () => {
-        const colors = [
-          'rgba(18,18,18,1)',
-          'rgba(24,24,24,1)',
-          'rgba(20,20,20,1)',
-          'rgba(16,16,16,1)'
-        ];
-        
-        let currentIndex = 0;
-        const gradientInterval = setInterval(() => {
-          if (document.body.classList.contains('light-mode')) {
-            document.documentElement.style.setProperty(
-              '--background', 
-              colors[currentIndex]
-            );
-            currentIndex = (currentIndex + 1) % colors.length;
-          } else {
-            clearInterval(gradientInterval);
-          }
-        }, 3000);
-        
-        return () => clearInterval(gradientInterval);
-      };
-      
-      const cleanup = animateGradient();
-      return cleanup;
+      document.body.classList.add('animated-gradient');
     }
     
     // Save theme preference to localStorage

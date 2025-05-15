@@ -73,18 +73,18 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     if (platformLower.includes("facebook")) return "#1877F2";
     if (platformLower.includes("twitter") || platformLower.includes("x")) return "#1DA1F2";
     if (platformLower.includes("linkedin")) return "#0A66C2";
-    if (platformLower.includes("github")) return theme === "dark" ? "#ffffff" : "#333333";
+    if (platformLower.includes("github")) return "#FFFFFF"; // Always white for visibility
     if (platformLower.includes("instagram")) return "#E4405F";
     if (platformLower.includes("youtube")) return "#FF0000";
     if (platformLower.includes("dribbble")) return "#EA4C89";
     if (platformLower.includes("behance")) return "#1769FF";
-    if (platformLower.includes("medium")) return theme === "dark" ? "#ffffff" : "#333333";
+    if (platformLower.includes("medium")) return "#FFFFFF"; // Always white for visibility
     if (platformLower.includes("discord")) return "#5865F2";
     if (platformLower.includes("telegram")) return "#26A5E4";
     if (platformLower.includes("whatsapp")) return "#25D366";
     if (platformLower.includes("email") || platformLower.includes("mail")) return "#EA4335";
     
-    return theme === "dark" ? "#ffffff" : "#333333"; // Default color
+    return "#FFFFFF"; // Default color always white for visibility
   };
 
   // Animation variants for the container
@@ -175,7 +175,6 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
                     size={iconSize} 
                     color={platformColor} 
                     strokeWidth={1.5}
-                    className={link.platform.toLowerCase().includes("github") ? "github-icon" : ""}
                   />
                 </div>
               </motion.a>
@@ -189,7 +188,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   // Regular social links display (non-scrolling)
   return (
     <motion.div 
-      className={`flex flex-wrap items-center gap-4 ${className}`}
+      className={`flex flex-wrap items-center gap-4 ${className} social-links`}
       variants={container}
       initial="hidden"
       animate="show"
@@ -209,14 +208,14 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
                       hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border 
                       ${theme === 'dark' 
                         ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' 
-                        : 'bg-white border-gray-200 shadow-md'}`}
+                        : 'bg-black/90 border-white/10 shadow-md'}`}
             variants={item}
             whileHover="hover"
             initial="rest"
             title={link.platform}
             style={{ 
               borderColor: `${platformColor}30`,
-              boxShadow: `0 0 10px ${platformColor}${theme === 'dark' ? '20' : '10'}`
+              boxShadow: `0 0 10px ${platformColor}${theme === 'dark' ? '20' : '20'}`
             }}
           >
             <motion.div 
@@ -225,12 +224,11 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             >
               <IconComponent 
                 size={iconSize} 
-                className={link.platform.toLowerCase().includes("github") ? "github-icon" : ""}
-                strokeWidth={theme === 'dark' ? 1.5 : 2}
+                strokeWidth={1.5}
               />
             </motion.div>
             {showLabels && (
-              <span className={`text-sm hidden md:inline pr-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+              <span className="text-sm hidden md:inline pr-2 text-white">
                 {link.platform}
               </span>
             )}
