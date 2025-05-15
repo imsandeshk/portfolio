@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light';
@@ -29,11 +30,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (theme === 'dark') {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
+      // Remove animated gradient class for both themes
       document.body.classList.remove('animated-gradient');
     } else {
       document.body.classList.remove('dark-mode');
       document.body.classList.add('light-mode');
-      document.body.classList.add('animated-gradient');
+      // Remove animated gradient class for both themes
+      document.body.classList.remove('animated-gradient');
     }
     
     // Save theme preference to localStorage

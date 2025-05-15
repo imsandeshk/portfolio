@@ -100,13 +100,13 @@ const Index = () => {
     <>
       <SplineBackground />
       <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b ${
-        theme === 'light' ? 'from-black via-black/5 to-transparent' : 'from-black via-black/70 to-transparent'
+        theme === 'light' ? 'from-light-dark via-light-dark/5 to-transparent' : 'from-black via-black/70 to-transparent'
       } z-[-9]`} />
       
       {/* Theme-specific background */}
       <div className={`fixed inset-0 z-[-10] ${
         theme === 'light' 
-          ? 'bg-[#111111]'
+          ? 'bg-light-bg'
           : 'bg-black'
       } opacity-90`} />
 

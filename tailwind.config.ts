@@ -90,6 +90,23 @@ export default {
 					700: "#333333",
 					800: "#3d3d3d",
 					900: "#454545",
+				},
+				// New light theme palette based on provided image
+				light: {
+					bg: "#FAF1E6",        // Light background
+					neutral: "#8E9196",    // Neutral Gray
+					primary: "#9b87f5",    // Primary Purple
+					secondary: "#7E69AB",  // Secondary Purple
+					tertiary: "#6E59A5",   // Tertiary Purple
+					dark: "#1A1F2C",       // Dark Purple
+					green: "#F2FCE2",      // Soft Green
+					yellow: "#FEF7CD",     // Soft Yellow
+					orange: "#FEC6A1",     // Soft Orange
+					purple: "#E5DEFF",     // Soft Purple
+					pink: "#FFDEE2",       // Soft Pink
+					peach: "#FDE1D3",      // Soft Peach
+					blue: "#D3E4FD",       // Soft Blue
+					gray: "#F1F0FB",       // Soft Gray
 				}
 			},
 			borderRadius: {

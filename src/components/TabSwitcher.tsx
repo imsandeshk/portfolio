@@ -30,7 +30,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
       <div className={`
         ${isDark 
           ? 'backdrop-blur-md bg-black/40 border-white/10' 
-          : 'backdrop-blur-md bg-[#222222]/90 border-black/30 shadow-[0_8px_32px_rgba(0,0,0,0.25)]'
+          : 'backdrop-blur-md bg-light-dark/90 border-light-secondary/30 shadow-[0_8px_32px_rgba(0,0,0,0.25)]'
         }
         p-1.5 rounded-xl border shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex overflow-hidden
         ${isMobile 
@@ -60,7 +60,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               {isActive && (
                 <motion.span
                   className={`absolute inset-0 rounded-lg ${
-                    isDark ? 'bg-white/10' : 'bg-[#181818]'
+                    isDark ? 'bg-white/10' : 'bg-light-secondary'
                   }`}
                   layoutId="tabBackground"
                   transition={{ 

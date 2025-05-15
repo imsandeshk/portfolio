@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -36,32 +35,32 @@
   }
 
   :root[data-theme="light"] {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 0%;
+    --background: 36 54% 95%; /* #FAF1E6 in HSL format */
+    --foreground: 0 0% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
 
     --primary: 0 0% 0%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 0 0% 96%;
+    --secondary: 84 76% 94%;
     --secondary-foreground: 0 0% 0%;
 
-    --muted: 0 0% 96%;
+    --muted: 252 70% 97%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 12 90% 60%;
+    --accent: 260 35% 50%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 85% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 38 36% 80%;
+    --input: 38 36% 80%;
     --ring: 0 0% 80%;
     --radius: 0.5rem;
   }
@@ -167,7 +166,7 @@
     @apply relative after:absolute after:inset-0 after:blur-md after:bg-accent/20 after:-z-10;
   }
 
-  /* New: Drop shadow glow */
+  /* Drop shadow glow */
   .drop-shadow-glow {
     filter: drop-shadow(0 0 8px rgba(255, 87, 51, 0.6));
   }
@@ -214,7 +213,7 @@
   .stagger-card:nth-child(7) { animation-delay: 0.7s; }
   .stagger-card:nth-child(8) { animation-delay: 0.8s; }
 
-  /* New: Improved card hover transition */
+  /* Improved card hover transition */
   .card-hover-3d {
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -223,7 +222,7 @@
     transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
   }
   
-  /* New: Badge glow effect */
+  /* Badge glow effect */
   .badge-glow {
     @apply relative overflow-hidden;
   }
@@ -244,7 +243,7 @@
     animation: badgeGlow 2s ease-in-out infinite;
   }
   
-  /* New: Name animation with flash-slide */
+  /* Name animation with flash-slide */
   .name-animation {
     @apply relative overflow-hidden;
   }
@@ -285,24 +284,6 @@
   .auto-scroll-right > div {
     animation: scrollRight 40s linear infinite;
     width: fit-content;
-  }
-  
-  @keyframes scrollLeft {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  
-  @keyframes scrollRight {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(0);
-    }
   }
 }
 
@@ -529,9 +510,9 @@ body {
   @apply text-white opacity-100 hover:opacity-100;
 }
 
-/* Light mode styles - updated for more whitish background */
+/* Light mode styles - updated for requested #FAF1E6 color */
 .light-mode {
-  background: #fbfbfb;
+  background: #FAF1E6;
 }
 
 .light-mode .glass-card {
@@ -551,30 +532,19 @@ body {
   @apply bg-black/40 border-white/10;
 }
 
-/* Animated gradient background for light mode */
+/* Remove animated gradient background for light mode */
 .animated-gradient {
-  background: linear-gradient(-45deg, #f9f9f9, #ffffff, #f5f5f5, #fafafa);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  background: #FAF1E6;
 }
 
 /* Light theme text adjustments for better visibility */
-[data-theme="light"] h1, 
+[data-theme="light"] h1 {
+  @apply text-[#1A1F2C];  /* Dark Purple */
+}
+
 [data-theme="light"] h2, 
 [data-theme="light"] h3 {
-  @apply text-black;
+  @apply text-[#6E59A5];  /* Tertiary Purple */
 }
 
 [data-theme="light"] .project-card h1,
@@ -593,7 +563,7 @@ body {
 }
 
 [data-theme="light"] p {
-  @apply text-gray-800;
+  @apply text-[#403E43];  /* Charcoal Gray */
 }
 
 [data-theme="light"] .project-card p,
@@ -604,64 +574,56 @@ body {
 }
 
 [data-theme="light"] .badge {
-  @apply bg-black/90 text-white;
+  @apply bg-[#7E69AB] text-white;  /* Secondary Purple */
 }
 
-/* Light theme tabs and buttons - darkened */
+/* Light theme tabs and buttons - updated colors */
 [data-theme="light"] button[role="tab"] {
-  @apply text-gray-200 bg-black/90 hover:bg-black/100;
+  @apply text-gray-200 bg-[#1A1F2C]/90 hover:bg-[#1A1F2C];  /* Dark Purple */
 }
 
 [data-theme="light"] button[role="tab"][aria-selected="true"] {
-  @apply bg-black text-white shadow-md;
+  @apply bg-[#7E69AB] text-white shadow-md;  /* Secondary Purple */
 }
 
 /* Light theme card adjustments */
 [data-theme="light"] .glass-card {
-  @apply bg-black/90 shadow-md border border-white/10;
+  @apply bg-[#1A1F2C]/90 shadow-md border border-white/10;  /* Dark Purple */
 }
 
 /* Project cards in light mode */
 [data-theme="light"] .project-card {
-  @apply bg-black/90 text-white shadow-md;
-}
-
-[data-theme="light"] .project-card h3 {
-  @apply text-white;
-}
-
-[data-theme="light"] .project-card p {
-  @apply text-gray-200;
+  @apply bg-[#1A1F2C]/90 text-white shadow-md;  /* Dark Purple */
 }
 
 /* Certificate cards in light mode */
 [data-theme="light"] .certificate-card {
-  @apply bg-black/90 border-white/10;
+  @apply bg-[#1A1F2C]/90 border-white/10;  /* Dark Purple */
 }
 
 /* Task cards in light mode */
 [data-theme="light"] .task-card {
-  @apply bg-black/90 border-white/10 text-white;
+  @apply bg-[#1A1F2C]/90 border-white/10 text-white;  /* Dark Purple */
 }
 
 /* Skills section in light mode */
 [data-theme="light"] .skill-badge {
-  @apply bg-black/90 text-white shadow-sm;
+  @apply bg-[#7E69AB] text-white shadow-sm;  /* Secondary Purple */
 }
 
 /* Interests badges in light mode */
 [data-theme="light"] .interest-badge {
-  @apply bg-black/90 text-white;
+  @apply bg-[#7E69AB] text-white;  /* Secondary Purple */
 }
 
-/* Tab switcher - darkened for light theme */
+/* Tab switcher - updated colors */
 [data-theme="light"] .tab-switcher-container {
-  @apply bg-black/90 border-white/10;
+  @apply bg-[#1A1F2C]/90 border-white/10;  /* Dark Purple */
 }
 
-/* Fix for white text on white background in light theme */
+/* Fix for white text on light background in light theme */
 [data-theme="light"] .white-text {
-  @apply text-black;
+  @apply text-[#1A1F2C];  /* Dark Purple */
 }
 
 /* Fix for contact section in light mode */
@@ -670,14 +632,14 @@ body {
 }
 
 [data-theme="light"] .contact-form {
-  @apply bg-black/90 border border-white/10;
+  @apply bg-[#1A1F2C]/90 border border-white/10;  /* Dark Purple */
 }
 
 [data-theme="light"] .contact-info {
-  @apply bg-black/90 border border-white/10 text-white;
+  @apply bg-[#1A1F2C]/90 border border-white/10 text-white;  /* Dark Purple */
 }
 
 /* Social links fixes for light mode */
 [data-theme="light"] .social-links a {
-  @apply bg-black/90 text-white border-white/10;
+  @apply bg-[#1A1F2C]/90 text-white border-white/10;  /* Dark Purple */
 }

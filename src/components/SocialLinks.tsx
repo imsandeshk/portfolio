@@ -205,22 +205,22 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             rel="noopener noreferrer"
             className={`transition-all duration-300 flex items-center gap-2 
                       backdrop-blur-md p-2.5 rounded-full 
-                      hover:shadow-[0_0_15px_rgba(255,87,51,0.5)] border 
+                      hover:shadow-[0_0_15px_rgba(155,135,245,0.5)] border 
                       ${theme === 'dark' 
                         ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' 
-                        : 'bg-black/90 border-white/10 shadow-md'}`}
+                        : 'bg-light-dark/90 border-white/10 shadow-md'}`}
             variants={item}
             whileHover="hover"
             initial="rest"
             title={link.platform}
             style={{ 
               borderColor: `${platformColor}30`,
-              boxShadow: `0 0 10px ${platformColor}${theme === 'dark' ? '20' : '20'}`
+              boxShadow: `0 0 10px ${platformColor}${theme === 'dark' ? '20' : '30'}`
             }}
           >
             <motion.div 
               variants={iconHover}
-              style={{ color: platformColor }}
+              style={{ color: theme === 'light' ? 'white' : platformColor }}
             >
               <IconComponent 
                 size={iconSize} 

@@ -29,13 +29,13 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: theme === "dark" ? "#ffffff" : "#333333",
+            value: theme === "dark" ? "#ffffff" : "#7E69AB", // Secondary Purple for light theme
           },
           links: {
-            color: theme === "dark" ? "#ffffff" : "#333333",
+            color: theme === "dark" ? "#ffffff" : "#6E59A5", // Tertiary Purple for light theme
             distance: 150,
             enable: true,
-            opacity: theme === "dark" ? 0.25 : 0.3,
+            opacity: theme === "dark" ? 0.25 : 0.4,
             width: theme === "dark" ? 1 : 1,
           },
           collisions: {
@@ -109,7 +109,7 @@ const ParticlesBackground: React.FC = () => {
               distance: 180,
               links: {
                 opacity: theme === "dark" ? 0.6 : 0.7,
-                color: theme === "dark" ? "#ffffff" : "#333333",
+                color: theme === "dark" ? "#ffffff" : "#7E69AB", // Secondary Purple for light theme
               }
             },
             push: {

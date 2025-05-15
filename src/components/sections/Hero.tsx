@@ -85,7 +85,7 @@ const Hero: React.FC<HeroProps> = ({
           <motion.div variants={nameVariants} className="mb-6 overflow-hidden">
             <motion.h1 
               className={`font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold ${
-                theme === 'dark' ? 'text-gradient' : 'text-gray-800'
+                theme === 'dark' ? 'text-gradient' : 'text-light-dark'
               } leading-tight`}
             >
               {profile.name}
@@ -94,7 +94,7 @@ const Hero: React.FC<HeroProps> = ({
           
           <motion.div variants={itemVariants}>
             <h2 className={`font-playfair ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 ${
-              theme === 'dark' ? 'text-accent/90' : 'text-accent'
+              theme === 'dark' ? 'text-accent/90' : 'text-light-secondary'
             }`}>
               {profile.title}
             </h2>
@@ -109,7 +109,7 @@ const Hero: React.FC<HeroProps> = ({
                 className={`flex items-center gap-2 ${
                   theme === 'dark' 
                     ? 'bg-black/30 backdrop-blur-md border border-green-500/20' 
-                    : 'bg-white backdrop-blur-md border border-green-500/20 shadow-sm'
+                    : 'bg-light-dark backdrop-blur-md border border-green-500/20 shadow-sm'
                 } rounded-full px-4 py-1.5`}
               >
                 <span className="relative flex h-3 w-3">
@@ -123,7 +123,7 @@ const Hero: React.FC<HeroProps> = ({
 
           <motion.div variants={itemVariants}>
             <p className={`${isMobile ? 'text-base' : 'text-lg'} ${
-              theme === 'dark' ? 'text-muted-foreground' : 'text-gray-600'
+              theme === 'dark' ? 'text-muted-foreground' : 'text-light-dark/80'
             } mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed`}>
               {profile.bio}
             </p>
@@ -153,7 +153,7 @@ const Hero: React.FC<HeroProps> = ({
               className={`mt-2 sm:mt-0 text-base font-semibold transition-all duration-300 rounded-xl ${
                 theme === 'dark'
                   ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.5)]'
-                  : 'bg-primary text-white hover:bg-primary/90 shadow-md'
+                  : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-md'
               }`}
             >
               Contact Me
@@ -171,13 +171,13 @@ const Hero: React.FC<HeroProps> = ({
           <div className="relative max-w-md mx-auto">
             <motion.div 
               className={`aspect-square rounded-full overflow-hidden border-2 ${
-                theme === 'dark' ? 'border-white/10' : 'border-gray-300'
+                theme === 'dark' ? 'border-white/10' : 'border-light-secondary/30'
               }`}
               initial={{ boxShadow: "0 0 0 rgba(255,255,255,0)" }}
               animate={{ 
                 boxShadow: theme === 'dark' 
                   ? "0 0 40px rgba(255,255,255,0.2)" 
-                  : "0 0 40px rgba(0,0,0,0.1)" 
+                  : "0 0 40px rgba(126,105,171,0.3)" 
               }}
               transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
             >
@@ -203,7 +203,7 @@ const Hero: React.FC<HeroProps> = ({
       {/* Scroll indicator */}
       <motion.div 
         className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 ${
-          theme === 'dark' ? 'text-white/50' : 'text-gray-500'
+          theme === 'dark' ? 'text-white/50' : 'text-light-secondary'
         }`}
         initial={{ opacity: 0, y: -10 }} 
         animate={{ opacity: 1, y: 0 }} 

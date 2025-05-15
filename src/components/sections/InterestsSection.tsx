@@ -30,34 +30,34 @@ const InterestsSection: React.FC = () => {
 
   // First row of interests
   const interestsRow1: Interest[] = [
-    { id: "web-dev", name: "Web Development", icon: Code2, color: "#3498db" },
-    { id: "software-dev", name: "Software Development", icon: Monitor, color: "#e74c3c" },
-    { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#2ecc71" },
-    { id: "game-dev", name: "Game Development", icon: Gamepad, color: "#9b59b6" },
-    { id: "ai", name: "Artificial Intelligence", icon: Brain, color: "#f39c12" },
-    { id: "ml", name: "Machine Learning", icon: Infinity, color: "#1abc9c" },
-    { id: "fullstack", name: "Full Stack", icon: Package, color: "#e67e22" },
-    { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#3498db" },
+    { id: "web-dev", name: "Web Development", icon: Code2, color: "#9b87f5" },
+    { id: "software-dev", name: "Software Development", icon: Monitor, color: "#7E69AB" },
+    { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#6E59A5" },
+    { id: "game-dev", name: "Game Development", icon: Gamepad, color: "#9b87f5" },
+    { id: "ai", name: "Artificial Intelligence", icon: Brain, color: "#7E69AB" },
+    { id: "ml", name: "Machine Learning", icon: Infinity, color: "#6E59A5" },
+    { id: "fullstack", name: "Full Stack", icon: Package, color: "#9b87f5" },
+    { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#7E69AB" },
     // Duplicate a few for continuous scrolling
-    { id: "web-dev-2", name: "Web Development", icon: Code2, color: "#3498db" },
-    { id: "software-dev-2", name: "Software Development", icon: Monitor, color: "#e74c3c" },
-    { id: "data-viz-2", name: "Data Visualization", icon: BarChart, color: "#2ecc71" },
+    { id: "web-dev-2", name: "Web Development", icon: Code2, color: "#9b87f5" },
+    { id: "software-dev-2", name: "Software Development", icon: Monitor, color: "#7E69AB" },
+    { id: "data-viz-2", name: "Data Visualization", icon: BarChart, color: "#6E59A5" },
   ];
 
   // Second row of interests
   const interestsRow2: Interest[] = [
-    { id: "databases", name: "Databases", icon: Database, color: "#3498db" },
-    { id: "cybersecurity", name: "Cybersecurity", icon: Key, color: "#e74c3c" },
-    { id: "cloud-computing", name: "Cloud Computing", icon: Package, color: "#2ecc71" },
-    { id: "mobile-dev", name: "Mobile Development", icon: Monitor, color: "#9b59b6" },
-    { id: "devops", name: "DevOps", icon: TestTube, color: "#f39c12" },
-    { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#1abc9c" },
-    { id: "blockchain", name: "Blockchain", icon: Brain, color: "#e67e22" },
-    { id: "api-dev", name: "API Development", icon: Package, color: "#3498db" },
+    { id: "databases", name: "Databases", icon: Database, color: "#9b87f5" },
+    { id: "cybersecurity", name: "Cybersecurity", icon: Key, color: "#7E69AB" },
+    { id: "cloud-computing", name: "Cloud Computing", icon: Package, color: "#6E59A5" },
+    { id: "mobile-dev", name: "Mobile Development", icon: Monitor, color: "#9b87f5" },
+    { id: "devops", name: "DevOps", icon: TestTube, color: "#7E69AB" },
+    { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#6E59A5" },
+    { id: "blockchain", name: "Blockchain", icon: Brain, color: "#9b87f5" },
+    { id: "api-dev", name: "API Development", icon: Package, color: "#7E69AB" },
     // Duplicate a few for continuous scrolling
-    { id: "databases-2", name: "Databases", icon: Database, color: "#3498db" },
-    { id: "cybersecurity-2", name: "Cybersecurity", icon: Key, color: "#e74c3c" },
-    { id: "cloud-computing-2", name: "Cloud Computing", icon: Package, color: "#2ecc71" },
+    { id: "databases-2", name: "Databases", icon: Database, color: "#9b87f5" },
+    { id: "cybersecurity-2", name: "Cybersecurity", icon: Key, color: "#7E69AB" },
+    { id: "cloud-computing-2", name: "Cloud Computing", icon: Package, color: "#6E59A5" },
   ];
 
   return (
@@ -80,15 +80,15 @@ const InterestsSection: React.FC = () => {
                     className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
                     whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
                     style={{
-                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(20,20,20,0.9)',
-                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)', // Dark Purple
+                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)' // Secondary Purple
                     }}
                   >
                     <div 
                       className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
-                      <span style={{ color: interest.color }}>
+                      <span style={{ color: isDark ? interest.color : '#fff' }}>
                         <interest.icon size={16} />
                       </span>
                     </div>
@@ -115,15 +115,15 @@ const InterestsSection: React.FC = () => {
                     className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
                     whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
                     style={{
-                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(20,20,20,0.9)',
-                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)', // Dark Purple
+                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)' // Secondary Purple
                     }}
                   >
                     <div 
                       className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
-                      <span style={{ color: interest.color }}>
+                      <span style={{ color: isDark ? interest.color : '#fff' }}>
                         <interest.icon size={16} />
                       </span>
                     </div>

@@ -17,7 +17,7 @@ const Card = React.forwardRef<
         "rounded-xl border shadow-sm transition-all duration-300",
         isDark 
           ? "bg-card text-card-foreground backdrop-blur-md bg-opacity-30 hover:bg-opacity-40 border-white/10" 
-          : "bg-black/90 text-white hover:bg-black/95 border-white/10 backdrop-blur-sm",
+          : "bg-light-dark/90 text-white hover:bg-light-dark/95 border-white/10 backdrop-blur-sm",
         className
       )}
       {...props}
