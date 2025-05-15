@@ -30,9 +30,25 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (theme === 'dark') {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
+      
+      // Remove animated gradient
+      const gradientElement = document.getElementById('animated-gradient');
+      if (gradientElement) {
+        gradientElement.style.opacity = '0';
+      }
     } else {
       document.body.classList.remove('dark-mode');
       document.body.classList.add('light-mode');
+      
+      // Create or show animated gradient background for light theme
+      let gradientElement = document.getElementById('animated-gradient');
+      if (!gradientElement) {
+        gradientElement = document.createElement('div');
+        gradientElement.id = 'animated-gradient';
+        gradientElement.className = 'fixed inset-0 z-[-15] animated-gradient';
+        document.body.appendChild(gradientElement);
+      }
+      gradientElement.style.opacity = '1';
     }
     
     // Save theme preference to localStorage

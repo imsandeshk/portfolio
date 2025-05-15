@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
@@ -50,13 +49,6 @@ const Index = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mainContentVisible, setMainContentVisible] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { 
-    stiffness: 100, 
-    damping: 30, 
-    restDelta: 0.001 
-  });
 
   const tabs = [
     { id: "projects", label: "Projects", icon: <Code size={16} /> },
@@ -119,15 +111,11 @@ const Index = () => {
       {/* Theme-specific background */}
       <div className={`fixed inset-0 z-[-10] ${
         theme === 'light' 
-          ? 'bg-[#f8fafc]'
+          ? 'bg-[#111]' // Much darker background for light theme
           : 'bg-black'
       } opacity-90`} />
       
-      {/* Progress bar at the top */}
-      <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-accent z-50"
-        style={{ scaleX, transformOrigin: "0%" }}
-      />
+      {/* Progress bar removed */}
 
       {/* Theme toggle positioned in top-right corner */}
       <div className="fixed top-4 right-4 z-50">

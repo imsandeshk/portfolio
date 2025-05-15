@@ -14,6 +14,7 @@ import {
   Key,
   LucideIcon 
 } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface Interest {
   id: string;
@@ -23,6 +24,8 @@ interface Interest {
 }
 
 const InterestsSection: React.FC = () => {
+  const { theme } = useTheme();
+  
   // First row of interests
   const interestsRow1: Interest[] = [
     { id: "web-dev", name: "Web Development", icon: Code2, color: "#3498db" },
@@ -64,15 +67,22 @@ const InterestsSection: React.FC = () => {
           {/* First row - scrolling left */}
           <div className="relative overflow-hidden">
             {/* Blur/fade effect at the edges */}
-            <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
+            <div className={`absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10 ${
+              theme === 'light' ? 'from-[#111]' : ''
+            }`}></div>
+            <div className={`absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10 ${
+              theme === 'light' ? 'from-[#111]' : ''
+            }`}></div>
             
             <div className="auto-scroll-left py-2">
               <div className="flex gap-1 md:gap-4">
                 {interestsRow1.map((interest) => (
                   <div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-[1.2rem] bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    className={`flex-shrink-0 rounded-[1.2rem] backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]
+                      ${theme === 'light' 
+                        ? 'bg-black text-white border border-white/10' 
+                        : 'bg-black/40 border border-white/10'}`}
                   >
                     <div 
                       className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
@@ -92,15 +102,22 @@ const InterestsSection: React.FC = () => {
           {/* Second row - scrolling right */}
           <div className="relative overflow-hidden">
             {/* Blur/fade effect at the edges */}
-            <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
+            <div className={`absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10 ${
+              theme === 'light' ? 'from-[#111]' : ''
+            }`}></div>
+            <div className={`absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10 ${
+              theme === 'light' ? 'from-[#111]' : ''
+            }`}></div>
             
             <div className="auto-scroll-right py-2">
               <div className="flex gap-1 md:gap-4">
                 {interestsRow2.map((interest) => (
                   <div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-[1.2rem] bg-black/40 border border-white/10 backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    className={`flex-shrink-0 rounded-[1.2rem] backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]
+                      ${theme === 'light' 
+                        ? 'bg-black text-white border border-white/10' 
+                        : 'bg-black/40 border border-white/10'}`}
                   >
                     <div 
                       className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 

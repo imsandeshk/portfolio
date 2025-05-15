@@ -29,13 +29,13 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: theme === "dark" ? "#ffffff" : "#3b82f6",
+            value: theme === "dark" ? "#ffffff" : "#ffffff", // White particles in both modes
           },
           links: {
-            color: theme === "dark" ? "#ffffff" : "#3b82f6",
+            color: theme === "dark" ? "#ffffff" : "#ffffff", // White links for better visibility
             distance: 150,
             enable: true,
-            opacity: theme === "dark" ? 0.25 : 0.3,
+            opacity: theme === "dark" ? 0.25 : 0.15, // Lower opacity in light mode
             width: theme === "dark" ? 1 : 1,
           },
           collisions: {
@@ -48,7 +48,7 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: theme === "dark" ? 0.8 : 0.6,
+            speed: theme === "dark" ? 0.8 : 0.5, // Slightly slower in light theme
             straight: false,
           },
           number: {
@@ -56,13 +56,13 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 1600,
             },
-            value: theme === "dark" ? 70 : 40,
-            limit: theme === "dark" ? 90 : 60,
+            value: theme === "dark" ? 70 : 30, // Fewer particles in light mode
+            limit: theme === "dark" ? 90 : 50,
           },
           opacity: {
             value: {
               min: theme === "dark" ? 0.15 : 0.1,
-              max: theme === "dark" ? 0.4 : 0.3,
+              max: theme === "dark" ? 0.4 : 0.2, // Lower max opacity in light mode
             },
             animation: {
               enable: true,
@@ -76,14 +76,14 @@ const ParticlesBackground: React.FC = () => {
           size: {
             value: {
               min: 0.8,
-              max: theme === "dark" ? 2.2 : 1.8,
+              max: theme === "dark" ? 2.2 : 1.5, // Smaller particles in light mode
             },
           },
           twinkle: {
             particles: {
               enable: true,
               frequency: 0.1,
-              opacity: theme === "dark" ? 0.8 : 0.5,
+              opacity: theme === "dark" ? 0.8 : 0.4, // Lower twinkle opacity
             },
           },
         },
@@ -108,8 +108,8 @@ const ParticlesBackground: React.FC = () => {
             grab: {
               distance: 180,
               links: {
-                opacity: theme === "dark" ? 0.6 : 0.4,
-                color: theme === "dark" ? "#ffffff" : "#3b82f6",
+                opacity: theme === "dark" ? 0.6 : 0.3, // Lower opacity in light mode
+                color: theme === "dark" ? "#ffffff" : "#ffffff",
               }
             },
             push: {

@@ -13,7 +13,7 @@ export function ThemeToggle() {
         transition-all duration-300 shadow-md
         ${theme === 'dark' 
           ? 'bg-background/40 backdrop-blur-md border border-white/10 hover:bg-background/60'
-          : 'bg-gray-300 backdrop-blur-md border border-gray-400 hover:bg-gray-400'}`}
+          : 'bg-white/70 backdrop-blur-md border border-white hover:bg-white/80'}`}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       initial={{ opacity: 0, rotate: -20 }}
@@ -31,7 +31,7 @@ export function ThemeToggle() {
         {theme === 'dark' ? (
           <Sun size={20} className="text-white" />
         ) : (
-          <Moon size={20} className="text-gray-900" /> // Changed to even darker color
+          <Moon size={20} className="text-black" /> // Much darker for light theme
         )}
       </motion.div>
       <span className="sr-only">Toggle theme</span>

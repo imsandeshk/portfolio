@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Edit, Plus, Trash } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface SkillsSectionProps {
   skills: Skill[];
@@ -27,6 +28,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   onUpdateSkill,
   onDeleteSkill,
 }) => {
+  const { theme } = useTheme();
   const [skillToEdit, setSkillToEdit] = useState<Skill | null>(null);
   const [skillToDelete, setSkillToDelete] = useState<Skill | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -165,7 +167,10 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               key={skill.id}
               variants={skillVariants}
               whileHover="hover"
-              className="group flex items-center gap-2 rounded-full px-4 py-2 bg-black/50 border border-white/10 backdrop-blur text-white text-sm font-medium overflow-hidden relative"
+              className={`group flex items-center gap-2 rounded-full px-4 py-2 backdrop-blur text-sm font-medium overflow-hidden relative
+                ${theme === 'light' 
+                  ? 'bg-black text-white border border-white/10' 
+                  : 'bg-black/50 border border-white/10 text-white'}`}
             >
               <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain" />
               {skill.name}
@@ -195,7 +200,10 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
           <motion.div
             variants={skillVariants}
             whileHover="hover"
-            className="group flex items-center gap-2 rounded-full px-4 py-2 bg-black/50 border border-white/10 backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
+            className={`group flex items-center gap-2 rounded-full px-4 py-2 backdrop-blur text-sm font-medium overflow-hidden relative cursor-pointer
+              ${theme === 'light' 
+                ? 'bg-black text-white border border-white/10' 
+                : 'bg-black/50 border border-white/10 text-white'}`}
           >
             more...
             
