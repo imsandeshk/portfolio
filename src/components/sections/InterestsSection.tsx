@@ -162,7 +162,9 @@ const InterestsSection: React.FC = () => {
         </div>
       </div>
       
-      <style jsx>{`
+      {/* Fixed: Removed 'jsx' attribute from style tag */}
+      <style>
+        {`
         .infinite-scroll-left {
           overflow: hidden;
         }
@@ -213,7 +215,8 @@ const InterestsSection: React.FC = () => {
             }
           }
         }
-      `}</style>
+        `}
+      </style>
     </section>
   );
 };

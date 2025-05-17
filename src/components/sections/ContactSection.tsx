@@ -108,7 +108,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       scale: 1,
       transition: {
         repeat: Infinity,
-        repeatType: "mirror",
+        repeatType: "mirror" as const, // Fixed: explicitly typing as const to ensure correct type
         duration: 0.8
       }
     }
