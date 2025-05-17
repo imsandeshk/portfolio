@@ -150,7 +150,7 @@
   }
   
   [data-theme="light"] .glass-card {
-    @apply bg-black/90 border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)];
+    @apply bg-light-dark border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)];
   }
 
   .text-gradient {
@@ -304,17 +304,25 @@
   transition: transform 0.8s ease-out;
 }
 
+.profile-image:hover {
+  transform: scale(1.05);
+}
+
 .dark-mode .profile-image {
   filter: grayscale(80%);
 }
 
 .dark-mode .profile-image:hover {
   filter: grayscale(0%);
+  transform: scale(1.05);
 }
 
-.light-mode .profile-image,
-.light-mode .profile-image:hover {
+.light-mode .profile-image {
   filter: none; /* Keep colored in light mode */
+}
+
+.light-mode .profile-image:hover {
+  transform: scale(1.05); /* Add zoom effect on hover */
 }
 
 /* Section styling */
@@ -516,11 +524,11 @@ body {
 }
 
 .light-mode .glass-card {
-  @apply bg-black/90 border-white/10 shadow-md;
+  @apply bg-light-dark border-white/10 shadow-md;
 }
 
 .light-mode .text-gradient {
-  @apply text-white font-bold;
+  @apply text-black font-bold;
 }
 
 /* Dark mode enhancements */

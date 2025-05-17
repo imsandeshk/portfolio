@@ -1,6 +1,7 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface SectionHeadingProps {
   title: string;
@@ -17,6 +18,8 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
   isAdmin = false,
   onEdit
 }) => {
+  const { theme } = useTheme();
+  
   return (
     <motion.div 
       className={cn("flex flex-col items-center text-center mb-10 px-4", className)} 
@@ -35,10 +38,20 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         once: true
       }}
     >
-      <h2 className="font-playfair text-3xl text-gradient mb-3 font-bold md:text-5xl">
+      <h2 className={`font-playfair text-3xl mb-3 font-bold md:text-5xl ${
+        theme === 'dark' 
+          ? 'text-gradient' 
+          : 'text-black'
+      }`}>
         {title}
       </h2>
-      {subtitle && <p className="text-muted-foreground max-w-2xl font-light">{subtitle}</p>}
+      {subtitle && <p className={`${
+        theme === 'dark' 
+          ? 'text-muted-foreground' 
+          : 'text-light-dark'
+      } max-w-2xl font-light`}>
+        {subtitle}
+      </p>}
     </motion.div>
   );
 };

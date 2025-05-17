@@ -6,6 +6,7 @@ import SectionHeading from "@/components/SectionHeading";
 import CertificateCard from "./CertificateCard";
 import CertificateForm from "./CertificateForm";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/contexts/ThemeContext";
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -34,6 +35,7 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
   onUpdateCertificate,
   onDeleteCertificate,
 }) => {
+  const { theme } = useTheme();
   const [certificateToEdit, setCertificateToEdit] = useState<Certificate | null>(null);
   const [certificateToDelete, setCertificateToDelete] = useState<Certificate | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -95,12 +97,16 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
+  const titleClass = theme === 'light' ? 'text-black' : '';
+  const subtitleClass = theme === 'light' ? 'text-light-dark' : '';
+
   return (
     <section id="certificates" className="py-16">
       <div className="container mx-auto px-4">
         <SectionHeading 
           title="Certificates" 
           subtitle="My professional certifications and achievements."
+          className={theme === 'light' ? 'text-black' : ''}
         />
         
         {isAdmin && onAddCertificate && (

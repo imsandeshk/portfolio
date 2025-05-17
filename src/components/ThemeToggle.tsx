@@ -13,7 +13,7 @@ export function ThemeToggle() {
         transition-all duration-300 shadow-md
         ${theme === 'dark' 
           ? 'bg-background/40 backdrop-blur-md border border-white/10 hover:bg-background/60'
-          : 'bg-light-dark/90 backdrop-blur-md border border-white/10 hover:bg-light-dark/100'}`}
+          : 'bg-light-dark backdrop-blur-md border border-white/10 hover:bg-light-dark/100'}`}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       initial={{ opacity: 0, rotate: -20 }}

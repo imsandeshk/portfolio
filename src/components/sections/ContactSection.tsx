@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { sendEmail } from '@/utils/sendEmail';
+import { useTheme } from "@/contexts/ThemeContext";
 
 import {
   Dialog,
@@ -35,6 +36,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState(5);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { theme } = useTheme();
 
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [editEmail, setEditEmail] = useState(contact.email);
@@ -61,6 +63,9 @@ const ContactSection: React.FC<ContactSectionProps> = ({
       setIsEditFormOpen(false);
     }
   };
+
+  const labelClass = theme === 'light' ? 'text-black font-medium' : '';
+  const contactInfoClass = theme === 'light' ? 'text-light-dark' : '';
 
   return (
     <section id="contact" className="py-16">
@@ -102,10 +107,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
               <div className="flex items-center">
                 <Mail className="h-5 w-5 mr-3 text-accent" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
+                  <p className={`text-sm ${theme === 'light' ? 'text-gray-600 font-medium' : 'text-muted-foreground'}`}>Email</p>
                   <a
                     href={`mailto:${contact.email}`}
-                    className="hover:text-accent transition-colors"
+                    className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-black font-semibold' : ''}`}
                   >
                     {contact.email}
                   </a>
@@ -116,10 +121,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 mr-3 text-accent" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <p className={`text-sm ${theme === 'light' ? 'text-gray-600 font-medium' : 'text-muted-foreground'}`}>Phone</p>
                     <a
                       href={`tel:${contact.phone}`}
-                      className="hover:text-accent transition-colors"
+                      className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-black font-semibold' : ''}`}
                     >
                       {contact.phone}
                     </a>
@@ -131,8 +136,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-3 text-accent" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p>
+                    <p className={`text-sm ${theme === 'light' ? 'text-gray-600 font-medium' : 'text-muted-foreground'}`}>Location</p>
+                    <p className={theme === 'light' ? 'text-black font-semibold' : ''}>
                       {contact.address ? `${contact.address}, ` : ""}
                       {contact.location}
                     </p>
@@ -153,75 +158,74 @@ const ContactSection: React.FC<ContactSectionProps> = ({
             <h3 className="text-xl font-bold mb-4">Send a Message</h3>
 
             <form
-  onSubmit={async (e) => {
-    setIsSubmitting(true);
-    try {
-      await sendEmail(e);
-      toast({
-        title: "Message sent!",
-        description: "Thanks for your feedback. We'll get back to you shortly.",
-      });
-      setName("");
-      setEmail("");
-      setMessage("");
-      setRating(5);
-    } catch (err) {
-      toast({
-        title: "Failed to send",
-        description: "Please try again.",
-        variant: "destructive",
-      });
-      console.error("EmailJS error:", err);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }}
-  className="space-y-4"
->
-  <input type="hidden" name="rating" value={rating} />
+              onSubmit={async (e) => {
+                setIsSubmitting(true);
+                try {
+                  await sendEmail(e);
+                  toast({
+                    title: "Message sent!",
+                    description: "Thanks for your feedback. We'll get back to you shortly.",
+                  });
+                  setName("");
+                  setEmail("");
+                  setMessage("");
+                  setRating(5);
+                } catch (err) {
+                  toast({
+                    title: "Failed to send",
+                    description: "Please try again.",
+                    variant: "destructive",
+                  });
+                  console.error("EmailJS error:", err);
+                } finally {
+                  setIsSubmitting(false);
+                }
+              }}
+              className="space-y-4"
+            >
+              <input type="hidden" name="rating" value={rating} />
 
-  <div className="space-y-2">
-    <Label htmlFor="name">Name</Label>
-    <Input
-      id="name"
-      name="from_name"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      required
-    />
-  </div>
+              <div className="space-y-2">
+                <Label htmlFor="name" className={labelClass}>Name</Label>
+                <Input
+                  id="name"
+                  name="from_name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
 
-  <div className="space-y-2">
-    <Label htmlFor="email">Email</Label>
-    <Input
-      id="email"
-      name="reply_to"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
-  </div>
+              <div className="space-y-2">
+                <Label htmlFor="email" className={labelClass}>Email</Label>
+                <Input
+                  id="email"
+                  name="reply_to"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
 
-  <div className="space-y-2">
-    <Label htmlFor="message">Message</Label>
-    <Textarea
-      id="message"
-      name="message"
-      value={message}
-      onChange={(e) => setMessage(e.target.value)}
-      required
-    />
-  </div>
+              <div className="space-y-2">
+                <Label htmlFor="message" className={labelClass}>Message</Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                />
+              </div>
 
-  <Button type="submit" disabled={isSubmitting} className="w-full">
-    {isSubmitting ? "Sending..." : (
-      <>
-        <Send className="mr-2 h-4 w-4" />
-        Send Message
-      </>
-    )}
-  </Button>
-</form>
-
+              <Button type="submit" disabled={isSubmitting} className="w-full">
+                {isSubmitting ? "Sending..." : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" />
+                    Send Message
+                  </>
+                )}
+              </Button>
+            </form>
           </motion.div>
         </div>
 
