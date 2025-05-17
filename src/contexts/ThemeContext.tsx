@@ -30,7 +30,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (theme === 'dark') {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
+      
+      // Set background for dark mode - explicitly set black for dark theme
       document.documentElement.style.setProperty('background-color', '#000000');
+      document.body.style.backgroundColor = '#000000';
       document.documentElement.style.setProperty('--background', '0 0% 0%');
     } else {
       document.body.classList.remove('dark-mode');
