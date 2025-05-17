@@ -63,6 +63,9 @@
     --input: 38 36% 80%;
     --ring: 0 0% 80%;
     --radius: 0.5rem;
+    
+    /* Certificate card color */
+    --light-dark: 252 19% 13%;
   }
   
   /* Set default to dark theme */
@@ -95,6 +98,12 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
     --radius: 0.5rem;
+    
+    /* Certificate card color */
+    --light-dark: 252 19% 13%;
+    
+    /* Light mode background color */
+    --light-bg-color: #FAF1E6;
   }
 }
 
@@ -106,11 +115,13 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+    overflow-x: hidden;
   }
 
   html {
-    @apply scroll-smooth;
     scroll-behavior: smooth !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Responsive font size adjustments */
@@ -201,7 +212,7 @@
   /* Card stagger animation */
   .stagger-card {
     @apply opacity-0;
-    animation: fadeInUp 0.5s ease forwards;
+    animation: fadeInUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
   .stagger-card:nth-child(1) { animation-delay: 0.1s; }
@@ -215,7 +226,7 @@
 
   /* Improved card hover transition */
   .card-hover-3d {
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .card-hover-3d:hover {
@@ -285,6 +296,12 @@
     animation: scrollRight 40s linear infinite;
     width: fit-content;
   }
+  
+  /* Smooth scroll behavior */
+  .smooth-scroll {
+    scroll-behavior: smooth !important;
+    transition: scroll-behavior 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
 }
 
 .story-link * {
@@ -301,7 +318,7 @@
 
 /* Profile image styling - keep colored in light theme */
 .profile-image {
-  transition: transform 0.8s ease-out;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .profile-image:hover {
@@ -325,19 +342,20 @@
   transform: scale(1.05); /* Add zoom effect on hover */
 }
 
-/* Section styling */
+/* Section styling with improved animations */
 section {
   @apply py-16 md:py-24;
+  scroll-margin-top: 80px;
 }
 
-/* Card hover effects */
+/* Card hover effects with smoother transitions */
 .card-hover {
-  @apply transition-all duration-300 hover:translate-y-[-5px] hover:shadow-[0_10px_20px_rgba(0,0,0,0.3)];
+  @apply transition-all duration-500 hover:translate-y-[-5px] hover:shadow-[0_10px_20px_rgba(0,0,0,0.3)];
 }
 
-/* Button hover effects */
+/* Button hover effects with improved transitions */
 .btn-hover {
-  @apply relative overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:z-[-1] after:bg-white/10 after:opacity-0 after:transition-opacity hover:after:opacity-100;
+  @apply relative overflow-hidden transition-all duration-500 after:absolute after:inset-0 after:z-[-1] after:bg-white/10 after:opacity-0 after:transition-opacity hover:after:opacity-100;
 }
 
 /* Animated borders */
@@ -457,6 +475,7 @@ body {
   
   section {
     @apply py-10;
+    scroll-margin-top: 60px;
   }
   
   .responsive-grid {
@@ -520,7 +539,7 @@ body {
 
 /* Light mode styles - updated for requested #FAF1E6 color */
 .light-mode {
-  background: #FAF1E6;
+  background: var(--light-bg-color);
 }
 
 .light-mode .glass-card {
@@ -650,4 +669,16 @@ body {
 /* Social links fixes for light mode */
 [data-theme="light"] .social-links a {
   @apply bg-[#1A1F2C]/90 text-white border-white/10;  /* Dark Purple */
+}
+
+/* Fix for sticky position elements */
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Smoother scrolling for all elements */
+* {
+  scroll-behavior: smooth !important;
 }

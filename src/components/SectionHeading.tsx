@@ -32,10 +32,12 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         y: 0
       }} 
       transition={{
-        duration: 0.5
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1]
       }} 
       viewport={{
-        once: true
+        once: true,
+        margin: "-50px"
       }}
     >
       <h2 className={`font-playfair text-3xl mb-3 font-bold md:text-5xl ${
@@ -48,7 +50,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
       {subtitle && <p className={`${
         theme === 'dark' 
           ? 'text-muted-foreground' 
-          : 'text-light-dark'
+          : 'text-[#1A1F2C]'
       } max-w-2xl font-light`}>
         {subtitle}
       </p>}

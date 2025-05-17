@@ -42,7 +42,7 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
             <Button 
               variant="ghost" 
               size="icon" 
-              className="absolute right-2 top-2 text-white/60 hover:text-white hover:bg-white/10"
+              className="absolute right-2 top-2 text-white/60 hover:text-white hover:bg-white/10 transition-all duration-300"
               onClick={onClose}
             >
               <X size={18} />
@@ -66,14 +66,18 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                   transition={{ 
                     type: "spring", 
                     stiffness: 300, 
-                    damping: 30 
+                    damping: 30,
+                    duration: 0.6
                   }}
                   className="flex flex-col items-center"
                 >
                   <div className="relative w-full aspect-[1.414/1] bg-gradient-to-b from-accent/5 to-transparent rounded-lg overflow-hidden shadow-lg border border-white/10">
                     {imageUrl && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <img 
+                        <motion.img 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.5, delay: 0.2 }}
                           src={imageUrl} 
                           alt={`${certificate.title} Certificate`}
                           className="max-w-full max-h-full object-contain p-2"
@@ -82,7 +86,12 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                     )}
                   </div>
                   
-                  <div className="flex justify-center mt-6 mb-2">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="flex justify-center mt-6 mb-2"
+                  >
                     <Button 
                       variant="outline"
                       className="bg-white/5 hover:bg-accent hover:text-white border-white/20 text-white gap-2 transition-all duration-300"
@@ -91,7 +100,7 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                       <Download size={16} />
                       Download Certificate
                     </Button>
-                  </div>
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -109,7 +118,7 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
           <Button 
             variant="ghost" 
             size="icon" 
-            className="absolute right-2 top-2 text-white/60 hover:text-white hover:bg-white/10"
+            className="absolute right-2 top-2 text-white/60 hover:text-white hover:bg-white/10 transition-all duration-300"
             onClick={onClose}
           >
             <X size={18} />
@@ -133,14 +142,18 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                 transition={{ 
                   type: "spring", 
                   stiffness: 300, 
-                  damping: 30 
+                  damping: 30,
+                  duration: 0.7
                 }}
                 className="flex flex-col items-center"
               >
                 <div className="relative w-full max-w-3xl mx-auto aspect-[1.414/1] bg-gradient-to-b from-accent/5 to-transparent rounded-lg overflow-hidden shadow-lg border border-white/10">
                   {imageUrl && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <img 
+                      <motion.img 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
                         src={imageUrl} 
                         alt={`${certificate.title} Certificate`}
                         className="max-w-full max-h-full object-contain p-2"
@@ -149,16 +162,21 @@ const CertificateViewer: React.FC<CertificateViewerProps> = ({
                   )}
                 </div>
                 
-                <div className="flex justify-center mt-6">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="flex justify-center mt-6"
+                >
                   <Button 
                     variant="outline"
-                    className="bg-white/5 hover:bg-accent hover:text-white border-white/20 text-white gap-2 transition-all duration-300"
+                    className="bg-white/5 hover:bg-accent hover:text-white border-white/20 text-white gap-2 transition-all duration-500"
                     onClick={handleDownload}
                   >
                     <Download size={16} />
                     Download Certificate
                   </Button>
-                </div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>

@@ -97,16 +97,12 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
-  const titleClass = theme === 'light' ? 'text-black' : '';
-  const subtitleClass = theme === 'light' ? 'text-light-dark' : '';
-
   return (
-    <section id="certificates" className="py-16">
+    <section id="certificates" className="py-16 smooth-scroll">
       <div className="container mx-auto px-4">
         <SectionHeading 
           title="Certificates" 
           subtitle="My professional certifications and achievements."
-          className={theme === 'light' ? 'text-black' : ''}
         />
         
         {isAdmin && onAddCertificate && (
@@ -114,7 +110,10 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
             className="flex justify-center mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ 
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1]
+            }}
           >
             <Button onClick={handleAddCertificate}>
               <Plus className="mr-2 h-4 w-4" />
@@ -125,14 +124,25 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
         
         {/* Certificates List - Changed to 1 column */}
         <div className="grid grid-cols-1 gap-4 mt-8 max-w-3xl mx-auto">
-          {sortedCertificates.map((certificate) => (
-            <CertificateCard
+          {sortedCertificates.map((certificate, index) => (
+            <motion.div
               key={certificate.id}
-              certificate={certificate}
-              isAdmin={isAdmin}
-              onEdit={isAdmin ? () => handleEditCertificate(certificate) : undefined}
-              onDelete={isAdmin ? () => handleDeleteCertificate(certificate) : undefined}
-            />
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ 
+                duration: 0.7,
+                delay: index * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+            >
+              <CertificateCard
+                certificate={certificate}
+                isAdmin={isAdmin}
+                onEdit={isAdmin ? () => handleEditCertificate(certificate) : undefined}
+                onDelete={isAdmin ? () => handleDeleteCertificate(certificate) : undefined}
+              />
+            </motion.div>
           ))}
         </div>
         

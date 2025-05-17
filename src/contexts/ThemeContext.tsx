@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type Theme = 'dark' | 'light';
@@ -32,6 +33,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } else {
       document.body.classList.remove('dark-mode');
       document.body.classList.add('light-mode');
+      
+      // Force the light mode background color specifically for mobile
+      document.documentElement.style.setProperty('--light-bg-color', '#FAF1E6');
     }
     
     // Save theme preference to localStorage
