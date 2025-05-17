@@ -2,6 +2,7 @@
 import * as React from "react"
 import { useTheme } from "@/contexts/ThemeContext"
 import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
@@ -11,10 +12,18 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const { theme } = useTheme();
     
     return (
-      <textarea
+      <motion.textarea
+        whileFocus={{ scale: 1.01 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 400, 
+          damping: 25 
+        }}
         className={cn(
           "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-300",
-          theme === 'light' ? "text-black border-gray-400" : "",
+          theme === 'light' 
+            ? "text-[#1A1F2C] border-gray-400 focus:border-[#7E69AB] bg-white/80" 
+            : "",
           className
         )}
         ref={ref}

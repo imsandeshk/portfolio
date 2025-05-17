@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -182,9 +183,9 @@
     filter: drop-shadow(0 0 8px rgba(255, 87, 51, 0.6));
   }
 
-  /* Floating animation enhanced */
+  /* Enhanced floating animation */
   .float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   }
 
   /* Enhanced shine effect */
@@ -280,20 +281,20 @@
     transition: text-shadow 0.3s ease;
   }
   
-  /* Auto-scrolling animations for interests section */
-  .auto-scroll-left {
+  /* Enhanced infinite scrolling animations for interests section */
+  .infinite-scroll-left {
     overflow: hidden;
   }
-  .auto-scroll-left > div {
-    animation: scrollLeft 40s linear infinite;
+  .infinite-scroll-left > div {
+    animation: infiniteScrollLeft 40s linear infinite;
     width: fit-content;
   }
   
-  .auto-scroll-right {
+  .infinite-scroll-right {
     overflow: hidden;
   }
-  .auto-scroll-right > div {
-    animation: scrollRight 40s linear infinite;
+  .infinite-scroll-right > div {
+    animation: infiniteScrollRight 40s linear infinite;
     width: fit-content;
   }
   
@@ -381,7 +382,7 @@ section {
   @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
 }
 
-/* Animations */
+/* Enhanced animations */
 @keyframes gradient-x {
   0%, 100% {
     background-position: 0% 50%;
@@ -459,6 +460,25 @@ section {
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+/* Enhanced infinite scroll animations */
+@keyframes infiniteScrollLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes infiniteScrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
   }
 }
 
@@ -547,7 +567,7 @@ body {
 }
 
 .light-mode .text-gradient {
-  @apply text-black font-bold;
+  @apply text-[#1A1F2C] font-bold;
 }
 
 /* Dark mode enhancements */
@@ -571,7 +591,7 @@ body {
 
 [data-theme="light"] h2, 
 [data-theme="light"] h3 {
-  @apply text-[#6E59A5];  /* Tertiary Purple */
+  @apply text-[#1A1F2C];  /* Updated to Dark Purple for better visibility */
 }
 
 [data-theme="light"] .project-card h1,
@@ -590,7 +610,7 @@ body {
 }
 
 [data-theme="light"] p {
-  @apply text-[#403E43];  /* Charcoal Gray */
+  @apply text-[#1A1F2C];  /* Dark Purple for better visibility */
 }
 
 [data-theme="light"] .project-card p,
@@ -678,7 +698,53 @@ body {
   z-index: 50;
 }
 
-/* Smoother scrolling for all elements */
+/* Enhanced scrolling for all elements */
 * {
   scroll-behavior: smooth !important;
+}
+
+/* Improves form elements in light mode */
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  @apply text-[#1A1F2C] border-[#7E69AB]/50;
+}
+
+[data-theme="light"] label {
+  @apply text-[#1A1F2C];
+}
+
+/* Enhanced form transitions */
+input, textarea, button {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), 
+              box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), 
+              border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+input:focus, textarea:focus {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 2px rgba(126, 105, 171, 0.3);
+}
+
+/* Enhanced button animations */
+button {
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+button:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+}
+
+button:hover:after {
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }

@@ -38,10 +38,15 @@ const InterestsSection: React.FC = () => {
     { id: "ml", name: "Machine Learning", icon: Infinity, color: "#6E59A5" },
     { id: "fullstack", name: "Full Stack", icon: Package, color: "#9b87f5" },
     { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#7E69AB" },
-    // Duplicate a few for continuous scrolling
+    // Duplicate interests for seamless scrolling
     { id: "web-dev-2", name: "Web Development", icon: Code2, color: "#9b87f5" },
     { id: "software-dev-2", name: "Software Development", icon: Monitor, color: "#7E69AB" },
     { id: "data-viz-2", name: "Data Visualization", icon: BarChart, color: "#6E59A5" },
+    { id: "game-dev-2", name: "Game Development", icon: Gamepad, color: "#9b87f5" },
+    { id: "ai-2", name: "Artificial Intelligence", icon: Brain, color: "#7E69AB" },
+    { id: "ml-2", name: "Machine Learning", icon: Infinity, color: "#6E59A5" },
+    { id: "fullstack-2", name: "Full Stack", icon: Package, color: "#9b87f5" },
+    { id: "beta-testing-2", name: "Beta Testing", icon: TestTube, color: "#7E69AB" },
   ];
 
   // Second row of interests
@@ -54,10 +59,15 @@ const InterestsSection: React.FC = () => {
     { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#6E59A5" },
     { id: "blockchain", name: "Blockchain", icon: Brain, color: "#9b87f5" },
     { id: "api-dev", name: "API Development", icon: Package, color: "#7E69AB" },
-    // Duplicate a few for continuous scrolling
+    // Duplicate interests for seamless scrolling
     { id: "databases-2", name: "Databases", icon: Database, color: "#9b87f5" },
     { id: "cybersecurity-2", name: "Cybersecurity", icon: Key, color: "#7E69AB" },
     { id: "cloud-computing-2", name: "Cloud Computing", icon: Package, color: "#6E59A5" },
+    { id: "mobile-dev-2", name: "Mobile Development", icon: Monitor, color: "#9b87f5" },
+    { id: "devops-2", name: "DevOps", icon: TestTube, color: "#7E69AB" },
+    { id: "ui-design-2", name: "UI/UX Design", icon: Code2, color: "#6E59A5" },
+    { id: "blockchain-2", name: "Blockchain", icon: Brain, color: "#9b87f5" },
+    { id: "api-dev-2", name: "API Development", icon: Package, color: "#7E69AB" },
   ];
 
   return (
@@ -72,26 +82,33 @@ const InterestsSection: React.FC = () => {
             <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
             <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
             
-            <div className="auto-scroll-left py-2">
+            <div className="infinite-scroll-left py-2">
               <div className="flex gap-1 md:gap-4">
                 {interestsRow1.map((interest) => (
                   <motion.div
                     key={interest.id}
                     className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
-                    whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      transition: { 
+                        type: "spring", 
+                        stiffness: 400, 
+                        damping: 10 
+                      } 
+                    }}
                     style={{
                       backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)', // Dark Purple
                       borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)' // Secondary Purple
                     }}
                   >
-                    <div 
+                    <motion.div 
                       className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
                       <span style={{ color: isDark ? interest.color : '#fff' }}>
                         <interest.icon size={16} />
                       </span>
-                    </div>
+                    </motion.div>
                     <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white">
                       {interest.name}
                     </span>
@@ -107,13 +124,20 @@ const InterestsSection: React.FC = () => {
             <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
             <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
             
-            <div className="auto-scroll-right py-2">
+            <div className="infinite-scroll-right py-2">
               <div className="flex gap-1 md:gap-4">
                 {interestsRow2.map((interest) => (
                   <motion.div
                     key={interest.id}
                     className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
-                    whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      transition: { 
+                        type: "spring", 
+                        stiffness: 400, 
+                        damping: 10 
+                      } 
+                    }}
                     style={{
                       backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)', // Dark Purple
                       borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)' // Secondary Purple
@@ -138,20 +162,23 @@ const InterestsSection: React.FC = () => {
         </div>
       </div>
       
-      <style>{`
-        .auto-scroll-left {
+      <style jsx>{`
+        .infinite-scroll-left {
           overflow: hidden;
         }
-        .auto-scroll-left > div {
-          animation: scrollLeft 20s linear infinite;
+        .infinite-scroll-left > div {
+          animation: infiniteScrollLeft 40s linear infinite;
+          width: fit-content;
         }
-        .auto-scroll-right {
+        .infinite-scroll-right {
           overflow: hidden;
         }
-        .auto-scroll-right > div {
-          animation: scrollRight 20s linear infinite;
+        .infinite-scroll-right > div {
+          animation: infiniteScrollRight 40s linear infinite;
+          width: fit-content;
         }
-        @keyframes scrollLeft {
+        
+        @keyframes infiniteScrollLeft {
           0% {
             transform: translateX(0);
           }
@@ -159,7 +186,7 @@ const InterestsSection: React.FC = () => {
             transform: translateX(calc(-90px * 8 - 8px * 8));
           }
         }
-        @keyframes scrollRight {
+        @keyframes infiniteScrollRight {
           0% {
             transform: translateX(calc(-90px * 8 - 8px * 8));
           }
@@ -167,8 +194,9 @@ const InterestsSection: React.FC = () => {
             transform: translateX(0);
           }
         }
+        
         @media (min-width: 768px) {
-          @keyframes scrollLeft {
+          @keyframes infiniteScrollLeft {
             0% {
               transform: translateX(0);
             }
@@ -176,7 +204,7 @@ const InterestsSection: React.FC = () => {
               transform: translateX(calc(-180px * 8 - 16px * 8));
             }
           }
-          @keyframes scrollRight {
+          @keyframes infiniteScrollRight {
             0% {
               transform: translateX(calc(-180px * 8 - 16px * 8));
             }

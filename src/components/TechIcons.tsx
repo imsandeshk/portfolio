@@ -1,6 +1,7 @@
 
 import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface TechIcon {
@@ -11,6 +12,7 @@ interface TechIcon {
 
 const TechIcons = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: false, margin: "-100px 0px" });
   const isMobile = useIsMobile();
   
   const techIcons: TechIcon[] = [
@@ -28,27 +30,73 @@ const TechIcons = () => {
     { name: "AWS", color: "#ff9900", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { 
+      opacity: 0 
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 20,
+      scale: 0.8,
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }
+    }
+  };
+
   return (
     <div className="w-full overflow-hidden py-6" ref={containerRef}>
-      <div className="flex flex-wrap gap-4 justify-center">
+      <motion.div 
+        className="flex flex-wrap gap-4 justify-center"
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
         {techIcons.map((icon, index) => (
           <motion.div
             key={`${icon.name}-${index}`}
             className="flex items-center justify-center mx-4 relative group"
+            variants={itemVariants}
             whileHover={{ 
               y: -5, 
               scale: 1.1,
               boxShadow: "0 0 20px rgba(255,255,255,0.7)",
-            }}
-            transition={{ 
-              duration: 0.3,
-              boxShadow: { duration: 0.2 } 
+              transition: {
+                type: "spring",
+                stiffness: 400,
+                damping: 10
+              }
             }}
           >
             <motion.div 
               className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4 overflow-hidden"
-              whileHover={{ borderColor: "rgba(255,255,255,0.5)" }}
-              transition={{ duration: 0.2 }}
+              whileHover={{ 
+                borderColor: "rgba(255,255,255,0.5)",
+                transition: {
+                  duration: 0.3,
+                  ease: "easeOut"
+                }
+              }}
             >
               <img 
                 src={icon.icon} 
@@ -57,7 +105,7 @@ const TechIcons = () => {
               />
               <span className="text-sm font-medium">{icon.name}</span>
 
-              {/* Continuous flash-slide animation */}
+              {/* Enhanced flash-slide animation */}
               <motion.div
                 className="absolute inset-0 rounded-full overflow-hidden"
                 initial={false}
@@ -79,7 +127,7 @@ const TechIcons = () => {
             </motion.div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

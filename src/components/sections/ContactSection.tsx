@@ -1,4 +1,4 @@
-// ⬆️ Your existing imports remain the same
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ContactInfo, Feedback, addFeedback } from "@/services/storageService";
@@ -17,8 +17,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Edit, Mail, MapPin, Phone, Send, Star } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { Edit, Mail, MapPin, Phone, Send, Star, CheckCircle2, XCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast"; // Updated import path
 
 interface ContactSectionProps {
   contact: ContactInfo;
@@ -36,6 +36,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState(5);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<"idle" | "success" | "error">("idle");
   const { theme } = useTheme();
 
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
@@ -64,8 +65,67 @@ const ContactSection: React.FC<ContactSectionProps> = ({
     }
   };
 
-  const labelClass = theme === 'light' ? 'text-black font-medium' : '';
-  const contactInfoClass = theme === 'light' ? 'text-light-dark' : '';
+  const labelClass = theme === 'light' ? 'text-[#1A1F2C] font-medium' : '';
+  const contactInfoClass = theme === 'light' ? 'text-[#1A1F2C]' : '';
+
+  // Animation variants
+  const formVariants = {
+    submitting: {
+      opacity: 0.7,
+      scale: 0.98,
+      transition: {
+        duration: 0.2
+      }
+    },
+    success: {
+      scale: [1, 1.02, 1],
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    },
+    error: {
+      x: [0, -10, 10, -10, 10, 0],
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut"
+      }
+    },
+    idle: {
+      opacity: 1,
+      scale: 1
+    }
+  };
+
+  const buttonVariants = {
+    idle: { scale: 1 },
+    hover: { 
+      scale: 1.05,
+      boxShadow: "0 0 10px rgba(255,255,255,0.5)"
+    },
+    tap: { scale: 0.95 },
+    submitting: { 
+      scale: 1,
+      transition: {
+        repeat: Infinity,
+        repeatType: "mirror",
+        duration: 0.8
+      }
+    }
+  };
+  
+  const successIconVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: { 
+      scale: 1, 
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 260,
+        damping: 20
+      }
+    }
+  };
 
   return (
     <section id="contact" className="py-16">
@@ -81,11 +141,11 @@ const ContactSection: React.FC<ContactSectionProps> = ({
             className="glass-card rounded-lg p-6"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
           >
             <div className="flex justify-between items-start mb-4">
-              <h3 className="text-xl font-bold">Contact Information</h3>
+              <h3 className={`text-xl font-bold ${theme === 'light' ? 'text-white' : ''}`}>Contact Information</h3>
               {isAdmin && onUpdateContact && (
                 <Button
                   size="icon"
@@ -107,10 +167,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
               <div className="flex items-center">
                 <Mail className="h-5 w-5 mr-3 text-accent" />
                 <div>
-                  <p className={`text-sm ${theme === 'light' ? 'text-gray-600 font-medium' : 'text-muted-foreground'}`}>Email</p>
+                  <p className={`text-sm ${theme === 'light' ? 'text-gray-200 font-medium' : 'text-muted-foreground'}`}>Email</p>
                   <a
                     href={`mailto:${contact.email}`}
-                    className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-black font-semibold' : ''}`}
+                    className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-white font-semibold' : ''}`}
                   >
                     {contact.email}
                   </a>
@@ -121,10 +181,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 mr-3 text-accent" />
                   <div>
-                    <p className={`text-sm ${theme === 'light' ? 'text-gray-600 font-medium' : 'text-muted-foreground'}`}>Phone</p>
+                    <p className={`text-sm ${theme === 'light' ? 'text-gray-200 font-medium' : 'text-muted-foreground'}`}>Phone</p>
                     <a
                       href={`tel:${contact.phone}`}
-                      className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-black font-semibold' : ''}`}
+                      className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-white font-semibold' : ''}`}
                     >
                       {contact.phone}
                     </a>
@@ -136,8 +196,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-3 text-accent" />
                   <div>
-                    <p className={`text-sm ${theme === 'light' ? 'text-gray-600 font-medium' : 'text-muted-foreground'}`}>Location</p>
-                    <p className={theme === 'light' ? 'text-black font-semibold' : ''}>
+                    <p className={`text-sm ${theme === 'light' ? 'text-gray-200 font-medium' : 'text-muted-foreground'}`}>Location</p>
+                    <p className={theme === 'light' ? 'text-white font-semibold' : ''}>
                       {contact.address ? `${contact.address}, ` : ""}
                       {contact.location}
                     </p>
@@ -149,28 +209,92 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
           {/* Feedback Form */}
           <motion.div
-            className="glass-card rounded-lg p-6"
+            className="glass-card rounded-lg p-6 relative"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
+            variants={formVariants}
+            animate={isSubmitting ? "submitting" : formStatus}
           >
-            <h3 className="text-xl font-bold mb-4">Send a Message</h3>
+            <h3 className={`text-xl font-bold mb-4 ${theme === 'light' ? 'text-white' : ''}`}>Send a Message</h3>
+
+            {/* Success/Error Animation Overlays */}
+            {formStatus === "success" && (
+              <motion.div 
+                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-lg z-10"
+                initial="hidden"
+                animate="visible"
+                variants={successIconVariants}
+              >
+                <motion.div 
+                  className="flex flex-col items-center p-6 bg-green-500/20 rounded-lg border border-green-500/50 backdrop-blur-md"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <CheckCircle2 size={50} className="text-green-500 mb-3" />
+                  <p className="text-white font-medium text-lg">Message sent successfully!</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4 border-green-500/50 text-white hover:bg-green-500/20"
+                    onClick={() => setFormStatus("idle")}
+                  >
+                    Close
+                  </Button>
+                </motion.div>
+              </motion.div>
+            )}
+
+            {formStatus === "error" && (
+              <motion.div 
+                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-lg z-10"
+                initial="hidden"
+                animate="visible"
+                variants={successIconVariants}
+              >
+                <motion.div 
+                  className="flex flex-col items-center p-6 bg-red-500/20 rounded-lg border border-red-500/50 backdrop-blur-md"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <XCircle size={50} className="text-red-500 mb-3" />
+                  <p className="text-white font-medium text-lg">Failed to send message</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4 border-red-500/50 text-white hover:bg-red-500/20"
+                    onClick={() => setFormStatus("idle")}
+                  >
+                    Try Again
+                  </Button>
+                </motion.div>
+              </motion.div>
+            )}
 
             <form
               onSubmit={async (e) => {
+                e.preventDefault();
                 setIsSubmitting(true);
+                setFormStatus("idle");
+                
                 try {
                   await sendEmail(e);
+                  setFormStatus("success");
+                  
                   toast({
                     title: "Message sent!",
                     description: "Thanks for your feedback. We'll get back to you shortly.",
                   });
+                  
+                  // Reset form
                   setName("");
                   setEmail("");
                   setMessage("");
                   setRating(5);
                 } catch (err) {
+                  setFormStatus("error");
+                  
                   toast({
                     title: "Failed to send",
                     description: "Please try again.",
@@ -187,23 +311,29 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
               <div className="space-y-2">
                 <Label htmlFor="name" className={labelClass}>Name</Label>
-                <Input
-                  id="name"
-                  name="from_name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
+                <motion.div whileTap={{ scale: 0.99 }}>
+                  <Input
+                    id="name"
+                    name="from_name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className={`${theme === 'light' ? 'text-[#1A1F2C] bg-white/80' : ''}`}
+                  />
+                </motion.div>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email" className={labelClass}>Email</Label>
-                <Input
-                  id="email"
-                  name="reply_to"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                <motion.div whileTap={{ scale: 0.99 }}>
+                  <Input
+                    id="email"
+                    name="reply_to"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={`${theme === 'light' ? 'text-[#1A1F2C] bg-white/80' : ''}`}
+                  />
+                </motion.div>
               </div>
 
               <div className="space-y-2">
@@ -217,14 +347,45 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 />
               </div>
 
-              <Button type="submit" disabled={isSubmitting} className="w-full">
-                {isSubmitting ? "Sending..." : (
-                  <>
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
-                  </>
-                )}
-              </Button>
+              <motion.div
+                whileHover="hover"
+                whileTap="tap"
+                animate={isSubmitting ? "submitting" : "idle"}
+                variants={buttonVariants}
+              >
+                <Button 
+                  type="submit" 
+                  disabled={isSubmitting} 
+                  className="w-full relative overflow-hidden group"
+                >
+                  {isSubmitting ? (
+                    <motion.div 
+                      className="flex items-center"
+                      animate={{ opacity: [0.5, 1] }}
+                      transition={{ repeat: Infinity, repeatType: "mirror", duration: 0.8 }}
+                    >
+                      <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </motion.div>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-4 w-4" />
+                      <span>Send Message</span>
+                      
+                      {/* Animated gradient */}
+                      <motion.div
+                        className="absolute bottom-0 left-0 h-full bg-white/10"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: "100%" }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </>
+                  )}
+                </Button>
+              </motion.div>
             </form>
           </motion.div>
         </div>
