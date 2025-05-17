@@ -10,6 +10,8 @@ interface SkillsSectionProps {
   isAdmin?: boolean;
   onOpenSkillForm?: (skill?: Skill) => void;
   onDeleteSkill?: (skill: Skill) => void;
+  onAddSkill?: (skill: any) => void;
+  onUpdateSkill?: (skill: any) => void;
 }
 
 const SkillsSection: React.FC<SkillsSectionProps> = ({
@@ -17,6 +19,8 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   isAdmin = false,
   onOpenSkillForm,
   onDeleteSkill,
+  onAddSkill,
+  onUpdateSkill,
 }) => {
   // Process skills by category
   const skillsByCategory: Record<string, Skill[]> = {};
@@ -96,6 +100,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
                       <div className="flex-grow">
                         <div className="flex justify-between items-center mb-2">
                           <div className="flex items-center gap-2">
+                            {/* Make the icon property optional with ? operator */}
                             {skill.icon && (
                               <img
                                 src={skill.icon}

@@ -12,6 +12,8 @@ interface TasksSectionProps {
   isAdmin?: boolean;
   onOpenTaskForm?: (task?: Task) => void;
   onDeleteTask?: (task: Task) => void;
+  onAddTask?: (task: any) => void;
+  onUpdateTask?: (task: any) => void;
 }
 
 const TasksSection: React.FC<TasksSectionProps> = ({
@@ -19,14 +21,19 @@ const TasksSection: React.FC<TasksSectionProps> = ({
   isAdmin = false,
   onOpenTaskForm,
   onDeleteTask,
+  onAddTask,
+  onUpdateTask,
 }) => {
   const [activeTab, setActiveTab] = useState("all");
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   
+  // Sort tasks - handling the case where pinned might not exist
   const allTasks = [...tasks].sort((a, b) => {
-    if (a.pinned && !b.pinned) return -1;
-    if (!a.pinned && b.pinned) return 1;
+    const aPinned = 'pinned' in a ? a.pinned : false;
+    const bPinned = 'pinned' in b ? b.pinned : false;
+    if (aPinned && !bPinned) return -1;
+    if (!aPinned && bPinned) return 1;
     return 0;
   });
   
