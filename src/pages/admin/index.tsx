@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -335,7 +334,7 @@ const AdminPanel = () => {
               <TasksSection 
                 tasks={tasks} 
                 isAdmin={true}
-                onAddTask={handleAddTask}
+                onOpenTaskForm={handleAddTask} 
                 onUpdateTask={handleUpdateTask}
                 onDeleteTask={handleDeleteTask}
               />
@@ -348,7 +347,7 @@ const AdminPanel = () => {
       <SkillsSection 
         skills={skills} 
         isAdmin={true}
-        onAddSkill={handleAddSkill}
+        onOpenSkillForm={handleAddSkill}
         onUpdateSkill={handleUpdateSkill}
         onDeleteSkill={handleDeleteSkill}
       />

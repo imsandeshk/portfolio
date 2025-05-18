@@ -106,9 +106,9 @@ const Index = () => {
       {/* Theme-specific background */}
       <div className={`fixed inset-0 z-[-10] ${
         theme === 'light' 
-          ? 'bg-light-bg'
-          : 'bg-black'
-      } opacity-90`} />
+          ? 'bg-[#FAF1E6]' // Fixed light background
+          : 'bg-black' // Fixed dark background
+      }`} />
 
       {/* Theme toggle positioned in top-right corner */}
       <div className="fixed top-4 right-4 z-50">

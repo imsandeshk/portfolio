@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown, ExternalLink, Briefcase } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTheme } from "@/contexts/ThemeContext";
-import Cube3D from "@/components/Cube3D";
 
 interface HeroProps {
   profile: ProfileInfo;
@@ -83,18 +82,7 @@ const Hero: React.FC<HeroProps> = ({
           initial="hidden" 
           animate="visible" 
         >
-          <motion.div variants={nameVariants} className="mb-6 overflow-hidden relative">
-            {/* 3D Cube positioned behind the name */}
-            <div className="absolute -left-10 -top-24 opacity-50 w-64 h-64 pointer-events-none">
-              <Cube3D 
-                size={1.5} 
-                position={{ x: 0, y: 0, z: 0 }} 
-                rotation={{ x: 0.01, y: 0.01, z: 0.005 }}
-                color={theme === 'dark' ? '#ffffff' : '#1A1F2C'} 
-                wireframe={true} 
-              />
-            </div>
-            
+          <motion.div variants={nameVariants} className="mb-6 overflow-hidden">
             <motion.h1 
               className={`font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold ${
                 theme === 'dark' ? 'text-gradient' : 'text-light-dark'
