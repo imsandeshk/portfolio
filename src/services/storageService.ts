@@ -1,3 +1,4 @@
+
 // Types
 export interface SocialLink {
   id: string;
@@ -34,7 +35,6 @@ export interface Task {
   completed: boolean;
   dueDate?: string;
   priority: "low" | "medium" | "high";
-  pinned?: boolean;  // Added pinned property as optional
 }
 
 export interface Skill {
@@ -42,7 +42,6 @@ export interface Skill {
   name: string;
   level: number; // 1-5
   category: string;
-  icon?: string;  // Added icon property as optional
 }
 
 export interface Education {

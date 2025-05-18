@@ -282,8 +282,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                   await sendEmail(e);
                   setFormStatus("success");
                   
-                  // Removing toast notification as requested
-                  // since we now have better success animation
+                  toast({
+                    title: "Message sent!",
+                    description: "Thanks for your feedback. We'll get back to you shortly.",
+                  });
                   
                   // Reset form
                   setName("");
@@ -292,6 +294,12 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                   setRating(5);
                 } catch (err) {
                   setFormStatus("error");
+                  
+                  toast({
+                    title: "Failed to send",
+                    description: "Please try again.",
+                    variant: "destructive",
+                  });
                   console.error("EmailJS error:", err);
                 } finally {
                   setIsSubmitting(false);

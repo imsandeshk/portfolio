@@ -99,7 +99,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           )}
         </div>
         
-        <p className="text-white/90 text-xs md:text-sm line-clamp-2 mb-3 md:mb-4 hidden sm:block">
+        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2 mb-3 md:mb-4 hidden sm:block">
           {project.description}
         </p>
         
@@ -111,7 +111,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 <Badge 
                   key={index} 
                   variant="outline" 
-                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors text-white/90"
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors"
                 >
                   {tag}
                 </Badge>
@@ -119,7 +119,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               {project.tags.length > 2 && (
                 <Badge 
                   variant="outline" 
-                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors text-white/90"
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors"
                 >
                   +{project.tags.length - 2}
                 </Badge>
@@ -135,7 +135,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 text-white"
+              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -155,7 +155,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 text-white"
+              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
