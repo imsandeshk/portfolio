@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
 
 import ParticlesBackground from "@/components/ParticlesBackground";
-import SplineBackground from "@/components/SplineBackground";
 import Hero from "@/components/sections/Hero";
 import ProjectsSection from "@/components/sections/projects/ProjectsSection";
 import CertificatesSection from "@/components/sections/certificates/CertificatesSection";
@@ -98,7 +97,6 @@ const Index = () => {
 
   return (
     <>
-      <SplineBackground />
       <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b ${
         theme === 'light' ? 'from-light-dark via-light-dark/5 to-transparent' : 'from-black via-black/70 to-transparent'
       } z-[-9]`} />
