@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -117,12 +116,16 @@
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   html {
     scroll-behavior: smooth !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Optimize for performance */
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
   }
 
   /* Responsive font size adjustments */
@@ -141,6 +144,39 @@
   p {
     @apply text-sm md:text-base leading-relaxed;
   }
+
+  /* Focus styles for better accessibility */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+
+  /* Skip link styles */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
 }
 
 @layer utilities {
@@ -155,6 +191,9 @@
 
   .glass-card {
     @apply backdrop-blur-md border shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-white/20 transition-all duration-500;
+    /* Performance optimization */
+    will-change: transform;
+    backface-visibility: hidden;
   }
   
   [data-theme="dark"] .glass-card {
@@ -183,9 +222,10 @@
     filter: drop-shadow(0 0 8px rgba(255, 87, 51, 0.6));
   }
 
-  /* Enhanced floating animation */
+  /* Enhanced floating animation with performance optimization */
   .float {
     animation: float 6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    will-change: transform;
   }
 
   /* Enhanced shine effect */
@@ -208,6 +248,7 @@
     );
     transform: rotate(30deg);
     animation: shine 6s ease-in-out infinite;
+    will-change: transform;
   }
 
   /* Card stagger animation */
@@ -228,6 +269,7 @@
   /* Improved card hover transition */
   .card-hover-3d {
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
   }
   
   .card-hover-3d:hover {
@@ -253,6 +295,7 @@
       transparent
     );
     animation: badgeGlow 2s ease-in-out infinite;
+    will-change: transform;
   }
   
   /* Name animation with flash-slide */
@@ -274,6 +317,7 @@
       transparent
     );
     animation: nameFlash 3s ease-in-out infinite;
+    will-change: transform;
   }
   
   .name-animation:hover {
@@ -288,6 +332,7 @@
   .infinite-scroll-left > div {
     animation: infiniteScrollLeft 40s linear infinite;
     width: fit-content;
+    will-change: transform;
   }
   
   .infinite-scroll-right {
@@ -296,12 +341,44 @@
   .infinite-scroll-right > div {
     animation: infiniteScrollRight 40s linear infinite;
     width: fit-content;
+    will-change: transform;
   }
   
   /* Smooth scroll behavior */
   .smooth-scroll {
     scroll-behavior: smooth !important;
     transition: scroll-behavior 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Performance optimizations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-spin,
+    .animate-ping,
+    .animate-pulse,
+    .animate-bounce {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+    
+    .float,
+    .shine::after,
+    .badge-glow::before,
+    .name-animation::after {
+      animation: none !important;
+    }
   }
 }
 

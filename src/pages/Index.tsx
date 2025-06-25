@@ -15,8 +15,11 @@ import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import ScrollToTop from "@/components/ScrollToTop";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import SkipLink from "@/components/SkipLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
+import { usePerformanceMonitor } from "@/hooks/usePerformanceMonitor";
 
 import {
   getProfile,
@@ -31,6 +34,9 @@ import {
 } from "@/services/storageService";
 
 const Index = () => {
+  // Monitor performance
+  usePerformanceMonitor();
+  
   // Get theme information
   const { theme } = useTheme();
   
@@ -62,7 +68,7 @@ const Index = () => {
       setHasScrolled(true);
     };
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       clearTimeout(timer);
@@ -70,26 +76,27 @@ const Index = () => {
     };
   }, []);
 
+  // Optimized animation variants
   const sectionVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.15,
-        duration: 1.0,
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+        duration: 0.8,
         ease: [0.22, 1, 0.36, 1],
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: { 
-        duration: 1.0,
+        duration: 0.8,
         ease: [0.22, 1, 0.36, 1] 
       }
     }
@@ -97,6 +104,8 @@ const Index = () => {
 
   return (
     <>
+      <SkipLink />
+      
       <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b ${
         theme === 'light' ? 'from-light-dark via-light-dark/5 to-transparent' : 'from-black via-black/70 to-transparent'
       } z-[-9]`} />
@@ -114,109 +123,135 @@ const Index = () => {
       </div>
 
       <div className="relative z-10 bg-transparent min-h-screen">
-        <AnimatePresence mode="wait">
-          {mainContentVisible && (
-            <motion.div
-              key="main-content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="w-full"
-            >
-              <ParticlesBackground />
-
+        <ErrorBoundary>
+          <AnimatePresence mode="wait">
+            {mainContentVisible && (
               <motion.div
-                initial={isInitialLoad ? "hidden" : false}
-                animate="visible"
-                variants={sectionVariants}
-                className="relative z-10"
-              >
-                <motion.div variants={itemVariants}>
-                  <Hero profile={profile} socialLinks={socialLinks} />
-                </motion.div>
-
-                <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
-                  <div className="container mx-auto px-4">
-                    <TabSwitcher
-                      tabs={tabs}
-                      activeTab={activeTab}
-                      onTabChange={(tabId) => setActiveTab(tabId)}
-                    />
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={activeTab}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{
-                          duration: 0.8, // Increased for slower animation
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        className="min-h-[400px]"
-                      >
-                        {activeTab === "projects" && <ProjectsSection projects={projects} />}
-                        {activeTab === "certificates" && (
-                          <div className="grid grid-cols-1 gap-6">
-                            <CertificatesSection certificates={certificates} />
-                          </div>
-                        )}
-                        {activeTab === "tasks" && <TasksSection tasks={tasks} />}
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-                </motion.section>
-
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
-                  <SkillsSection skills={skills} />
-                </motion.div>
-
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
-                  <InterestsSection />
-                </motion.div>
-
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
-                  <EducationSection education={education} />
-                </motion.div>
-
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
-                  <ContactSection contact={contact} />
-                </motion.div>
-              </motion.div>
-
-              <motion.div
+                key="main-content"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.0, duration: 0.8 }}
-                className="relative z-10"
+                transition={{ duration: 1.0, ease: "easeOut" }}
+                className="w-full"
               >
-                <Footer socialLinks={socialLinks} />
+                <ParticlesBackground />
+
+                <main id="main-content" className="relative z-10">
+                  <motion.div
+                    initial={isInitialLoad ? "hidden" : false}
+                    animate="visible"
+                    variants={sectionVariants}
+                  >
+                    <ErrorBoundary fallback={<div className="p-8 text-center">Hero section failed to load</div>}>
+                      <motion.div variants={itemVariants}>
+                        <Hero profile={profile} socialLinks={socialLinks} />
+                      </motion.div>
+                    </ErrorBoundary>
+
+                    <ErrorBoundary fallback={<div className="p-8 text-center">Content tabs failed to load</div>}>
+                      <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
+                        <div className="container mx-auto px-4">
+                          <TabSwitcher
+                            tabs={tabs}
+                            activeTab={activeTab}
+                            onTabChange={(tabId) => setActiveTab(tabId)}
+                          />
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={activeTab}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -20 }}
+                              transition={{
+                                duration: 0.6,
+                                ease: [0.22, 1, 0.36, 1],
+                              }}
+                              className="min-h-[400px]"
+                            >
+                              {activeTab === "projects" && (
+                                <ErrorBoundary fallback={<div className="p-8 text-center">Projects failed to load</div>}>
+                                  <ProjectsSection projects={projects} />
+                                </ErrorBoundary>
+                              )}
+                              {activeTab === "certificates" && (
+                                <ErrorBoundary fallback={<div className="p-8 text-center">Certificates failed to load</div>}>
+                                  <div className="grid grid-cols-1 gap-6">
+                                    <CertificatesSection certificates={certificates} />
+                                  </div>
+                                </ErrorBoundary>
+                              )}
+                              {activeTab === "tasks" && (
+                                <ErrorBoundary fallback={<div className="p-8 text-center">Tasks failed to load</div>}>
+                                  <TasksSection tasks={tasks} />
+                                </ErrorBoundary>
+                              )}
+                            </motion.div>
+                          </AnimatePresence>
+                        </div>
+                      </motion.section>
+                    </ErrorBoundary>
+
+                    <ErrorBoundary fallback={<div className="p-8 text-center">Skills section failed to load</div>}>
+                      <motion.div 
+                        variants={itemVariants}
+                        whileInView="visible"
+                        initial="hidden"
+                        viewport={{ once: true, amount: 0.2 }}
+                      >
+                        <SkillsSection skills={skills} />
+                      </motion.div>
+                    </ErrorBoundary>
+
+                    <ErrorBoundary fallback={<div className="p-8 text-center">Interests section failed to load</div>}>
+                      <motion.div 
+                        variants={itemVariants}
+                        whileInView="visible"
+                        initial="hidden"
+                        viewport={{ once: true, amount: 0.2 }}
+                      >
+                        <InterestsSection />
+                      </motion.div>
+                    </ErrorBoundary>
+
+                    <ErrorBoundary fallback={<div className="p-8 text-center">Education section failed to load</div>}>
+                      <motion.div 
+                        variants={itemVariants}
+                        whileInView="visible"
+                        initial="hidden"
+                        viewport={{ once: true, amount: 0.2 }}
+                      >
+                        <EducationSection education={education} />
+                      </motion.div>
+                    </ErrorBoundary>
+
+                    <ErrorBoundary fallback={<div className="p-8 text-center">Contact section failed to load</div>}>
+                      <motion.div 
+                        variants={itemVariants}
+                        whileInView="visible"
+                        initial="hidden"
+                        viewport={{ once: true, amount: 0.2 }}
+                      >
+                        <ContactSection contact={contact} />
+                      </motion.div>
+                    </ErrorBoundary>
+                  </motion.div>
+                </main>
+
+                <ErrorBoundary fallback={<div className="p-8 text-center">Footer failed to load</div>}>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
+                    className="relative z-10"
+                  >
+                    <Footer socialLinks={socialLinks} />
+                  </motion.div>
+                </ErrorBoundary>
+                
+                <ScrollToTop />
               </motion.div>
-              
-              {/* Add the ScrollToTop component */}
-              <ScrollToTop />
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
+        </ErrorBoundary>
       </div>
     </>
   );

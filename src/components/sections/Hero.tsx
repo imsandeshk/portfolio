@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ProfileInfo, SocialLink } from "@/services/storageService";
 import SocialLinks from "@/components/SocialLinks";
+import LazyImage from "@/components/LazyImage";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ExternalLink, Briefcase } from "lucide-react";
+import { ArrowDown, ExternalLink } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -31,34 +32,36 @@ const Hero: React.FC<HeroProps> = ({
     const contactSection = document.getElementById("contact");
     if (contactSection) {
       contactSection.scrollIntoView({
-        behavior: "smooth"
+        behavior: "smooth",
+        block: "start"
       });
     }
   };
 
-  // Enhanced animation variants
+  // Enhanced animation variants with better performance
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+        ease: "easeOut"
       }
     }
   };
 
   const nameVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: { 
-        duration: 0.9, 
+        duration: 0.8, 
         ease: [0.22, 1, 0.36, 1],
         type: "spring",
         stiffness: 100,
-        damping: 10
+        damping: 12
       }
     }
   };
@@ -73,7 +76,10 @@ const Hero: React.FC<HeroProps> = ({
   };
 
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-center px-6 overflow-hidden">
+    <section 
+      className="relative min-h-[100vh] flex flex-col justify-center px-6 overflow-hidden"
+      aria-label="Hero section"
+    >
       <div className="container mx-auto max-w-6xl flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
         {/* Content */}
         <motion.div 
@@ -87,6 +93,7 @@ const Hero: React.FC<HeroProps> = ({
               className={`font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold ${
                 theme === 'dark' ? 'text-gradient' : 'text-light-dark'
               } leading-tight`}
+              role="banner"
             >
               {profile.name}
             </motion.h1>
@@ -111,6 +118,8 @@ const Hero: React.FC<HeroProps> = ({
                     ? 'bg-black/30 backdrop-blur-md border border-green-500/20' 
                     : 'bg-light-dark backdrop-blur-md border border-green-500/20 shadow-sm'
                 } rounded-full px-4 py-1.5`}
+                role="status"
+                aria-label="Employment status"
               >
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -141,6 +150,7 @@ const Hero: React.FC<HeroProps> = ({
                   variant="ghost" 
                   className="ml-2" 
                   onClick={onEditSocial}
+                  aria-label="Edit social links"
                 >
                   <ExternalLink size={16} />
                 </Button>
@@ -150,11 +160,12 @@ const Hero: React.FC<HeroProps> = ({
             <Button 
               onClick={handleContactClick} 
               size="lg" 
-              className={`mt-2 sm:mt-0 text-base font-semibold transition-all duration-300 rounded-xl ${
+              className={`mt-2 sm:mt-0 text-base font-semibold transition-all duration-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 theme === 'dark'
-                  ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.5)]'
-                  : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-md'
+                  ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.5)] focus:ring-white'
+                  : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-md focus:ring-light-secondary'
               }`}
+              aria-label="Navigate to contact section"
             >
               Contact Me
             </Button>
@@ -181,10 +192,10 @@ const Hero: React.FC<HeroProps> = ({
               }}
               transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
             >
-              <img 
+              <LazyImage 
                 src="/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png"
-                alt="Profile Picture"
-                className="w-full h-full profile-image object-cover"
+                alt={`Profile picture of ${profile.name}`}
+                className="w-full h-full profile-image"
               />
             </motion.div>
             {isAdmin && onEditProfile && (
@@ -192,6 +203,7 @@ const Hero: React.FC<HeroProps> = ({
                 size="icon" 
                 className="absolute bottom-4 right-4 rounded-full opacity-80 hover:opacity-100" 
                 onClick={onEditProfile}
+                aria-label="Edit profile"
               >
                 <ExternalLink size={16} />
               </Button>
@@ -200,7 +212,7 @@ const Hero: React.FC<HeroProps> = ({
         </motion.div>
       </div>
       
-      {/* Scroll indicator */}
+      {/* Enhanced scroll indicator */}
       <motion.div 
         className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 ${
           theme === 'dark' ? 'text-white/50' : 'text-light-secondary'
@@ -213,15 +225,24 @@ const Hero: React.FC<HeroProps> = ({
           repeat: Infinity, 
           repeatType: "reverse" 
         }}
+        role="button"
+        tabIndex={0}
+        onClick={handleContactClick}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            handleContactClick();
+          }
+        }}
+        aria-label="Scroll to content"
       >
-        <ArrowDown className="w-8 h-8" />
+        <ArrowDown className="w-8 h-8 cursor-pointer hover:scale-110 transition-transform" />
       </motion.div>
 
-      {/* Glow effects */}
+      {/* Optimized glow effects */}
       {theme === 'dark' && (
         <>
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 filter blur-[80px] -z-0 animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500/10 filter blur-[100px] -z-0 animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 filter blur-[80px] -z-0 animate-pulse will-change-transform" />
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500/10 filter blur-[100px] -z-0 animate-pulse will-change-transform" style={{ animationDelay: '1s' }} />
         </>
       )}
     </section>
