@@ -1,7 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import LoadingSpinner from './LoadingSpinner';
 
 interface LazyImageProps {
   src: string;
@@ -60,7 +59,7 @@ const LazyImage: React.FC<LazyImageProps> = ({
           {placeholder ? (
             <img src={placeholder} alt="" className="w-full h-full object-cover opacity-50" />
           ) : (
-            <LoadingSpinner size="md" />
+            <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
           )}
         </div>
       )}

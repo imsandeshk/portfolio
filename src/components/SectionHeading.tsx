@@ -73,7 +73,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
         className={`font-playfair text-3xl mb-3 font-bold md:text-5xl ${
           theme === 'dark' 
             ? 'text-gradient' 
-            : 'text-[#1A1F2C]' // Dark text for light mode
+            : 'text-[#2D3748]' // Dark gray for excellent readability in light mode
         }`}
       >
         {title}
@@ -85,8 +85,8 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           className={`${
             theme === 'dark' 
               ? 'text-muted-foreground' 
-              : 'text-[#1A1F2C]' // Dark text for light mode
-          } max-w-2xl font-medium`}
+              : 'text-[#4A5568]' // Medium gray for better readability in light mode
+          } max-w-2xl font-medium text-lg`}
         >
           {subtitle}
         </motion.p>
