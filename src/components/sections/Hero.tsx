@@ -95,7 +95,7 @@ const Hero: React.FC<HeroProps> = ({
         duration: 6,
         ease: [0.19, 1, 0.22, 1],
         repeat: Infinity,
-        repeatType: "reverse"
+        repeatType: "reverse" as const
       }
     }
   };
@@ -244,10 +244,12 @@ const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, scale: 0.8, y: 20 }} 
           animate={{ opacity: 1, scale: 1, y: 0 }} 
           transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 0.3 }}
-          variants={floatingVariants}
-          animate="animate"
         >
-          <div className="relative max-w-md mx-auto">
+          <motion.div 
+            className="relative max-w-md mx-auto"
+            variants={floatingVariants}
+            animate="animate"
+          >
             <motion.div 
               className={`aspect-square rounded-full overflow-hidden border-2 ${
                 theme === 'dark' ? 'border-white/10' : 'border-light-secondary/30'
@@ -301,7 +303,7 @@ const Hero: React.FC<HeroProps> = ({
                 </Button>
               </motion.div>
             )}
-          </div>
+          </motion.div>
         </motion.div>
       </div>
       
