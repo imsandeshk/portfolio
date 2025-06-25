@@ -30,7 +30,7 @@ const TechIcons = () => {
     { name: "AWS", color: "#ff9900", icon: "/lovable-uploads/5ec496ac-68d2-4e83-a14a-813368da5c5a.png" },
   ];
 
-  // Animation variants
+  // Ultra-smooth animation variants
   const containerVariants = {
     hidden: { 
       opacity: 0 
@@ -38,10 +38,10 @@ const TechIcons = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
         delayChildren: 0.2,
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1]
+        duration: 0.6,
+        ease: [0.19, 1, 0.22, 1]
       }
     }
   };
@@ -49,17 +49,21 @@ const TechIcons = () => {
   const itemVariants = {
     hidden: { 
       opacity: 0, 
-      y: 20,
+      y: 30,
       scale: 0.8,
+      rotateX: -90,
     },
     visible: { 
       opacity: 1, 
       y: 0,
       scale: 1,
+      rotateX: 0,
       transition: {
         type: "spring",
-        stiffness: 260,
-        damping: 20
+        stiffness: 300,
+        damping: 20,
+        duration: 0.6,
+        ease: [0.19, 1, 0.22, 1]
       }
     }
   };
@@ -78,32 +82,60 @@ const TechIcons = () => {
             className="flex items-center justify-center mx-4 relative group"
             variants={itemVariants}
             whileHover={{ 
-              y: -5, 
-              scale: 1.1,
-              boxShadow: "0 0 20px rgba(255,255,255,0.7)",
+              y: -8, 
+              scale: 1.15,
+              rotateY: 5,
               transition: {
                 type: "spring",
                 stiffness: 400,
-                damping: 10
+                damping: 15,
+                duration: 0.4
               }
             }}
           >
             <motion.div 
-              className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4 overflow-hidden"
+              className="w-28 sm:w-32 h-12 sm:h-14 flex items-center justify-center rounded-full bg-black/40 border border-white/10 backdrop-blur-md px-4 overflow-hidden btn-hover"
               whileHover={{ 
-                borderColor: "rgba(255,255,255,0.5)",
+                borderColor: "rgba(255,255,255,0.6)",
+                boxShadow: "0 0 30px rgba(255,255,255,0.3)",
+                backgroundColor: "rgba(0,0,0,0.6)",
                 transition: {
-                  duration: 0.3,
-                  ease: "easeOut"
+                  duration: 0.4,
+                  ease: [0.19, 1, 0.22, 1]
                 }
               }}
+              animate={{
+                boxShadow: [
+                  "0 0 10px rgba(255,255,255,0.1)",
+                  "0 0 20px rgba(255,255,255,0.2)",
+                  "0 0 10px rgba(255,255,255,0.1)"
+                ]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: [0.19, 1, 0.22, 1]
+              }}
             >
-              <img 
+              <motion.img 
                 src={icon.icon} 
                 alt={icon.name}
                 className="w-6 h-6 mr-2 object-contain"
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 5,
+                  transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
+                }}
               />
-              <span className="text-sm font-medium">{icon.name}</span>
+              <motion.span 
+                className="text-sm font-medium"
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.2, ease: [0.19, 1, 0.22, 1] }
+                }}
+              >
+                {icon.name}
+              </motion.span>
 
               {/* Enhanced flash-slide animation */}
               <motion.div
@@ -111,19 +143,32 @@ const TechIcons = () => {
                 initial={false}
               >
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
                   animate={{
                     x: ["-100%", "200%"]
                   }}
                   transition={{
-                    duration: 1.5,
+                    duration: 2,
                     repeat: Infinity,
                     repeatType: "loop",
-                    ease: "easeInOut",
-                    repeatDelay: 1
+                    ease: [0.19, 1, 0.22, 1],
+                    repeatDelay: 2
                   }}
                 />
               </motion.div>
+              
+              {/* Glow effect */}
+              <motion.div
+                className="absolute inset-0 rounded-full opacity-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle, ${icon.color}40, transparent)`
+                }}
+                whileHover={{
+                  opacity: 0.6,
+                  scale: 1.2,
+                  transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
+                }}
+              />
             </motion.div>
           </motion.div>
         ))}
