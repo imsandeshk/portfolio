@@ -26,22 +26,15 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
     
-    // Apply appropriate background for each mode with improved transitions
+    // Apply theme classes only; colors are handled via CSS variables in index.css
     if (theme === 'dark') {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
-      document.documentElement.style.setProperty('background-color', '#000000');
-      document.body.style.backgroundColor = '#000000';
-      document.documentElement.style.setProperty('--background', '0 0% 0%');
+      document.documentElement.classList.add('dark');
     } else {
       document.body.classList.remove('dark-mode');
       document.body.classList.add('light-mode');
-      
-      // Set background color directly on both html and body for mobile consistency
-      document.documentElement.style.setProperty('background-color', '#FAF1E6');
-      document.body.style.backgroundColor = '#FAF1E6';
-      document.documentElement.style.setProperty('--light-bg-color', '#FAF1E6');
-      document.documentElement.style.setProperty('--background', '36 54% 95%');
+      document.documentElement.classList.remove('dark');
     }
     
     // Apply smooth transition for theme change

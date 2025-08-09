@@ -23,6 +23,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
           ref={ref}
           src={error ? fallbackSrc : src}
           alt={alt}
+          loading={(props.loading as any) ?? 'lazy'}
+          decoding="async"
           className={cn(
             'transition-opacity duration-300',
             isLoaded ? 'opacity-100' : 'opacity-0',

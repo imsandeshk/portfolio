@@ -1,10 +1,11 @@
 
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Image from "@/components/ui/image";
 import { ProfileInfo, SocialLink } from "@/services/storageService";
 import SocialLinks from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ExternalLink, Briefcase } from "lucide-react";
+import { ArrowDown, ExternalLink } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -279,14 +280,13 @@ const Hero: React.FC<HeroProps> = ({
                 ease: [0.19, 1, 0.22, 1]
               }}
             >
-              <motion.img 
+              <Image
                 src="/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png"
                 alt="Profile Picture"
                 className="w-full h-full profile-image object-cover"
-                whileHover={{
-                  scale: 1.1,
-                  transition: { duration: 0.6, ease: [0.19, 1, 0.22, 1] }
-                }}
+                loading="eager"
+                fallbackSrc="/placeholder.svg"
+                decoding="async"
               />
             </motion.div>
             {isAdmin && onEditProfile && (
