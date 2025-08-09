@@ -115,7 +115,7 @@ const Hero: React.FC<HeroProps> = ({
             <motion.h1 
               className={`font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold ${
                 theme === 'dark' ? 'text-gradient' : 'text-light-dark'
-              } leading-tight name-animation`}
+              } leading-tight`}
               whileHover={{
                 scale: 1.02,
                 transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] }

@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 import AdminPanel from "./pages/admin";
 import AdminLogin from "./pages/admin/login";
 import NotFound from "./pages/NotFound";
+import Resume from "./pages/Resume";
+import ChatbotFab from "@/components/ChatbotFab";
 import "@/lib/fontawesome"; // This runs only once!
 
 const queryClient = new QueryClient();
@@ -27,8 +29,10 @@ const App = () => (
               {/* Admin routes are still present but accessible without authentication */}
               <Route path="/admin/login" element={<AdminLogin />} />
               <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/resume" element={<Resume />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <ChatbotFab />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>

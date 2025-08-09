@@ -27,6 +27,22 @@ const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
               iconSize={24}
             />
           </motion.div>
+
+          {/* Resume button at the end */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            viewport={{ once: true }}
+            className="mb-4"
+          >
+            <a
+              href="/resume"
+              className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-accent/90 text-white hover:bg-accent transition-colors"
+            >
+              View Resume
+            </a>
+          </motion.div>
           
           <motion.p
             className="text-sm text-muted-foreground text-center"
