@@ -1,12 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const Resume = () => {
+  const [viewerUrl, setViewerUrl] = useState("");
   useEffect(() => {
     document.title = "Resume | Sandesh K";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", "View and download the resume of Sandesh K.");
+    const pdfAbsolute = `${window.location.origin}/resume.pdf`;
+    setViewerUrl(`https://drive.google.com/viewerng/viewer?embedded=1&url=${encodeURIComponent(pdfAbsolute)}`);
   }, []);
 
   return (
@@ -50,9 +53,10 @@ const Resume = () => {
 
           <div className="rounded-xl border border-white/10 overflow-hidden bg-black/20">
             <iframe
-              src="/resume.pdf#toolbar=1&view=fitH"
-              title="Resume PDF Viewer"
-              className="w-full h-[70vh] md:h-[80vh]"
+              src={viewerUrl || "/resume.pdf#view=FitH"}
+              title="Resume - Sandesh K"
+              className="w-full h-[75vh] md:h-[85vh]"
+              loading="lazy"
             />
           </div>
         </div>

@@ -23,7 +23,7 @@ interface ChatMessage {
   role: "assistant" | "user";
   content: string;
   cta?: "contact";
-  kind?: "projects" | "certificates";
+  kind?: "projects" | "certificates" | "skills";
   payload?: any[];
 }
 
@@ -75,7 +75,7 @@ const ChatbotFab = () => {
 
     const reply = (
       content: string,
-      options?: { cta?: "contact"; kind?: "projects" | "certificates"; payload?: any[] }
+      options?: { cta?: "contact"; kind?: "projects" | "certificates" | "skills"; payload?: any[] }
     ): ChatMessage => ({
       id: crypto.randomUUID(),
       role: "assistant",
@@ -99,7 +99,7 @@ const ChatbotFab = () => {
 
     if (/skill|stack|tech|tools/.test(text)) {
       const top = skills.slice(0, 10).map((s: Skill) => s.name).join(", ");
-      return reply(`Key skills: ${top}.`);
+      return reply(`Key skills: ${top}. Tap a skill to see related projects.`, { kind: "skills", payload: skills });
     }
 
     if (/project|work|portfolio/.test(text)) {
@@ -134,19 +134,53 @@ const ChatbotFab = () => {
     );
   };
 
+  const streamAssistantMessage = (msg: ChatMessage) => {
+    const newId = crypto.randomUUID();
+    const base: ChatMessage = { ...msg, id: newId, content: "" };
+    setMessages((prev) => [...prev, base]);
+    setTyping(true);
+
+    const text = msg.content || "";
+    let i = 0;
+    const interval = setInterval(() => {
+      i += 1;
+      setMessages((prev) => prev.map((m) => (m.id === newId ? { ...m, content: text.slice(0, i) } : m)));
+      if (i >= text.length) {
+        clearInterval(interval);
+        setTyping(false);
+      }
+    }, 18);
+  };
+
+  const showProjectsForSkill = (skillName: string) => {
+    const filtered = projects.filter((p) => p.tags?.some((t) => t.toLowerCase() === skillName.toLowerCase()));
+    if (filtered.length > 0) {
+      streamAssistantMessage({
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: `Projects using ${skillName}:`,
+        kind: "projects",
+        payload: filtered,
+      });
+    } else {
+      streamAssistantMessage({
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: `No projects found for ${skillName}. More projects coming soon. For more details, contact me.`,
+        cta: "contact",
+      });
+    }
+  };
+
   const sendMessage = () => {
     const trimmed = input.trim();
     if (!trimmed) return;
     const userMsg: ChatMessage = { id: crypto.randomUUID(), role: "user", content: trimmed };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
-    setTyping(true);
-    const delay = Math.min(1200, Math.max(500, trimmed.length * 30));
-    setTimeout(() => {
-      const aiMsg = answerQuestion(trimmed);
-      setMessages((prev) => [...prev, aiMsg]);
-      setTyping(false);
-    }, delay);
+    const aiMsg = answerQuestion(trimmed);
+    // slight delay for more natural feel
+    setTimeout(() => streamAssistantMessage(aiMsg), 250);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -192,7 +226,7 @@ const ChatbotFab = () => {
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div
-                    className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
+                    className={`${m.kind ? "w-full" : "max-w-[85%]"} rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
                       m.role === "user"
                         ? "bg-accent text-white"
                         : theme === "dark"
@@ -240,6 +274,25 @@ const ChatbotFab = () => {
                       </div>
                     )}
 
+                    {m.kind === "skills" && Array.isArray(m.payload) && (
+                      <div className="mt-3">
+                        <div className="flex flex-wrap gap-2">
+                          {(m.payload as Skill[]).map((s) => (
+                            <Button
+                              key={s.id}
+                              size="sm"
+                              variant="secondary"
+                              onClick={() => showProjectsForSkill(s.name)}
+                              className="rounded-full"
+                              aria-label={`Show projects using ${s.name}`}
+                            >
+                              {s.name}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {m.cta === "contact" && (
                       <div className="mt-2">
                         <Button size="sm" variant="outline" onClick={handleContactCTA}>
@@ -251,20 +304,9 @@ const ChatbotFab = () => {
                 </div>
               ))}
 
-              {typing && (
-                <div className="flex justify-start">
-                  <div className={`rounded-2xl px-3 py-2 text-sm ${theme === "dark" ? "bg-white/10 text-white" : "bg-white text-foreground shadow"}`}>
-                    <span className="inline-flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:120ms]" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:240ms]" />
-                    </span>
-                  </div>
-                </div>
-              )}
 
               {messages.length === 0 && !typing && (
-                <div className="text-sm text-muted-foreground">Start a conversation...</div>
+                <div className="text-sm text-muted-foreground">Start a conversation…</div>
               )}
             </div>
 
@@ -275,7 +317,7 @@ const ChatbotFab = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about skills, projects, contact..."
+                  placeholder="Ask about skills, projects, contact…"
                 />
                 <Button onClick={sendMessage}>
                   <Send className="w-4 h-4 mr-1" />
