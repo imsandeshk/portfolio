@@ -55,13 +55,13 @@ const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
           </motion.p>
           
           <motion.p
-            className="text-xs text-muted-foreground mt-2 flex items-center"
+            className="text-xs text-muted-foreground mt-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            Made with <Heart className="h-3 w-3 mx-1 text-red-500" /> by Sandesh
+            Made by Sandesh K
           </motion.p>
         </div>
       </div>

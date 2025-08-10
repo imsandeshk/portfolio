@@ -189,7 +189,14 @@ const Hero: React.FC<HeroProps> = ({
               {profile.bio}
             </motion.p>
           </motion.div>
-          
+
+          {/* View Resume CTA */}
+          <motion.div variants={itemVariants} className="mb-4">
+            <a href="/resume" aria-label="View Resume" className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium bg-accent text-white hover:bg-accent/90 transition-colors hover-scale">
+              View Resume
+            </a>
+          </motion.div>
+
           <motion.div 
             variants={itemVariants}
             className="flex flex-col sm:flex-row gap-5 items-center justify-center md:justify-start"

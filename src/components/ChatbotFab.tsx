@@ -23,12 +23,15 @@ interface ChatMessage {
   role: "assistant" | "user";
   content: string;
   cta?: "contact";
+  kind?: "projects" | "certificates";
+  payload?: any[];
 }
 
 const ChatbotFab = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [typing, setTyping] = useState(false);
   const { theme } = useTheme();
   const navigate = useNavigate();
   const listRef = useRef<HTMLDivElement>(null);
@@ -70,11 +73,16 @@ const ChatbotFab = () => {
   const answerQuestion = (q: string): ChatMessage => {
     const text = q.toLowerCase();
 
-    const reply = (content: string, cta?: "contact"): ChatMessage => ({
+    const reply = (
+      content: string,
+      options?: { cta?: "contact"; kind?: "projects" | "certificates"; payload?: any[] }
+    ): ChatMessage => ({
       id: crypto.randomUUID(),
       role: "assistant",
       content,
-      cta,
+      cta: options?.cta,
+      kind: options?.kind,
+      payload: options?.payload,
     });
 
     if (/(who are you|name|sandesh)/.test(text)) {
@@ -82,7 +90,7 @@ const ChatbotFab = () => {
     }
 
     if (/(email|contact|reach|mail)/.test(text)) {
-      return reply(`You can contact ${profile.name} at ${contact.email}.`, "contact");
+      return reply(`You can contact ${profile.name} at ${contact.email}.`, { cta: "contact" });
     }
 
     if (/(where|location|based)/.test(text)) {
@@ -95,18 +103,17 @@ const ChatbotFab = () => {
     }
 
     if (/project|work|portfolio/.test(text)) {
-      const pinned = projects.filter((p: Project) => p.pinned).slice(0, 3);
-      if (pinned.length) {
-        const lines = pinned.map((p) => `• ${p.title}${p.url ? ` — ${p.url}` : ""}`).join("\n");
-        return reply(`Highlighted projects:\n${lines}`);
-      }
-      const lines = projects.slice(0, 3).map((p) => `• ${p.title}`).join("\n");
-      return reply(`Some projects:\n${lines}`);
+      return reply("Here are Sandesh's projects. Swipe to explore.", {
+        kind: "projects",
+        payload: projects,
+      });
     }
 
     if (/certificates?|achiev/.test(text)) {
-      const list = certificates.slice(0, 5).map((c: Certificate) => `• ${c.title} — ${c.issuer}`).join("\n");
-      return reply(list ? `Certificates:\n${list}` : "No certificates available yet.");
+      return reply("Certificates — swipe to see all.", {
+        kind: "certificates",
+        payload: certificates,
+      });
     }
 
     if (/education|college|degree|stud/.test(text)) {
@@ -131,9 +138,15 @@ const ChatbotFab = () => {
     const trimmed = input.trim();
     if (!trimmed) return;
     const userMsg: ChatMessage = { id: crypto.randomUUID(), role: "user", content: trimmed };
-    const aiMsg = answerQuestion(trimmed);
-    setMessages((prev) => [...prev, userMsg, aiMsg]);
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
+    setTyping(true);
+    const delay = Math.min(1200, Math.max(500, trimmed.length * 30));
+    setTimeout(() => {
+      const aiMsg = answerQuestion(trimmed);
+      setMessages((prev) => [...prev, aiMsg]);
+      setTyping(false);
+    }, delay);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -179,7 +192,7 @@ const ChatbotFab = () => {
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div
-                    className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
+                    className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
                       m.role === "user"
                         ? "bg-accent text-white"
                         : theme === "dark"
@@ -187,7 +200,46 @@ const ChatbotFab = () => {
                         : "bg-white text-foreground shadow"
                     }`}
                   >
-                    {m.content}
+                    <div>{m.content}</div>
+
+                    {m.kind === "projects" && Array.isArray(m.payload) && (
+                      <div className="mt-3 -mx-1">
+                        <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2">
+                          {(m.payload as Project[]).map((p) => (
+                            <a
+                              key={p.id}
+                              href={p.url || p.github || "#"}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="snap-start min-w-[220px] bg-background/30 rounded-xl border border-white/10 hover:border-accent/50 transition-colors p-3"
+                            >
+                              <div className="h-24 w-full rounded-lg overflow-hidden mb-2 bg-muted">
+                                <img src={p.image || "/placeholder.svg"} alt={p.title} loading="lazy" className="w-full h-full object-cover" />
+                              </div>
+                              <div className="font-medium text-sm line-clamp-1">{p.title}</div>
+                              <div className="text-xs text-muted-foreground line-clamp-2">{p.description}</div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {m.kind === "certificates" && Array.isArray(m.payload) && (
+                      <div className="mt-3 -mx-1">
+                        <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-2">
+                          {(m.payload as Certificate[]).map((c) => (
+                            <div key={c.id} className="snap-start min-w-[220px] bg-background/30 rounded-xl border border-white/10 p-3">
+                              <div className="h-24 w-full rounded-lg overflow-hidden mb-2 bg-muted">
+                                <img src={c.image || "/placeholder.svg"} alt={c.title} loading="lazy" className="w-full h-full object-cover" />
+                              </div>
+                              <div className="font-medium text-sm line-clamp-1">{c.title}</div>
+                              <div className="text-xs text-muted-foreground line-clamp-1">{c.issuer}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {m.cta === "contact" && (
                       <div className="mt-2">
                         <Button size="sm" variant="outline" onClick={handleContactCTA}>
@@ -199,7 +251,19 @@ const ChatbotFab = () => {
                 </div>
               ))}
 
-              {messages.length === 0 && (
+              {typing && (
+                <div className="flex justify-start">
+                  <div className={`rounded-2xl px-3 py-2 text-sm ${theme === "dark" ? "bg-white/10 text-white" : "bg-white text-foreground shadow"}`}>
+                    <span className="inline-flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:120ms]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:240ms]" />
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {messages.length === 0 && !typing && (
                 <div className="text-sm text-muted-foreground">Start a conversation...</div>
               )}
             </div>
