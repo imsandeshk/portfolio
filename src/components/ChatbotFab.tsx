@@ -130,7 +130,7 @@ const ChatbotFab = () => {
 
     return reply(
       "I can help with Sandesh's profile, skills, projects, or contact details. For other questions, please reach out via the Contact section.",
-      "contact"
+      { cta: "contact" }
     );
   };
 
