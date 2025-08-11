@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MessageCircle, Send, X, Bot, Mail } from "lucide-react";
+import { MessageCircle, Send, X, Bot, Mail, Github, Linkedin, Youtube, Twitter, ExternalLink } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useToast } from "@/hooks/use-toast";
+import { sendEmail } from "@/utils/sendEmail";
 import {
   getProfile,
   getProjects,
@@ -12,10 +15,12 @@ import {
   getEducation,
   getCertificates,
   getContact,
+  getSocialLinks,
   Project,
   Skill,
   Education,
   Certificate,
+  SocialLink,
 } from "@/services/storageService";
 
 interface ChatMessage {
@@ -23,9 +28,10 @@ interface ChatMessage {
   role: "assistant" | "user";
   content: string;
   cta?: "contact";
-  kind?: "projects" | "certificates" | "skills";
-  payload?: any[];
+  kind?: "projects" | "certificates" | "skills" | "resume" | "socials" | "contact-form" | "email";
+  payload?: any[] | string;
 }
+
 
 const ChatbotFab = () => {
   const [open, setOpen] = useState(false);
@@ -35,6 +41,7 @@ const ChatbotFab = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const listRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   const profile = useMemo(() => getProfile(), []);
   const projects = useMemo(() => getProjects(), []);
@@ -42,6 +49,7 @@ const ChatbotFab = () => {
   const education = useMemo(() => getEducation(), []);
   const certificates = useMemo(() => getCertificates(), []);
   const contact = useMemo(() => getContact(), []);
+  const socials = useMemo(() => getSocialLinks(), []);
 
   useEffect(() => {
     if (!open) return;
@@ -75,7 +83,7 @@ const ChatbotFab = () => {
 
     const reply = (
       content: string,
-      options?: { cta?: "contact"; kind?: "projects" | "certificates" | "skills"; payload?: any[] }
+      options?: { cta?: "contact"; kind?: ChatMessage["kind"]; payload?: ChatMessage["payload"] }
     ): ChatMessage => ({
       id: crypto.randomUUID(),
       role: "assistant",
@@ -85,16 +93,36 @@ const ChatbotFab = () => {
       payload: options?.payload,
     });
 
-    if (/(who are you|name|sandesh)/.test(text)) {
-      return reply(`I'm an AI assistant for ${profile.name}, a ${profile.title}.`);
+    if (/(who are you|what's your name|your name|name\??)/.test(text)) {
+      return reply(`His name is ${profile.name}. I'm his AI assistant, here to help.`);
     }
 
-    if (/(email|contact|reach|mail)/.test(text)) {
-      return reply(`You can contact ${profile.name} at ${contact.email}.`, { cta: "contact" });
+    if (/(current|currently|doing now|up to|status|what's up|what are you up to)/.test(text)) {
+      return reply(`${profile.name} is in his final year and actively open to work opportunities.`);
+    }
+
+    if (/(email|gmail|contact|reach|message|send (a )?message)/.test(text)) {
+      return reply(`You can contact ${profile.name} at ${contact.email}. Compose a message below or use quick links.`, { kind: "contact-form" });
+    }
+
+    if (/(gmail app|open gmail|compose)/.test(text)) {
+      return reply(`Quick links to contact ${profile.name}`, { kind: "email", payload: contact.email });
+    }
+
+    if (/(social|linkedin|github|youtube|twitter|\bx\b)/.test(text)) {
+      return reply("Social profiles:", { kind: "socials", payload: socials });
     }
 
     if (/(where|location|based)/.test(text)) {
       return reply(`${profile.name} is based in ${contact.location || profile.location || "Bengaluru"}.`);
+    }
+
+    if (/(better|best|strong|expert|proficient).*(skill|tools|stack)|\bhtml\b|\bcss\b|\bjava\b/.test(text)) {
+      return reply("Strongest skills: HTML, CSS, and Java. Also experienced with JavaScript and UI/UX.");
+    }
+
+    if (/interest|hobbies?/.test(text)) {
+      return reply("Top interests: Web Development, Software Development, and Jr Software Engineer roles.");
     }
 
     if (/skill|stack|tech|tools/.test(text)) {
@@ -116,20 +144,22 @@ const ChatbotFab = () => {
       });
     }
 
-    if (/education|college|degree|stud/.test(text)) {
+    if (/education|college|degree|stud|branch|graduate|graduation|when started|start year|end year/.test(text)) {
       const e = education[0] as Education | undefined;
       if (e) {
-        return reply(`${e.degree} in ${e.field} at ${e.institution} (${new Date(e.startDate).getFullYear()}–${new Date(e.endDate).getFullYear()}).`);
+        const start = new Date(e.startDate).toLocaleString("en-US", { month: "short", year: "numeric" });
+        const end = new Date(e.endDate).toLocaleString("en-US", { month: "short", year: "numeric" });
+        return reply(`${e.degree} in ${e.field} at ${e.institution} (${start}–${end}). Expected graduation: ${end}.`);
       }
       return reply("Education details are not available right now.");
     }
 
     if (/resume|cv/.test(text)) {
-      return reply("You can view the resume from the Resume page.");
+      return reply("Here is a quick resume preview.", { kind: "resume", payload: `${window.location.origin}/resume.pdf#toolbar=1&view=FitH` });
     }
 
     return reply(
-      "I can help with Sandesh's profile, skills, projects, or contact details. For other questions, please reach out via the Contact section.",
+      "I can help with Sandesh's profile, skills, projects, certificates, resume, or contact details. For other questions, send a quick message below.",
       { cta: "contact" }
     );
   };
@@ -210,7 +240,7 @@ const ChatbotFab = () => {
       </button>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="right" className="w-[min(420px,100vw)] p-0">
+        <SheetContent side="right" className="w-[min(480px,100vw)] p-0">
           <div className="flex h-full flex-col">
             <SheetHeader className="px-4 py-3 border-b border-white/10">
               <div className="flex items-center justify-between">

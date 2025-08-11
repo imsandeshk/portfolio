@@ -8,8 +8,8 @@ const Resume = () => {
     document.title = "Resume | Sandesh K";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", "View and download the resume of Sandesh K.");
-    const pdfAbsolute = `${window.location.origin}/resume.pdf`;
-    setViewerUrl(`https://drive.google.com/viewerng/viewer?embedded=1&url=${encodeURIComponent(pdfAbsolute)}`);
+    const pdfAbsolute = `${window.location.origin}/resume.pdf#toolbar=1&view=FitH`;
+    setViewerUrl(pdfAbsolute);
   }, []);
 
   return (
