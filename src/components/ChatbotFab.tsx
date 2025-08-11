@@ -42,6 +42,7 @@ const ChatbotFab = () => {
   const navigate = useNavigate();
   const listRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const [formStatusById, setFormStatusById] = useState<Record<string, 'idle' | 'sending' | 'sent' | 'error'>>({});
 
   const profile = useMemo(() => getProfile(), []);
   const projects = useMemo(() => getProjects(), []);
@@ -252,11 +253,14 @@ const ChatbotFab = () => {
       </button>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="right" className="w-[min(480px,100vw)] p-0">
+        <SheetContent side="right" className="w-[min(480px,100vw)] h-[100dvh] p-0 flex flex-col">
           <div className="flex h-full flex-col">
             <SheetHeader className="px-4 py-3 border-b border-white/10">
               <div className="flex items-center justify-between">
-                <SheetTitle>Ask about Sandesh</SheetTitle>
+                <div>
+                  <SheetTitle>Ask about Sandesh</SheetTitle>
+                  <SheetDescription className="sr-only">Chat assistant to explore Sandesh’s profile, skills, projects, and contact options.</SheetDescription>
+                </div>
                 <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close">
                   <X className="w-4 h-4" />
                 </Button>
@@ -335,6 +339,93 @@ const ChatbotFab = () => {
                       </div>
                     )}
 
+                    {m.kind === "socials" && Array.isArray(m.payload) && (
+                      <div className="mt-3">
+                        <div className="flex flex-wrap gap-2">
+                          {(m.payload as SocialLink[]).map((s) => (
+                            <a
+                              key={s.id}
+                              href={s.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 hover:border-accent/50 transition-colors"
+                            >
+                              <SocialIcon platform={s.platform} />
+                              <span className="text-xs">{s.platform}</span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {m.kind === "email" && typeof m.payload === "string" && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <a
+                          href={gmailComposeFor(m.payload)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent text-white hover:opacity-90"
+                        >
+                          <Mail className="w-4 h-4" /> Gmail
+                        </a>
+                        <a
+                          href={`mailto:${m.payload}`}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10"
+                        >
+                          <Mail className="w-4 h-4" /> Email
+                        </a>
+                      </div>
+                    )}
+
+                    {m.kind === "resume" && typeof m.payload === "string" && (
+                      <div className="mt-3">
+                        <div className="rounded-lg overflow-hidden border border-white/10 bg-background/30">
+                          <iframe src={m.payload as string} title="Resume preview" className="w-full h-64" loading="lazy" />
+                        </div>
+                        <div className="mt-2 flex gap-3">
+                          <a href="/resume.pdf" download className="text-xs underline">Download PDF</a>
+                          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-xs underline">Open full</a>
+                        </div>
+                      </div>
+                    )}
+
+                    {m.kind === "contact-form" && (
+                      <form
+                        className="mt-3 space-y-2"
+                        onSubmit={async (e) => {
+                          e.preventDefault();
+                          setFormStatusById((prev) => ({ ...prev, [m.id]: 'sending' }));
+                          try {
+                            await sendEmail(e as any);
+                            setFormStatusById((prev) => ({ ...prev, [m.id]: 'sent' }));
+                            toast({ title: 'Message sent!', description: 'Thanks for reaching out.' });
+                          } catch (err) {
+                            setFormStatusById((prev) => ({ ...prev, [m.id]: 'error' }));
+                            toast({ title: 'Failed to send', description: 'Please try again.', variant: 'destructive' });
+                            console.error('EmailJS error (chat):', err);
+                          }
+                        }}
+                      >
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <Input name="from_name" placeholder="Your name" required />
+                          <Input name="reply_to" type="email" placeholder="Your email (optional)" />
+                        </div>
+                        <Textarea name="message" placeholder="Type your message..." required />
+                        <div className="flex items-center gap-2">
+                          <Button type="submit" size="sm" disabled={formStatusById[m.id] === 'sending'}>
+                            <Send className="w-4 h-4 mr-1" />
+                            {formStatusById[m.id] === 'sending' ? 'Sending...' : 'Send message'}
+                          </Button>
+                          {formStatusById[m.id] === 'sent' && (
+                            <span className="text-xs text-green-500">Sent!</span>
+                          )}
+                          {formStatusById[m.id] === 'error' && (
+                            <span className="text-xs text-red-500">Failed. Try again.</span>
+                          )}
+                        </div>
+                      </form>
+                    )}
+
                     {m.cta === "contact" && (
                       <div className="mt-2">
                         <Button size="sm" variant="outline" onClick={handleContactCTA}>
@@ -353,7 +444,7 @@ const ChatbotFab = () => {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-white/10">
+            <div className="p-3 border-t border-white/10 sticky bottom-0 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div className="flex items-center gap-2">
                 <Input
                   value={input}
