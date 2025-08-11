@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MessageCircle, Send, X, Bot, Mail, Github, Linkedin, Youtube, Twitter, ExternalLink } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -219,6 +219,18 @@ const ChatbotFab = () => {
       sendMessage();
     }
   };
+
+  const SocialIcon = ({ platform, className = "w-4 h-4" }: { platform: string; className?: string }) => {
+    const p = platform.toLowerCase();
+    if (p.includes("github")) return <Github className={className} />;
+    if (p.includes("linkedin")) return <Linkedin className={className} />;
+    if (p.includes("youtube")) return <Youtube className={className} />;
+    if (p.includes("twitter") || p === "x") return <Twitter className={className} />;
+    if (p.includes("mail") || p.includes("email") || p.includes("gmail")) return <Mail className={className} />;
+    return <ExternalLink className={className} />;
+  };
+
+  const gmailComposeFor = (email: string) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
 
   return (
     <>
