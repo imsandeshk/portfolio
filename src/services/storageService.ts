@@ -1,3 +1,4 @@
+import { supabase } from "@/integrations/supabase/client";
 
 // Types
 export interface SocialLink {
@@ -96,6 +97,24 @@ export interface ContactInfo {
 // Helper function to generate IDs
 export const generateId = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
+};
+
+// Supabase helpers (fire-and-forget to keep current sync API)
+const from = (table: string) => (supabase.from as any)(table);
+const upsert = (table: string, row: any) => {
+  (from(table).upsert(row) as any)
+    .then(() => {
+      console.log(`[Supabase] upsert into ${table} ok`);
+    })
+    .catch((e: any) => console.error(`[Supabase] upsert ${table} error`, e));
+};
+
+const removeById = (table: string, id: string) => {
+  (from(table).delete().eq('id', id) as any)
+    .then(() => {
+      console.log(`[Supabase] delete from ${table} ok`);
+    })
+    .catch((e: any) => console.error(`[Supabase] delete ${table} error`, e));
 };
 
 // Static data (no localStorage dependency)
@@ -293,7 +312,20 @@ export const getProfile = (): ProfileInfo => {
 };
 
 export const updateProfile = (updatedProfile: ProfileInfo): void => {
-  // In a real app, this would update the database
+  // Persist to Supabase (single row with fixed id)
+  upsert('site_profile', {
+    id: 'main',
+    name: updatedProfile.name,
+    title: updatedProfile.title,
+    bio: updatedProfile.bio,
+    email: updatedProfile.email,
+    phone: updatedProfile.phone,
+    location: updatedProfile.location,
+    date_of_birth: updatedProfile.dateOfBirth,
+    languages: updatedProfile.languages,
+    hobbies: updatedProfile.hobbies,
+    profile_image: updatedProfile.profileImage,
+  });
   console.log("Profile update requested:", updatedProfile);
 };
 
@@ -303,15 +335,18 @@ export const getSocialLinks = (): SocialLink[] => {
 
 export const addSocialLink = (link: Omit<SocialLink, "id">): SocialLink => {
   const newLink = { ...link, id: generateId() };
+  upsert('social_links', newLink);
   console.log("Add social link requested:", newLink);
   return newLink;
 };
 
 export const updateSocialLink = (link: SocialLink): void => {
+  upsert('social_links', link);
   console.log("Update social link requested:", link);
 };
 
 export const deleteSocialLink = (id: string): void => {
+  removeById('social_links', id);
   console.log("Delete social link requested:", id);
 };
 
@@ -325,15 +360,18 @@ export const getProjectById = (id: string): Project | undefined => {
 
 export const addProject = (project: Omit<Project, "id">): Project => {
   const newProject = { ...project, id: generateId() };
+  upsert('projects', newProject);
   console.log("Add project requested:", newProject);
   return newProject;
 };
 
 export const updateProject = (project: Project): void => {
+  upsert('projects', project);
   console.log("Update project requested:", project);
 };
 
 export const deleteProject = (id: string): void => {
+  removeById('projects', id);
   console.log("Delete project requested:", id);
 };
 
@@ -343,15 +381,18 @@ export const getCertificates = (): Certificate[] => {
 
 export const addCertificate = (certificate: Omit<Certificate, "id">): Certificate => {
   const newCertificate = { ...certificate, id: generateId() };
+  upsert('certificates', newCertificate);
   console.log("Add certificate requested:", newCertificate);
   return newCertificate;
 };
 
 export const updateCertificate = (certificate: Certificate): void => {
+  upsert('certificates', certificate);
   console.log("Update certificate requested:", certificate);
 };
 
 export const deleteCertificate = (id: string): void => {
+  removeById('certificates', id);
   console.log("Delete certificate requested:", id);
 };
 
@@ -361,15 +402,18 @@ export const getTasks = (): Task[] => {
 
 export const addTask = (task: Omit<Task, "id">): Task => {
   const newTask = { ...task, id: generateId() };
+  upsert('tasks', { ...newTask, due_date: newTask.dueDate });
   console.log("Add task requested:", newTask);
   return newTask;
 };
 
 export const updateTask = (task: Task): void => {
+  upsert('tasks', { ...task, due_date: task.dueDate });
   console.log("Update task requested:", task);
 };
 
 export const deleteTask = (id: string): void => {
+  removeById('tasks', id);
   console.log("Delete task requested:", id);
 };
 
@@ -379,15 +423,18 @@ export const getSkills = (): Skill[] => {
 
 export const addSkill = (skill: Omit<Skill, "id">): Skill => {
   const newSkill = { ...skill, id: generateId() };
+  upsert('skills', skill);
   console.log("Add skill requested:", newSkill);
   return newSkill;
 };
 
 export const updateSkill = (skill: Skill): void => {
+  upsert('skills', skill);
   console.log("Update skill requested:", skill);
 };
 
 export const deleteSkill = (id: string): void => {
+  removeById('skills', id);
   console.log("Delete skill requested:", id);
 };
 
@@ -397,15 +444,18 @@ export const getEducation = (): Education[] => {
 
 export const addEducation = (educationItem: Omit<Education, "id">): Education => {
   const newEducation = { ...educationItem, id: generateId() };
+  upsert('education', { ...newEducation, start_date: newEducation.startDate, end_date: newEducation.endDate });
   console.log("Add education requested:", newEducation);
   return newEducation;
 };
 
 export const updateEducation = (educationItem: Education): void => {
+  upsert('education', { ...educationItem, start_date: educationItem.startDate, end_date: educationItem.endDate });
   console.log("Update education requested:", educationItem);
 };
 
 export const deleteEducation = (id: string): void => {
+  removeById('education', id);
   console.log("Delete education requested:", id);
 };
 
@@ -415,15 +465,18 @@ export const getExperience = (): Experience[] => {
 
 export const addExperience = (experienceItem: Omit<Experience, "id">): Experience => {
   const newExperience = { ...experienceItem, id: generateId() };
+  upsert('experience', { ...newExperience, start_date: newExperience.startDate, end_date: newExperience.endDate });
   console.log("Add experience requested:", newExperience);
   return newExperience;
 };
 
 export const updateExperience = (experienceItem: Experience): void => {
+  upsert('experience', { ...experienceItem, start_date: experienceItem.startDate, end_date: experienceItem.endDate });
   console.log("Update experience requested:", experienceItem);
 };
 
 export const deleteExperience = (id: string): void => {
+  removeById('experience', id);
   console.log("Delete experience requested:", id);
 };
 
@@ -437,11 +490,13 @@ export const addFeedback = (feedback: Omit<Feedback, "id" | "date">): Feedback =
     id: generateId(), 
     date: new Date().toISOString() 
   };
+  upsert('feedback', newFeedback);
   console.log("Add feedback requested:", newFeedback);
   return newFeedback;
 };
 
 export const deleteFeedback = (id: string): void => {
+  removeById('feedback', id);
   console.log("Delete feedback requested:", id);
 };
 
@@ -450,6 +505,7 @@ export const getContact = (): ContactInfo => {
 };
 
 export const updateContact = (updatedContact: ContactInfo): void => {
+  upsert('contact_info', { id: 'main', email: updatedContact.email, phone: updatedContact.phone, address: updatedContact.address, location: updatedContact.location });
   console.log("Contact update requested:", updatedContact);
 };
 

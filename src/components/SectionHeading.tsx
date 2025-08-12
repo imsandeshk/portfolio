@@ -102,22 +102,27 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
             transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] }
           }}
         >
-          <motion.span className="inline-block">
-            {title.split('').map((letter, index) => (
-              <motion.span
-                key={index}
-                variants={letterVariants}
-                custom={index}
-                className="inline-block"
-                whileHover={{
-                  y: -3,
-                  transition: { duration: 0.2, ease: [0.19, 1, 0.22, 1] }
-                }}
-              >
-                {letter === ' ' ? '\u00A0' : letter}
-              </motion.span>
-            ))}
-          </motion.span>
+          {theme === 'dark' ? (
+            <span className="inline-block">{title}</span>
+          ) : (
+            <motion.span className="inline-block">
+              {title.split('').map((letter, index) => (
+                <motion.span
+                  key={index}
+                  variants={letterVariants}
+                  custom={index}
+                  className="inline-block"
+                  whileHover={{
+                    y: -3,
+                    transition: { duration: 0.2, ease: [0.19, 1, 0.22, 1] }
+                  }}
+                >
+                  {letter === ' ' ? '\u00A0' : letter}
+                </motion.span>
+              ))}
+            </motion.span>
+          )}
+
           
           {/* Animated underline */}
           <motion.div

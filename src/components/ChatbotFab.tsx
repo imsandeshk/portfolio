@@ -253,7 +253,7 @@ const ChatbotFab = () => {
       </button>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="right" className="w-[min(480px,100vw)] h-[100dvh] p-0 flex flex-col">
+        <SheetContent side="right" className="w-[min(480px,100vw)] h-[100svh] p-0 flex flex-col">
           <div className="flex h-full flex-col">
             <SheetHeader className="px-4 py-3 border-b border-white/10">
               <div className="flex items-center justify-between">
@@ -444,7 +444,7 @@ const ChatbotFab = () => {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-white/10 sticky bottom-0 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="p-3 pb-[env(safe-area-inset-bottom)] border-t border-white/10 sticky bottom-0 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div className="flex items-center gap-2">
                 <Input
                   value={input}
