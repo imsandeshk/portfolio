@@ -29,21 +29,32 @@ import {
   getExperience,
   getContact,
 } from "@/services/storageService";
+import {
+  fetchProfile,
+  fetchSocialLinks,
+  fetchProjects as fetchProjectsRemote,
+  fetchCertificates as fetchCertificatesRemote,
+  fetchTasks as fetchTasksRemote,
+  fetchSkills as fetchSkillsRemote,
+  fetchEducation as fetchEducationRemote,
+  fetchExperience as fetchExperienceRemote,
+  fetchContact as fetchContactRemote,
+} from "@/services/dataClient";
 
 const Index = () => {
   // Get theme information
   const { theme } = useTheme();
   
-  // Fetch all stored data
-  const profile = getProfile();
-  const socialLinks = getSocialLinks();
-  const projects = getProjects();
-  const certificates = getCertificates();
-  const tasks = getTasks();
-  const skills = getSkills();
-  const education = getEducation();
-  const experience = getExperience();
-  const contact = getContact();
+  // Local state initialized with static defaults; replaced with Supabase data after mount
+  const [profile, setProfile] = useState(getProfile());
+  const [socialLinks, setSocialLinks] = useState(getSocialLinks());
+  const [projects, setProjects] = useState(getProjects());
+  const [certificates, setCertificates] = useState(getCertificates());
+  const [tasks, setTasks] = useState(getTasks());
+  const [skills, setSkills] = useState(getSkills());
+  const [education, setEducation] = useState(getEducation());
+  const [experience, setExperience] = useState(getExperience());
+  const [contact, setContact] = useState(getContact());
 
   const [activeTab, setActiveTab] = useState("projects");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -68,6 +79,39 @@ const Index = () => {
       clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
     };
+  }, []);
+
+  // Fetch live data from Supabase on mount
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const [p, s, pr, c, t, sk, ed, ex, co] = await Promise.all([
+          fetchProfile(),
+          fetchSocialLinks(),
+          fetchProjectsRemote(),
+          fetchCertificatesRemote(),
+          fetchTasksRemote(),
+          fetchSkillsRemote(),
+          fetchEducationRemote(),
+          fetchExperienceRemote(),
+          fetchContactRemote(),
+        ]);
+        if (!mounted) return;
+        setProfile(p);
+        setSocialLinks(s);
+        setProjects(pr);
+        setCertificates(c);
+        setTasks(t);
+        setSkills(sk);
+        setEducation(ed);
+        setExperience(ex);
+        setContact(co);
+      } catch (e) {
+        console.warn("Failed to fetch live data from Supabase, using defaults.", e);
+      }
+    })();
+    return () => { mounted = false; };
   }, []);
 
   const sectionVariants = {

@@ -120,7 +120,7 @@ const removeById = (table: string, id: string) => {
 // Static data (no localStorage dependency)
 const profile: ProfileInfo = {
   name: "Sandesh K",
-  title: "Computer Science Student",
+  title: "Computer Science and Engineering",
   bio: "Passionate about web development and UI/UX design.",
   email: "sandeshkullolli4@gmail.com",
   location: "Raghuvanahalli, Bangalore - 590109",
@@ -145,15 +145,15 @@ const socialLinks: SocialLink[] = [
   },
   {
     id: "social3",
-    platform: "YouTube",
-    url: "https://youtube.com/@TheOneUI?si=dGSPvu14BSPC1Pi_",
-    icon: "Youtube",
+    platform: "Gmail",
+    url: "mailto:sandeshkullolli4@gmail.com",
+    icon: "Mail",
   },
   {
     id: "social4",
-    platform: "Twitter",
-    url: "https://x.com/The1UX?t=rtFCxTr86h5JHVm9tc-jqg&s=09",
-    icon: "Twitter",
+    platform: "LeetCode",
+    url: "https://leetcode.com/u/iamsandeshk",
+    icon: "ExternalLink",
   },
 ];
 
@@ -191,29 +191,8 @@ const projects: Project[] = [
     github: "https://github.com/iamsandeshk/bus-booking.git",
     pinned: false,
   },
-  {
-    id: "project4",
-    title: "Vexora-Anime",
-    description: "Anime site for episode countdown and trailers.",
-    image: "/projects/Vexora-Anime.png",
-    category: "Web App",
-    tags: ["TypeScript", "CSS"],
-    url: "https://vexoanime.netlify.app",
-    github: "https://github.com/iamsandeshk/Vaxora-Anime.git",
-    pinned: false,
-  },
-  {
-    id: "project5",
-    title: "Movie Bot",
-    description: "A chatbot that suggests movies.",
-    image: "/projects/Moviebot.png",
-    category: "Web App",
-    tags: ["HTML", "CSS", "JavaScript"],
-    url: "https://iamsandeshk.github.io/MovieBot/",
-    github: "https://github.com/iamsandeshk/MovieBot.git",
-    pinned: false,
-  }
 ];
+
 
 const certificates: Certificate[] = [
   {
@@ -274,6 +253,7 @@ const backendSkills: Skill[] = [
   { id: "skill8", name: "C", level: 4, category: "Backend" },
   { id: "skill9", name: "Python", level: 4, category: "Backend" },
   { id: "skill10", name: "MongoDB", level: 3, category: "Backend" },
+  { id: "skill13", name: "SQL", level: 3, category: "Backend" },
 ];
 
 const otherSkills: Skill[] = [
