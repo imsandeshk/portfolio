@@ -42,43 +42,43 @@ export const fetchProfile = async (): Promise<ProfileInfo> => {
 
 export const fetchSocialLinks = async (): Promise<SocialLink[]> => {
   const { data, error } = await supabase.from("social_links").select("*").order("sort_order", { ascending: true });
-  if (error || !data) return getSocialLinks();
+  if (error || !data || data.length === 0) return getSocialLinks();
   return data as SocialLink[];
 };
 
 export const fetchProjects = async (): Promise<Project[]> => {
   const { data, error } = await supabase.from("projects").select("*").order("updated_at", { ascending: false });
-  if (error || !data) return getProjects();
+  if (error || !data || data.length === 0) return getProjects();
   return data as Project[];
 };
 
 export const fetchCertificates = async (): Promise<Certificate[]> => {
   const { data, error } = await supabase.from("certificates").select("*").order("date", { ascending: false });
-  if (error || !data) return getCertificates();
+  if (error || !data || data.length === 0) return getCertificates();
   return data as Certificate[];
 };
 
 export const fetchTasks = async (): Promise<Task[]> => {
   const { data, error } = await supabase.from("tasks").select("*").order("created_at", { ascending: false });
-  if (error || !data) return getTasks();
+  if (error || !data || data.length === 0) return getTasks();
   return data.map((t: any) => ({ ...t, dueDate: t.due_date })) as Task[];
 };
 
 export const fetchSkills = async (): Promise<Skill[]> => {
   const { data, error } = await supabase.from("skills").select("*").order("created_at", { ascending: true });
-  if (error || !data) return getSkills();
+  if (error || !data || data.length === 0) return getSkills();
   return data as Skill[];
 };
 
 export const fetchEducation = async (): Promise<Edu[]> => {
   const { data, error } = await supabase.from("education").select("*").order("end_date", { ascending: false });
-  if (error || !data) return getEducation();
+  if (error || !data || data.length === 0) return getEducation();
   return data.map((e: any) => ({ ...e, startDate: e.start_date, endDate: e.end_date })) as Edu[];
 };
 
 export const fetchExperience = async (): Promise<Exp[]> => {
   const { data, error } = await supabase.from("experience").select("*").order("end_date", { ascending: false });
-  if (error || !data) return getExperience();
+  if (error || !data || data.length === 0) return getExperience();
   return data.map((e: any) => ({ ...e, startDate: e.start_date, endDate: e.end_date })) as Exp[];
 };
 

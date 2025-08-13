@@ -196,7 +196,15 @@ const EducationSection: React.FC<EducationSectionProps> = ({
                     <h4 className="text-lg text-accent mb-1">{edu.field}</h4>
                     <div className="flex items-center mb-2 text-sm text-muted-foreground">
                       <School className="h-4 w-4 mr-2" />
-                      <span>{edu.institution}</span>
+                      <a
+                        href={`https://www.google.com/maps?q=${encodeURIComponent(edu.institution + ' Bangalore')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline hover:text-accent"
+                        aria-label={`Open ${edu.institution} location in Google Maps`}
+                      >
+                        {edu.institution}
+                      </a>
                     </div>
                     <div className="mb-3 text-sm text-muted-foreground">
                       {formatDate(edu.startDate)} - {edu.endDate === "Present" ? "Present" : formatDate(edu.endDate)}

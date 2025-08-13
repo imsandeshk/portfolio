@@ -28,7 +28,7 @@ interface ChatMessage {
   role: "assistant" | "user";
   content: string;
   cta?: "contact";
-  kind?: "projects" | "certificates" | "skills" | "resume" | "socials" | "contact-form" | "email";
+  kind?: "projects" | "certificates" | "skills" | "resume" | "socials" | "contact-form" | "email" | "education-link";
   payload?: any[] | string;
 }
 
@@ -150,7 +150,8 @@ const ChatbotFab = () => {
       if (e) {
         const start = new Date(e.startDate).toLocaleString("en-US", { month: "short", year: "numeric" });
         const end = new Date(e.endDate).toLocaleString("en-US", { month: "short", year: "numeric" });
-        return reply(`${e.degree} in ${e.field} at ${e.institution} (${start}–${end}). Expected graduation: ${end}.`);
+        const maps = `https://www.google.com/maps?q=${encodeURIComponent(e.institution + ' Bangalore')}`;
+        return reply(`${e.degree} in ${e.field} at ${e.institution} (${start}–${end}).`, { kind: "education-link", payload: maps });
       }
       return reply("Education details are not available right now.");
     }
@@ -373,6 +374,19 @@ const ChatbotFab = () => {
                           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10"
                         >
                           <Mail className="w-4 h-4" /> Email
+                        </a>
+                      </div>
+                    )}
+
+                    {m.kind === "education-link" && typeof m.payload === "string" && (
+                      <div className="mt-3">
+                        <a
+                          href={m.payload as string}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent text-white hover:opacity-90"
+                        >
+                          <ExternalLink className="w-4 h-4" /> Open College Location
                         </a>
                       </div>
                     )}

@@ -259,6 +259,8 @@ const backendSkills: Skill[] = [
 const otherSkills: Skill[] = [
   { id: "skill11", name: "UI/UX Design", level: 5, category: "Design" },
   { id: "skill12", name: "AWS", level: 2, category: "DevOps" },
+  { id: "skill14", name: "Git", level: 4, category: "Tools" },
+  { id: "skill15", name: "GitHub", level: 4, category: "Tools" },
 ];
 
 const skills: Skill[] = [
