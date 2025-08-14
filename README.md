@@ -6,6 +6,8 @@
 *A next-gen portfolio built with **Vite**, **TailwindCSS**, and **TypeScript** — fast, sleek, and responsive.*
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-Live-brightgreen?style=for-the-badge&logo=vercel)](https://sandeshk.netlify.app)
+
+
 <img src="public/preview.png" alt="Portfolio Preview" width="800"/>
 
 </div>
