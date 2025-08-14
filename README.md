@@ -122,8 +122,11 @@ Welcome to my digital space! I'm **Sandesh**, a passionate developer from **Beng
 ## 📁 Project Structure
 
 portfolio/
+
 │
+
 ├── 📄 index.html # Main entry point
+
 ├── 🎨 css/
 │ ├── style.css # Main stylesheet
 │ ├── responsive.css # Media queries
