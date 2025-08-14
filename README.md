@@ -69,7 +69,7 @@ This portfolio is my digital home — showcasing my journey, skills, and feature
 ---
 
 ## 🏗️ Architecture
-
+<div align="left">
 <pre>
 📦 Frontend Stack
 ├── ⚡ Vite            → Fast bundling & dev server
