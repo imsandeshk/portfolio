@@ -51,7 +51,7 @@ const ScrollToTop = ({ threshold = 300, className }: ScrollToTopProps) => {
           }}
           onClick={scrollToTop}
           className={cn(
-            "fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-accent/90 backdrop-blur-sm shadow-lg text-white hover:bg-accent transition-all duration-500 btn-hover",
+            "fixed bottom-20 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-accent/90 backdrop-blur-sm shadow-lg text-white hover:bg-accent transition-all duration-500 btn-hover",
             className
           )}
           aria-label="Scroll to top"

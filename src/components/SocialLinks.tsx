@@ -38,7 +38,9 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
       discord: "MessageSquare",
       telegram: "Send",
       whatsapp: "Phone",
-      email: "Mail"
+      email: "Mail",
+      gmail: "Mail",
+      leetcode: "Code2"
     };
 
     const platformLower = platform.toLowerCase();
@@ -77,7 +79,8 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
     if (platformLower.includes("discord")) return "#5865F2";
     if (platformLower.includes("telegram")) return "#26A5E4";
     if (platformLower.includes("whatsapp")) return "#25D366";
-    if (platformLower.includes("email") || platformLower.includes("mail")) return "#EA4335";
+    if (platformLower.includes("email") || platformLower.includes("mail") || platformLower.includes("gmail")) return "#EA4335";
+    if (platformLower.includes("leetcode")) return "#FFA116";
     
     return "#FFFFFF";
   };

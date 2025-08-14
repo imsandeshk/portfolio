@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import AdminPanel from "./pages/admin";
 import AdminLogin from "./pages/admin/login";
@@ -26,9 +27,12 @@ const App = () => (
           <BrowserRouter basename="/">
             <Routes>
               <Route path="/" element={<Index />} />
-              {/* Admin routes are still present but accessible without authentication */}
               <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/admin" element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminPanel />
+                </ProtectedRoute>
+              } />
               <Route path="/resume" element={<Resume />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -18,62 +18,119 @@ import TabSwitcher from "@/components/TabSwitcher";
 import ProfileForm from "@/components/ProfileForm";
 import SocialLinksManager from "@/components/SocialLinksManager";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, Loader2 } from "lucide-react";
 import {
-  getProfile,
+  fetchProfile,
+  fetchSocialLinks,
+  fetchProjects,
+  fetchCertificates,
+  fetchTasks,
+  fetchSkills,
+  fetchEducation,
+  fetchExperience,
+  fetchContact,
+  fetchFeedback,
+} from "@/services/dataClient";
+import {
   updateProfile,
-  getSocialLinks,
   addSocialLink,
   updateSocialLink,
   deleteSocialLink,
-  getProjects,
   addProject,
   updateProject,
   deleteProject,
-  getCertificates,
   addCertificate,
   updateCertificate,
   deleteCertificate,
-  getTasks,
   addTask,
   updateTask,
   deleteTask,
-  getSkills,
   addSkill,
   updateSkill,
   deleteSkill,
-  getEducation,
   addEducation,
   updateEducation,
   deleteEducation,
-  getExperience,
   addExperience,
   updateExperience,
   deleteExperience,
-  getContact,
   updateContact,
-  getFeedback,
   deleteFeedback,
+  getFeedback,
 } from "@/services/storageService";
 import { useToast } from "@/components/ui/use-toast";
 
 const AdminPanel = () => {
   // Auth
-  const { logout } = useAuth();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Get data from storage
-  const [profile, setProfile] = useState(getProfile());
-  const [socialLinks, setSocialLinks] = useState(getSocialLinks());
-  const [projects, setProjects] = useState(getProjects());
-  const [certificates, setCertificates] = useState(getCertificates());
-  const [tasks, setTasks] = useState(getTasks());
-  const [skills, setSkills] = useState(getSkills());
-  const [education, setEducation] = useState(getEducation());
-  const [experience, setExperience] = useState(getExperience());
-  const [contact, setContact] = useState(getContact());
-  const [feedback, setFeedback] = useState(getFeedback());
+  // State for all data
+  const [profile, setProfile] = useState(null);
+  const [socialLinks, setSocialLinks] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [certificates, setCertificates] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [skills, setSkills] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [experience, setExperience] = useState([]);
+  const [contact, setContact] = useState(null);
+  const [feedback, setFeedback] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
+
+  // Load data from Supabase on mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [
+          profileData,
+          socialLinksData,
+          projectsData,
+          certificatesData,
+          tasksData,
+          skillsData,
+          educationData,
+          experienceData,
+          contactData,
+          feedbackData,
+        ] = await Promise.all([
+          fetchProfile(),
+          fetchSocialLinks(),
+          fetchProjects(),
+          fetchCertificates(),
+          fetchTasks(),
+          fetchSkills(),
+          fetchEducation(),
+          fetchExperience(),
+          fetchContact(),
+          fetchFeedback(),
+        ]);
+
+        setProfile(profileData);
+        setSocialLinks(socialLinksData);
+        setProjects(projectsData);
+        setCertificates(certificatesData);
+        setTasks(tasksData);
+        setSkills(skillsData);
+        setEducation(educationData);
+        setExperience(experienceData);
+        setContact(contactData);
+        setFeedback(feedbackData);
+      } catch (error) {
+        console.error('Error loading admin data:', error);
+        toast({
+          title: "Error loading data",
+          description: "Failed to load portfolio data",
+          variant: "destructive",
+        });
+      } finally {
+        setDataLoading(false);
+      }
+    };
+
+    loadData();
+  }, [toast]);
 
   // State for edit forms
   const [isProfileFormOpen, setIsProfileFormOpen] = useState(false);
@@ -97,14 +154,23 @@ const AdminPanel = () => {
     setIsProfileFormOpen(true);
   };
 
-  const handleSaveProfile = (updatedProfile) => {
-    updateProfile(updatedProfile);
-    setProfile(updatedProfile);
-    setIsProfileFormOpen(false);
-    toast({
-      title: "Profile updated",
-      description: "Your profile has been updated successfully.",
-    });
+  const handleSaveProfile = async (updatedProfile) => {
+    try {
+      await updateProfile(updatedProfile);
+      setProfile(updatedProfile);
+      setIsProfileFormOpen(false);
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully.",
+      });
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update profile",
+        variant: "destructive",
+      });
+    }
   };
 
   // Handle social links
@@ -112,21 +178,60 @@ const AdminPanel = () => {
     setIsSocialLinksManagerOpen(true);
   };
 
-  const handleAddSocialLink = (socialLink) => {
-    const newSocialLink = addSocialLink(socialLink);
-    setSocialLinks([...socialLinks, newSocialLink]);
+  const handleAddSocialLink = async (socialLink) => {
+    try {
+      const newSocialLink = await addSocialLink(socialLink);
+      setSocialLinks([...socialLinks, newSocialLink]);
+      toast({
+        title: "Social link added",
+        description: "Social link has been added successfully.",
+      });
+    } catch (error) {
+      console.error('Error adding social link:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add social link",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleUpdateSocialLink = (socialLink) => {
-    updateSocialLink(socialLink);
-    setSocialLinks(
-      socialLinks.map((link) => (link.id === socialLink.id ? socialLink : link))
-    );
+  const handleUpdateSocialLink = async (socialLink) => {
+    try {
+      await updateSocialLink(socialLink);
+      setSocialLinks(
+        socialLinks.map((link) => (link.id === socialLink.id ? socialLink : link))
+      );
+      toast({
+        title: "Social link updated",
+        description: "Social link has been updated successfully.",
+      });
+    } catch (error) {
+      console.error('Error updating social link:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update social link",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleDeleteSocialLink = (id) => {
-    deleteSocialLink(id);
-    setSocialLinks(socialLinks.filter((link) => link.id !== id));
+  const handleDeleteSocialLink = async (id) => {
+    try {
+      await deleteSocialLink(id);
+      setSocialLinks(socialLinks.filter((link) => link.id !== id));
+      toast({
+        title: "Social link deleted",
+        description: "Social link has been deleted successfully.",
+      });
+    } catch (error) {
+      console.error('Error deleting social link:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete social link",
+        variant: "destructive",
+      });
+    }
   };
 
   // Handle projects
@@ -250,10 +355,18 @@ const AdminPanel = () => {
   };
 
   // Handle logout
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await signOut();
     navigate("/");
   };
+
+  if (dataLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-background min-h-screen">

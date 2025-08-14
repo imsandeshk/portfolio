@@ -9,6 +9,7 @@ import {
   getEducation,
   getExperience,
   getContact,
+  getFeedback,
   ProfileInfo,
   SocialLink,
   Project,
@@ -18,6 +19,7 @@ import {
   Education as Edu,
   Experience as Exp,
   ContactInfo,
+  Feedback,
 } from "@/services/storageService";
 
 // Generic helpers
@@ -86,4 +88,10 @@ export const fetchContact = async (): Promise<ContactInfo> => {
   const { data, error } = await supabase.from("contact_info").select("*").eq("id", "main").maybeSingle();
   if (error || !data) return getContact();
   return { email: data.email, phone: data.phone ?? undefined, address: data.address ?? undefined, location: data.location ?? undefined };
+};
+
+export const fetchFeedback = async (): Promise<Feedback[]> => {
+  const { data, error } = await supabase.from("feedback").select("*").order("date", { ascending: false });
+  if (error || !data || data.length === 0) return getFeedback();
+  return data as Feedback[];
 };

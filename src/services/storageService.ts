@@ -36,6 +36,7 @@ export interface Task {
   completed: boolean;
   dueDate?: string;
   priority: "low" | "medium" | "high";
+  progress?: number;
 }
 
 export interface Skill {
@@ -160,33 +161,55 @@ const socialLinks: SocialLink[] = [
 const projects: Project[] = [
   {
     id: "project1",
-    title: "Hostel Booking System",
-    description: "Hostel booking website for tourists to book rooms with pricing info.",
-    image: "/projects/Hostel-booking.png",
+    title: "Blood Donation",
+    description: "A web platform for blood donation management and donor connectivity.",
+    image: "/projects/blood-donation.png",
     category: "Web Development",
-    tags: ["HTML", "CSS", "JavaScript"],
-    url: "https://iamsandeshk.github.io/HotelBokking/",
-    github: "https://github.com/iamsandeshk/HotelBokking.git",
+    tags: ["HTML", "CSS", "JavaScript", "Perplexity API", "Git", "GitHub"],
+    url: "https://iamsandeshk.github.io/Blood_Donation/",
+    github: "https://github.com/iamsandeshk/Blood_Donation.git",
     pinned: true,
   },
   {
     id: "project2",
-    title: "Stop Watch",
-    description: "Stopwatch with start, pause, lap, and reset features.",
-    image: "/projects/Stopwatch.png",
+    title: "Patients Health Database",
+    description: "A comprehensive patient health records management system.",
+    image: "/projects/health-database.png",
     category: "Web App",
-    tags: ["HTML", "CSS", "JavaScript"],
-    url: "https://iamsandeshk.github.io/Stopwatch1/",
-    github: "https://github.com/iamsandeshk/Stopwatch1.git",
+    tags: ["HTML", "CSS", "JavaScript", "Node.js", "MongoDB", "Git", "GitHub"],
+    url: "https://iamsandeshk.github.io/HP/index.html",
+    github: "https://github.com/iamsandeshk/Patient-Health-records.git",
     pinned: true,
   },
   {
     id: "project3",
+    title: "Hostel Booking System",
+    description: "Hostel booking website for tourists to book rooms with pricing info.",
+    image: "/projects/Hostel-booking.png",
+    category: "Web Development",
+    tags: ["HTML", "CSS", "JavaScript", "Git", "GitHub"],
+    url: "https://iamsandeshk.github.io/HotelBokking/",
+    github: "https://github.com/iamsandeshk/HotelBokking.git",
+    pinned: false,
+  },
+  {
+    id: "project4",
+    title: "Stop Watch",
+    description: "Stopwatch with start, pause, lap, and reset features.",
+    image: "/projects/Stopwatch.png",
+    category: "Web App",
+    tags: ["HTML", "CSS", "JavaScript", "Git", "GitHub"],
+    url: "https://iamsandeshk.github.io/Stopwatch1/",
+    github: "https://github.com/iamsandeshk/Stopwatch1.git",
+    pinned: false,
+  },
+  {
+    id: "project5",
     title: "Bus Booking",
     description: "Bus seat/sleeper selection with pricing.",
     image: "/projects/Bus-booking.png",
     category: "Web App",
-    tags: ["HTML", "CSS", "JavaScript"],
+    tags: ["HTML", "CSS", "JavaScript", "Git", "GitHub"],
     url: "https://iamsandeshk.github.io/bus-booking/",
     github: "https://github.com/iamsandeshk/bus-booking.git",
     pinned: false,
@@ -227,6 +250,7 @@ const tasks: Task[] = [
     completed: false,
     dueDate: "2025-11-20",
     priority: "high",
+    progress: 40,
   },
   {
     id: "task3",
@@ -235,6 +259,25 @@ const tasks: Task[] = [
     completed: false,
     dueDate: "2025-09-20",
     priority: "medium",
+    progress: 20,
+  },
+  {
+    id: "task4",
+    title: "Interview Preparation",
+    description: "Learning aptitude & coding skills for interview preparation",
+    completed: false,
+    dueDate: "2025-05-15",
+    priority: "high",
+    progress: 0,
+  },
+  {
+    id: "task5",
+    title: "Improving Communication Skills",
+    description: "Further enhance communication and presentation skills",
+    completed: false,
+    dueDate: "2025-06-30",
+    priority: "medium",
+    progress: 0,
   }
 ];
 
@@ -253,7 +296,7 @@ const backendSkills: Skill[] = [
   { id: "skill8", name: "C", level: 4, category: "Backend" },
   { id: "skill9", name: "Python", level: 4, category: "Backend" },
   { id: "skill10", name: "MongoDB", level: 3, category: "Backend" },
-  { id: "skill13", name: "SQL", level: 3, category: "Backend" },
+  { id: "skill13", name: "MySQL", level: 3, category: "Backend" },
 ];
 
 const otherSkills: Skill[] = [
@@ -263,10 +306,20 @@ const otherSkills: Skill[] = [
   { id: "skill15", name: "GitHub", level: 4, category: "Tools" },
 ];
 
+const softSkills: Skill[] = [
+  { id: "skill16", name: "Communication", level: 4, category: "Soft" },
+  { id: "skill17", name: "Flexibility", level: 4, category: "Soft" },
+  { id: "skill18", name: "Adaptability", level: 4, category: "Soft" },
+  { id: "skill19", name: "Problem Solving", level: 4, category: "Soft" },
+  { id: "skill20", name: "Leadership", level: 3, category: "Soft" },
+  { id: "skill21", name: "Team Work", level: 4, category: "Soft" },
+];
+
 const skills: Skill[] = [
   ...frontendSkills,
   ...backendSkills,
-  ...otherSkills
+  ...otherSkills,
+  ...softSkills
 ];
 
 const education: Education[] = [

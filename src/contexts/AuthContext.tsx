@@ -1,69 +1,158 @@
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 
 type AuthContextType = {
+  user: User | null;
+  session: Session | null;
   isAdmin: boolean;
-  login: (password: string) => Promise<boolean>;
-  logout: () => void;
+  signUp: (email: string, password: string) => Promise<{ error: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signOut: () => Promise<void>;
   loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Hardcoded admin password
-const DEMO_PASSWORD = "@#Sandesh58";
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Always default to true for demo purposes
-  const [isAdmin, setIsAdmin] = useState<boolean>(true);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const login = async (password: string): Promise<boolean> => {
+  // Check if user has admin role
+  const checkAdminRole = async (userId: string) => {
     try {
-      // Simple password check (no localStorage)
-      const isValid = password === DEMO_PASSWORD;
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .eq('role', 'admin')
+        .single();
       
-      if (isValid) {
-        setIsAdmin(true);
-        toast({
-          title: "Login successful",
-          description: "Welcome to the admin panel",
-        });
-        return true;
-      } else {
-        toast({
-          title: "Login failed",
-          description: "Incorrect password",
-          variant: "destructive",
-        });
+      if (error) {
+        console.log('No admin role found for user');
         return false;
       }
+      
+      return !!data;
     } catch (error) {
-      console.error("Login error:", error);
-      toast({
-        title: "Login error",
-        description: "An error occurred during login",
-        variant: "destructive",
-      });
+      console.error('Error checking admin role:', error);
       return false;
     }
   };
 
-  const logout = () => {
-    setIsAdmin(false);
-    toast({
-      title: "Logged out",
-      description: "You have been logged out successfully",
+  useEffect(() => {
+    // Set up auth state listener FIRST
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          // Defer admin role check to prevent deadlock
+          setTimeout(async () => {
+            const adminStatus = await checkAdminRole(session.user.id);
+            setIsAdmin(adminStatus);
+          }, 0);
+        } else {
+          setIsAdmin(false);
+        }
+        
+        setLoading(false);
+      }
+    );
+
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+      
+      if (session?.user) {
+        setTimeout(async () => {
+          const adminStatus = await checkAdminRole(session.user.id);
+          setIsAdmin(adminStatus);
+        }, 0);
+      } else {
+        setIsAdmin(false);
+      }
+      
+      setLoading(false);
     });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const signUp = async (email: string, password: string) => {
+    const redirectUrl = `${window.location.origin}/`;
+    
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: redirectUrl
+      }
+    });
+    
+    if (!error) {
+      toast({
+        title: "Account created successfully",
+        description: "Please check your email to verify your account",
+      });
+    } else {
+      toast({
+        title: "Sign up failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+    
+    return { error };
   };
 
-  // All authentication functionalities are maintained but localStorage dependency is removed
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    
+    if (!error) {
+      toast({
+        title: "Login successful",
+        description: "Welcome back!",
+      });
+    } else {
+      toast({
+        title: "Login failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+    
+    return { error };
+  };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    
+    if (!error) {
+      toast({
+        title: "Logged out",
+        description: "You have been logged out successfully",
+      });
+    }
+  };
+
   const value = {
+    user,
+    session,
     isAdmin,
-    login,
-    logout,
+    signUp,
+    signIn,
+    signOut,
     loading,
   };
 
