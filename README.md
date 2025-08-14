@@ -3,14 +3,14 @@
 # 🚀 Sandesh's Portfolio
 ### Modern • Responsive • Interactive
 
-*A cutting-edge portfolio showcasing my journey as a developer*
+*A next-gen portfolio built with **Vite**, **TailwindCSS**, and **TypeScript** — fast, sleek, and responsive.*
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-Live-brightgreen?style=for-the-badge&logo=vercel)](https://iamsandeshk.github.io/portfolio)
 [![GitHub Stars](https://img.shields.io/github/stars/iamsandeshk/portfolio?style=for-the-badge&logo=github)](https://github.com/iamsandeshk/portfolio/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/iamsandeshk/portfolio?style=for-the-badge&logo=github)](https://github.com/iamsandeshk/portfolio/network/members)
 [![License](https://img.shields.io/github/license/iamsandeshk/portfolio?style=for-the-badge)](LICENSE)
 
-<img src="https://user-images.githubusercontent.com/placeholder/portfolio-preview.png" alt="Portfolio Preview" width="800"/>
+<img src="public/lovable-uploads/35e9edd1-2261-4d5e-9d8e-7db49585a904.png" alt="Portfolio Preview" width="800"/>
 
 </div>
 
@@ -20,31 +20,31 @@
 
 > **Crafting digital experiences with passion and precision**
 
-Hey there! I'm **Sandesh**, a passionate developer from **Bengaluru** 🇮🇳.  
-This portfolio reflects my journey, skills, and the projects that define my growth — where **creativity meets functionality**.
+I’m **Sandesh**, a developer from **Bengaluru** 🇮🇳, building modern web solutions that merge **creativity with performance**.  
+This portfolio is my digital home — showcasing my journey, skills, and featured projects.
 
 ---
 
-## 🌟 What Makes This Portfolio Special?
+## 🌟 Key Highlights
 
 <table>
 <tr>
 <td width="50%">
 
 #### 🎨 **Design Excellence**
-- ✨ Pixel-perfect responsive design
-- 🌙 Dark/Light theme support
-- 🎭 Smooth micro-interactions
-- 📱 Mobile-first approach
+- Dark/Light theme support
+- Smooth micro-interactions
+- Pixel-perfect responsive design
+- Mobile-first approach
 
 </td>
 <td width="50%">
 
-#### ⚡ **Performance Focused**
-- 🚀 Lightning-fast loading
-- 📊 SEO optimized
-- ♿ Accessibility compliant
-- 🔧 Clean, maintainable code
+#### ⚡ **Performance & Quality**
+- Blazing-fast Vite build
+- SEO & accessibility optimized
+- Clean, scalable codebase
+- Deployed on Vercel
 
 </td>
 </tr>
@@ -56,9 +56,12 @@ This portfolio reflects my journey, skills, and the projects that define my grow
 
 <div align="center">
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![PostCSS](https://img.shields.io/badge/PostCSS-DD3A0A?style=for-the-badge&logo=postcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 
 </div>
@@ -67,38 +70,40 @@ This portfolio reflects my journey, skills, and the projects that define my grow
 
 ## 🏗️ Architecture
 
-🎨 **Frontend Technologies**
 <pre>
-🎨  HTML5           → Semantic markup
-🎨  CSS3            → Modern styling with Grid & Flexbox
-⚡  JavaScript      → Interactive functionality
-📱  Responsive Design → Mobile-first approach
+📦 Frontend Stack
+├── ⚡ Vite            → Fast bundling & dev server
+├── 🎨 TailwindCSS     → Utility-first styling
+├── 🔷 TypeScript      → Type safety & clean code
+├── 🔧 PostCSS         → Advanced CSS processing
+├── 📱 Responsive UI   → Mobile-first approach
+└── ☁️ Vercel Deploy   → Seamless hosting
 </pre>
 
 ---
 
-## ✨ Features Showcase
+## ✨ Features
 
 <details>
 <summary>🎯 <strong>Core Features</strong></summary>
 
-- Responsive grid layout
-- Interactive animations
-- Modern typography
-- Strategic color scheme
-- Performance optimized
-- WCAG accessibility compliant
+- Responsive, grid-based layout  
+- Dark/Light theme toggle  
+- Smooth scroll and animations  
+- SEO-friendly meta setup  
+- Accessibility compliant (WCAG)  
+- Certificates & Resume section  
 
 </details>
 
 <details>
 <summary>🚀 <strong>Interactive Elements</strong></summary>
 
-- Smooth scrolling navigation
-- Parallax effects
-- Hover animations
-- Touch gestures for mobile
-- Loading animations
+- Scroll reveal animations  
+- Hover interaction effects  
+- Mobile touch gestures  
+- Dynamic content sections  
+- Loading feedback animations  
 
 </details>
 
@@ -108,21 +113,24 @@ This portfolio reflects my journey, skills, and the projects that define my grow
 
 <pre>
 portfolio/
-├── 📄 index.html               → Main entry point
-├── 🎨 css/
-│   ├── style.css               → Main stylesheet
-│   ├── responsive.css          → Media queries
-│   └── animations.css          → Animation definitions
-├── ⚡ js/
-│   ├── main.js                 → Core functionality
-│   ├── animations.js           → Animation controllers
-│   └── utils.js                → Utility functions
-├── 🖼️ assets/
-│   ├── images/                 → Image assets
-│   ├── icons/                  → Icon library
-│   └── videos/                 → Video content
-└── 📚 docs/                    → Documentation
+├── 📄 index.html               → Main HTML entry
+├── ⚙️ vite.config.ts            → Vite configuration
+├── 🎨 tailwind.config.ts        → TailwindCSS config
+├── 📦 package.json              → Project metadata & scripts
+├── 📂 public/
+│   ├── 📜 resume.pdf           → Resume
+│   ├── 🖼️ certificates/        → Certificates
+│   ├── 🖼️ projects/            → Project screenshots
+│   ├── 📁 lovable-uploads/     → Assets
+│   └── 📄 favicon.ico
+└── 📂 src/
+    ├── components/             → UI components
+    ├── styles/                 → Global styles
+    ├── scripts/                → App logic
+    └── assets/                 → Local images/icons
 </pre>
+
+---
 
 <div align="center">
 📌 Let's Connect
