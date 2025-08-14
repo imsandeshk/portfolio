@@ -141,3 +141,14 @@ portfolio/
 │ └── videos/ # Video content
 └── 📚 docs/ # Documentation
 
+
+*A cutting-edge portfolio showcasing my journey as a developer*
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live-brightgreen?style=for-the-badge&logo=vercel)](https://iamsandeshk.github.io/portfolio)
+[![GitHub Stars](https://img.shields.io/github/stars/iamsandeshk/portfolio?style=for-the-badge&logo=github)](https://github.com/iamsandeshk/portfolio/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/iamsandeshk/portfolio?style=for-the-badge&logo=github)](https://github.com/iamsandeshk/portfolio/network/members)
+[![License](https://img.shields.io/github/license/iamsandeshk/portfolio?style=for-the-badge)](LICENSE)
+
+<img src="https://user-images.githubusercontent.com/placeholder/portfolio-preview.png" alt="Portfolio Preview" width="800"/>
+
+</div>
