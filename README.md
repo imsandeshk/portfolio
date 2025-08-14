@@ -5,7 +5,7 @@
 
 *A next-gen portfolio built with **Vite**, **TailwindCSS**, and **TypeScript** — fast, sleek, and responsive.*
 
-
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live-brightgreen?style=for-the-badge&logo=vercel)](https://sandeshk.netlify.app)
 <img src="public/preview.png" alt="Portfolio Preview" width="800"/>
 
 </div>
@@ -132,8 +132,6 @@ portfolio/
 
 </div>
 
-
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live-brightgreen?style=for-the-badge&logo=vercel)](https://sandeshk.netlify.app)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Sandesh%20Kullolli-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sandeshkullolli?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
 [![Gmail](https://img.shields.io/badge/Email-sandeshkullolli4%40gmail.com-red?style=for-the-badge&logo=gmail&logoColor=white)](mailto:sandeshkullolli4@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-iamsandeshk-181717?style=for-the-badge&logo=github)](https://github.com/iamsandeshk)
