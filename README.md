@@ -10,7 +10,7 @@
 [![GitHub Forks](https://img.shields.io/github/forks/iamsandeshk/portfolio?style=for-the-badge&logo=github)](https://github.com/iamsandeshk/portfolio/network/members)
 [![License](https://img.shields.io/github/license/iamsandeshk/portfolio?style=for-the-badge)](LICENSE)
 
-<img src="public/lovable-uploads/35e9edd1-2261-4d5e-9d8e-7db49585a904.png" alt="Portfolio Preview" width="800"/>
+<img src="public/preview.png" alt="Portfolio Preview" width="800"/>
 
 </div>
 
