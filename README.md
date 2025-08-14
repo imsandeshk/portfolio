@@ -138,11 +138,3 @@ portfolio/
 │ └── videos/ # Video content
 └── 📚 docs/ # Documentation
 
-
-
----
-
-## 🎨 Customization Guide
-
-<div align="center">
-
