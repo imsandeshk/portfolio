@@ -146,26 +146,3 @@ portfolio/
 
 <div align="center">
 
-### Make it yours! 🎯
-
-</div>
-
-<table>
-<tr>
-<td width="33%">
-
-#### 🎨 **Styling**
-
-/* Update color scheme */
-:root {
---primary: #your-color;
---secondary: #your-color;
-}
-
-
-</td>
-<td width="33%">
-
-#### 📝 **Content**
-
-<!-- Update personal info --> <section id="about"> <!-- Your content here --> </section> ``` </td> <td width="33%">
