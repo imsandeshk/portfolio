@@ -133,11 +133,3 @@ portfolio/
 </div>
 
 
-This layout:
-- Keeps **everything center-aligned** for visual appeal  
-- Uses **modern badges** for quick recognition  
-- Includes **expandable `<details>` sections** to keep it clean but detailed  
-- Uses **code blocks for structure** so it’s developer-friendly  
-- Keeps **image placeholders** so you can replace them anytime  
-
-If you want, I can also make a **sleek dark-mode preview image banner** for the top so the README looks even more premium on GitHub. That would make it *really* stand out.
