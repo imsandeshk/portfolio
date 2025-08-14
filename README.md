@@ -67,12 +67,13 @@ This portfolio reflects my journey, skills, and the projects that define my grow
 
 ## 🏗️ Architecture
 
-🎨 Frontend Technologies
-├── 📄 HTML5 - Semantic markup
-├── 🎨 CSS3 - Modern styling with Grid & Flexbox
-├── ⚡ Vanilla JavaScript - Interactive functionality
-└── 📱 Responsive Design - Mobile-first approach
-
+🎨 **Frontend Technologies**
+<pre>
+🎨  HTML5           → Semantic markup
+🎨  CSS3            → Modern styling with Grid & Flexbox
+⚡  JavaScript      → Interactive functionality
+📱  Responsive Design → Mobile-first approach
+</pre>
 
 ---
 
@@ -81,16 +82,11 @@ This portfolio reflects my journey, skills, and the projects that define my grow
 <details>
 <summary>🎯 <strong>Core Features</strong></summary>
 
-### 🌟 Visual Excellence
 - Responsive grid layout
 - Interactive animations
 - Modern typography
 - Strategic color scheme
-
-### ⚙️ Technical Features
 - Performance optimized
-- Cross-browser compatible
-- SEO friendly
 - WCAG accessibility compliant
 
 </details>
@@ -99,10 +95,10 @@ This portfolio reflects my journey, skills, and the projects that define my grow
 <summary>🚀 <strong>Interactive Elements</strong></summary>
 
 - Smooth scrolling navigation
-- Parallax effects for depth
-- Hover animations for engagement
+- Parallax effects
+- Hover animations
 - Touch gestures for mobile
-- Loading animations for feedback
+- Loading animations
 
 </details>
 
@@ -110,22 +106,23 @@ This portfolio reflects my journey, skills, and the projects that define my grow
 
 ## 📁 Project Structure
 
+<pre>
 portfolio/
-│
-├── 📄 index.html # Main entry point
+├── 📄 index.html               → Main entry point
 ├── 🎨 css/
-│ ├── style.css # Main stylesheet
-│ ├── responsive.css # Media queries
-│ └── animations.css # Animation definitions
+│   ├── style.css               → Main stylesheet
+│   ├── responsive.css          → Media queries
+│   └── animations.css          → Animation definitions
 ├── ⚡ js/
-│ ├── main.js # Core functionality
-│ ├── animations.js # Animation controllers
-│ └── utils.js # Utility functions
+│   ├── main.js                 → Core functionality
+│   ├── animations.js           → Animation controllers
+│   └── utils.js                → Utility functions
 ├── 🖼️ assets/
-│ ├── images/ # Image assets
-│ ├── icons/ # Icon library
-│ └── videos/ # Video content
-└── 📚 docs/ # Documentation
+│   ├── images/                 → Image assets
+│   ├── icons/                  → Icon library
+│   └── videos/                 → Video content
+└── 📚 docs/                    → Documentation
+</pre>
 
 <div align="center">
 📌 Let's Connect
