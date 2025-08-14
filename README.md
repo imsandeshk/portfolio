@@ -24,7 +24,7 @@ I’m **Sandesh**, a developer from **Bengaluru** 🇮🇳, building modern web 
 This portfolio is my digital home — showcasing my journey, skills, and featured projects.
 
 ---
-
+<div align="center">
 ## 🌟 Key Highlights
 
 <table>
