@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import React, { useState } from 'react';
 import { motion } from "framer-motion";
 import { Skill } from "@/services/storageService";
 import SectionHeading from "@/components/SectionHeading";
@@ -21,6 +20,24 @@ interface SkillsSectionProps {
   onDeleteSkill?: (id: string) => void;
 }
 
+const softSkillNames = [
+  "problem solving",
+  "leadership",
+  "team work",
+  "communication",
+  "flexibility",
+  "adaptability",
+];
+
+const softSkillIcons: Record<string, React.ReactNode> = {
+  "problem solving": <span title="Problem Solving" className="w-6 h-6 flex items-center justify-center">💡</span>,
+  "leadership": <span title="Leadership" className="w-6 h-6 flex items-center justify-center">🧑‍💼</span>,
+  "team work": <span title="Team Work" className="w-6 h-6 flex items-center justify-center">🤝</span>,
+  "communication": <span title="Communication" className="w-6 h-6 flex items-center justify-center">💬</span>,
+  "flexibility": <span title="Flexibility" className="w-6 h-6 flex items-center justify-center">🔄</span>,
+  "adaptability": <span title="Adaptability" className="w-6 h-6 flex items-center justify-center">🌱</span>,
+};
+
 const SkillsSection: React.FC<SkillsSectionProps> = ({
   skills,
   isAdmin = false,
@@ -35,6 +52,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [level, setLevel] = useState(3);
+  const [showMore, setShowMore] = useState(false);
   const { toast } = useToast();
   const { theme } = useTheme();
 
@@ -138,6 +156,14 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
     setLevel(3);
   };
 
+  // Split skills into technical and soft skills
+  const technicalSkills = skills.filter(
+    (skill) => !softSkillNames.includes(skill.name.toLowerCase())
+  );
+  const softSkills = skills.filter(
+    (skill) => softSkillNames.includes(skill.name.toLowerCase())
+  );
+
   return (
     <section id="skills" className="py-16">
       <div className="container mx-auto">
@@ -163,7 +189,8 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {skills.map((skill) => (
+          {/* Render technical skills */}
+          {technicalSkills.map((skill) => (
             <motion.div
               key={skill.id}
               variants={skillVariants}
@@ -176,7 +203,6 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             >
               <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain" />
               {skill.name}
-              
               {/* Shine effect overlay */}
               <motion.div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -197,102 +223,152 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               </motion.div>
             </motion.div>
           ))}
-          
-          {/* More... pill */}
-          <motion.div
-            variants={skillVariants}
-            whileHover="hover"
-            className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
-            style={{
-              backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
-              borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
-            }}
-          >
-            more...
-            
-            {/* Shine effect overlay */}
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              initial={false}
-            >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                animate={{
-                  x: ["-100%", "200%"],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  repeatDelay: 0.5,
-                }}
-              />
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      </div>
 
-      {/* Dialog forms for admin actions */}
-      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>{skillToEdit ? "Edit Skill" : "Add Skill"}</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSaveSkill}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="category" className="text-right">
-                  Category
-                </Label>
-                <Input id="category" value={category} onChange={(e) => setCategory(e.target.value)} className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="level" className="text-right">
-                  Level
-                </Label>
-                <Slider
-                  id="level"
-                  defaultValue={[level]}
-                  max={5}
-                  step={1}
-                  onValueChange={(value) => setLevel(value[0])}
-                  className="col-span-3"
+          {/* "more..." pill for soft skills */}
+          {!showMore && softSkills.length > 0 && (
+            <motion.div
+              variants={skillVariants}
+              whileHover="hover"
+              className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
+                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+              }}
+              onClick={() => setShowMore(true)}
+            >
+              <span title="More" className="w-6 h-6 flex items-center justify-center">⭐</span>
+              more...
+              {/* Shine effect overlay */}
+              <motion.div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                initial={false}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{
+                    x: ["-100%", "200%"],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    repeatDelay: 0.5,
+                  }}
                 />
+              </motion.div>
+            </motion.div>
+          )}
+        </motion.div>
+
+        {/* Reveal soft skills when showMore is true */}
+        {showMore && (
+          <motion.div 
+            className="flex flex-wrap gap-4 justify-center mt-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {softSkills.map((skill) => {
+              const name = skill.name.toLowerCase();
+              return (
+                <motion.div
+                  key={skill.id}
+                  variants={skillVariants}
+                  whileHover="hover"
+                  className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
+                  style={{
+                    backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
+                    borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                  }}
+                >
+                  {softSkillIcons[name]}
+                  {skill.name}
+                  {/* Shine effect overlay */}
+                  <motion.div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={false}
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                      animate={{
+                        x: ["-100%", "200%"],
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        repeatDelay: 0.5,
+                      }}
+                    />
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
+
+        {/* Dialog forms for admin actions */}
+        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>{skillToEdit ? "Edit Skill" : "Add Skill"}</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSaveSkill}>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Name
+                  </Label>
+                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="category" className="text-right">
+                    Category
+                  </Label>
+                  <Input id="category" value={category} onChange={(e) => setCategory(e.target.value)} className="col-span-3" />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="level" className="text-right">
+                    Level
+                  </Label>
+                  <Slider
+                    id="level"
+                    defaultValue={[level]}
+                    max={5}
+                    step={1}
+                    onValueChange={(value) => setLevel(value[0])}
+                    className="col-span-3"
+                  />
+                </div>
               </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">
-                {skillToEdit ? "Update Skill" : "Add Skill"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-      
-      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. Are you sure you want to delete <span className="font-medium">"{skillToDelete?.name}"</span>?
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)}>
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmDelete}>
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+              <DialogFooter>
+                <Button type="submit">
+                  {skillToEdit ? "Update Skill" : "Add Skill"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+        
+        <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. Are you sure you want to delete <span className="font-medium">"{skillToDelete?.name}"</span>?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={handleConfirmDelete}>
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </section>
   );
 };
