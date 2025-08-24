@@ -146,11 +146,6 @@ const Index = () => {
 
       <div className="fixed inset-0 z-[-10] bg-black opacity-90" />
 
-      {/* Theme toggle positioned in top-right corner */}
-      <div className="fixed top-4 right-4 z-50">
-        <ThemeToggle />
-      </div>
-
       <div className="relative z-10 bg-transparent min-h-screen">
         <AnimatePresence mode="wait">
           {mainContentVisible && (
