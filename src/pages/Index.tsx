@@ -1,7 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
+import Spline from '@splinetool/react-spline';
 
 import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
@@ -17,6 +17,7 @@ import TabSwitcher from "@/components/TabSwitcher";
 import ScrollToTop from "@/components/ScrollToTop";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "@/contexts/ThemeContext";
+import SplineBackground from '@/components/SplineBackground';
 
 import {
   getProfile,
@@ -141,16 +142,9 @@ const Index = () => {
 
   return (
     <>
-      <div className={`fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b ${
-        theme === 'light' ? 'from-light-dark via-light-dark/5 to-transparent' : 'from-black via-black/70 to-transparent'
-      } z-[-9]`} />
-      
-      {/* Theme-specific background */}
-      <div className={`fixed inset-0 z-[-10] ${
-        theme === 'light' 
-          ? 'bg-light-bg'
-          : 'bg-black'
-      } opacity-90`} />
+      <div className="fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black via-black/70 to-transparent z-[-9]" />
+
+      <div className="fixed inset-0 z-[-10] bg-black opacity-90" />
 
       {/* Theme toggle positioned in top-right corner */}
       <div className="fixed top-4 right-4 z-50">
@@ -262,6 +256,8 @@ const Index = () => {
           )}
         </AnimatePresence>
       </div>
+
+      <SplineBackground />
     </>
   );
 };
