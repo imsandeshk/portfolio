@@ -15,8 +15,6 @@ import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import ScrollToTop from "@/components/ScrollToTop";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { useTheme } from "@/contexts/ThemeContext";
 import SplineBackground from '@/components/SplineBackground';
 
 import {
@@ -43,8 +41,6 @@ import {
 } from "@/services/dataClient";
 
 const Index = () => {
-  // Get theme information
-  const { theme } = useTheme();
   
   // Local state initialized with static defaults; replaced with Supabase data after mount
   const [profile, setProfile] = useState(getProfile());

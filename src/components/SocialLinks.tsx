@@ -247,7 +247,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             <motion.div 
               variants={iconHover}
               className="relative"
-              style={{ color: theme === 'light' ? 'white' : platformColor }}
+              style={{ color: platformColor }}
             >
               <IconComponent 
                 size={iconSize} 

@@ -240,14 +240,11 @@ const ChatbotFab = () => {
       <button
         aria-label="Open AI Chatbot"
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-accent"
+        className="fixed bottom-6 right-4 md:bottom-6 md:right-6 z-50 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-accent"
         style={{
           width: 56,
           height: 56,
-          background:
-            theme === "dark"
-              ? "linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))"
-              : "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))",
+          background: "linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))",
         }}
       >
         <Bot className="w-6 h-6 text-white mx-auto" />
@@ -273,13 +270,11 @@ const ChatbotFab = () => {
               {messages.map((m) => (
                 <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div
-                    className={`${m.kind ? "w-full" : "max-w-[85%]"} rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
-                      m.role === "user"
-                        ? "bg-accent text-white"
-                        : theme === "dark"
-                        ? "bg-white/10 text-white"
-                        : "bg-white text-foreground shadow"
-                    }`}
+                     className={`${m.kind ? "w-full" : "max-w-[85%]"} rounded-2xl px-3 py-2 text-sm whitespace-pre-wrap ${
+                       m.role === "user"
+                         ? "bg-accent text-white"
+                         : "bg-white/10 text-white"
+                     }`}
                   >
                     <div>{m.content}</div>
 

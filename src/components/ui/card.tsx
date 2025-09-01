@@ -49,7 +49,6 @@ const CardTitle = React.forwardRef<
       ref={ref}
       className={cn(
         "text-base md:text-xl font-semibold leading-none tracking-tight transition-all duration-300",
-        theme === 'light' ? "text-white" : "",
         className
       )}
       {...props}
@@ -68,8 +67,7 @@ const CardDescription = React.forwardRef<
     <p
       ref={ref}
       className={cn(
-        "text-xs md:text-sm transition-all duration-300", 
-        theme === 'light' ? "text-gray-200" : "text-muted-foreground",
+        "text-xs md:text-sm transition-all duration-300 text-muted-foreground",
         className
       )}
       {...props}

@@ -35,39 +35,7 @@
     --radius: 0.5rem;
   }
 
-  :root[data-theme="light"] {
-    --background: 36 54% 95%;
-    --foreground: 0 0% 10%;
-
-    --card: 0 0% 0%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 0%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 0 0% 0%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 84 76% 94%;
-    --secondary-foreground: 0 0% 0%;
-
-    --muted: 252 70% 97%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 260 35% 50%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 85% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 38 36% 80%;
-    --input: 38 36% 80%;
-    --ring: 0 0% 80%;
-    --radius: 0.5rem;
-    
-    --light-dark: 252 19% 13%;
-  }
-  
+  /* Only dark theme variables - light theme removed */
   :root {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
@@ -182,10 +150,6 @@
   
   [data-theme="dark"] .glass-card {
     @apply bg-card/40 border-white/10;
-  }
-  
-  [data-theme="light"] .glass-card {
-    @apply bg-light-dark border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)];
   }
 
   .text-gradient {
@@ -380,23 +344,15 @@
     transform: scale(1.08) rotate(2deg);
   }
 
-  .dark-mode .profile-image {
+  /* Profile image animations - dark mode only */
+  .profile-image {
     filter: grayscale(80%);
     transition: filter 0.8s var(--butter-smooth), transform 0.8s var(--butter-smooth);
   }
 
-  .dark-mode .profile-image:hover {
+  .profile-image:hover {
     filter: grayscale(0%);
     transform: scale(1.08) rotate(-2deg);
-  }
-
-  .light-mode .profile-image {
-    filter: none;
-    transition: transform 0.8s var(--butter-smooth);
-  }
-
-  .light-mode .profile-image:hover {
-    transform: scale(1.08) rotate(2deg);
   }
 
   /* Enhanced section animations */
@@ -482,20 +438,7 @@
   transform-origin: bottom left;
 }
 
-/* Light mode styles */
-.light-mode {
-  background: var(--light-bg-color);
-  transition: background-color 0.6s var(--butter-smooth);
-}
-
-.light-mode .glass-card {
-  @apply bg-light-dark border-white/10 shadow-md;
-}
-
-.light-mode .text-gradient {
-  @apply text-[#1A1F2C] font-bold;
-}
-
+/* Dark mode styles - only theme supported */
 .dark-mode {
   background: #000000;
   transition: background-color 0.6s var(--butter-smooth);
@@ -510,25 +453,12 @@
   transition: background 0.6s var(--butter-smooth);
 }
 
-/* Enhanced theme-specific styles */
-[data-theme="light"] h1,
-[data-theme="light"] h2, 
-[data-theme="light"] h3,
-[data-theme="light"] p {
+/* Enhanced theme-specific styles - dark only */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3,
+[data-theme="dark"] p {
   transition: color 0.5s var(--butter-smooth);
-}
-
-[data-theme="light"] h1 {
-  @apply text-[#1A1F2C];
-}
-
-[data-theme="light"] h2, 
-[data-theme="light"] h3 {
-  @apply text-[#1A1F2C];
-}
-
-[data-theme="light"] p {
-  @apply text-[#1A1F2C];
 }
 
 /* Enhanced form elements */
@@ -745,102 +675,13 @@ button:hover::before {
   }
 }
 
-/* Enhanced GitHub icon visibility */
+/* Enhanced GitHub icon visibility - dark only */
 .github-icon {
   transition: all 0.4s var(--butter-smooth);
 }
 
 [data-theme="dark"] .github-icon {
   @apply text-white opacity-90 hover:opacity-100;
-}
-  
-[data-theme="light"] .github-icon {
-  @apply text-white opacity-100 hover:opacity-100;
-}
-
-/* Enhanced light theme elements */
-[data-theme="light"] .project-card h1,
-[data-theme="light"] .project-card h2,
-[data-theme="light"] .project-card h3,
-[data-theme="light"] .certificate-card h1,
-[data-theme="light"] .certificate-card h2,
-[data-theme="light"] .certificate-card h3,
-[data-theme="light"] .task-card h1,
-[data-theme="light"] .task-card h2,
-[data-theme="light"] .task-card h3,
-[data-theme="light"] .glass-card h1,
-[data-theme="light"] .glass-card h2,
-[data-theme="light"] .glass-card h3 {
-  @apply text-white;
-  transition: color 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] .project-card p,
-[data-theme="light"] .certificate-card p,
-[data-theme="light"] .task-card p,
-[data-theme="light"] .glass-card p {
-  @apply text-gray-200;
-  transition: color 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] .badge {
-  @apply bg-[#7E69AB] text-white;
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] button[role="tab"] {
-  @apply text-gray-200 bg-[#1A1F2C]/90 hover:bg-[#1A1F2C];
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] button[role="tab"][aria-selected="true"] {
-  @apply bg-[#7E69AB] text-white shadow-md;
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] .glass-card {
-  @apply bg-[#1A1F2C]/90 shadow-md border border-white/10;
-  transition: all 0.5s var(--butter-smooth);
-}
-
-[data-theme="light"] .project-card,
-[data-theme="light"] .certificate-card,
-[data-theme="light"] .task-card {
-  @apply bg-[#1A1F2C]/90 text-white;
-  transition: all 0.5s var(--butter-smooth);
-}
-
-[data-theme="light"] .skill-badge,
-[data-theme="light"] .interest-badge {
-  @apply bg-[#7E69AB] text-white;
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] .tab-switcher-container {
-  @apply bg-[#1A1F2C]/90 border-white/10;
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] .contact-form,
-[data-theme="light"] .contact-info {
-  @apply bg-[#1A1F2C]/90 border border-white/10 text-white;
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] .social-links a {
-  @apply bg-[#1A1F2C]/90 text-white border-white/10;
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] input,
-[data-theme="light"] textarea {
-  @apply text-[#1A1F2C] border-[#7E69AB]/50;
-  transition: all 0.4s var(--butter-smooth);
-}
-
-[data-theme="light"] label {
-  @apply text-[#1A1F2C];
-  transition: color 0.4s var(--butter-smooth);
 }
 
 /* Enhanced scrolling for all elements */

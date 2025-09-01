@@ -65,8 +65,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({
     }
   };
 
-  const labelClass = theme === 'light' ? 'text-[#1A1F2C] font-medium' : '';
-  const contactInfoClass = theme === 'light' ? 'text-[#1A1F2C]' : '';
+  const labelClass = '';
+  const contactInfoClass = '';
 
   // Animation variants
   const formVariants = {
@@ -145,7 +145,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
             viewport={{ once: true }}
           >
             <div className="flex justify-between items-start mb-4">
-              <h3 className={`text-xl font-bold ${theme === 'light' ? 'text-white' : ''}`}>Contact Information</h3>
+              <h3 className="text-xl font-bold">Contact Information</h3>
               {isAdmin && onUpdateContact && (
                 <Button
                   size="icon"
@@ -167,10 +167,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
               <div className="flex items-center">
                 <Mail className="h-5 w-5 mr-3 text-accent" />
                 <div>
-                  <p className={`text-sm ${theme === 'light' ? 'text-gray-200 font-medium' : 'text-muted-foreground'}`}>Email</p>
+                  <p className="text-sm text-muted-foreground">Email</p>
                   <a
                     href={`mailto:${contact.email}`}
-                    className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-white font-semibold' : ''}`}
+                    className="hover:text-accent transition-colors"
                   >
                     {contact.email}
                   </a>
@@ -181,10 +181,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 mr-3 text-accent" />
                   <div>
-                    <p className={`text-sm ${theme === 'light' ? 'text-gray-200 font-medium' : 'text-muted-foreground'}`}>Phone</p>
+                    <p className="text-sm text-muted-foreground">Phone</p>
                     <a
                       href={`tel:${contact.phone}`}
-                      className={`hover:text-accent transition-colors ${theme === 'light' ? 'text-white font-semibold' : ''}`}
+                      className="hover:text-accent transition-colors"
                     >
                       {contact.phone}
                     </a>
@@ -196,8 +196,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <div className="flex items-center">
                   <MapPin className="h-5 w-5 mr-3 text-accent" />
                   <div>
-                    <p className={`text-sm ${theme === 'light' ? 'text-gray-200 font-medium' : 'text-muted-foreground'}`}>Location</p>
-                    <p className={theme === 'light' ? 'text-white font-semibold' : ''}>
+                    <p className="text-sm text-muted-foreground">Location</p>
+                    <p>
                       {contact.address ? `${contact.address}, ` : ""}
                       {contact.location}
                     </p>
@@ -217,7 +217,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
             variants={formVariants}
             animate={isSubmitting ? "submitting" : formStatus}
           >
-            <h3 className={`text-xl font-bold mb-4 ${theme === 'light' ? 'text-white' : ''}`}>Send a Message</h3>
+            <h3 className="text-xl font-bold mb-4">Send a Message</h3>
 
             {/* Success/Error Animation Overlays */}
             {formStatus === "success" && (
@@ -318,7 +318,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className={`${theme === 'light' ? 'text-[#1A1F2C] bg-white/80' : ''}`}
                   />
                 </motion.div>
               </div>
@@ -331,7 +330,6 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                     name="reply_to"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`${theme === 'light' ? 'text-[#1A1F2C] bg-white/80' : ''}`}
                   />
                 </motion.div>
               </div>

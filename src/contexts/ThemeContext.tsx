@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'dark';
 
 interface ThemeContextType {
   theme: Theme;
@@ -11,41 +11,25 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Check if user has previously set a theme
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      return savedTheme;
-    }
-    // Otherwise use system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+  // Always use dark theme only
+  const [theme] = useState<Theme>('dark');
 
   useEffect(() => {
     // Update the data-theme attribute on the document element
     const root = document.documentElement;
-    root.setAttribute('data-theme', theme);
+    root.setAttribute('data-theme', 'dark');
     
-    // Apply theme classes only; colors are handled via CSS variables in index.css
-    if (theme === 'dark') {
-      document.body.classList.add('dark-mode');
-      document.body.classList.remove('light-mode');
-      document.documentElement.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark-mode');
-      document.body.classList.add('light-mode');
-      document.documentElement.classList.remove('dark');
-    }
+    // Apply dark theme classes only
+    document.body.classList.add('dark-mode');
+    document.body.classList.remove('light-mode');
+    document.documentElement.classList.add('dark');
     
-    // Apply smooth transition for theme change
-    document.body.style.transition = 'background-color 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
-    
-    // Save theme preference to localStorage
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+    // Store theme preference as dark
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'dark' ? 'light' : 'dark'));
+    // No-op since we only support dark theme
   };
 
   return (
