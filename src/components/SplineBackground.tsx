@@ -1,19 +1,10 @@
 'use client';
 
 import Spline from '@splinetool/react-spline';
-import { useEffect, useState } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { memo } from 'react';
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  return isMobile;
-}
-
-export default function SplineBackground() {
+const SplineBackground = memo(() => {
   const isMobile = useIsMobile();
 
   const style: React.CSSProperties = isMobile
@@ -27,6 +18,7 @@ export default function SplineBackground() {
         zIndex: 0,
         pointerEvents: 'none',
         overflow: 'hidden',
+        willChange: 'transform',
       }
     : {
         position: 'absolute',
@@ -38,11 +30,19 @@ export default function SplineBackground() {
         zIndex: 0,
         pointerEvents: 'none',
         overflow: 'hidden',
+        willChange: 'transform',
       };
 
   return (
     <div className="spline-bg" style={style}>
-      <Spline scene="https://prod.spline.design/8qoypt8sRrMBuxAg/scene.splinecode" />
+      <Spline 
+        scene="https://prod.spline.design/8qoypt8sRrMBuxAg/scene.splinecode"
+        style={{ width: '100%', height: '100%' }}
+      />
     </div>
   );
-}
+});
+
+SplineBackground.displayName = 'SplineBackground';
+
+export default SplineBackground;
