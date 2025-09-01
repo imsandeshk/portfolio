@@ -240,7 +240,7 @@ const ChatbotFab = () => {
       <button
         aria-label="Open AI Chatbot"
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-4 md:bottom-6 md:right-6 z-50 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-accent"
+        className="fixed bottom-4 right-4 z-50 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-accent"
         style={{
           width: 56,
           height: 56,
