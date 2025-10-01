@@ -199,7 +199,7 @@ const Hero: React.FC<HeroProps> = ({
 
           <motion.div 
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-5 items-center justify-center md:justify-start"
+            className="flex flex-col gap-5 items-center md:items-start"
           >
             <motion.div 
               className="flex items-center"
@@ -234,7 +234,7 @@ const Hero: React.FC<HeroProps> = ({
               <Button 
                 onClick={handleContactClick} 
                 size="lg" 
-                className={`mt-2 sm:mt-0 text-base font-semibold transition-all duration-500 rounded-xl btn-hover ${
+                className={`text-base font-semibold transition-all duration-500 rounded-xl btn-hover ${
                   theme === 'dark'
                     ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.5)]'
                     : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-md'
