@@ -151,17 +151,27 @@ const Index = () => {
 
   return (
     <>
-      {/* Top gradient blur - small area */}
+      {/* Top gradient blur - smooth and minimal */}
       <motion.div 
-        className="fixed top-0 left-0 w-full h-16 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm pointer-events-none z-40"
+        className="fixed top-0 left-0 w-full h-10 pointer-events-none z-40"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.2) 60%, transparent 100%)',
+          backdropFilter: 'blur(4px)',
+          WebkitBackdropFilter: 'blur(4px)'
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showTopBlur ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
       
-      {/* Bottom gradient blur - very small area */}
+      {/* Bottom gradient blur - smooth and minimal */}
       <motion.div 
-        className="fixed bottom-0 left-0 w-full h-12 bg-gradient-to-t from-black/80 to-transparent backdrop-blur-sm pointer-events-none z-40"
+        className="fixed bottom-0 left-0 w-full h-8 pointer-events-none z-40"
+        style={{
+          background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.15) 60%, transparent 100%)',
+          backdropFilter: 'blur(3px)',
+          WebkitBackdropFilter: 'blur(3px)'
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showBottomBlur ? 1 : 0 }}
         transition={{ duration: 0.3 }}
