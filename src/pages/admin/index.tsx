@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
 import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
 import ProjectsSection from "@/components/sections/projects/ProjectsSection";
@@ -61,8 +60,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 
 const AdminPanel = () => {
-  // Auth
-  const { signOut } = useAuth();
+  // Navigation
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -355,9 +353,13 @@ const AdminPanel = () => {
   };
 
   // Handle logout
-  const handleLogout = async () => {
-    await signOut();
-    navigate("/");
+  const handleLogout = () => {
+    localStorage.removeItem("adminAuthenticated");
+    toast({
+      title: "Logged out",
+      description: "You have been logged out successfully",
+    });
+    navigate("/admin/login");
   };
 
   if (dataLoading) {

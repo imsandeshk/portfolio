@@ -1,181 +1,119 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Lock, User } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Lock } from "lucide-react";
 import ParticlesBackground from "@/components/ParticlesBackground";
+import { useToast } from "@/components/ui/use-toast";
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("signin");
-  const { user, signIn, signUp } = useAuth();
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
+  const { toast } = useToast();
   
-  // Get the redirect path from location state or default to "/admin"
-  const from = (location.state as any)?.from?.pathname || "/admin";
+  const ADMIN_PASSWORD = "@#Sandesh58";
 
-  // Redirect if already authenticated
+  // Check if already logged in
   useEffect(() => {
-    if (user) {
-      navigate(from);
+    const isAdminLoggedIn = localStorage.getItem("adminAuthenticated") === "true";
+    if (isAdminLoggedIn) {
+      navigate("/admin");
     }
-  }, [user, navigate, from]);
+  }, [navigate]);
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
-    
-    try {
-      const { error } = await signIn(email, password);
-      if (!error) {
-        navigate(from);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      await signUp(email, password);
-    } finally {
-      setIsLoading(false);
+    // Simulate a small delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    if (password === ADMIN_PASSWORD) {
+      localStorage.setItem("adminAuthenticated", "true");
+      toast({
+        title: "Login successful",
+        description: "Welcome back, Admin!",
+      });
+      navigate("/admin");
+    } else {
+      setError("Incorrect password");
+      toast({
+        title: "Login failed",
+        description: "The password you entered is incorrect",
+        variant: "destructive",
+      });
     }
+
+    setIsLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
+    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
       <ParticlesBackground />
       
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
+        className="relative z-10 w-full max-w-md"
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
       >
-        <Card className="glass-card border-white/10">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Admin Access</CardTitle>
-            <CardDescription className="text-center">
-              Sign in or create an account to access the admin panel
+        <Card className="backdrop-blur-md bg-black/40 border-white/20 shadow-2xl">
+          <CardHeader className="space-y-1 text-center">
+            <motion.div
+              className="mx-auto w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-4"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            >
+              <Lock className="w-6 h-6 text-accent" />
+            </motion.div>
+            <CardTitle className="text-2xl font-bold">Admin Access</CardTitle>
+            <CardDescription>
+              Enter your password to continue
             </CardDescription>
           </CardHeader>
-          
           <CardContent>
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="signin">
-                <form onSubmit={handleSignIn} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
-                    <Input
-                      id="signin-email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
-                      required
-                      disabled={isLoading}
-                      className="bg-black/40"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signin-password">Password</Label>
-                    <Input
-                      id="signin-password"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter your password"
-                      required
-                      disabled={isLoading}
-                      className="bg-black/40"
-                    />
-                  </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
-                    disabled={isLoading}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter admin password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setError("");
+                  }}
+                  required
+                  className="bg-black/20 border-white/10 focus:border-accent"
+                  autoFocus
+                />
+                {error && (
+                  <motion.p
+                    className="text-sm text-destructive"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
                   >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Signing in...
-                      </>
-                    ) : (
-                      <>
-                        <Lock className="mr-2 h-4 w-4" />
-                        Sign In
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </TabsContent>
-              
-              <TabsContent value="signup">
-                <form onSubmit={handleSignUp} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
-                      required
-                      disabled={isLoading}
-                      className="bg-black/40"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
-                    <Input
-                      id="signup-password"
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Create a password"
-                      required
-                      disabled={isLoading}
-                      className="bg-black/40"
-                    />
-                  </div>
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Creating account...
-                      </>
-                    ) : (
-                      <>
-                        <User className="mr-2 h-4 w-4" />
-                        Create Account
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
+                    {error}
+                  </motion.p>
+                )}
+              </div>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isLoading || !password}
+              >
+                {isLoading ? "Logging in..." : "Login"}
+              </Button>
+            </form>
           </CardContent>
         </Card>
         

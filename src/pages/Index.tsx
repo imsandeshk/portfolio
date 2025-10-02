@@ -151,26 +151,30 @@ const Index = () => {
 
   return (
     <>
-      {/* Top gradient blur - smooth and minimal */}
+      {/* Top gradient blur - ultra smooth */}
       <motion.div 
-        className="fixed top-0 left-0 w-full h-10 pointer-events-none z-40"
+        className="fixed top-0 left-0 w-full h-12 pointer-events-none z-40"
         style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.2) 60%, transparent 100%)',
-          backdropFilter: 'blur(4px)',
-          WebkitBackdropFilter: 'blur(4px)'
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 15%, rgba(0,0,0,0.5) 35%, rgba(0,0,0,0.3) 55%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0.05) 90%, transparent 100%)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          maskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)'
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showTopBlur ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
       
-      {/* Bottom gradient blur - smooth and minimal */}
+      {/* Bottom gradient blur - ultra smooth */}
       <motion.div 
-        className="fixed bottom-0 left-0 w-full h-8 pointer-events-none z-40"
+        className="fixed bottom-0 left-0 w-full h-10 pointer-events-none z-40"
         style={{
-          background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.15) 60%, transparent 100%)',
-          backdropFilter: 'blur(3px)',
-          WebkitBackdropFilter: 'blur(3px)'
+          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.1) 80%, transparent 100%)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          maskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)'
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showBottomBlur ? 1 : 0 }}
