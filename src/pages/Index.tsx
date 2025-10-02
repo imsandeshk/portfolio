@@ -57,6 +57,8 @@ const Index = () => {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mainContentVisible, setMainContentVisible] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [showTopBlur, setShowTopBlur] = useState(false);
+  const [showBottomBlur, setShowBottomBlur] = useState(false);
 
   useEffect(() => {
     // Show main content with a slight delay for better transition
@@ -65,12 +67,23 @@ const Index = () => {
       setIsInitialLoad(false);
     }, 100);
     
-    // Add scroll event listener to reset animations on scroll direction change
+    // Add scroll event listener to control blur visibility
     const handleScroll = () => {
-      setHasScrolled(true);
+      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = window.innerHeight;
+      
+      setHasScrolled(scrollTop > 0);
+      
+      // Show top blur after scrolling down 50px
+      setShowTopBlur(scrollTop > 50);
+      
+      // Show bottom blur when not at the bottom (with 100px threshold)
+      setShowBottomBlur(scrollTop + clientHeight < scrollHeight - 100);
     };
     
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call once to set initial state
     
     return () => {
       clearTimeout(timer);
@@ -138,19 +151,19 @@ const Index = () => {
 
   return (
     <>
-      {/* Top gradient blur */}
+      {/* Top gradient blur - small area */}
       <motion.div 
-        className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black via-black/90 to-transparent backdrop-blur-sm pointer-events-none z-40"
+        className="fixed top-0 left-0 w-full h-16 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm pointer-events-none z-40"
         initial={{ opacity: 0 }}
-        animate={{ opacity: hasScrolled ? 1 : 0 }}
+        animate={{ opacity: showTopBlur ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
       
-      {/* Bottom gradient blur */}
+      {/* Bottom gradient blur - very small area */}
       <motion.div 
-        className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-black/90 to-transparent backdrop-blur-sm pointer-events-none z-40"
+        className="fixed bottom-0 left-0 w-full h-12 bg-gradient-to-t from-black/80 to-transparent backdrop-blur-sm pointer-events-none z-40"
         initial={{ opacity: 0 }}
-        animate={{ opacity: hasScrolled ? 1 : 0 }}
+        animate={{ opacity: showBottomBlur ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
 

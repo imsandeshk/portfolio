@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -185,9 +185,9 @@ const AdminLogin = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <a href="/" className="text-primary hover:text-accent transition-colors">
+          <Link to="/" className="text-primary hover:text-accent transition-colors">
             ← Back to Portfolio
-          </a>
+          </Link>
         </motion.div>
       </motion.div>
     </div>
