@@ -138,6 +138,22 @@ const Index = () => {
 
   return (
     <>
+      {/* Top gradient blur */}
+      <motion.div 
+        className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black via-black/90 to-transparent backdrop-blur-sm pointer-events-none z-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: hasScrolled ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      />
+      
+      {/* Bottom gradient blur */}
+      <motion.div 
+        className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-black/90 to-transparent backdrop-blur-sm pointer-events-none z-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: hasScrolled ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      />
+
       <div className="fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black via-black/70 to-transparent z-[-9]" />
 
       <div className="fixed inset-0 z-[-10] bg-black opacity-90" />

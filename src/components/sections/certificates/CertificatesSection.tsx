@@ -123,7 +123,7 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
         )}
         
         {/* Certificates List - Changed to 1 column */}
-        <div className="grid grid-cols-1 gap-4 mt-8 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 gap-5 mt-8 max-w-3xl mx-auto px-2 md:px-0">
           {sortedCertificates.map((certificate, index) => (
             <motion.div
               key={certificate.id}
@@ -135,6 +135,8 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
                 delay: index * 0.1,
                 ease: [0.22, 1, 0.36, 1]
               }}
+              whileHover={{ y: -4 }}
+              className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:border-white/30"
             >
               <CertificateCard
                 certificate={certificate}

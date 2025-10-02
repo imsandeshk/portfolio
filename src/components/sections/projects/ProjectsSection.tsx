@@ -308,25 +308,38 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
           
           {/* Mobile layout - Vertical cards */}
           {isMobile && (
-            <div className="flex flex-col space-y-6">
+            <div className="flex flex-col space-y-5 px-2">
               {otherProjects.map((project) => (
-                <div 
+                <motion.div 
                   key={project.id}
-                  className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:shadow-lg transition-shadow"
+                  className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:border-white/30"
                   onClick={() => handleProjectClick(project)}
+                  whileHover={{ y: -4 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <div className="relative h-[180px] overflow-hidden">
+                  <div className="relative h-[200px] overflow-hidden">
                     <img 
                       src={project.image || "/placeholder.svg"} 
                       alt={project.title} 
                       className="w-full h-full object-cover"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                   </div>
-                  <div className="p-4">
-                    <h4 className="text-xl font-bold mb-2">{project.title}</h4>
-                    <p className="text-sm text-gray-300 mb-4 line-clamp-2">
+                  <div className="p-5">
+                    <h4 className="text-xl font-bold mb-2 text-white">{project.title}</h4>
+                    <p className="text-sm text-white/70 mb-4 line-clamp-2 leading-relaxed">
                       {project.description}
                     </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags?.slice(0, 3).map((tag, idx) => (
+                        <span 
+                          key={idx}
+                          className="px-2.5 py-1 bg-white/10 rounded-lg text-xs text-white/80 backdrop-blur-sm border border-white/10"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                     <div className="flex justify-between items-center">
                       <div className="flex space-x-2">
                         {project.url && (
@@ -334,7 +347,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                             size="sm" 
                             variant="outline"
                             asChild
-                            className="text-xs bg-white/5 border-white/10"
+                            className="text-xs bg-white/10 border-white/20 hover:bg-white/20 text-white"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <a href={project.url} target="_blank" rel="noopener noreferrer">
@@ -347,7 +360,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                             size="sm" 
                             variant="outline"
                             asChild
-                            className="text-xs bg-white/5 border-white/10"
+                            className="text-xs bg-white/10 border-white/20 hover:bg-white/20 text-white"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <a href={project.github} target="_blank" rel="noopener noreferrer">
@@ -384,7 +397,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
