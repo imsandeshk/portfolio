@@ -102,20 +102,20 @@ const Hero: React.FC<HeroProps> = ({
   };
 
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-center px-6 overflow-hidden">
-      <div className="container mx-auto max-w-6xl flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
+    <section className="relative min-h-[100vh] flex flex-col justify-center px-4 sm:px-6 overflow-hidden py-8 sm:py-0">
+      <div className="container mx-auto max-w-6xl flex flex-col-reverse md:flex-row items-center gap-8 sm:gap-12 md:gap-16">
         {/* Content */}
         <motion.div 
-          className="w-full md:w-1/2 text-center md:text-left z-10" 
+          className="w-full md:w-1/2 text-center md:text-left z-10 px-2 sm:px-0" 
           variants={containerVariants}
           initial="hidden" 
           animate="visible" 
         >
-          <motion.div variants={nameVariants} className="mb-6 overflow-hidden relative">
+          <motion.div variants={nameVariants} className="mb-4 sm:mb-6 overflow-hidden relative">
             <motion.h1 
-              className={`font-playfair text-5xl md:text-6xl lg:text-7xl font-extrabold ${
+              className={`font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold ${
                 theme === 'dark' ? 'text-gradient' : 'text-light-dark'
-              } leading-tight`}
+              } leading-tight px-2 sm:px-0`}
               whileHover={{
                 scale: 1.02,
                 transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] }
@@ -127,7 +127,7 @@ const Hero: React.FC<HeroProps> = ({
           
           <motion.div variants={itemVariants}>
             <motion.h2 
-              className={`font-playfair ${isMobile ? 'text-xl' : 'text-2xl md:text-3xl lg:text-4xl'} font-medium mb-6 ${
+              className={`font-playfair text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium mb-4 sm:mb-6 px-2 sm:px-0 ${
                 theme === 'dark' ? 'text-accent/90' : 'text-light-secondary'
               }`}
               whileHover={{
@@ -139,7 +139,7 @@ const Hero: React.FC<HeroProps> = ({
             </motion.h2>
           </motion.div>
           
-          <motion.div variants={itemVariants} className="mb-6">
+          <motion.div variants={itemVariants} className="mb-4 sm:mb-6">
             <div className="flex items-center justify-center md:justify-start gap-2">
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -149,7 +149,7 @@ const Hero: React.FC<HeroProps> = ({
                   theme === 'dark' 
                     ? 'bg-black/30 backdrop-blur-md border border-green-500/20' 
                     : 'bg-light-dark backdrop-blur-md border border-green-500/20 shadow-sm'
-                } rounded-full px-4 py-1.5 badge-glow`}
+                } rounded-full px-4 sm:px-5 py-2 sm:py-2.5 badge-glow`}
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 0 20px rgba(34, 197, 94, 0.3)",
@@ -171,16 +171,16 @@ const Hero: React.FC<HeroProps> = ({
                   />
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <span className="text-green-500 text-sm font-medium">Open to Work</span>
+                <span className="text-green-500 text-sm sm:text-base font-medium">Open to Work</span>
               </motion.div>
             </div>
           </motion.div>
 
           <motion.div variants={itemVariants}>
             <motion.p 
-              className={`${isMobile ? 'text-base' : 'text-lg'} ${
+              className={`text-base sm:text-lg ${
                 theme === 'dark' ? 'text-muted-foreground' : 'text-light-dark/80'
-              } mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed`}
+              } mb-6 sm:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed px-4 sm:px-0`}
               whileHover={{
                 scale: 1.01,
                 transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
@@ -191,15 +191,19 @@ const Hero: React.FC<HeroProps> = ({
           </motion.div>
 
           {/* View Resume CTA */}
-          <motion.div variants={itemVariants} className="mb-4">
-            <Link to="/resume" aria-label="View Resume" className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium bg-accent text-white hover:bg-accent/90 transition-colors hover-scale">
+          <motion.div variants={itemVariants} className="mb-3 sm:mb-4">
+            <Link 
+              to="/resume" 
+              aria-label="View Resume" 
+              className="inline-flex items-center justify-center rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-base sm:text-lg font-semibold bg-accent text-white hover:bg-accent/90 transition-all hover-scale shadow-lg hover:shadow-xl btn-3d"
+            >
               View Resume
             </Link>
           </motion.div>
 
           <motion.div 
             variants={itemVariants}
-            className="flex flex-col gap-5 items-center md:items-start"
+            className="flex flex-col gap-4 sm:gap-5 items-center md:items-start"
           >
             <motion.div 
               className="flex items-center"
@@ -208,7 +212,7 @@ const Hero: React.FC<HeroProps> = ({
                 transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
               }}
             >
-              <SocialLinks links={socialLinks} iconSize={20} className="mt-1" />
+              <SocialLinks links={socialLinks} iconSize={isMobile ? 18 : 20} className="mt-1" />
               {isAdmin && onEditSocial && (
                 <Button 
                   size="icon" 
@@ -234,10 +238,10 @@ const Hero: React.FC<HeroProps> = ({
               <Button 
                 onClick={handleContactClick} 
                 size="lg" 
-                className={`text-base font-semibold transition-all duration-500 rounded-xl btn-hover btn-3d ${
+                className={`text-base sm:text-lg font-semibold transition-all duration-500 rounded-xl btn-hover btn-3d px-8 sm:px-10 py-3 sm:py-4 shadow-lg ${
                   theme === 'dark'
-                    ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.5)]'
-                    : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-md'
+                    ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_20px_rgba(255,255,255,0.6)]'
+                    : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-xl'
                 }`}
               >
                 Contact Me
@@ -248,19 +252,19 @@ const Hero: React.FC<HeroProps> = ({
 
         {/* Image */}
         <motion.div 
-          className="w-full md:w-1/2 relative mb-8 md:mb-0 z-10 perspective-container" 
+          className="w-full md:w-1/2 relative mb-6 sm:mb-8 md:mb-0 z-10 perspective-container px-4 sm:px-0" 
           initial={{ opacity: 0, scale: 0.8, y: 20 }} 
           animate={{ opacity: 1, scale: 1, y: 0 }} 
           transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 0.3 }}
         >
           <motion.div 
-            className="relative max-w-md mx-auto float-3d"
+            className="relative max-w-xs sm:max-w-md mx-auto float-3d"
             style={{ transformStyle: 'preserve-3d' }}
           >
             <motion.div 
-              className={`aspect-square rounded-full overflow-hidden border-2 ${
+              className={`aspect-square rounded-full overflow-hidden border-3 sm:border-2 ${
                 theme === 'dark' ? 'border-white/10' : 'border-light-secondary/30'
-              } hover-glow`}
+              } hover-glow shadow-2xl`}
               style={{ transformStyle: 'preserve-3d' }}
               whileHover={{
                 scale: 1.05,
@@ -270,14 +274,14 @@ const Hero: React.FC<HeroProps> = ({
               animate={{
                 boxShadow: theme === 'dark' 
                   ? [
-                      "0 0 20px rgba(255,255,255,0.1)",
-                      "0 0 40px rgba(255,255,255,0.2)",
-                      "0 0 20px rgba(255,255,255,0.1)"
+                      "0 0 25px rgba(255,255,255,0.15)",
+                      "0 0 50px rgba(255,255,255,0.25)",
+                      "0 0 25px rgba(255,255,255,0.15)"
                     ]
                   : [
-                      "0 0 20px rgba(126,105,171,0.2)",
-                      "0 0 40px rgba(126,105,171,0.3)",
-                      "0 0 20px rgba(126,105,171,0.2)"
+                      "0 0 25px rgba(126,105,171,0.25)",
+                      "0 0 50px rgba(126,105,171,0.35)",
+                      "0 0 25px rgba(126,105,171,0.25)"
                     ]
               }}
               transition={{ 
@@ -316,9 +320,9 @@ const Hero: React.FC<HeroProps> = ({
       
       {/* Scroll indicator */}
       <motion.div 
-        className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 ${
+        className={`absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 ${
           theme === 'dark' ? 'text-white/50' : 'text-light-secondary'
-        } hover-scale`}
+        } hover-scale hidden sm:block`}
         initial={{ opacity: 0, y: 20 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ 
