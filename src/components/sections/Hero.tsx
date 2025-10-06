@@ -234,7 +234,7 @@ const Hero: React.FC<HeroProps> = ({
               <Button 
                 onClick={handleContactClick} 
                 size="lg" 
-                className={`text-base font-semibold transition-all duration-500 rounded-xl btn-hover ${
+                className={`text-base font-semibold transition-all duration-500 rounded-xl btn-hover btn-3d ${
                   theme === 'dark'
                     ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.5)]'
                     : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-md'
@@ -248,20 +248,20 @@ const Hero: React.FC<HeroProps> = ({
 
         {/* Image */}
         <motion.div 
-          className="w-full md:w-1/2 relative mb-8 md:mb-0 z-10" 
+          className="w-full md:w-1/2 relative mb-8 md:mb-0 z-10 perspective-container" 
           initial={{ opacity: 0, scale: 0.8, y: 20 }} 
           animate={{ opacity: 1, scale: 1, y: 0 }} 
           transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 0.3 }}
         >
           <motion.div 
-            className="relative max-w-md mx-auto"
-            variants={floatingVariants}
-            animate="animate"
+            className="relative max-w-md mx-auto float-3d"
+            style={{ transformStyle: 'preserve-3d' }}
           >
             <motion.div 
               className={`aspect-square rounded-full overflow-hidden border-2 ${
                 theme === 'dark' ? 'border-white/10' : 'border-light-secondary/30'
               } hover-glow`}
+              style={{ transformStyle: 'preserve-3d' }}
               whileHover={{
                 scale: 1.05,
                 rotate: 2,

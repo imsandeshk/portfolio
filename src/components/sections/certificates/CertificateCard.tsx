@@ -35,7 +35,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
   return (
     <>
-      <Card className="relative overflow-hidden rounded-xl bg-gradient-to-b from-black/60 to-black/20 backdrop-blur-sm border border-white/10 shadow-xl hover:shadow-accent/20 transition-all duration-300">
+      <Card className="relative overflow-hidden rounded-xl bg-gradient-to-b from-black/60 to-black/20 backdrop-blur-sm border border-white/10 shadow-xl hover:shadow-accent/20 transition-all duration-300 card-3d-tilt">
         <div
           className="relative aspect-video overflow-hidden cursor-pointer"
           onClick={() => setShowViewer(true)}
@@ -59,7 +59,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
             <Button
               variant="outline"
               size="icon"
-              className="rounded-full bg-black/50 hover:bg-accent/80 border-white/20"
+              className="rounded-full bg-black/50 hover:bg-accent/80 border-white/20 btn-3d"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowViewer(true);
@@ -78,7 +78,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full bg-black/50 hover:bg-accent/80 border-white/20"
+                  className="rounded-full bg-black/50 hover:bg-accent/80 border-white/20 btn-3d"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="View certificate externally"
                 >

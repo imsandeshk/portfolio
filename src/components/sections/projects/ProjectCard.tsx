@@ -31,7 +31,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <motion.div
-      className="relative group glass-card rounded-xl overflow-hidden hover-glow border border-white/10 bg-black/30 backdrop-blur-sm"
+      className="relative group glass-card rounded-xl overflow-hidden hover-glow border border-white/10 bg-black/30 backdrop-blur-sm card-3d cursor-pointer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -39,10 +39,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={onClick}
-      whileHover={{
-        y: -5,
-        transition: { duration: 0.3, ease: "easeOut" }
-      }}
+      style={{ transformStyle: 'preserve-3d' }}
     >
       {/* Image */}
       <div className="relative h-40 sm:h-48 md:h-56 overflow-hidden">
@@ -81,7 +78,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white text-xs md:text-sm px-2 md:px-3">
+            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white text-xs md:text-sm px-2 md:px-3 btn-3d">
               <Maximize2 className="mr-1 h-3 w-3 md:h-4 md:w-4" />
               View Project
             </Button>
@@ -111,7 +108,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 <Badge 
                   key={index} 
                   variant="outline" 
-                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors"
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors badge-3d"
                 >
                   {tag}
                 </Badge>
@@ -135,7 +132,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -155,7 +152,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d"
               onClick={(e) => e.stopPropagation()}
             >
               <a 

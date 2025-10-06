@@ -195,10 +195,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               key={skill.id}
               variants={skillVariants}
               whileHover="hover"
-              className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
+              className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative badge-3d"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
-                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
+                transformStyle: 'preserve-3d'
               }}
             >
               <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain" />
@@ -229,10 +230,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             <motion.div
               variants={skillVariants}
               whileHover="hover"
-              className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
+              className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer badge-3d"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
-                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
+                transformStyle: 'preserve-3d'
               }}
               onClick={() => setShowMore(true)}
             >
@@ -275,10 +277,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
                   key={skill.id}
                   variants={skillVariants}
                   whileHover="hover"
-                  className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
+                  className="group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative badge-3d"
                   style={{
                     backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
-                    borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)'
+                    borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
+                    transformStyle: 'preserve-3d'
                   }}
                 >
                   {softSkillIcons[name]}
