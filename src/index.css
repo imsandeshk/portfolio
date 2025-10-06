@@ -735,13 +735,91 @@ button:hover::before {
     @apply text-sm;
   }
   
-  /* Reduce animation intensity on mobile */
+  /* Optimize 3D effects for mobile - keep them active but lighter */
   .card-hover-3d:hover {
     transform: perspective(1000px) rotateX(2deg) rotateY(2deg) scale(1.02) translateY(-5px);
   }
   
   .hover-scale:hover {
     transform: scale(1.02) translateY(-1px);
+  }
+  
+  /* Ensure 3D effects work on mobile */
+  .card-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-perspective: 1000px;
+  }
+  
+  .card-3d:active,
+  .card-3d:hover {
+    transform: translateY(-6px) rotateX(1deg) rotateY(-1deg) scale(1.01);
+    box-shadow: 
+      0 15px 30px -10px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(255, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .card-3d-tilt {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-perspective: 1000px;
+  }
+  
+  .card-3d-tilt:active,
+  .card-3d-tilt:hover {
+    transform: translateZ(15px) rotateX(3deg) scale(1.03);
+    box-shadow: 
+      0 20px 40px -10px rgba(0, 0, 0, 0.6),
+      0 0 40px rgba(255, 255, 255, 0.15);
+  }
+  
+  .btn-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  
+  .btn-3d:active,
+  .btn-3d:hover {
+    transform: translateY(-1px) translateZ(8px);
+    box-shadow: 
+      0 6px 12px rgba(0, 0, 0, 0.4),
+      0 0 15px rgba(255, 255, 255, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  }
+  
+  .badge-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  
+  .badge-3d:active,
+  .badge-3d:hover {
+    transform: translateZ(6px) scale(1.08);
+    box-shadow: 
+      0 4px 10px rgba(0, 0, 0, 0.3),
+      0 0 12px rgba(255, 255, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  
+  .perspective-container {
+    perspective: 1200px;
+    -webkit-perspective: 1200px;
+  }
+  
+  .float-3d {
+    animation: float3dMobile 5s ease-in-out infinite;
+  }
+  
+  @keyframes float3dMobile {
+    0%, 100% {
+      transform: translateY(0) translateZ(0) rotateX(0deg);
+    }
+    50% {
+      transform: translateY(-15px) translateZ(10px) rotateX(0deg);
+    }
   }
 }
 
