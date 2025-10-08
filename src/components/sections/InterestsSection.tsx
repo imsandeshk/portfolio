@@ -87,7 +87,7 @@ const InterestsSection: React.FC = () => {
                 {interestsRow1.map((interest) => (
                   <motion.div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
                     whileHover={{ 
                       scale: 1.05, 
                       transition: { 
@@ -129,7 +129,7 @@ const InterestsSection: React.FC = () => {
                 {interestsRow2.map((interest) => (
                   <motion.div
                     key={interest.id}
-                    className="flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                    className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
                     whileHover={{ 
                       scale: 1.05, 
                       transition: { 

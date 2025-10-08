@@ -141,24 +141,21 @@ const Hero: React.FC<HeroProps> = ({
           
           <motion.div variants={itemVariants} className="mb-4 sm:mb-6">
             <div className="flex items-center justify-center md:justify-start gap-2">
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.6, ease: [0.19, 1, 0.22, 1] }}
-                className={`flex items-center gap-2 ${
-                  theme === 'dark' 
-                    ? 'bg-black/30 backdrop-blur-md border border-green-500/20' 
-                    : 'bg-light-dark backdrop-blur-md border border-green-500/20 shadow-sm'
-                } rounded-full px-4 sm:px-5 py-2 sm:py-2.5 badge-glow`}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 20px rgba(34, 197, 94, 0.3)",
-                  transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
+              <motion.div 
+                className="open-to-work-badge inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 backdrop-blur-md rounded-full border border-white/20 overflow-hidden"
+                style={{
+                  background: theme === 'dark' 
+                    ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)' 
+                    : 'linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 100%)'
                 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
+                whileHover={{ scale: 1.05 }}
               >
                 <span className="relative flex h-3 w-3">
                   <motion.span 
-                    className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                    className="status-indicator animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
                     animate={{
                       scale: [1, 1.2, 1],
                       opacity: [0.75, 0.3, 0.75]
@@ -195,7 +192,7 @@ const Hero: React.FC<HeroProps> = ({
             <Link 
               to="/resume" 
               aria-label="View Resume" 
-              className="inline-flex items-center justify-center rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-base sm:text-lg font-semibold bg-accent text-white hover:bg-accent/90 transition-all hover-scale shadow-lg hover:shadow-xl btn-3d"
+              className="btn-3d hero-button inline-flex items-center justify-center rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-base sm:text-lg font-semibold bg-accent text-white hover:bg-accent/90 transition-all hover-scale shadow-lg hover:shadow-xl"
             >
               View Resume
             </Link>
@@ -238,7 +235,7 @@ const Hero: React.FC<HeroProps> = ({
               <Button 
                 onClick={handleContactClick} 
                 size="lg" 
-                className={`text-base sm:text-lg font-semibold transition-all duration-500 rounded-xl btn-hover btn-3d px-8 sm:px-10 py-3 sm:py-4 shadow-lg ${
+                className={`btn-3d hero-button text-base sm:text-lg font-semibold transition-all duration-500 rounded-xl btn-hover px-8 sm:px-10 py-3 sm:py-4 shadow-lg ${
                   theme === 'dark'
                     ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_20px_rgba(255,255,255,0.6)]'
                     : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-xl'
@@ -262,7 +259,7 @@ const Hero: React.FC<HeroProps> = ({
             style={{ transformStyle: 'preserve-3d' }}
           >
             <motion.div 
-              className={`aspect-square rounded-full overflow-hidden border-3 sm:border-2 ${
+              className={`profile-3d aspect-square rounded-full overflow-hidden border-3 sm:border-2 ${
                 theme === 'dark' ? 'border-white/10' : 'border-light-secondary/30'
               } hover-glow shadow-2xl`}
               style={{ transformStyle: 'preserve-3d' }}

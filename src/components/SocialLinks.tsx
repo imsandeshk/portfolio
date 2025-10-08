@@ -230,12 +230,12 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`transition-all duration-500 flex items-center gap-2 
+            className={`social-icon-3d transition-all duration-500 flex items-center gap-2 
                       backdrop-blur-md p-2.5 rounded-full 
                       hover:shadow-[0_0_25px_rgba(155,135,245,0.6)] border 
                       ${theme === 'dark' 
                         ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' 
-                        : 'bg-light-dark/90 border-white/10 shadow-md'} btn-hover`}
+                        : 'bg-light-dark/90 border-white/10 shadow-md'}`}
             variants={item}
             whileHover="hover"
             initial="rest"
