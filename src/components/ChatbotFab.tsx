@@ -240,29 +240,24 @@ const ChatbotFab = () => {
       <button
         aria-label="Open AI Chatbot"
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 right-4 z-50 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-accent"
+        className="fixed bottom-6 right-6 z-50 rounded-full shadow-[0_8px_30px_rgba(255,87,51,0.4)] hover:shadow-[0_12px_40px_rgba(255,87,51,0.6)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent flex items-center justify-center"
         style={{
-          width: 56,
-          height: 56,
+          width: 64,
+          height: 64,
           background: "linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))",
+          transform: 'translateZ(20px)',
+          boxShadow: '0 8px 30px rgba(255,87,51,0.4), 0 0 0 2px rgba(255,255,255,0.1) inset'
         }}
       >
-        <Bot className="w-6 h-6 text-white mx-auto" />
+        <Bot className="w-7 h-7 text-white" />
       </button>
 
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="right" className="w-[min(480px,100vw)] h-[100svh] p-0 flex flex-col">
           <div className="flex h-full flex-col">
             <SheetHeader className="px-4 py-3 border-b border-white/10">
-              <div className="flex items-center justify-between">
-                <div>
-                  <SheetTitle>Ask about Sandesh</SheetTitle>
-                  <SheetDescription className="sr-only">Chat assistant to explore Sandesh’s profile, skills, projects, and contact options.</SheetDescription>
-                </div>
-                <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close">
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
+              <SheetTitle>Ask about Sandesh</SheetTitle>
+              <SheetDescription className="sr-only">Chat assistant to explore Sandesh's profile, skills, projects, and contact options.</SheetDescription>
             </SheetHeader>
 
             {/* Messages */}
@@ -467,7 +462,7 @@ const ChatbotFab = () => {
                 </Button>
               </div>
               <div className="mt-2 text-[11px] text-muted-foreground">
-                For non-profile questions, I’ll offer a quick contact option.
+                For non-profile questions, I'll offer a quick contact option.
               </div>
             </div>
           </div>
