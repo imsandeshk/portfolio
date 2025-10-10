@@ -20,8 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Poppins', 'sans-serif'],
-				playfair: ['Playfair Display', 'serif'],
+				sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+				display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

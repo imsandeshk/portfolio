@@ -181,9 +181,15 @@ const Index = () => {
         transition={{ duration: 0.3 }}
       />
 
-      <div className="fixed top-0 left-0 w-full h-[25vh] bg-gradient-to-b from-black via-black/70 to-transparent z-[-9]" />
-
-      <div className="fixed inset-0 z-[-10] bg-black opacity-90" />
+      {/* iOS-style floating orbs background */}
+      <div className="fixed inset-0 z-[-10] overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#101113] via-[#1a1a1c] to-[#101113]" />
+        
+        {/* Floating light orbs */}
+        <div className="floating-orb w-96 h-96 top-1/4 left-1/4 animate-float" style={{ animationDelay: '0s' }} />
+        <div className="floating-orb w-80 h-80 top-3/4 right-1/4 animate-float" style={{ animationDelay: '2s' }} />
+        <div className="floating-orb w-64 h-64 bottom-1/4 left-1/2 animate-float" style={{ animationDelay: '4s' }} />
+      </div>
 
       <div className="relative z-10 bg-transparent min-h-screen">
         <AnimatePresence mode="wait">
