@@ -177,6 +177,12 @@ export default {
 					'0%': { backgroundPosition: '0% 50%' },
 					'50%': { backgroundPosition: '100% 50%' },
 					'100%': { backgroundPosition: '0% 50%' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0) translateX(0)' },
+					'25%': { transform: 'translateY(-20px) translateX(10px)' },
+					'50%': { transform: 'translateY(0) translateX(20px)' },
+					'75%': { transform: 'translateY(20px) translateX(10px)' }
 				}
 			},
 			animation: {
@@ -191,7 +197,8 @@ export default {
 				'enter': 'fade-in 0.3s ease-out, scale-in 0.2s ease-out',
 				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out',
 				'gradient-x': 'gradient-x 2s ease infinite',
-				'gradient': 'gradient-animation 15s ease infinite'
+				'gradient': 'gradient-animation 15s ease infinite',
+				'float': 'float 6s ease-in-out infinite'
 			},
 			backgroundImage: {
 				'gradient-animated': 'linear-gradient(-45deg, #111111, #191919, #161616, #121212)',
