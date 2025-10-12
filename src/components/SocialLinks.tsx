@@ -230,28 +230,33 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`icon-ios relative overflow-hidden transition-all duration-500 flex items-center gap-2 
-                      backdrop-blur-xl p-3.5 rounded-2xl group
+            className={`relative overflow-hidden transition-all duration-500 
+                      w-14 h-14 flex items-center justify-center
+                      backdrop-blur-xl rounded-full group cursor-pointer
                       ${theme === 'dark' 
-                        ? 'bg-gradient-to-br from-white/10 to-white/5' 
+                        ? 'bg-gradient-to-br from-white/15 to-white/5' 
                         : 'bg-gradient-to-br from-white/90 to-white/70'}`}
             variants={item}
             whileHover={{ 
-              scale: 1.15, 
-              y: -6,
-              rotateY: 5,
+              scale: 1.2, 
+              y: -8,
+              rotateY: 10,
+              rotateX: 5,
               transition: { 
                 type: "spring", 
-                stiffness: 300, 
+                stiffness: 400, 
                 damping: 20 
               }
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.9 }}
             initial="rest"
             title={link.platform}
             style={{ 
-              border: `1px solid ${platformColor}30`,
-              boxShadow: `0 4px 12px rgba(0, 0, 0, 0.1), 0 0 0 1px ${platformColor}20, inset 0 1px 0 rgba(255, 255, 255, 0.1)`,
+              border: `2px solid ${platformColor}40`,
+              boxShadow: `0 8px 16px rgba(0, 0, 0, 0.3), 
+                          0 0 30px ${platformColor}30, 
+                          inset 0 2px 4px rgba(255, 255, 255, 0.2),
+                          inset 0 -2px 4px rgba(0, 0, 0, 0.2)`,
               transformStyle: 'preserve-3d',
               perspective: '1000px'
             }}
@@ -261,31 +266,31 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
               className="relative z-10"
               style={{ 
                 color: platformColor,
-                filter: `drop-shadow(0 2px 8px ${platformColor}40)`,
+                filter: `drop-shadow(0 4px 12px ${platformColor}60)`,
                 transformStyle: 'preserve-3d',
-                transform: 'translateZ(20px)'
+                transform: 'translateZ(25px)'
               }}
               whileHover={{
-                rotateZ: [0, -5, 5, 0],
-                transition: { duration: 0.5 }
+                rotateZ: [0, -10, 10, 0],
+                transition: { duration: 0.6 }
               }}
             >
               <IconComponent 
-                size={iconSize} 
-                strokeWidth={2}
+                size={24} 
+                strokeWidth={2.5}
               />
             </motion.div>
             
-            {/* Animated glow background */}
+            {/* Pulsing glow background */}
             <motion.div
-              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none"
+              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 pointer-events-none"
               style={{ 
-                background: `radial-gradient(circle at center, ${platformColor}30, transparent 70%)`,
-                filter: 'blur(12px)'
+                background: `radial-gradient(circle at center, ${platformColor}40, transparent 70%)`,
+                filter: 'blur(15px)'
               }}
               animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0, 0.6, 0]
+                scale: [1, 1.4, 1],
+                opacity: [0, 0.8, 0]
               }}
               transition={{
                 duration: 2,
@@ -294,13 +299,21 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
               }}
             />
             
-            {/* Spotlight effect on hover */}
+            {/* Top spotlight for 3D effect */}
             <motion.div
-              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none"
+              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 pointer-events-none"
               style={{
-                background: `radial-gradient(circle at 50% 0%, rgba(255,255,255,0.2), transparent 60%)`
+                background: `radial-gradient(circle at 50% 20%, rgba(255,255,255,0.3), transparent 50%)`
               }}
               transition={{ duration: 0.3 }}
+            />
+            
+            {/* Bottom shadow for depth */}
+            <motion.div
+              className="absolute inset-0 rounded-full pointer-events-none"
+              style={{
+                background: `radial-gradient(circle at 50% 80%, rgba(0,0,0,0.3), transparent 50%)`
+              }}
             />
             
             {showLabels && (
