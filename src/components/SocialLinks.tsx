@@ -230,47 +230,78 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`social-icon-3d transition-all duration-500 flex items-center gap-2 
-                      backdrop-blur-md p-2.5 rounded-full 
-                      hover:shadow-[0_0_25px_rgba(155,135,245,0.6)] border 
+            className={`icon-ios relative overflow-hidden transition-all duration-500 flex items-center gap-2 
+                      backdrop-blur-xl p-3.5 rounded-2xl group
                       ${theme === 'dark' 
-                        ? 'bg-gradient-to-br from-black/60 to-black/40 border-white/10' 
-                        : 'bg-light-dark/90 border-white/10 shadow-md'}`}
+                        ? 'bg-gradient-to-br from-white/10 to-white/5' 
+                        : 'bg-gradient-to-br from-white/90 to-white/70'}`}
             variants={item}
-            whileHover="hover"
+            whileHover={{ 
+              scale: 1.15, 
+              y: -6,
+              rotateY: 5,
+              transition: { 
+                type: "spring", 
+                stiffness: 300, 
+                damping: 20 
+              }
+            }}
+            whileTap={{ scale: 0.95 }}
             initial="rest"
             title={link.platform}
             style={{ 
-              borderColor: `${platformColor}30`
+              border: `1px solid ${platformColor}30`,
+              boxShadow: `0 4px 12px rgba(0, 0, 0, 0.1), 0 0 0 1px ${platformColor}20, inset 0 1px 0 rgba(255, 255, 255, 0.1)`,
+              transformStyle: 'preserve-3d',
+              perspective: '1000px'
             }}
           >
+            {/* 3D Icon Container */}
             <motion.div 
-              variants={iconHover}
-              className="relative"
-              style={{ color: platformColor }}
+              className="relative z-10"
+              style={{ 
+                color: platformColor,
+                filter: `drop-shadow(0 2px 8px ${platformColor}40)`,
+                transformStyle: 'preserve-3d',
+                transform: 'translateZ(20px)'
+              }}
+              whileHover={{
+                rotateZ: [0, -5, 5, 0],
+                transition: { duration: 0.5 }
+              }}
             >
               <IconComponent 
                 size={iconSize} 
-                strokeWidth={1.5}
-              />
-              
-              {/* Glow effect */}
-              <motion.div
-                className="absolute inset-0 blur-sm opacity-50 pointer-events-none"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: [0.19, 1, 0.22, 1]
-                }}
-                style={{ 
-                  background: `radial-gradient(circle, ${platformColor}60, transparent)`
-                }}
+                strokeWidth={2}
               />
             </motion.div>
+            
+            {/* Animated glow background */}
+            <motion.div
+              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none"
+              style={{ 
+                background: `radial-gradient(circle at center, ${platformColor}30, transparent 70%)`,
+                filter: 'blur(12px)'
+              }}
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0, 0.6, 0]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            
+            {/* Spotlight effect on hover */}
+            <motion.div
+              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none"
+              style={{
+                background: `radial-gradient(circle at 50% 0%, rgba(255,255,255,0.2), transparent 60%)`
+              }}
+              transition={{ duration: 0.3 }}
+            />
             
             {showLabels && (
               <motion.span 
