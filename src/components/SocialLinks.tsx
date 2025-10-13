@@ -215,7 +215,7 @@ const SocialLinks: React.FC<SocialLinksProps> = ({
   // Regular social links display (non-scrolling)
   return (
     <motion.div 
-      className={`flex flex-wrap items-center gap-4 ${className} social-links`}
+      className={`flex items-center gap-3 ${className} social-links`}
       variants={container}
       initial="hidden"
       animate="show"

@@ -113,9 +113,10 @@ const Hero: React.FC<HeroProps> = ({
         >
           <motion.div variants={nameVariants} className="mb-4 sm:mb-6 overflow-hidden relative">
             <motion.h1 
-              className={`font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold ${
-                theme === 'dark' ? 'text-gradient' : 'text-light-dark'
-              } leading-tight px-2 sm:px-0`}
+              className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight px-2 sm:px-0"
+              style={{
+                color: '#FFF8E7'
+              }}
               whileHover={{
                 scale: 1.02,
                 transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] }
@@ -175,9 +176,10 @@ const Hero: React.FC<HeroProps> = ({
 
           <motion.div variants={itemVariants}>
             <motion.p 
-              className={`text-base sm:text-lg ${
-                theme === 'dark' ? 'text-muted-foreground' : 'text-light-dark/80'
-              } mb-6 sm:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed px-4 sm:px-0`}
+              className="text-base sm:text-lg mb-6 sm:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed px-4 sm:px-0"
+              style={{
+                color: '#FF8C42'
+              }}
               whileHover={{
                 scale: 1.01,
                 transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
@@ -352,10 +354,11 @@ const Hero: React.FC<HeroProps> = ({
       {theme === 'dark' && (
         <>
           <motion.div 
-            className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 filter blur-[80px] -z-0"
+            className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full filter blur-[120px] -z-0"
+            style={{ background: 'radial-gradient(circle, #FF8C42 0%, transparent 70%)' }}
             animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.6, 0.3]
+              scale: [1, 1.3, 1],
+              opacity: [0.15, 0.35, 0.15]
             }}
             transition={{
               duration: 8,
@@ -364,16 +367,45 @@ const Hero: React.FC<HeroProps> = ({
             }}
           />
           <motion.div 
-            className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500/10 filter blur-[100px] -z-0"
+            className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full filter blur-[130px] -z-0"
+            style={{ background: 'radial-gradient(circle, #4A90E2 0%, transparent 70%)' }}
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.5, 0.2]
+              scale: [1, 1.4, 1],
+              opacity: [0.2, 0.4, 0.2]
             }}
             transition={{
               duration: 10,
               repeat: Infinity,
               ease: [0.19, 1, 0.22, 1],
               delay: 2
+            }}
+          />
+          <motion.div 
+            className="absolute top-1/2 right-1/3 w-72 h-72 rounded-full filter blur-[110px] -z-0"
+            style={{ background: 'radial-gradient(circle, #10B981 0%, transparent 70%)' }}
+            animate={{
+              scale: [1, 1.25, 1],
+              opacity: [0.12, 0.3, 0.12]
+            }}
+            transition={{
+              duration: 9,
+              repeat: Infinity,
+              ease: [0.19, 1, 0.22, 1],
+              delay: 4
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 left-1/3 w-64 h-64 rounded-full filter blur-[100px] -z-0"
+            style={{ background: 'radial-gradient(circle, #FF6B9D 0%, transparent 70%)' }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.25, 0.1]
+            }}
+            transition={{
+              duration: 11,
+              repeat: Infinity,
+              ease: [0.19, 1, 0.22, 1],
+              delay: 6
             }}
           />
         </>
