@@ -92,11 +92,22 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
     >
       <motion.div variants={childVariants} className="relative">
         <motion.h2 
-          className={`font-playfair text-3xl mb-3 font-bold md:text-5xl ${
-            theme === 'dark' 
-              ? 'text-gradient' 
-              : 'text-[#1A1F2C]'
-          } relative overflow-hidden`}
+          className="font-playfair text-3xl mb-3 font-bold md:text-5xl relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(90deg, #FF6B9D 0%, #4A90E2 25%, #10B981 50%, #FF8C42 75%, #FF6B9D 100%)',
+            backgroundSize: '200% 100%',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}
+          animate={{
+            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "linear"
+          }}
           whileHover={{
             scale: 1.02,
             transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] }
@@ -126,9 +137,10 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           
           {/* Animated underline */}
           <motion.div
-            className={`absolute bottom-0 left-0 h-1 ${
-              theme === 'dark' ? 'bg-gradient-to-r from-accent to-blue-500' : 'bg-gradient-to-r from-[#7E69AB] to-[#9b87f5]'
-            } rounded-full`}
+            className="absolute bottom-0 left-0 h-1 rounded-full"
+            style={{
+              background: 'linear-gradient(90deg, #FF6B9D 0%, #4A90E2 50%, #10B981 100%)'
+            }}
             initial={{ width: 0 }}
             animate={isInView ? { width: '100%' } : { width: 0 }}
             transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1], delay: 0.5 }}

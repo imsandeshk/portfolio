@@ -128,9 +128,10 @@ const Hero: React.FC<HeroProps> = ({
           
           <motion.div variants={itemVariants}>
             <motion.h2 
-              className={`font-playfair text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium mb-4 sm:mb-6 px-2 sm:px-0 ${
-                theme === 'dark' ? 'text-accent/90' : 'text-light-secondary'
-              }`}
+              className="font-playfair text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium mb-4 sm:mb-6 px-2 sm:px-0"
+              style={{
+                color: '#FF8C42'
+              }}
               whileHover={{
                 scale: 1.01,
                 transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
@@ -143,17 +144,47 @@ const Hero: React.FC<HeroProps> = ({
           <motion.div variants={itemVariants} className="mb-4 sm:mb-6">
             <div className="flex items-center justify-center md:justify-start gap-2">
               <motion.div 
-                className="open-to-work-badge inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 backdrop-blur-md rounded-full border border-white/20 overflow-hidden"
+                className="open-to-work-badge inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 backdrop-blur-md rounded-full border border-white/20 overflow-hidden relative"
                 style={{
                   background: theme === 'dark' 
                     ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)' 
-                    : 'linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 100%)'
+                    : 'linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 100%)',
+                  boxShadow: '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), inset 0 0 20px rgba(34, 197, 94, 0.1)'
                 }}
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  boxShadow: [
+                    '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), inset 0 0 20px rgba(34, 197, 94, 0.1)',
+                    '0 0 50px rgba(34, 197, 94, 0.6), 0 0 100px rgba(34, 197, 94, 0.3), inset 0 0 30px rgba(34, 197, 94, 0.2)',
+                    '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), inset 0 0 20px rgba(34, 197, 94, 0.1)'
+                  ]
+                }}
+                transition={{ 
+                  opacity: { duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] },
+                  scale: { duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] },
+                  boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                }}
                 whileHover={{ scale: 1.05 }}
               >
+                {/* Animated outer glow ring */}
+                <motion.div
+                  className="absolute inset-0 rounded-full pointer-events-none"
+                  style={{
+                    background: 'radial-gradient(circle, rgba(34, 197, 94, 0.4), transparent 70%)',
+                    filter: 'blur(20px)'
+                  }}
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 0.8, 0.5]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
                 <span className="relative flex h-3 w-3">
                   <motion.span 
                     className="status-indicator animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
@@ -178,7 +209,7 @@ const Hero: React.FC<HeroProps> = ({
             <motion.p 
               className="text-base sm:text-lg mb-6 sm:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed px-4 sm:px-0"
               style={{
-                color: '#FF8C42'
+                color: '#FFFFFF'
               }}
               whileHover={{
                 scale: 1.01,
