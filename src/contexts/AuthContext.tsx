@@ -4,14 +4,35 @@ import { User, Session } from '@supabase/supabase-js';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 
+export type UserRole = 'farmer' | 'logistics' | 'market_agent' | 'buyer' | 'admin';
+
+export interface UserProfile {
+  id: string;
+  email: string;
+  full_name: string;
+  role: UserRole;
+  organization?: string;
+  phone?: string;
+  address?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 type AuthContextType = {
   user: User | null;
   session: Session | null;
+  userProfile: UserProfile | null;
+  role: UserRole | null;
   isAdmin: boolean;
-  signUp: (email: string, password: string) => Promise<{ error: any }>;
+  isFarmer: boolean;
+  isLogistics: boolean;
+  isMarketAgent: boolean;
+  isBuyer: boolean;
+  signUp: (email: string, password: string, role: UserRole, fullName: string, organization?: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   loading: boolean;
+  updateProfile: (updates: Partial<UserProfile>) => Promise<{ error: any }>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,29 +40,29 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [role, setRole] = useState<UserRole | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  // Check if user has admin role
-  const checkAdminRole = async (userId: string) => {
+  // Fetch user profile and role
+  const fetchUserProfile = async (userId: string) => {
     try {
       const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId)
-        .eq('role', 'admin')
+        .from('user_profiles')
+        .select('*')
+        .eq('id', userId)
         .single();
       
       if (error) {
-        console.log('No admin role found for user');
-        return false;
+        console.log('No user profile found:', error);
+        return null;
       }
       
-      return !!data;
+      return data as UserProfile;
     } catch (error) {
-      console.error('Error checking admin role:', error);
-      return false;
+      console.error('Error fetching user profile:', error);
+      return null;
     }
   };
 
@@ -53,13 +74,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          // Defer admin role check to prevent deadlock
+          // Fetch user profile and role
           setTimeout(async () => {
-            const adminStatus = await checkAdminRole(session.user.id);
-            setIsAdmin(adminStatus);
+            const profile = await fetchUserProfile(session.user.id);
+            setUserProfile(profile);
+            setRole(profile?.role || null);
           }, 0);
         } else {
-          setIsAdmin(false);
+          setUserProfile(null);
+          setRole(null);
         }
         
         setLoading(false);
@@ -67,17 +90,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
         setTimeout(async () => {
-          const adminStatus = await checkAdminRole(session.user.id);
-          setIsAdmin(adminStatus);
+          const profile = await fetchUserProfile(session.user.id);
+          setUserProfile(profile);
+          setRole(profile?.role || null);
         }, 0);
       } else {
-        setIsAdmin(false);
+        setUserProfile(null);
+        setRole(null);
       }
       
       setLoading(false);
@@ -86,18 +111,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string, role: UserRole, fullName: string, organization?: string) => {
     const redirectUrl = `${window.location.origin}/`;
     
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: redirectUrl
+        emailRedirectTo: redirectUrl,
+        data: {
+          role,
+          full_name: fullName,
+          organization
+        }
       }
     });
     
-    if (!error) {
+    if (!error && data.user) {
+      // Create user profile
+      const { error: profileError } = await supabase
+        .from('user_profiles')
+        .insert({
+          id: data.user.id,
+          email,
+          full_name: fullName,
+          role,
+          organization,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        });
+      
+      if (profileError) {
+        console.error('Error creating user profile:', profileError);
+      }
+      
       toast({
         title: "Account created successfully",
         description: "Please check your email to verify your account",
@@ -105,7 +152,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       toast({
         title: "Sign up failed",
-        description: error.message,
+        description: error?.message || "Failed to create account",
         variant: "destructive",
       });
     }
@@ -139,6 +186,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { error } = await supabase.auth.signOut();
     
     if (!error) {
+      setUserProfile(null);
+      setRole(null);
       toast({
         title: "Logged out",
         description: "You have been logged out successfully",
@@ -146,14 +195,56 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const updateProfile = async (updates: Partial<UserProfile>) => {
+    if (!user) return { error: new Error('No user logged in') };
+    
+    const { error } = await supabase
+      .from('user_profiles')
+      .update({
+        ...updates,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', user.id);
+    
+    if (!error) {
+      setUserProfile(prev => prev ? { ...prev, ...updates } : null);
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully",
+      });
+    } else {
+      toast({
+        title: "Update failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+    
+    return { error };
+  };
+
+  // Computed properties for role checking
+  const isAdmin = role === 'admin';
+  const isFarmer = role === 'farmer';
+  const isLogistics = role === 'logistics';
+  const isMarketAgent = role === 'market_agent';
+  const isBuyer = role === 'buyer';
+
   const value = {
     user,
     session,
+    userProfile,
+    role,
     isAdmin,
+    isFarmer,
+    isLogistics,
+    isMarketAgent,
+    isBuyer,
     signUp,
     signIn,
     signOut,
     loading,
+    updateProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
