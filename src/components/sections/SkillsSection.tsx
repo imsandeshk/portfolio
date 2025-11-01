@@ -195,18 +195,18 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               key={skill.id}
               variants={skillVariants}
               whileHover="hover"
-              className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative badge-3d"
+              className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
                 borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
                 transformStyle: 'preserve-3d'
               }}
             >
-              <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain" />
-              {skill.name}
+              <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain relative z-10" />
+              <span className="relative z-10">{skill.name}</span>
               {/* Shine effect overlay */}
               <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
                 initial={false}
               >
                 <motion.div
@@ -230,7 +230,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             <motion.div
               variants={skillVariants}
               whileHover="hover"
-              className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer badge-3d"
+              className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
                 borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
@@ -238,11 +238,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               }}
               onClick={() => setShowMore(true)}
             >
-              <span title="More" className="w-6 h-6 flex items-center justify-center">⭐</span>
-              more...
+              <span title="More" className="w-6 h-6 flex items-center justify-center relative z-10">⭐</span>
+              <span className="relative z-10">more...</span>
               {/* Shine effect overlay */}
               <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
                 initial={false}
               >
                 <motion.div
@@ -277,18 +277,18 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
                   key={skill.id}
                   variants={skillVariants}
                   whileHover="hover"
-                  className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative badge-3d"
+                  className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
                   style={{
                     backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
                     borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  {softSkillIcons[name]}
-                  {skill.name}
+                  <span className="relative z-10">{softSkillIcons[name]}</span>
+                  <span className="relative z-10">{skill.name}</span>
                   {/* Shine effect overlay */}
                   <motion.div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
                     initial={false}
                   >
                     <motion.div

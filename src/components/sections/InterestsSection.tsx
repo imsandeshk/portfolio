@@ -97,19 +97,19 @@ const InterestsSection: React.FC = () => {
                       } 
                     }}
                     style={{
-                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)', // Dark Purple
-                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)' // Secondary Purple
+                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
+                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
                     }}
                   >
                     <motion.div 
-                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
+                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
                       <span style={{ color: isDark ? interest.color : '#fff' }}>
                         <interest.icon size={16} />
                       </span>
                     </motion.div>
-                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white">
+                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
                       {interest.name}
                     </span>
                   </motion.div>
@@ -139,19 +139,19 @@ const InterestsSection: React.FC = () => {
                       } 
                     }}
                     style={{
-                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)', // Dark Purple
-                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)' // Secondary Purple
+                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
+                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
                     }}
                   >
                     <div 
-                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full" 
+                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
                       style={{ backgroundColor: `${interest.color}30` }}
                     >
                       <span style={{ color: isDark ? interest.color : '#fff' }}>
                         <interest.icon size={16} />
                       </span>
                     </div>
-                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white">
+                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
                       {interest.name}
                     </span>
                   </motion.div>

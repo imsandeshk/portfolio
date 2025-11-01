@@ -251,6 +251,50 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
   
+  /* 3D Badge/Pill styles (Skills & Interests) */
+  .badge-3d, .skill-pill-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(255, 135, 66, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.15),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+  }
+  
+  .badge-3d::before, .skill-pill-3d::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.2), transparent 60%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  .badge-3d::after, .skill-pill-3d::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.3), transparent 60%);
+    pointer-events: none;
+  }
+  
+  .badge-3d:hover, .skill-pill-3d:hover {
+    transform: translateY(-4px) translateZ(20px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5),
+                0 0 50px rgba(255, 135, 66, 0.4),
+                inset 0 2px 6px rgba(255, 255, 255, 0.2),
+                inset 0 -2px 6px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 135, 66, 0.4);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+  }
+  
   /* Text gradient (iOS style) */
   .text-gradient-ios {
     background: linear-gradient(135deg, #FFFFFF, #A0A0A0);
