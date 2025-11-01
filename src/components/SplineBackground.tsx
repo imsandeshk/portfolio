@@ -7,31 +7,23 @@ import { memo } from 'react';
 const SplineBackground = memo(() => {
   const isMobile = useIsMobile();
 
-  const style: React.CSSProperties = isMobile
-    ? {
-        position: 'absolute',
-        top: '70%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '120vw',
-        height: '80vh',
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
-        willChange: 'transform',
-      }
-    : {
-        position: 'absolute',
-        top: '50%',
-        left: '35%',
-        transform: 'translate(-50%, -50%)',
-        width: '100vw',
-        height: '100vh',
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
-        willChange: 'transform',
-      };
+  // Hide on mobile, keep only glow effects
+  if (isMobile) {
+    return null;
+  }
+
+  const style: React.CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '100vw',
+    height: '100vh',
+    zIndex: 0,
+    pointerEvents: 'none',
+    overflow: 'hidden',
+    willChange: 'transform',
+  };
 
   return (
     <div className="spline-bg" style={style}>

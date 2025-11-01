@@ -39,7 +39,7 @@
     --popover: 220 14% 8%;
     --popover-foreground: 0 0% 95%;
     
-    --primary: 263 70% 60%;
+    --primary: 16 100% 63%;
     --primary-foreground: 0 0% 100%;
     
     --secondary: 220 14% 16%;
@@ -48,7 +48,7 @@
     --muted: 220 14% 16%;
     --muted-foreground: 0 0% 65%;
     
-    --accent: 263 70% 60%;
+    --accent: 16 100% 63%;
     --accent-foreground: 0 0% 100%;
     
     --destructive: 0 84% 60%;
@@ -56,13 +56,13 @@
     
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 263 70% 60%;
+    --ring: 16 100% 63%;
     
     --radius: 20px;
     
     /* iOS gradient accents */
     --gradient-ios-blue: linear-gradient(135deg, #007AFF, #00C6FF);
-    --gradient-ios-purple: linear-gradient(135deg, #9b87f5, #d946ef);
+    --gradient-ios-orange: linear-gradient(135deg, #FF8C42, #FF5733);
     --gradient-ios-green: linear-gradient(135deg, #34D399, #10B981);
   }
   
