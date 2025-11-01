@@ -29,7 +29,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
     <div className="flex justify-center mb-8 sm:mb-10 px-3 sm:px-2">
       <motion.div 
         className={`
-          p-1.5 rounded-3xl flex scrollbar-none
+          relative p-1.5 rounded-3xl flex scrollbar-none
           bg-white/5 backdrop-blur-xl
           border border-white/10
           shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
@@ -60,17 +60,12 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                 relative flex-1 px-3 sm:px-6 py-3 rounded-2xl
                 text-sm font-semibold
                 flex items-center justify-center gap-2
-                transition-all duration-300
+                transition-colors duration-300
                 ${isActive 
-                  ? 'text-white shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]' 
-                  : 'text-white/60 hover:text-white/90 hover:bg-white/5'
+                  ? 'text-white z-10' 
+                  : 'text-white/60 hover:text-white/90'
                 }
               `}
-              style={isActive ? {
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%)',
-                border: '1px solid rgba(255,255,255,0.15)',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)'
-              } : {}}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ 
@@ -87,12 +82,28 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                 scale: 0.98,
               }}
             >
+              {isActive && (
+                <motion.div
+                  layoutId="activeTab"
+                  className="absolute inset-0 rounded-2xl"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%)',
+                    border: '1px solid rgba(255,255,255,0.15)',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)'
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 380,
+                    damping: 30,
+                  }}
+                />
+              )}
               {!isMobile && tab.icon && (
-                <span className={`${isActive ? 'text-accent' : ''} flex items-center flex-shrink-0`}>
+                <span className={`${isActive ? 'text-accent' : ''} flex items-center flex-shrink-0 relative z-10`}>
                   {tab.icon}
                 </span>
               )}
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis relative z-10">
                 {tab.label}
               </span>
             </motion.button>
