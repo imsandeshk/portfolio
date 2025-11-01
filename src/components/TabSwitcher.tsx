@@ -34,7 +34,7 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
           border border-white/10
           shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
           ${isMobile 
-            ? 'w-full max-w-full gap-1.5 overflow-x-auto' 
+            ? 'w-full gap-1.5' 
             : 'w-full max-w-lg gap-2'
           }
         `}
@@ -57,8 +57,8 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`
-                relative flex-1 min-w-[100px] sm:min-w-[120px] px-5 sm:px-6 py-3 rounded-2xl
-                text-sm font-semibold whitespace-nowrap
+                relative flex-1 px-3 sm:px-6 py-3 rounded-2xl
+                text-sm font-semibold
                 flex items-center justify-center gap-2
                 transition-all duration-300
                 ${isActive 
@@ -87,12 +87,12 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
                 scale: 0.98,
               }}
             >
-              {tab.icon && (
+              {!isMobile && tab.icon && (
                 <span className={`${isActive ? 'text-accent' : ''} flex items-center flex-shrink-0`}>
                   {tab.icon}
                 </span>
               )}
-              <span className="truncate">
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis">
                 {tab.label}
               </span>
             </motion.button>
