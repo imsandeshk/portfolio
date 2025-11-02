@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import SectionHeading from "@/components/SectionHeading";
 import { motion } from "framer-motion";
 import { 
@@ -27,6 +27,74 @@ interface Interest {
 const InterestsSection: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  
+  const scrollRef1 = useRef<HTMLDivElement>(null);
+  const scrollRef2 = useRef<HTMLDivElement>(null);
+  const [isDragging1, setIsDragging1] = useState(false);
+  const [isDragging2, setIsDragging2] = useState(false);
+  const [startX1, setStartX1] = useState(0);
+  const [startX2, setStartX2] = useState(0);
+  const [scrollLeft1, setScrollLeft1] = useState(0);
+  const [scrollLeft2, setScrollLeft2] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent, row: number) => {
+    const scrollRef = row === 1 ? scrollRef1 : scrollRef2;
+    const setIsDragging = row === 1 ? setIsDragging1 : setIsDragging2;
+    const setStartX = row === 1 ? setStartX1 : setStartX2;
+    const setScrollLeft = row === 1 ? setScrollLeft1 : setScrollLeft2;
+    
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent, row: number) => {
+    const scrollRef = row === 1 ? scrollRef1 : scrollRef2;
+    const setIsDragging = row === 1 ? setIsDragging1 : setIsDragging2;
+    const setStartX = row === 1 ? setStartX1 : setStartX2;
+    const setScrollLeft = row === 1 ? setScrollLeft1 : setScrollLeft2;
+    
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent, row: number) => {
+    const isDragging = row === 1 ? isDragging1 : isDragging2;
+    const scrollRef = row === 1 ? scrollRef1 : scrollRef2;
+    const startX = row === 1 ? startX1 : startX2;
+    const scrollLeft = row === 1 ? scrollLeft1 : scrollLeft2;
+    
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent, row: number) => {
+    const isDragging = row === 1 ? isDragging1 : isDragging2;
+    const scrollRef = row === 1 ? scrollRef1 : scrollRef2;
+    const startX = row === 1 ? startX1 : startX2;
+    const scrollLeft = row === 1 ? scrollLeft1 : scrollLeft2;
+    
+    if (!isDragging || !scrollRef.current) return;
+    const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = (row: number) => {
+    const setIsDragging = row === 1 ? setIsDragging1 : setIsDragging2;
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = (row: number) => {
+    const setIsDragging = row === 1 ? setIsDragging1 : setIsDragging2;
+    setIsDragging(false);
+  };
 
   // First row of interests
   const interestsRow1: Interest[] = [
@@ -79,10 +147,21 @@ const InterestsSection: React.FC = () => {
           {/* First row - scrolling left */}
           <div className="relative overflow-hidden">
             {/* Blur/fade effect at the edges */}
-            <div className="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-10"></div>
+            <div className="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
             
-            <div className="infinite-scroll-left py-2">
+            <div 
+              ref={scrollRef1}
+              className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging1 ? 'infinite-scroll-left' : ''}`}
+              onMouseDown={(e) => handleMouseDown(e, 1)}
+              onMouseMove={(e) => handleMouseMove(e, 1)}
+              onMouseUp={() => handleMouseUp(1)}
+              onMouseLeave={() => handleMouseLeave(1)}
+              onTouchStart={(e) => handleTouchStart(e, 1)}
+              onTouchMove={(e) => handleTouchMove(e, 1)}
+              onTouchEnd={() => handleMouseUp(1)}
+              style={{ userSelect: 'none' }}
+            >
               <div className="flex gap-1 md:gap-4">
                 {interestsRow1.map((interest) => (
                   <motion.div
@@ -121,10 +200,21 @@ const InterestsSection: React.FC = () => {
           {/* Second row - scrolling right */}
           <div className="relative overflow-hidden">
             {/* Blur/fade effect at the edges */}
-            <div className="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-10"></div>
+            <div className="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
             
-            <div className="infinite-scroll-right py-2">
+            <div 
+              ref={scrollRef2}
+              className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging2 ? 'infinite-scroll-right' : ''}`}
+              onMouseDown={(e) => handleMouseDown(e, 2)}
+              onMouseMove={(e) => handleMouseMove(e, 2)}
+              onMouseUp={() => handleMouseUp(2)}
+              onMouseLeave={() => handleMouseLeave(2)}
+              onTouchStart={(e) => handleTouchStart(e, 2)}
+              onTouchMove={(e) => handleTouchMove(e, 2)}
+              onTouchEnd={() => handleMouseUp(2)}
+              style={{ userSelect: 'none' }}
+            >
               <div className="flex gap-1 md:gap-4">
                 {interestsRow2.map((interest) => (
                   <motion.div
@@ -162,18 +252,19 @@ const InterestsSection: React.FC = () => {
         </div>
       </div>
       
-      {/* Fixed: Removed 'jsx' attribute from style tag */}
       <style>
         {`
-        .infinite-scroll-left {
-          overflow: hidden;
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        
         .infinite-scroll-left > div {
           animation: infiniteScrollLeft 40s linear infinite;
           width: fit-content;
-        }
-        .infinite-scroll-right {
-          overflow: hidden;
         }
         .infinite-scroll-right > div {
           animation: infiniteScrollRight 40s linear infinite;
