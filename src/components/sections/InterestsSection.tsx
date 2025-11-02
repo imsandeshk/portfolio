@@ -70,7 +70,7 @@ const InterestsSection: React.FC = () => {
     if (!isDragging || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
+    const walk = (x - startX) * 1.2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -82,7 +82,7 @@ const InterestsSection: React.FC = () => {
     
     if (!isDragging || !scrollRef.current) return;
     const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
+    const walk = (x - startX) * 1.2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -160,7 +160,7 @@ const InterestsSection: React.FC = () => {
               onTouchStart={(e) => handleTouchStart(e, 1)}
               onTouchMove={(e) => handleTouchMove(e, 1)}
               onTouchEnd={() => handleMouseUp(1)}
-              style={{ userSelect: 'none' }}
+              style={{ userSelect: 'none', scrollBehavior: 'auto' }}
             >
               <div className="flex gap-1 md:gap-4">
                 {interestsRow1.map((interest) => (
@@ -213,7 +213,7 @@ const InterestsSection: React.FC = () => {
               onTouchStart={(e) => handleTouchStart(e, 2)}
               onTouchMove={(e) => handleTouchMove(e, 2)}
               onTouchEnd={() => handleMouseUp(2)}
-              style={{ userSelect: 'none' }}
+              style={{ userSelect: 'none', scrollBehavior: 'auto' }}
             >
               <div className="flex gap-1 md:gap-4">
                 {interestsRow2.map((interest) => (
