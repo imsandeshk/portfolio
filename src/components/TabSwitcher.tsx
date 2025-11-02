@@ -31,21 +31,37 @@ const TabSwitcher: React.FC<TabSwitcherProps> = ({
         className={`
           relative p-1.5 rounded-3xl flex scrollbar-none
           bg-white/5 backdrop-blur-xl
-          border border-white/10
-          shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]
+          border-2 border-white/20
           ${isMobile 
             ? 'w-full gap-1.5' 
             : 'w-full max-w-lg gap-2'
           }
         `}
         style={{
-          boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1), 0 0 0 1px rgba(0,0,0,0.3)'
+          transformStyle: 'preserve-3d',
+          perspective: '1000px',
+          boxShadow: `
+            0 12px 28px rgba(0, 0, 0, 0.6),
+            0 6px 16px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(255, 135, 66, 0.15),
+            inset 0 2px 4px rgba(255, 255, 255, 0.15),
+            inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(0, 0, 0, 0.5)
+          `
         }}
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
         whileHover={{
           scale: isMobile ? 1 : 1.01,
+          boxShadow: `
+            0 16px 36px rgba(0, 0, 0, 0.7),
+            0 8px 20px rgba(0, 0, 0, 0.5),
+            0 0 60px rgba(255, 135, 66, 0.25),
+            inset 0 2px 6px rgba(255, 255, 255, 0.2),
+            inset 0 -2px 6px rgba(0, 0, 0, 0.4),
+            0 0 0 1px rgba(0, 0, 0, 0.5)
+          `,
           transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
         }}
       >
