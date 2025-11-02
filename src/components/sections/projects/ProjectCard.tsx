@@ -31,7 +31,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <motion.div
-      className="relative group glass-card rounded-xl overflow-hidden hover-glow border border-white/10 bg-black/30 backdrop-blur-sm card-3d cursor-pointer"
+      className="relative group rounded-3xl overflow-hidden cursor-pointer border-2 border-white/20 bg-black/40 backdrop-blur-xl"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -39,7 +39,29 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={onClick}
-      style={{ transformStyle: 'preserve-3d' }}
+      style={{ 
+        transformStyle: 'preserve-3d',
+        perspective: '1000px',
+        boxShadow: `
+          0 12px 28px rgba(0, 0, 0, 0.6),
+          0 6px 16px rgba(0, 0, 0, 0.4),
+          0 0 40px rgba(255, 135, 66, 0.15),
+          inset 0 2px 4px rgba(255, 255, 255, 0.1),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3)
+        `
+      }}
+      whileHover={{
+        y: -8,
+        scale: 1.02,
+        boxShadow: `
+          0 20px 40px rgba(0, 0, 0, 0.7),
+          0 10px 24px rgba(0, 0, 0, 0.5),
+          0 0 60px rgba(255, 135, 66, 0.3),
+          inset 0 2px 6px rgba(255, 255, 255, 0.15),
+          inset 0 -2px 6px rgba(0, 0, 0, 0.4)
+        `,
+        transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
+      }}
     >
       {/* Image */}
       <div className="relative h-40 sm:h-48 md:h-56 overflow-hidden">

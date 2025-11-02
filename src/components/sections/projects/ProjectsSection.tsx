@@ -146,12 +146,35 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               {featuredProjects.map((project) => (
                 <motion.div
                   key={project.id}
-                  className="relative group overflow-hidden rounded-xl bg-black/20 backdrop-blur-lg hover-glow border border-white/10"
+                  className="relative group overflow-hidden rounded-3xl bg-black/40 backdrop-blur-xl border-2 border-white/20 cursor-pointer"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   viewport={{ once: true, margin: "-100px" }}
                   onClick={() => handleProjectClick(project)}
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                    perspective: '1000px',
+                    boxShadow: `
+                      0 12px 28px rgba(0, 0, 0, 0.6),
+                      0 6px 16px rgba(0, 0, 0, 0.4),
+                      0 0 40px rgba(255, 135, 66, 0.15),
+                      inset 0 2px 4px rgba(255, 255, 255, 0.1),
+                      inset 0 -2px 4px rgba(0, 0, 0, 0.3)
+                    `
+                  }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.01,
+                    boxShadow: `
+                      0 20px 40px rgba(0, 0, 0, 0.7),
+                      0 10px 24px rgba(0, 0, 0, 0.5),
+                      0 0 60px rgba(255, 135, 66, 0.3),
+                      inset 0 2px 6px rgba(255, 255, 255, 0.15),
+                      inset 0 -2px 6px rgba(0, 0, 0, 0.4)
+                    `,
+                    transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
+                  }}
                 >
                   <div className="relative h-[300px] md:h-[400px] overflow-hidden">
                     <motion.div 
@@ -312,9 +335,31 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               {otherProjects.map((project) => (
                 <motion.div 
                   key={project.id}
-                  className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:border-white/30"
+                  className="bg-black/40 backdrop-blur-xl border-2 border-white/20 rounded-3xl overflow-hidden cursor-pointer"
                   onClick={() => handleProjectClick(project)}
-                  whileHover={{ y: -4 }}
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                    perspective: '1000px',
+                    boxShadow: `
+                      0 8px 20px rgba(0, 0, 0, 0.5),
+                      0 4px 12px rgba(0, 0, 0, 0.3),
+                      0 0 30px rgba(255, 135, 66, 0.12),
+                      inset 0 1px 3px rgba(255, 255, 255, 0.1),
+                      inset 0 -1px 3px rgba(0, 0, 0, 0.25)
+                    `
+                  }}
+                  whileHover={{ 
+                    y: -6,
+                    scale: 1.01,
+                    boxShadow: `
+                      0 12px 28px rgba(0, 0, 0, 0.6),
+                      0 6px 16px rgba(0, 0, 0, 0.4),
+                      0 0 50px rgba(255, 135, 66, 0.25),
+                      inset 0 2px 4px rgba(255, 255, 255, 0.12),
+                      inset 0 -2px 4px rgba(0, 0, 0, 0.3)
+                    `,
+                    transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
+                  }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="relative h-[200px] overflow-hidden">

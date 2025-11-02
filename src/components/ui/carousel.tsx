@@ -204,12 +204,22 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute  h-8 w-8 rounded-full",
+        "absolute h-8 w-8 rounded-full bg-black/40 backdrop-blur-xl border-2 border-white/20",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
+      style={{
+        transformStyle: 'preserve-3d',
+        boxShadow: `
+          0 6px 16px rgba(0, 0, 0, 0.5),
+          0 3px 8px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(255, 135, 66, 0.1),
+          inset 0 1px 2px rgba(255, 255, 255, 0.1),
+          inset 0 -1px 2px rgba(0, 0, 0, 0.25)
+        `
+      }}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
@@ -233,12 +243,22 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full",
+        "absolute h-8 w-8 rounded-full bg-black/40 backdrop-blur-xl border-2 border-white/20",
         orientation === "horizontal"
           ? "-right-12 top-1/2 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
+      style={{
+        transformStyle: 'preserve-3d',
+        boxShadow: `
+          0 6px 16px rgba(0, 0, 0, 0.5),
+          0 3px 8px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(255, 135, 66, 0.1),
+          inset 0 1px 2px rgba(255, 255, 255, 0.1),
+          inset 0 -1px 2px rgba(0, 0, 0, 0.25)
+        `
+      }}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
