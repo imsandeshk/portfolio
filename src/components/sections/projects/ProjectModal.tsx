@@ -76,7 +76,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-2xl overflow-hidden bg-card/95 backdrop-blur-xl border border-white/10 p-0 rounded-xl">
+      <DialogContent className="sm:max-w-2xl overflow-hidden bg-card/95 backdrop-blur-xl border border-white/10 p-0 rounded-xl [&>div]:scrollbar-hide max-h-[90vh]">
         <motion.div
           variants={cardVariants}
           initial="hidden"
