@@ -209,9 +209,6 @@ const EducationSection: React.FC<EducationSectionProps> = ({
                     <div className="mb-3 text-sm text-muted-foreground">
                       {formatDate(edu.startDate)} - {edu.endDate === "Present" ? "Present" : formatDate(edu.endDate)}
                     </div>
-                    <p className="text-muted-foreground">
-                      {edu.description}
-                    </p>
                   </div>
                   
                   {isAdmin && onUpdateEducation && onDeleteEducation && (
