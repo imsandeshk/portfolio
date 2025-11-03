@@ -70,7 +70,7 @@ const InterestsSection: React.FC = () => {
     if (!isDragging || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
+    const walk = (x - startX) * 0.8;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -82,7 +82,7 @@ const InterestsSection: React.FC = () => {
     
     if (!isDragging || !scrollRef.current) return;
     const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.2;
+    const walk = (x - startX) * 0.8;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
