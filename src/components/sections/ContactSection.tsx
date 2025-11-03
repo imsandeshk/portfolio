@@ -328,8 +328,10 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                   <Input
                     id="email"
                     name="reply_to"
+                    type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </motion.div>
               </div>
