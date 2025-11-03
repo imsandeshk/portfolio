@@ -97,7 +97,7 @@ const InterestsSection: React.FC = () => {
   };
 
   // First row of interests
-  const interestsRow1: Interest[] = [
+  const baseInterestsRow1: Interest[] = [
     { id: "web-dev", name: "Web Development", icon: Code2, color: "#9b87f5" },
     { id: "software-dev", name: "Software Development", icon: Monitor, color: "#7E69AB" },
     { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#6E59A5" },
@@ -106,19 +106,16 @@ const InterestsSection: React.FC = () => {
     { id: "ml", name: "Machine Learning", icon: Infinity, color: "#6E59A5" },
     { id: "fullstack", name: "Full Stack", icon: Package, color: "#9b87f5" },
     { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#7E69AB" },
-    // Duplicate interests for seamless scrolling
-    { id: "web-dev-2", name: "Web Development", icon: Code2, color: "#9b87f5" },
-    { id: "software-dev-2", name: "Software Development", icon: Monitor, color: "#7E69AB" },
-    { id: "data-viz-2", name: "Data Visualization", icon: BarChart, color: "#6E59A5" },
-    { id: "game-dev-2", name: "Game Development", icon: Gamepad, color: "#9b87f5" },
-    { id: "ai-2", name: "Artificial Intelligence", icon: Brain, color: "#7E69AB" },
-    { id: "ml-2", name: "Machine Learning", icon: Infinity, color: "#6E59A5" },
-    { id: "fullstack-2", name: "Full Stack", icon: Package, color: "#9b87f5" },
-    { id: "beta-testing-2", name: "Beta Testing", icon: TestTube, color: "#7E69AB" },
   ];
 
+  // Create array with 3 repetitions for seamless infinite scroll
+  const interestsRow1: Interest[] = Array(3).fill(baseInterestsRow1).flat().map((interest, index) => ({
+    ...interest,
+    id: `${interest.id}-${index}`
+  }));
+
   // Second row of interests
-  const interestsRow2: Interest[] = [
+  const baseInterestsRow2: Interest[] = [
     { id: "databases", name: "Databases", icon: Database, color: "#9b87f5" },
     { id: "cybersecurity", name: "Cybersecurity", icon: Key, color: "#7E69AB" },
     { id: "cloud-computing", name: "Cloud Computing", icon: Package, color: "#6E59A5" },
@@ -127,16 +124,13 @@ const InterestsSection: React.FC = () => {
     { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#6E59A5" },
     { id: "blockchain", name: "Blockchain", icon: Brain, color: "#9b87f5" },
     { id: "api-dev", name: "API Development", icon: Package, color: "#7E69AB" },
-    // Duplicate interests for seamless scrolling
-    { id: "databases-2", name: "Databases", icon: Database, color: "#9b87f5" },
-    { id: "cybersecurity-2", name: "Cybersecurity", icon: Key, color: "#7E69AB" },
-    { id: "cloud-computing-2", name: "Cloud Computing", icon: Package, color: "#6E59A5" },
-    { id: "mobile-dev-2", name: "Mobile Development", icon: Monitor, color: "#9b87f5" },
-    { id: "devops-2", name: "DevOps", icon: TestTube, color: "#7E69AB" },
-    { id: "ui-design-2", name: "UI/UX Design", icon: Code2, color: "#6E59A5" },
-    { id: "blockchain-2", name: "Blockchain", icon: Brain, color: "#9b87f5" },
-    { id: "api-dev-2", name: "API Development", icon: Package, color: "#7E69AB" },
   ];
+
+  // Create array with 3 repetitions for seamless infinite scroll
+  const interestsRow2: Interest[] = Array(3).fill(baseInterestsRow2).flat().map((interest, index) => ({
+    ...interest,
+    id: `${interest.id}-${index}`
+  }));
 
   return (
     <section id="interests" className="py-16">
@@ -276,12 +270,12 @@ const InterestsSection: React.FC = () => {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-90px * 8 - 8px * 8));
+            transform: translateX(calc(-90px * 24 - 8px * 24));
           }
         }
         @keyframes infiniteScrollRight {
           0% {
-            transform: translateX(calc(-90px * 8 - 8px * 8));
+            transform: translateX(calc(-90px * 24 - 8px * 24));
           }
           100% {
             transform: translateX(0);
@@ -294,12 +288,12 @@ const InterestsSection: React.FC = () => {
               transform: translateX(0);
             }
             100% {
-              transform: translateX(calc(-180px * 8 - 16px * 8));
+              transform: translateX(calc(-180px * 24 - 16px * 24));
             }
           }
           @keyframes infiniteScrollRight {
             0% {
-              transform: translateX(calc(-180px * 8 - 16px * 8));
+              transform: translateX(calc(-180px * 24 - 16px * 24));
             }
             100% {
               transform: translateX(0);
