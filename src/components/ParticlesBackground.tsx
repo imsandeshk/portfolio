@@ -29,14 +29,16 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: theme === "dark" ? "#ffffff" : "#7E69AB", // Secondary Purple for light theme
+            value: theme === "dark" 
+              ? ["#ffffff", "#ff4444", "#4488ff"] // White, Red, Blue for dark theme
+              : ["#7E69AB", "#ff4444", "#4488ff"], // Purple, Red, Blue for light theme
           },
           links: {
-            color: theme === "dark" ? "#ffffff" : "#6E59A5", // Tertiary Purple for light theme
+            color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: theme === "dark" ? 0.25 : 0.4,
-            width: theme === "dark" ? 1 : 1,
+            opacity: theme === "dark" ? 0.3 : 0.4,
+            width: 1,
           },
           collisions: {
             enable: true,
