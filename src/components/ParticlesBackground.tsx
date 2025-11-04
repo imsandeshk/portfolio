@@ -29,14 +29,30 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: theme === "dark" ? "#ffffff" : "#7E69AB", // Secondary Purple for light theme
+            value: [
+              "#ffffff", // White - most common
+              "#ffffff", 
+              "#ffffff",
+              "#4A90E2", // Blue
+              "#E24A4A", // Red
+              "#7E69AB", // Purple - rare
+            ],
           },
           links: {
-            color: theme === "dark" ? "#ffffff" : "#6E59A5", // Tertiary Purple for light theme
+            color: "#ffffff",
             distance: 150,
             enable: true,
-            opacity: theme === "dark" ? 0.25 : 0.4,
-            width: theme === "dark" ? 1 : 1,
+            opacity: theme === "dark" ? 0.3 : 0.4,
+            width: 1.5,
+            triangles: {
+              enable: true,
+              opacity: 0.05,
+            },
+            shadow: {
+              enable: true,
+              color: "#ffffff",
+              blur: 20,
+            },
           },
           collisions: {
             enable: true,
@@ -50,6 +66,14 @@ const ParticlesBackground: React.FC = () => {
             random: true,
             speed: theme === "dark" ? 0.8 : 0.6,
             straight: false,
+            attract: {
+              enable: true,
+              distance: 200,
+              rotate: {
+                x: 600,
+                y: 600
+              }
+            }
           },
           number: {
             density: {
@@ -61,13 +85,14 @@ const ParticlesBackground: React.FC = () => {
           },
           opacity: {
             value: {
-              min: theme === "dark" ? 0.15 : 0.2,
-              max: theme === "dark" ? 0.4 : 0.5,
+              min: theme === "dark" ? 0.2 : 0.25,
+              max: theme === "dark" ? 0.6 : 0.7,
             },
             animation: {
               enable: true,
-              speed: 0.8,
-              minimumValue: theme === "dark" ? 0.1 : 0.1,
+              speed: 1,
+              minimumValue: theme === "dark" ? 0.1 : 0.15,
+              sync: false,
             },
           },
           shape: {
@@ -75,15 +100,36 @@ const ParticlesBackground: React.FC = () => {
           },
           size: {
             value: {
-              min: 0.8,
-              max: theme === "dark" ? 2.2 : 1.8,
+              min: 1,
+              max: theme === "dark" ? 2.5 : 2,
             },
+            animation: {
+              enable: true,
+              speed: 2,
+              minimumValue: 0.8,
+              sync: false,
+            }
+          },
+          shadow: {
+            enable: true,
+            color: {
+              value: [
+                "#ffffff",
+                "#4A90E2",
+                "#E24A4A",
+              ]
+            },
+            blur: 15,
+            offset: {
+              x: 0,
+              y: 0
+            }
           },
           twinkle: {
             particles: {
               enable: true,
-              frequency: 0.1,
-              opacity: theme === "dark" ? 0.8 : 0.7,
+              frequency: 0.08,
+              opacity: theme === "dark" ? 0.9 : 0.8,
             },
           },
         },
