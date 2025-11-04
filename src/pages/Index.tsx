@@ -201,7 +201,9 @@ const Index = () => {
               transition={{ duration: 1.2, ease: "easeOut" }}
               className="w-full"
             >
-              <ParticlesBackground />
+              <div className="fixed inset-0 z-0 pointer-events-none">
+                <ParticlesBackground />
+              </div>
 
               <motion.div
                 initial={isInitialLoad ? "hidden" : false}

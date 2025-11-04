@@ -16,11 +16,12 @@ const ParticlesBackground: React.FC = () => {
     <Particles
       id="tsparticles"
       init={particlesInit}
+      className="absolute inset-0"
       options={{
-        fpsLimit: 60,
+        fpsLimit: 120,
         fullScreen: {
-          enable: true,
-          zIndex: -1,
+          enable: false,
+          zIndex: 0,
         },
         background: {
           color: {
@@ -40,13 +41,18 @@ const ParticlesBackground: React.FC = () => {
           },
           links: {
             color: "#ffffff",
-            distance: 150,
+            distance: 160,
             enable: true,
-            opacity: theme === "dark" ? 0.2 : 0.3,
-            width: 1,
+            opacity: theme === "dark" ? 0.25 : 0.35,
+            width: 1.2,
             triangles: {
               enable: true,
-              opacity: 0.02,
+              opacity: 0.05,
+            },
+            shadow: {
+              enable: true,
+              blur: 25,
+              color: "#ffffff",
             },
           },
           collisions: {
@@ -72,13 +78,13 @@ const ParticlesBackground: React.FC = () => {
           },
           opacity: {
             value: {
-              min: theme === "dark" ? 0.15 : 0.2,
-              max: theme === "dark" ? 0.5 : 0.6,
+              min: theme === "dark" ? 0.2 : 0.25,
+              max: theme === "dark" ? 0.6 : 0.7,
             },
             animation: {
               enable: true,
-              speed: 0.8,
-              minimumValue: theme === "dark" ? 0.1 : 0.15,
+              speed: 1.2,
+              minimumValue: theme === "dark" ? 0.15 : 0.2,
               sync: false,
             },
           },
@@ -87,13 +93,13 @@ const ParticlesBackground: React.FC = () => {
           },
           size: {
             value: {
-              min: 0.8,
-              max: theme === "dark" ? 2 : 1.8,
+              min: 1.2,
+              max: theme === "dark" ? 2.5 : 2.2,
             },
             animation: {
               enable: true,
-              speed: 1.5,
-              minimumValue: 0.5,
+              speed: 2,
+              minimumValue: 0.8,
               sync: false,
             }
           },
