@@ -16,12 +16,11 @@ const ParticlesBackground: React.FC = () => {
     <Particles
       id="tsparticles"
       init={particlesInit}
-      className="absolute inset-0"
       options={{
-        fpsLimit: 120,
+        fpsLimit: 60,
         fullScreen: {
-          enable: false,
-          zIndex: 0,
+          enable: true,
+          zIndex: -1,
         },
         background: {
           color: {
@@ -30,30 +29,14 @@ const ParticlesBackground: React.FC = () => {
         },
         particles: {
           color: {
-            value: [
-              "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
-              "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
-              "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
-              "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff",
-              "#4A90E2", "#4A90E2", "#4A90E2", "#4A90E2", "#4A90E2", // Blue - 5 particles
-              "#E24A4A", "#E24A4A", "#E24A4A", "#E24A4A", "#E24A4A", // Red - 5 particles
-            ],
+            value: theme === "dark" ? "#ffffff" : "#7E69AB", // Secondary Purple for light theme
           },
           links: {
-            color: "#ffffff",
-            distance: 160,
+            color: theme === "dark" ? "#ffffff" : "#6E59A5", // Tertiary Purple for light theme
+            distance: 150,
             enable: true,
-            opacity: theme === "dark" ? 0.25 : 0.35,
-            width: 1.2,
-            triangles: {
-              enable: true,
-              opacity: 0.05,
-            },
-            shadow: {
-              enable: true,
-              blur: 25,
-              color: "#ffffff",
-            },
+            opacity: theme === "dark" ? 0.25 : 0.4,
+            width: theme === "dark" ? 1 : 1,
           },
           collisions: {
             enable: true,
@@ -65,7 +48,7 @@ const ParticlesBackground: React.FC = () => {
               default: "bounce",
             },
             random: true,
-            speed: theme === "dark" ? 0.6 : 0.5,
+            speed: theme === "dark" ? 0.8 : 0.6,
             straight: false,
           },
           number: {
@@ -73,19 +56,18 @@ const ParticlesBackground: React.FC = () => {
               enable: true,
               area: 1600,
             },
-            value: theme === "dark" ? 60 : 45,
-            limit: theme === "dark" ? 70 : 50,
+            value: theme === "dark" ? 70 : 50,
+            limit: theme === "dark" ? 90 : 60,
           },
           opacity: {
             value: {
-              min: theme === "dark" ? 0.2 : 0.25,
-              max: theme === "dark" ? 0.6 : 0.7,
+              min: theme === "dark" ? 0.15 : 0.2,
+              max: theme === "dark" ? 0.4 : 0.5,
             },
             animation: {
               enable: true,
-              speed: 1.2,
-              minimumValue: theme === "dark" ? 0.15 : 0.2,
-              sync: false,
+              speed: 0.8,
+              minimumValue: theme === "dark" ? 0.1 : 0.1,
             },
           },
           shape: {
@@ -93,21 +75,15 @@ const ParticlesBackground: React.FC = () => {
           },
           size: {
             value: {
-              min: 1.2,
-              max: theme === "dark" ? 2.5 : 2.2,
+              min: 0.8,
+              max: theme === "dark" ? 2.2 : 1.8,
             },
-            animation: {
-              enable: true,
-              speed: 2,
-              minimumValue: 0.8,
-              sync: false,
-            }
           },
           twinkle: {
             particles: {
               enable: true,
-              frequency: 0.05,
-              opacity: theme === "dark" ? 0.7 : 0.6,
+              frequency: 0.1,
+              opacity: theme === "dark" ? 0.8 : 0.7,
             },
           },
         },
@@ -132,17 +108,13 @@ const ParticlesBackground: React.FC = () => {
             grab: {
               distance: 180,
               links: {
-                opacity: theme === "dark" ? 0.5 : 0.6,
-                color: "#ffffff",
+                opacity: theme === "dark" ? 0.6 : 0.7,
+                color: theme === "dark" ? "#ffffff" : "#7E69AB", // Secondary Purple for light theme
               }
             },
             push: {
-              quantity: 2,
-              particles: {
-                color: {
-                  value: "#ffffff", // Only white particles on click
-                }
-              }
+              quantity: 1,
+              limit: 5,    
             },
             repulse: {
               distance: 150,
