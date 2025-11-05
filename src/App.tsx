@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Resume from "./pages/Resume";
 import ChatbotFab from "@/components/ChatbotFab";
 import "@/lib/fontawesome"; // This runs only once!
+import SCMApp from "./scm/App";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
                   <AdminPanel />
                 </ProtectedRoute>
               } />
+              <Route path="/scm/*" element={<SCMApp />} />
               <Route path="/resume" element={<Resume />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
