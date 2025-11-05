@@ -7,7 +7,11 @@ import { useToast } from "@/components/ui/use-toast";
 type AuthContextType = {
   user: User | null;
   session: Session | null;
+  roles: string[];
   isAdmin: boolean;
+  hasRole: (role: string) => boolean;
+  refreshRoles: () => Promise<void>;
+  setDemoRoles: (roles: string[]) => void;
   signUp: (email: string, password: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
@@ -20,28 +24,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [roles, setRoles] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const DEMO_ROLES_KEY = 'scm.demo.roles';
 
-  // Check if user has admin role
-  const checkAdminRole = async (userId: string) => {
+  // Load all roles for the user from the backend
+  const fetchUserRoles = async (userId: string) => {
     try {
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
-        .eq('user_id', userId)
-        .eq('role', 'admin')
-        .single();
-      
+        .eq('user_id', userId);
+
       if (error) {
-        console.log('No admin role found for user');
-        return false;
+        console.log('No roles found for user or error fetching roles');
+        // Fall back to demo roles if available
+        const demoStr = localStorage.getItem(DEMO_ROLES_KEY);
+        return demoStr ? (JSON.parse(demoStr) as string[]) : ([] as string[]);
       }
-      
-      return !!data;
+
+      const roleList = (data || []).map((r: { role: string }) => r.role);
+      return roleList as string[];
     } catch (error) {
-      console.error('Error checking admin role:', error);
-      return false;
+      console.error('Error fetching user roles:', error);
+      const demoStr = localStorage.getItem(DEMO_ROLES_KEY);
+      return demoStr ? (JSON.parse(demoStr) as string[]) : ([] as string[]);
     }
   };
 
@@ -55,11 +63,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (session?.user) {
           // Defer admin role check to prevent deadlock
           setTimeout(async () => {
-            const adminStatus = await checkAdminRole(session.user.id);
-            setIsAdmin(adminStatus);
+            const roleList = await fetchUserRoles(session.user.id);
+            setRoles(roleList);
+            setIsAdmin(roleList.includes('admin'));
           }, 0);
         } else {
-          setIsAdmin(false);
+          // No auth session: load demo roles if present to enable demo navigation
+          const demoStr = localStorage.getItem(DEMO_ROLES_KEY);
+          const demoRoles = demoStr ? (JSON.parse(demoStr) as string[]) : [];
+          setRoles(demoRoles);
+          setIsAdmin(demoRoles.includes('admin'));
         }
         
         setLoading(false);
@@ -73,11 +86,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (session?.user) {
         setTimeout(async () => {
-          const adminStatus = await checkAdminRole(session.user.id);
-          setIsAdmin(adminStatus);
+          const roleList = await fetchUserRoles(session.user.id);
+          setRoles(roleList);
+          setIsAdmin(roleList.includes('admin'));
         }, 0);
       } else {
-        setIsAdmin(false);
+        const demoStr = localStorage.getItem(DEMO_ROLES_KEY);
+        const demoRoles = demoStr ? (JSON.parse(demoStr) as string[]) : [];
+        setRoles(demoRoles);
+        setIsAdmin(demoRoles.includes('admin'));
       }
       
       setLoading(false);
@@ -144,12 +161,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: "You have been logged out successfully",
       });
     }
+    localStorage.removeItem(DEMO_ROLES_KEY);
+    setRoles([]);
+    setIsAdmin(false);
+  };
+
+  const hasRole = (role: string) => roles.includes(role);
+
+  const refreshRoles = async () => {
+    if (user?.id) {
+      const roleList = await fetchUserRoles(user.id);
+      setRoles(roleList);
+      setIsAdmin(roleList.includes('admin'));
+    } else {
+      const demoStr = localStorage.getItem(DEMO_ROLES_KEY);
+      const demoRoles = demoStr ? (JSON.parse(demoStr) as string[]) : [];
+      setRoles(demoRoles);
+      setIsAdmin(demoRoles.includes('admin'));
+    }
+  };
+
+  const setDemoRoles = (demoRoles: string[]) => {
+    localStorage.setItem(DEMO_ROLES_KEY, JSON.stringify(demoRoles));
+    setRoles(demoRoles);
+    setIsAdmin(demoRoles.includes('admin'));
   };
 
   const value = {
     user,
     session,
+    roles,
     isAdmin,
+    hasRole,
+    refreshRoles,
+    setDemoRoles,
     signUp,
     signIn,
     signOut,
