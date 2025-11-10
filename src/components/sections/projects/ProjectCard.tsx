@@ -183,7 +183,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center text-white"
               >
-                <Github className="mr-1 h-3 w-3 md:h-4 md:w-4 text-white" />
+                <Github className="mr-1 h-3 w-3 md:h-4 md:w-4 text-white stroke-[2.5]" style={{ filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.5))' }} />
                 <span className="hidden sm:inline">Code</span>
               </a>
             </Button>
