@@ -286,23 +286,19 @@ const frontendSkills: Skill[] = [
   { id: "skill1", name: "HTML", level: 5, category: "Frontend" },
   { id: "skill2", name: "CSS", level: 3, category: "Frontend" },
   { id: "skill3", name: "JavaScript", level: 2, category: "Frontend" },
-  { id: "skill4", name: "React", level: 1, category: "Frontend" },
-  { id: "skill5", name: "TypeScript", level: 1, category: "Frontend" },
 ];
 
 const backendSkills: Skill[] = [
-  { id: "skill6", name: "Node.js", level: 3, category: "Backend" },
   { id: "skill7", name: "Java", level: 2, category: "Backend" },
   { id: "skill8", name: "C", level: 4, category: "Backend" },
   { id: "skill9", name: "Python", level: 4, category: "Backend" },
   { id: "skill10", name: "MongoDB", level: 3, category: "Backend" },
-  { id: "skill13", name: "MySQL", level: 3, category: "Backend" },
+  { id: "skill13", name: "SQL", level: 3, category: "Backend" },
 ];
 
 const otherSkills: Skill[] = [
   { id: "skill11", name: "UI/UX Design", level: 5, category: "Design" },
   { id: "skill12", name: "AWS", level: 2, category: "DevOps" },
-  { id: "skill14", name: "Git", level: 4, category: "Tools" },
   { id: "skill15", name: "GitHub", level: 4, category: "Tools" },
 ];
 
@@ -310,9 +306,6 @@ const softSkills: Skill[] = [
   { id: "skill16", name: "Communication", level: 4, category: "Soft" },
   { id: "skill17", name: "Flexibility", level: 4, category: "Soft" },
   { id: "skill18", name: "Adaptability", level: 4, category: "Soft" },
-  { id: "skill19", name: "Problem Solving", level: 4, category: "Soft" },
-  { id: "skill20", name: "Leadership", level: 3, category: "Soft" },
-  { id: "skill21", name: "Team Work", level: 4, category: "Soft" },
 ];
 
 const skills: Skill[] = [
