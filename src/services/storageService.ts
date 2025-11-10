@@ -183,8 +183,8 @@ const projects: Project[] = [
   },
   {
     id: "project3",
-    title: "Hostel Booking System",
-    description: "Hostel booking website for tourists to book rooms with pricing info.",
+    title: "Hotel Booking System",
+    description: "Hotel booking website for tourists to book rooms with pricing info.",
     image: "/projects/Hostel-booking.png",
     category: "Web Development",
     tags: ["HTML", "CSS", "JavaScript", "Git", "GitHub"],

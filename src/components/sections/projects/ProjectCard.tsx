@@ -174,16 +174,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d"
+              className="text-white text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
                 href={project.github} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center"
+                className="flex items-center text-white"
               >
-                <Github className="mr-1 h-3 w-3 md:h-4 md:w-4" />
+                <Github className="mr-1 h-3 w-3 md:h-4 md:w-4 text-white" />
                 <span className="hidden sm:inline">Code</span>
               </a>
             </Button>
