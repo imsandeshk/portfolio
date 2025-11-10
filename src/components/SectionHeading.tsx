@@ -150,7 +150,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
       
       {subtitle && (
         <motion.div variants={childVariants} className="relative">
-          <motion.p 
+          <motion.div 
             className={`${
               theme === 'dark' 
                 ? 'text-muted-foreground' 
@@ -161,7 +161,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
               transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
             }}
           >
-            {subtitle}
+            <p>{subtitle}</p>
             
             {/* Subtle glow effect */}
             <motion.div
@@ -181,7 +181,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
                 ease: [0.19, 1, 0.22, 1]
               }}
             />
-          </motion.p>
+          </motion.div>
         </motion.div>
       )}
     </motion.div>
