@@ -3,9 +3,10 @@ import { useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
+  DialogClose,
+  DialogDescription,
   DialogHeader, 
-  DialogTitle,
-  DialogClose
+  DialogTitle
 } from "@/components/ui/dialog";
 import { 
   ExternalLink, 
@@ -89,6 +90,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             <img 
               src={project.image || "/placeholder.svg"} 
               alt={project.title}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
             <div className="absolute top-4 left-4 right-4 z-20 flex justify-between items-center">
@@ -99,6 +102,9 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                     <Star className="ml-2 fill-accent text-accent" size={18} />
                   )}
                 </DialogTitle>
+                <DialogDescription className="sr-only">
+                  View detailed information about {project.title} project
+                </DialogDescription>
               </DialogHeader>
               <DialogClose asChild>
                 <Button 

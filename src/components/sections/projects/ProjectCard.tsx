@@ -68,6 +68,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <motion.img
           src={project.image || "/placeholder.svg"}
           alt={project.title}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover"
           initial={{ scale: 1 }}
           animate={{ 
@@ -100,8 +102,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.2, delay: 0.1 }}
           >
-            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white text-xs md:text-sm px-2 md:px-3 btn-3d">
-              <Maximize2 className="mr-1 h-3 w-3 md:h-4 md:w-4" />
+            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white text-xs md:text-sm px-3 md:px-4 py-2 md:py-2.5 h-auto btn-3d touch-manipulation min-h-[44px]">
+              <Maximize2 className="mr-1 h-4 w-4 md:h-4 md:w-4" />
               View Project
             </Button>
           </motion.div>
@@ -111,14 +113,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       {/* Content */}
       <div className="p-4 md:p-5 bg-gradient-to-b from-black/30 to-black/60">
         <div className="flex justify-between items-start mb-2 md:mb-3">
-          <h3 className="text-base md:text-lg font-bold text-white truncate max-w-[80%]">{project.title}</h3>
+          <h3 className="text-base md:text-xl font-bold text-white truncate max-w-[80%]">{project.title}</h3>
           
           {isAdmin && onEdit && onDelete && (
             <EditControls onEdit={onEdit} onDelete={onDelete} />
           )}
         </div>
         
-        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2 mb-3 md:mb-4 hidden sm:block">
+        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2 mb-3 md:mb-4 leading-relaxed hidden sm:block">
           {project.description}
         </p>
         
@@ -154,7 +156,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d"
+              className="text-xs md:text-sm px-3 py-2 h-auto min-h-[44px] bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d touch-manipulation"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -163,8 +165,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <ExternalLink className="mr-1 h-3 w-3 md:h-4 md:w-4" />
-                <span className="hidden sm:inline">Live</span>
+                <ExternalLink className="mr-1.5 h-4 w-4" />
+                <span className="hidden sm:inline">Live Demo</span>
+                <span className="sm:hidden">Live</span>
               </a>
             </Button>
           )}
@@ -174,7 +177,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               size="sm" 
               variant="outline" 
               asChild
-              className="text-white text-[10px] md:text-xs px-2 py-1 h-auto md:h-8 bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d"
+              className="text-white text-xs md:text-sm px-3 py-2 h-auto min-h-[44px] bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d touch-manipulation"
               onClick={(e) => e.stopPropagation()}
             >
               <a 
@@ -183,8 +186,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 rel="noopener noreferrer"
                 className="flex items-center text-white"
               >
-                <Github className="mr-1 h-3 w-3 md:h-4 md:w-4 text-white stroke-[2.5]" style={{ filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.5))' }} />
-                <span className="hidden sm:inline">Code</span>
+                <Github className="mr-1.5 h-4 w-4 text-white stroke-[2.5]" style={{ filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.5))' }} />
+                <span className="hidden sm:inline">View Code</span>
+                <span className="sm:hidden">Code</span>
               </a>
             </Button>
           )}

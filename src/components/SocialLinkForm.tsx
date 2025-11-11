@@ -4,6 +4,7 @@ import { SocialLink } from "@/services/storageService";
 import { 
   Dialog, 
   DialogContent, 
+  DialogDescription,
   DialogFooter, 
   DialogHeader, 
   DialogTitle 
@@ -63,6 +64,9 @@ const SocialLinkForm: React.FC<SocialLinkFormProps> = ({
           <DialogTitle>
             {socialLink ? "Edit Social Link" : "Add New Social Link"}
           </DialogTitle>
+          <DialogDescription>
+            {socialLink ? "Update your social media link details." : "Add a new social media profile to your portfolio."}
+          </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
+  DialogDescription,
   DialogFooter, 
   DialogHeader, 
   DialogTitle 
@@ -79,6 +80,9 @@ const TaskForm: React.FC<TaskFormProps> = ({
           <DialogTitle>
             {task ? "Edit Task" : "Add New Task"}
           </DialogTitle>
+          <DialogDescription>
+            {task ? "Update the task details below." : "Create a new task with a title, description, and priority."}
+          </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">

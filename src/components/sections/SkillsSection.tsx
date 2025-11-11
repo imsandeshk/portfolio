@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Skill } from "@/services/storageService";
 import SectionHeading from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -203,7 +203,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
                 transformStyle: 'preserve-3d'
               }}
             >
-              <img src={getIconUrl(skill.name)} alt={skill.name} className="w-6 h-6 object-contain relative z-10" />
+              <img src={getIconUrl(skill.name)} alt={skill.name} loading="lazy" decoding="async" className="w-6 h-6 object-contain relative z-10" />
               <span className="relative z-10">{skill.name}</span>
               {/* Shine effect overlay */}
               <motion.div
@@ -316,6 +316,9 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>{skillToEdit ? "Edit Skill" : "Add Skill"}</DialogTitle>
+              <DialogDescription>
+                {skillToEdit ? "Update your skill details and proficiency level." : "Add a new skill with your proficiency level."}
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSaveSkill}>
               <div className="grid gap-4 py-4">

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import * as Icons from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -33,7 +33,12 @@ const IconPicker: React.FC<IconPickerProps> = ({ value, onChange }) => {
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md">
-        <DialogTitle>Select an Icon</DialogTitle>
+        <DialogHeader>
+          <DialogTitle>Select an Icon</DialogTitle>
+          <DialogDescription>
+            Choose an icon to represent this social media platform.
+          </DialogDescription>
+        </DialogHeader>
         <div className="py-4">
           <Input
             placeholder="Search icons..."

@@ -13,6 +13,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -395,6 +396,9 @@ const ContactSection: React.FC<ContactSectionProps> = ({
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Edit Contact Information</DialogTitle>
+              <DialogDescription>
+                Update your contact details that visitors can use to reach you.
+              </DialogDescription>
             </DialogHeader>
 
             <form onSubmit={handleSaveContactInfo} className="space-y-4">

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Dialog, 
   DialogContent, 
+  DialogDescription,
   DialogFooter, 
   DialogHeader, 
   DialogTitle 
@@ -233,6 +234,9 @@ const EducationSection: React.FC<EducationSectionProps> = ({
               <DialogTitle>
                 {educationToEdit ? "Edit Education" : "Add New Education"}
               </DialogTitle>
+              <DialogDescription>
+                {educationToEdit ? "Update your educational background details." : "Add a new degree or certification to your education history."}
+              </DialogDescription>
             </DialogHeader>
             
             <form onSubmit={handleSaveEducation} className="space-y-4">

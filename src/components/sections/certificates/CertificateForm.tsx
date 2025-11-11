@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
+  DialogDescription,
   DialogFooter, 
   DialogHeader, 
   DialogTitle 
@@ -71,6 +72,9 @@ const CertificateForm: React.FC<CertificateFormProps> = ({
           <DialogTitle>
             {certificate ? "Edit Certificate" : "Add New Certificate"}
           </DialogTitle>
+          <DialogDescription>
+            {certificate ? "Update the details of your certificate below." : "Add a new certificate to showcase your achievements."}
+          </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Dialog, 
   DialogContent, 
+  DialogDescription,
   DialogFooter, 
   DialogHeader, 
   DialogTitle 
@@ -264,6 +265,9 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
               <DialogTitle>
                 {experienceToEdit ? "Edit Experience" : "Add New Experience"}
               </DialogTitle>
+              <DialogDescription>
+                {experienceToEdit ? "Update your work experience details." : "Add a new position to your professional experience."}
+              </DialogDescription>
             </DialogHeader>
             
             <form onSubmit={handleSaveExperience} className="space-y-4">

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
+  DialogDescription,
   DialogFooter, 
   DialogHeader, 
   DialogTitle 
@@ -107,6 +108,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
           <DialogTitle>
             {project ? "Edit Project" : "Add New Project"}
           </DialogTitle>
+          <DialogDescription>
+            {project ? "Update your project details and showcase your work." : "Add a new project to your portfolio with details and technologies used."}
+          </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">

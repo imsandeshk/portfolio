@@ -4,6 +4,7 @@ import { ProfileInfo } from "@/services/storageService";
 import { 
   Dialog, 
   DialogContent, 
+  DialogDescription,
   DialogFooter, 
   DialogHeader, 
   DialogTitle 
@@ -69,6 +70,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       <DialogContent className="sm:max-w-md md:max-w-xl">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
+          <DialogDescription>
+            Update your personal information and professional details.
+          </DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
