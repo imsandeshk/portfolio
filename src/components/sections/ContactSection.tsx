@@ -129,7 +129,16 @@ const ContactSection: React.FC<ContactSectionProps> = ({
   };
 
   return (
-    <section id="contact" className="py-16">
+    <section 
+      id="contact" 
+      className="py-16"
+      style={{ 
+        userSelect: 'text',
+        WebkitUserSelect: 'text',
+        MozUserSelect: 'text',
+        msUserSelect: 'text'
+      }}
+    >
       <div className="container mx-auto">
         <SectionHeading
           title="Get in Touch"
