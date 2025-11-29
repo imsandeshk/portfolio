@@ -149,55 +149,21 @@ const Hero: React.FC<HeroProps> = ({
                   background: theme === 'dark' 
                     ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)' 
                     : 'linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 100%)',
-                  boxShadow: '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), inset 0 0 20px rgba(34, 197, 94, 0.1)'
+                  boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)'
                 }}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ 
                   opacity: 1, 
-                  scale: 1,
-                  boxShadow: [
-                    '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), inset 0 0 20px rgba(34, 197, 94, 0.1)',
-                    '0 0 50px rgba(34, 197, 94, 0.6), 0 0 100px rgba(34, 197, 94, 0.3), inset 0 0 30px rgba(34, 197, 94, 0.2)',
-                    '0 0 30px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.2), inset 0 0 20px rgba(34, 197, 94, 0.1)'
-                  ]
+                  scale: 1
                 }}
                 transition={{ 
                   opacity: { duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] },
-                  scale: { duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] },
-                  boxShadow: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                  scale: { duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] }
                 }}
                 whileHover={{ scale: 1.05 }}
               >
-                {/* Animated outer glow ring */}
-                <motion.div
-                  className="absolute inset-0 rounded-full pointer-events-none"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(34, 197, 94, 0.4), transparent 70%)',
-                    filter: 'blur(20px)'
-                  }}
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.5, 0.8, 0.5]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
                 <span className="relative flex h-3 w-3">
-                  <motion.span 
-                    className="status-indicator animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-                    animate={{
-                      scale: [1, 1.2, 1],
-                      opacity: [0.75, 0.3, 0.75]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: [0.19, 1, 0.22, 1]
-                    }}
-                  />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
                 <span className="text-green-500 text-sm sm:text-base font-medium">Open to Work</span>
@@ -381,15 +347,15 @@ const Hero: React.FC<HeroProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Enhanced glow effects */}
+      {/* Enhanced glow effects - reduced on mobile */}
       {theme === 'dark' && (
         <>
           <motion.div 
             className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full filter blur-[120px] -z-0"
             style={{ background: 'radial-gradient(circle, #FF8C42 0%, transparent 70%)' }}
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.15, 0.35, 0.15]
+              scale: [1, 1.15, 1],
+              opacity: isMobile ? [0.08, 0.15, 0.08] : [0.15, 0.35, 0.15]
             }}
             transition={{
               duration: 8,
@@ -401,8 +367,8 @@ const Hero: React.FC<HeroProps> = ({
             className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full filter blur-[130px] -z-0"
             style={{ background: 'radial-gradient(circle, #4A90E2 0%, transparent 70%)' }}
             animate={{
-              scale: [1, 1.4, 1],
-              opacity: [0.2, 0.4, 0.2]
+              scale: [1, 1.2, 1],
+              opacity: isMobile ? [0.1, 0.2, 0.1] : [0.2, 0.4, 0.2]
             }}
             transition={{
               duration: 10,
@@ -415,8 +381,8 @@ const Hero: React.FC<HeroProps> = ({
             className="absolute top-1/2 right-1/3 w-72 h-72 rounded-full filter blur-[110px] -z-0"
             style={{ background: 'radial-gradient(circle, #10B981 0%, transparent 70%)' }}
             animate={{
-              scale: [1, 1.25, 1],
-              opacity: [0.12, 0.3, 0.12]
+              scale: [1, 1.1, 1],
+              opacity: isMobile ? [0.06, 0.15, 0.06] : [0.12, 0.3, 0.12]
             }}
             transition={{
               duration: 9,
@@ -429,8 +395,8 @@ const Hero: React.FC<HeroProps> = ({
             className="absolute bottom-1/4 left-1/3 w-64 h-64 rounded-full filter blur-[100px] -z-0"
             style={{ background: 'radial-gradient(circle, #FF6B9D 0%, transparent 70%)' }}
             animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.1, 0.25, 0.1]
+              scale: [1, 1.1, 1],
+              opacity: isMobile ? [0.05, 0.12, 0.05] : [0.1, 0.25, 0.1]
             }}
             transition={{
               duration: 11,
