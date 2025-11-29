@@ -1,0 +1,201 @@
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Project } from '@/services/storageService';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { 
+  ExternalLink, 
+  Github, 
+  Star, 
+  Maximize2,
+} from 'lucide-react';
+import EditControls from '@/components/EditControls';
+
+interface ProjectCardProps {
+  project: Project;
+  isAdmin?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  onClick?: () => void;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  project,
+  isAdmin = false,
+  onEdit,
+  onDelete,
+  onClick
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div
+      className="relative group rounded-3xl overflow-hidden cursor-pointer border-2 border-white/20 bg-black/40 backdrop-blur-xl"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true, margin: "-100px" }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      onClick={onClick}
+      style={{ 
+        transformStyle: 'preserve-3d',
+        perspective: '1000px',
+        boxShadow: `
+          0 12px 28px rgba(0, 0, 0, 0.6),
+          0 6px 16px rgba(0, 0, 0, 0.4),
+          0 0 40px rgba(255, 135, 66, 0.15),
+          inset 0 2px 4px rgba(255, 255, 255, 0.1),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.3)
+        `
+      }}
+      whileHover={{
+        y: -8,
+        scale: 1.02,
+        boxShadow: `
+          0 20px 40px rgba(0, 0, 0, 0.7),
+          0 10px 24px rgba(0, 0, 0, 0.5),
+          0 0 60px rgba(255, 135, 66, 0.3),
+          inset 0 2px 6px rgba(255, 255, 255, 0.15),
+          inset 0 -2px 6px rgba(0, 0, 0, 0.4)
+        `,
+        transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
+      }}
+    >
+      {/* Image */}
+      <div className="relative h-40 sm:h-48 md:h-56 overflow-hidden">
+        <motion.img
+          src={project.image || "/placeholder.svg"}
+          alt={project.title}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover"
+          initial={{ scale: 1 }}
+          animate={{ 
+            scale: isHovered ? 1.05 : 1,
+          }}
+          transition={{ duration: 0.5 }}
+        />
+        
+        {/* Pinned indicator */}
+        {project.pinned && (
+          <motion.div 
+            className="absolute top-2 right-2 text-accent"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <Star className="fill-accent drop-shadow-glow" size={16} />
+          </motion.div>
+        )}
+        
+        {/* View details overlay */}
+        <motion.div 
+          className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
+          >
+            <Button variant="outline" size="sm" className="hover:bg-accent hover:text-white border-white/20 text-white text-xs md:text-sm px-3 md:px-4 py-2 md:py-2.5 h-auto btn-3d touch-manipulation min-h-[44px]">
+              <Maximize2 className="mr-1 h-4 w-4 md:h-4 md:w-4" />
+              View Project
+            </Button>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Content */}
+      <div className="p-4 md:p-5 bg-gradient-to-b from-black/30 to-black/60">
+        <div className="flex justify-between items-start mb-2 md:mb-3">
+          <h3 className="text-base md:text-xl font-bold text-white truncate max-w-[80%]">{project.title}</h3>
+          
+          {isAdmin && onEdit && onDelete && (
+            <EditControls onEdit={onEdit} onDelete={onDelete} />
+          )}
+        </div>
+        
+        <p className="text-muted-foreground text-xs md:text-sm line-clamp-2 mb-3 md:mb-4 leading-relaxed hidden sm:block">
+          {project.description}
+        </p>
+        
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1 mb-3 md:mb-4 hidden sm:flex">
+          {project.tags && project.tags.length > 0 ? (
+            <>
+              {project.tags.slice(0, 2).map((tag, index) => (
+                <Badge 
+                  key={index} 
+                  variant="outline" 
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors badge-3d"
+                >
+                  {tag}
+                </Badge>
+              ))}
+              {project.tags.length > 2 && (
+                <Badge 
+                  variant="outline" 
+                  className="text-[10px] md:text-xs bg-white/5 hover:bg-white/10 transition-colors"
+                >
+                  +{project.tags.length - 2}
+                </Badge>
+              )}
+            </>
+          ) : null}
+        </div>
+        
+        {/* Links */}
+        <div className="flex gap-2 sm:gap-3">
+          {project.url && (
+            <Button 
+              size="sm" 
+              variant="outline" 
+              asChild
+              className="text-xs md:text-sm px-3 py-2 h-auto min-h-[44px] bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d touch-manipulation"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <a 
+                href={project.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center"
+              >
+                <ExternalLink className="mr-1.5 h-4 w-4" />
+                <span className="hidden sm:inline">Live Demo</span>
+                <span className="sm:hidden">Live</span>
+              </a>
+            </Button>
+          )}
+          
+          {project.github && (
+            <Button 
+              size="sm" 
+              variant="outline" 
+              asChild
+              className="text-white text-xs md:text-sm px-3 py-2 h-auto min-h-[44px] bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20 btn-3d touch-manipulation"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <a 
+                href={project.github} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center text-white"
+              >
+                <Github className="mr-1.5 h-4 w-4 text-white stroke-[2.5]" style={{ filter: 'drop-shadow(0 0 1px rgba(255,255,255,0.5))' }} />
+                <span className="hidden sm:inline">View Code</span>
+                <span className="sm:hidden">Code</span>
+              </a>
+            </Button>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default ProjectCard;
