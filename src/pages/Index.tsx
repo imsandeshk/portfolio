@@ -153,30 +153,26 @@ const Index = () => {
       {/* Floating ambient elements */}
       <FloatingElements className="z-0" />
 
-      {/* Premium top gradient blur */}
+      {/* Premium top gradient blur - smooth fade */}
       <motion.div 
-        className="fixed top-0 left-0 w-full h-16 pointer-events-none z-50"
+        className="fixed top-0 left-0 w-full h-20 pointer-events-none z-50"
         style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, transparent 100%)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          background: 'linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.1) 80%, transparent 100%)',
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showTopBlur ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       />
       
-      {/* Premium bottom gradient blur */}
+      {/* Premium bottom gradient blur - smooth fade */}
       <motion.div 
-        className="fixed bottom-0 left-0 w-full h-12 pointer-events-none z-50"
+        className="fixed bottom-0 left-0 w-full h-16 pointer-events-none z-50"
         style={{
-          background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
+          background: 'linear-gradient(to top, #000000 0%, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.05) 85%, transparent 100%)',
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showBottomBlur ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       />
 
       {/* Deep background with mesh gradient */}
