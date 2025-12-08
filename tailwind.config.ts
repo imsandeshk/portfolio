@@ -18,10 +18,12 @@ export default {
 				'2xl': '1400px'
 			}
 		},
-		extend: {
+	extend: {
 			fontFamily: {
-				sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-				display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+				sans: ['Space Grotesk', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+				display: ['Playfair Display', 'Georgia', 'serif'],
+				playfair: ['Playfair Display', 'Georgia', 'serif'],
+				grotesk: ['Space Grotesk', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

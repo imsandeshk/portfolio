@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
-import Spline from '@splinetool/react-spline';
 
 import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
@@ -16,6 +15,9 @@ import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import ScrollToTop from "@/components/ScrollToTop";
 import SplineBackground from '@/components/SplineBackground';
+import ScrollReveal from "@/components/ScrollReveal";
+import FloatingElements from "@/components/FloatingElements";
+import SectionDivider from "@/components/SectionDivider";
 
 import {
   getProfile,
@@ -41,7 +43,6 @@ import {
 } from "@/services/dataClient";
 
 const Index = () => {
-  
   // Local state initialized with static defaults; replaced with Supabase data after mount
   const [profile, setProfile] = useState(getProfile());
   const [socialLinks, setSocialLinks] = useState(getSocialLinks());
@@ -56,34 +57,31 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("projects");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mainContentVisible, setMainContentVisible] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
   const [showTopBlur, setShowTopBlur] = useState(false);
   const [showBottomBlur, setShowBottomBlur] = useState(false);
 
+  // Scroll-based parallax
+  const { scrollYProgress } = useScroll();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.6]);
+
   useEffect(() => {
-    // Show main content with a slight delay for better transition
     const timer = setTimeout(() => {
       setMainContentVisible(true);
       setIsInitialLoad(false);
     }, 100);
     
-    // Add scroll event listener to control blur visibility
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight;
       const clientHeight = window.innerHeight;
       
-      setHasScrolled(scrollTop > 0);
-      
-      // Show top blur after scrolling down 50px
       setShowTopBlur(scrollTop > 50);
-      
-      // Show bottom blur when not at the bottom (with 100px threshold)
       setShowBottomBlur(scrollTop + clientHeight < scrollHeight - 100);
     };
     
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Call once to set initial state
+    handleScroll();
     
     return () => {
       clearTimeout(timer);
@@ -129,67 +127,76 @@ const Index = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.15,
-        duration: 1.0,
-        ease: [0.22, 1, 0.36, 1],
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 60, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: { 
-        duration: 1.0,
-        ease: [0.22, 1, 0.36, 1] 
+        duration: 1,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
   return (
     <>
-      {/* Top gradient blur - ultra smooth */}
+      {/* Floating ambient elements */}
+      <FloatingElements className="z-0" />
+
+      {/* Premium top gradient blur */}
       <motion.div 
-        className="fixed top-0 left-0 w-full h-12 pointer-events-none z-40"
+        className="fixed top-0 left-0 w-full h-16 pointer-events-none z-50"
         style={{
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 15%, rgba(0,0,0,0.5) 35%, rgba(0,0,0,0.3) 55%, rgba(0,0,0,0.15) 75%, rgba(0,0,0,0.05) 90%, transparent 100%)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          maskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)'
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, transparent 100%)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showTopBlur ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5 }}
       />
       
-      {/* Bottom gradient blur - ultra smooth */}
+      {/* Premium bottom gradient blur */}
       <motion.div 
-        className="fixed bottom-0 left-0 w-full h-10 pointer-events-none z-40"
+        className="fixed bottom-0 left-0 w-full h-12 pointer-events-none z-50"
         style={{
-          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 20%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.1) 80%, transparent 100%)',
-          backdropFilter: 'blur(6px)',
-          WebkitBackdropFilter: 'blur(6px)',
-          maskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)'
+          background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: showBottomBlur ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5 }}
       />
 
-      {/* iOS-style floating orbs background */}
-      <div className="fixed inset-0 z-[-10] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#101113] via-[#1a1a1c] to-[#101113]" />
-        
-        {/* Floating light orbs */}
-        <div className="floating-orb w-96 h-96 top-1/4 left-1/4 animate-float" style={{ animationDelay: '0s' }} />
-        <div className="floating-orb w-80 h-80 top-3/4 right-1/4 animate-float" style={{ animationDelay: '2s' }} />
-        <div className="floating-orb w-64 h-64 bottom-1/4 left-1/2 animate-float" style={{ animationDelay: '4s' }} />
-      </div>
+      {/* Deep background with mesh gradient */}
+      <motion.div 
+        className="fixed inset-0 z-[-20]"
+        style={{ y: backgroundY, opacity: backgroundOpacity }}
+      >
+        <div className="absolute inset-0 bg-black" />
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 100% 80% at 20% 10%, rgba(255, 140, 66, 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse 80% 60% at 80% 20%, rgba(74, 144, 226, 0.06) 0%, transparent 50%),
+              radial-gradient(ellipse 90% 70% at 50% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+              radial-gradient(ellipse 70% 50% at 10% 60%, rgba(255, 107, 157, 0.04) 0%, transparent 50%)
+            `
+          }}
+        />
+      </motion.div>
 
       <div className="relative z-10 bg-transparent min-h-screen">
         <AnimatePresence mode="wait">
@@ -198,7 +205,7 @@ const Index = () => {
               key="main-content"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
+              transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="w-full"
             >
               <ParticlesBackground />
@@ -209,88 +216,93 @@ const Index = () => {
                 variants={sectionVariants}
                 className="relative z-10"
               >
+                {/* Hero Section */}
                 <motion.div variants={itemVariants}>
                   <Hero profile={profile} socialLinks={socialLinks} />
                 </motion.div>
 
-                <motion.section id="content-tabs" className="py-16" variants={itemVariants}>
-                  <div className="container mx-auto px-4">
-                    <TabSwitcher
-                      tabs={tabs}
-                      activeTab={activeTab}
-                      onTabChange={(tabId) => setActiveTab(tabId)}
-                    />
-                    <AnimatePresence mode="wait">
+                <SectionDivider variant="glow" />
+
+                {/* Content Tabs Section */}
+                <ScrollReveal direction="up" blur>
+                  <section id="content-tabs" className="section-wrapper">
+                    <div className="container mx-auto px-4">
                       <motion.div
-                        key={activeTab}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{
-                          duration: 0.8, // Increased for slower animation
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        className="min-h-[400px]"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
                       >
-                        {activeTab === "projects" && <ProjectsSection projects={projects} />}
-                        {activeTab === "certificates" && (
-                          <div className="grid grid-cols-1 gap-6">
-                            <CertificatesSection certificates={certificates} />
-                          </div>
-                        )}
-                        {activeTab === "tasks" && <TasksSection tasks={tasks} />}
+                        <TabSwitcher
+                          tabs={tabs}
+                          activeTab={activeTab}
+                          onTabChange={(tabId) => setActiveTab(tabId)}
+                        />
                       </motion.div>
-                    </AnimatePresence>
-                  </div>
-                </motion.section>
+                      
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={activeTab}
+                          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -30, scale: 0.98 }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.25, 0.46, 0.45, 0.94],
+                          }}
+                          className="min-h-[400px]"
+                        >
+                          {activeTab === "projects" && <ProjectsSection projects={projects} />}
+                          {activeTab === "certificates" && (
+                            <div className="grid grid-cols-1 gap-6">
+                              <CertificatesSection certificates={certificates} />
+                            </div>
+                          )}
+                          {activeTab === "tasks" && <TasksSection tasks={tasks} />}
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+                  </section>
+                </ScrollReveal>
 
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
+                <SectionDivider variant="line" />
+
+                {/* Skills Section */}
+                <ScrollReveal direction="up" delay={0.1}>
                   <SkillsSection skills={skills} />
-                </motion.div>
+                </ScrollReveal>
 
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
+                <SectionDivider variant="gradient" />
+
+                {/* Interests Section */}
+                <ScrollReveal direction="scale" delay={0.1}>
                   <InterestsSection />
-                </motion.div>
+                </ScrollReveal>
 
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
+                <SectionDivider variant="wave" />
+
+                {/* Education Section */}
+                <ScrollReveal direction="left" delay={0.1}>
                   <EducationSection education={education} />
-                </motion.div>
+                </ScrollReveal>
 
-                <motion.div 
-                  variants={itemVariants}
-                  whileInView="visible"
-                  initial="hidden"
-                  viewport={{ once: false, amount: 0.2 }}
-                >
+                <SectionDivider variant="glow" />
+
+                {/* Contact Section */}
+                <ScrollReveal direction="up" delay={0.1} blur>
                   <ContactSection contact={contact} />
-                </motion.div>
+                </ScrollReveal>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.0, duration: 0.8 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
                 className="relative z-10"
               >
                 <Footer socialLinks={socialLinks} />
               </motion.div>
               
-              {/* Add the ScrollToTop component */}
               <ScrollToTop />
             </motion.div>
           )}
