@@ -96,16 +96,16 @@ const InterestsSection: React.FC = () => {
     setIsDragging(false);
   };
 
-  // First row of interests
+  // First row of interests - Orange theme colors
   const baseInterestsRow1: Interest[] = [
-    { id: "web-dev", name: "Web Development", icon: Code2, color: "#9b87f5" },
-    { id: "software-dev", name: "Software Development", icon: Monitor, color: "#7E69AB" },
-    { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#6E59A5" },
-    { id: "game-dev", name: "Game Development", icon: Gamepad, color: "#9b87f5" },
-    { id: "ai", name: "Artificial Intelligence", icon: Brain, color: "#7E69AB" },
-    { id: "ml", name: "Machine Learning", icon: Infinity, color: "#6E59A5" },
-    { id: "fullstack", name: "Full Stack", icon: Package, color: "#9b87f5" },
-    { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#7E69AB" },
+    { id: "web-dev", name: "Web Development", icon: Code2, color: "#FF8C42" },
+    { id: "software-dev", name: "Software Development", icon: Monitor, color: "#FF6B35" },
+    { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#F7931E" },
+    { id: "game-dev", name: "Game Development", icon: Gamepad, color: "#FF8C42" },
+    { id: "ai", name: "Artificial Intelligence", icon: Brain, color: "#FF6B35" },
+    { id: "ml", name: "Machine Learning", icon: Infinity, color: "#F7931E" },
+    { id: "fullstack", name: "Full Stack", icon: Package, color: "#FF8C42" },
+    { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#FF6B35" },
   ];
 
   // Create array with 3 repetitions for seamless infinite scroll
@@ -114,16 +114,16 @@ const InterestsSection: React.FC = () => {
     id: `${interest.id}-${index}`
   }));
 
-  // Second row of interests
+  // Second row of interests - Orange theme colors
   const baseInterestsRow2: Interest[] = [
-    { id: "databases", name: "Databases", icon: Database, color: "#9b87f5" },
-    { id: "cybersecurity", name: "Cybersecurity", icon: Key, color: "#7E69AB" },
-    { id: "cloud-computing", name: "Cloud Computing", icon: Package, color: "#6E59A5" },
-    { id: "mobile-dev", name: "Mobile Development", icon: Monitor, color: "#9b87f5" },
-    { id: "devops", name: "DevOps", icon: TestTube, color: "#7E69AB" },
-    { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#6E59A5" },
-    { id: "blockchain", name: "Blockchain", icon: Brain, color: "#9b87f5" },
-    { id: "api-dev", name: "API Development", icon: Package, color: "#7E69AB" },
+    { id: "databases", name: "Databases", icon: Database, color: "#FF8C42" },
+    { id: "cybersecurity", name: "Cybersecurity", icon: Key, color: "#FF6B35" },
+    { id: "cloud-computing", name: "Cloud Computing", icon: Package, color: "#F7931E" },
+    { id: "mobile-dev", name: "Mobile Development", icon: Monitor, color: "#FF8C42" },
+    { id: "devops", name: "DevOps", icon: TestTube, color: "#FF6B35" },
+    { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#F7931E" },
+    { id: "blockchain", name: "Blockchain", icon: Brain, color: "#FF8C42" },
+    { id: "api-dev", name: "API Development", icon: Package, color: "#FF6B35" },
   ];
 
   // Create array with 3 repetitions for seamless infinite scroll
@@ -140,9 +140,9 @@ const InterestsSection: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 space-y-2">
           {/* First row - scrolling left */}
           <div className="relative overflow-hidden">
-            {/* Blur/fade effect at the edges */}
-            <div className="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+            {/* Blur/fade effect at the edges - solid black */}
+            <div className="absolute left-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 30%, transparent 100%)' }}></div>
+            <div className="absolute right-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 30%, transparent 100%)' }}></div>
             
             <div 
               ref={scrollRef1}
@@ -193,9 +193,9 @@ const InterestsSection: React.FC = () => {
 
           {/* Second row - scrolling right */}
           <div className="relative overflow-hidden">
-            {/* Blur/fade effect at the edges */}
-            <div className="absolute left-0 top-0 h-full w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 h-full w-40 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
+            {/* Blur/fade effect at the edges - solid black */}
+            <div className="absolute left-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 30%, transparent 100%)' }}></div>
+            <div className="absolute right-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 30%, transparent 100%)' }}></div>
             
             <div 
               ref={scrollRef2}
