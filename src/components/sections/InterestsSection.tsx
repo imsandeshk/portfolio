@@ -140,9 +140,9 @@ const InterestsSection: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 space-y-2">
           {/* First row - scrolling left */}
           <div className="relative overflow-hidden">
-            {/* Blur/fade effect at the edges - solid black */}
-            <div className="absolute left-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 30%, transparent 100%)' }}></div>
-            <div className="absolute right-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 30%, transparent 100%)' }}></div>
+            {/* Blur/fade effect at the edges - solid black, more prominent on mobile */}
+            <div className="absolute left-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
+            <div className="absolute right-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
             
             <div 
               ref={scrollRef1}
@@ -193,9 +193,9 @@ const InterestsSection: React.FC = () => {
 
           {/* Second row - scrolling right */}
           <div className="relative overflow-hidden">
-            {/* Blur/fade effect at the edges - solid black */}
-            <div className="absolute left-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 30%, transparent 100%)' }}></div>
-            <div className="absolute right-0 top-0 h-full w-32 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 30%, transparent 100%)' }}></div>
+            {/* Blur/fade effect at the edges - solid black, more prominent on mobile */}
+            <div className="absolute left-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
+            <div className="absolute right-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
             
             <div 
               ref={scrollRef2}
