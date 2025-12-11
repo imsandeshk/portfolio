@@ -136,111 +136,120 @@ const InterestsSection: React.FC = () => {
     <section id="interests" className="py-16">
       <div className="container mx-auto">
         <SectionHeading title="Interests" subtitle="What I'm passionate about" />
-        
-        <div className="max-w-6xl mx-auto px-4 space-y-2">
-          {/* First row - scrolling left */}
-          <div className="relative overflow-hidden">
-            {/* Blur/fade effect at the edges - solid black, more prominent on mobile */}
-            <div className="absolute left-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
-            <div className="absolute right-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
-            
-            <div 
-              ref={scrollRef1}
-              className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging1 ? 'infinite-scroll-left' : ''}`}
-              onMouseDown={(e) => handleMouseDown(e, 1)}
-              onMouseMove={(e) => handleMouseMove(e, 1)}
-              onMouseUp={() => handleMouseUp(1)}
-              onMouseLeave={() => handleMouseLeave(1)}
-              onTouchStart={(e) => handleTouchStart(e, 1)}
-              onTouchMove={(e) => handleTouchMove(e, 1)}
-              onTouchEnd={() => handleMouseUp(1)}
-              style={{ userSelect: 'none', scrollBehavior: 'auto' }}
-            >
-              <div className="flex gap-1 md:gap-4">
-                {interestsRow1.map((interest) => (
-                  <motion.div
-                    key={interest.id}
-                    className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
-                    whileHover={{ 
-                      scale: 1.05, 
-                      transition: { 
-                        type: "spring", 
-                        stiffness: 400, 
-                        damping: 10 
-                      } 
-                    }}
-                    style={{
-                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
-                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
-                    }}
+      </div>
+      
+      {/* Full-width container - no padding on mobile, with fade on desktop */}
+      <div className="w-full space-y-2">
+        {/* First row - scrolling left */}
+        <div className="relative overflow-hidden">
+          {/* Animated glow pulse fade effect - only on desktop */}
+          <div className="hidden md:block absolute left-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-left" 
+            style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          />
+          <div className="hidden md:block absolute right-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-right" 
+            style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          />
+          
+          <div 
+            ref={scrollRef1}
+            className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging1 ? 'infinite-scroll-left' : ''}`}
+            onMouseDown={(e) => handleMouseDown(e, 1)}
+            onMouseMove={(e) => handleMouseMove(e, 1)}
+            onMouseUp={() => handleMouseUp(1)}
+            onMouseLeave={() => handleMouseLeave(1)}
+            onTouchStart={(e) => handleTouchStart(e, 1)}
+            onTouchMove={(e) => handleTouchMove(e, 1)}
+            onTouchEnd={() => handleMouseUp(1)}
+            style={{ userSelect: 'none', scrollBehavior: 'auto' }}
+          >
+            <div className="flex gap-1 md:gap-4">
+              {interestsRow1.map((interest) => (
+                <motion.div
+                  key={interest.id}
+                  className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                  whileHover={{ 
+                    scale: 1.05, 
+                    transition: { 
+                      type: "spring", 
+                      stiffness: 400, 
+                      damping: 10 
+                    } 
+                  }}
+                  style={{
+                    backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
+                    borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
+                  }}
+                >
+                  <motion.div 
+                    className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
+                    style={{ backgroundColor: `${interest.color}30` }}
                   >
-                    <motion.div 
-                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
-                      style={{ backgroundColor: `${interest.color}30` }}
-                    >
-                      <span style={{ color: isDark ? interest.color : '#fff' }}>
-                        <interest.icon size={16} />
-                      </span>
-                    </motion.div>
-                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
-                      {interest.name}
+                    <span style={{ color: isDark ? interest.color : '#fff' }}>
+                      <interest.icon size={16} />
                     </span>
                   </motion.div>
-                ))}
-              </div>
+                  <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
+                    {interest.name}
+                  </span>
+                </motion.div>
+              ))}
             </div>
           </div>
+        </div>
 
-          {/* Second row - scrolling right */}
-          <div className="relative overflow-hidden">
-            {/* Blur/fade effect at the edges - solid black, more prominent on mobile */}
-            <div className="absolute left-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
-            <div className="absolute right-0 top-0 h-full w-20 sm:w-28 md:w-48 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, #000000 0%, #000000 50%, rgba(0,0,0,0.6) 75%, transparent 100%)' }}></div>
-            
-            <div 
-              ref={scrollRef2}
-              className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging2 ? 'infinite-scroll-right' : ''}`}
-              onMouseDown={(e) => handleMouseDown(e, 2)}
-              onMouseMove={(e) => handleMouseMove(e, 2)}
-              onMouseUp={() => handleMouseUp(2)}
-              onMouseLeave={() => handleMouseLeave(2)}
-              onTouchStart={(e) => handleTouchStart(e, 2)}
-              onTouchMove={(e) => handleTouchMove(e, 2)}
-              onTouchEnd={() => handleMouseUp(2)}
-              style={{ userSelect: 'none', scrollBehavior: 'auto' }}
-            >
-              <div className="flex gap-1 md:gap-4">
-                {interestsRow2.map((interest) => (
-                  <motion.div
-                    key={interest.id}
-                    className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
-                    whileHover={{ 
-                      scale: 1.05, 
-                      transition: { 
-                        type: "spring", 
-                        stiffness: 400, 
-                        damping: 10 
-                      } 
-                    }}
-                    style={{
-                      backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
-                      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
-                    }}
+        {/* Second row - scrolling right */}
+        <div className="relative overflow-hidden">
+          {/* Animated glow pulse fade effect - only on desktop */}
+          <div className="hidden md:block absolute left-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-left" 
+            style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          />
+          <div className="hidden md:block absolute right-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-right" 
+            style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          />
+          
+          <div 
+            ref={scrollRef2}
+            className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging2 ? 'infinite-scroll-right' : ''}`}
+            onMouseDown={(e) => handleMouseDown(e, 2)}
+            onMouseMove={(e) => handleMouseMove(e, 2)}
+            onMouseUp={() => handleMouseUp(2)}
+            onMouseLeave={() => handleMouseLeave(2)}
+            onTouchStart={(e) => handleTouchStart(e, 2)}
+            onTouchMove={(e) => handleTouchMove(e, 2)}
+            onTouchEnd={() => handleMouseUp(2)}
+            style={{ userSelect: 'none', scrollBehavior: 'auto' }}
+          >
+            <div className="flex gap-1 md:gap-4">
+              {interestsRow2.map((interest) => (
+                <motion.div
+                  key={interest.id}
+                  className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                  whileHover={{ 
+                    scale: 1.05, 
+                    transition: { 
+                      type: "spring", 
+                      stiffness: 400, 
+                      damping: 10 
+                    } 
+                  }}
+                  style={{
+                    backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
+                    borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
+                  }}
+                >
+                  <div 
+                    className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
+                    style={{ backgroundColor: `${interest.color}30` }}
                   >
-                    <div 
-                      className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
-                      style={{ backgroundColor: `${interest.color}30` }}
-                    >
-                      <span style={{ color: isDark ? interest.color : '#fff' }}>
-                        <interest.icon size={16} />
-                      </span>
-                    </div>
-                    <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
-                      {interest.name}
+                    <span style={{ color: isDark ? interest.color : '#fff' }}>
+                      <interest.icon size={16} />
                     </span>
-                  </motion.div>
-                ))}
-              </div>
+                  </div>
+                  <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
+                    {interest.name}
+                  </span>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
@@ -263,6 +272,32 @@ const InterestsSection: React.FC = () => {
         .infinite-scroll-right > div {
           animation: infiniteScrollRight 40s linear infinite;
           width: fit-content;
+        }
+        
+        /* Animated glow pulse effect for fade edges */
+        .fade-glow-left {
+          animation: glowPulseLeft 3s ease-in-out infinite;
+        }
+        .fade-glow-right {
+          animation: glowPulseRight 3s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulseLeft {
+          0%, 100% {
+            box-shadow: inset -20px 0 40px rgba(255, 140, 66, 0.1);
+          }
+          50% {
+            box-shadow: inset -30px 0 60px rgba(255, 140, 66, 0.2);
+          }
+        }
+        
+        @keyframes glowPulseRight {
+          0%, 100% {
+            box-shadow: inset 20px 0 40px rgba(255, 140, 66, 0.1);
+          }
+          50% {
+            box-shadow: inset 30px 0 60px rgba(255, 140, 66, 0.2);
+          }
         }
         
         @keyframes infiniteScrollLeft {
