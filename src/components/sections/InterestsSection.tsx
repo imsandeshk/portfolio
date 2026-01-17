@@ -1,7 +1,7 @@
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import SectionHeading from "@/components/SectionHeading";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   Code2, 
   Monitor, 
@@ -28,8 +28,18 @@ const InterestsSection: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   
+  const sectionRef = useRef<HTMLElement>(null);
   const scrollRef1 = useRef<HTMLDivElement>(null);
   const scrollRef2 = useRef<HTMLDivElement>(null);
+  
+  // Parallax scroll effect
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const parallaxRow1 = useTransform(scrollYProgress, [0, 1], [-30, 30]);
+  const parallaxRow2 = useTransform(scrollYProgress, [0, 1], [30, -30]);
   const [isDragging1, setIsDragging1] = useState(false);
   const [isDragging2, setIsDragging2] = useState(false);
   const [startX1, setStartX1] = useState(0);
@@ -133,7 +143,7 @@ const InterestsSection: React.FC = () => {
   }));
 
   return (
-    <section id="interests" className="py-16">
+    <section ref={sectionRef} id="interests" className="py-16">
       <div className="container mx-auto">
         <SectionHeading title="Interests" subtitle="What I'm passionate about" />
       </div>
@@ -150,7 +160,7 @@ const InterestsSection: React.FC = () => {
             style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
           />
           
-          <div 
+          <motion.div 
             ref={scrollRef1}
             className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging1 ? 'infinite-scroll-left' : ''}`}
             onMouseDown={(e) => handleMouseDown(e, 1)}
@@ -160,7 +170,7 @@ const InterestsSection: React.FC = () => {
             onTouchStart={(e) => handleTouchStart(e, 1)}
             onTouchMove={(e) => handleTouchMove(e, 1)}
             onTouchEnd={() => handleMouseUp(1)}
-            style={{ userSelect: 'none', scrollBehavior: 'auto' }}
+            style={{ userSelect: 'none', scrollBehavior: 'auto', x: parallaxRow1 }}
           >
             <div className="flex gap-1 md:gap-4">
               {interestsRow1.map((interest) => (
@@ -194,7 +204,7 @@ const InterestsSection: React.FC = () => {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Second row - scrolling right */}
@@ -207,7 +217,7 @@ const InterestsSection: React.FC = () => {
             style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
           />
           
-          <div 
+          <motion.div 
             ref={scrollRef2}
             className={`py-2 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing ${!isDragging2 ? 'infinite-scroll-right' : ''}`}
             onMouseDown={(e) => handleMouseDown(e, 2)}
@@ -217,7 +227,7 @@ const InterestsSection: React.FC = () => {
             onTouchStart={(e) => handleTouchStart(e, 2)}
             onTouchMove={(e) => handleTouchMove(e, 2)}
             onTouchEnd={() => handleMouseUp(2)}
-            style={{ userSelect: 'none', scrollBehavior: 'auto' }}
+            style={{ userSelect: 'none', scrollBehavior: 'auto', x: parallaxRow2 }}
           >
             <div className="flex gap-1 md:gap-4">
               {interestsRow2.map((interest) => (
@@ -251,7 +261,7 @@ const InterestsSection: React.FC = () => {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
       
