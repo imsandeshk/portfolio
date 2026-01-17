@@ -182,9 +182,26 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             </Button>
           </motion.div>
         )}
+      </div>
 
+      {/* Full-width container - no padding on mobile, with fade on desktop */}
+      <div className="w-full relative">
+        {/* Animated glow pulse fade effect - only on desktop */}
+        <div className="hidden md:block absolute left-0 top-0 h-full w-48 z-10 pointer-events-none" 
+          style={{ 
+            background: 'linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)',
+            animation: 'glowPulseLeft 3s ease-in-out infinite'
+          }}
+        />
+        <div className="hidden md:block absolute right-0 top-0 h-full w-48 z-10 pointer-events-none" 
+          style={{ 
+            background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)',
+            animation: 'glowPulseRight 3s ease-in-out infinite'
+          }}
+        />
+        
         <motion.div 
-          className="flex flex-wrap gap-4 justify-center"
+          className="flex flex-wrap gap-2 md:gap-4 justify-center px-0 md:px-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -266,7 +283,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
         {/* Reveal soft skills when showMore is true */}
         {showMore && (
           <motion.div 
-            className="flex flex-wrap gap-4 justify-center mt-4"
+            className="flex flex-wrap gap-2 md:gap-4 justify-center mt-4 px-0 md:px-16"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -311,71 +328,95 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
           </motion.div>
         )}
 
-        {/* Dialog forms for admin actions */}
-        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>{skillToEdit ? "Edit Skill" : "Add Skill"}</DialogTitle>
-              <DialogDescription>
-                {skillToEdit ? "Update your skill details and proficiency level." : "Add a new skill with your proficiency level."}
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSaveSkill}>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Name
-                  </Label>
-                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="category" className="text-right">
-                    Category
-                  </Label>
-                  <Input id="category" value={category} onChange={(e) => setCategory(e.target.value)} className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="level" className="text-right">
-                    Level
-                  </Label>
-                  <Slider
-                    id="level"
-                    defaultValue={[level]}
-                    max={5}
-                    step={1}
-                    onValueChange={(value) => setLevel(value[0])}
-                    className="col-span-3"
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit">
-                  {skillToEdit ? "Update Skill" : "Add Skill"}
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
         
-        <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. Are you sure you want to delete <span className="font-medium">"{skillToDelete?.name}"</span>?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)}>
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={handleConfirmDelete}>
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
       </div>
+      
+      {/* Dialog forms for admin actions - moved inside container */}
+      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{skillToEdit ? "Edit Skill" : "Add Skill"}</DialogTitle>
+            <DialogDescription>
+              {skillToEdit ? "Update your skill details and proficiency level." : "Add a new skill with your proficiency level."}
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSaveSkill}>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="category" className="text-right">
+                  Category
+                </Label>
+                <Input id="category" value={category} onChange={(e) => setCategory(e.target.value)} className="col-span-3" />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="level" className="text-right">
+                  Level
+                </Label>
+                <Slider
+                  id="level"
+                  defaultValue={[level]}
+                  max={5}
+                  step={1}
+                  onValueChange={(value) => setLevel(value[0])}
+                  className="col-span-3"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">
+                {skillToEdit ? "Update Skill" : "Add Skill"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+      
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. Are you sure you want to delete <span className="font-medium">"{skillToDelete?.name}"</span>?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsDeleteDialogOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDelete}>
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      
+      <style>
+        {`
+        @keyframes glowPulseLeft {
+          0%, 100% {
+            box-shadow: inset -20px 0 40px rgba(255, 140, 66, 0.1);
+          }
+          50% {
+            box-shadow: inset -30px 0 60px rgba(255, 140, 66, 0.2);
+          }
+        }
+        
+        @keyframes glowPulseRight {
+          0%, 100% {
+            box-shadow: inset 20px 0 40px rgba(255, 140, 66, 0.1);
+          }
+          50% {
+            box-shadow: inset 30px 0 60px rgba(255, 140, 66, 0.2);
+          }
+        }
+        `}
+      </style>
     </section>
   );
 };
