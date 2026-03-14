@@ -174,50 +174,66 @@ const EducationSection: React.FC<EducationSectionProps> = ({
         )}
         
         {/* Education Timeline */}
-        <div className="relative max-w-3xl mx-auto mt-8 pl-8 border-l-2 border-accent/30">
+        <div className="relative max-w-3xl mx-auto mt-10 pl-10">
+          {/* Timeline line */}
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500/30 via-white/[0.06] to-transparent" />
+          
           {sortedEducation.map((edu, index) => (
             <motion.div
               key={edu.id}
-              className="mb-10 relative"
-              initial={{ opacity: 0, y: 20 }}
+              className="mb-12 relative group"
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
               viewport={{ once: true, margin: "-50px" }}
             >
-              {/* Timeline dot */}
-              <div className="absolute -left-[2.15rem] bg-background border-2 border-accent rounded-full p-1">
-                <GraduationCap className="h-5 w-5 text-accent" />
+              {/* Timeline dot with glow */}
+              <div className="absolute -left-[2.15rem]">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-violet-500/30 rounded-full blur-md scale-150 group-hover:bg-violet-500/50 transition-all duration-500" />
+                  <div className="relative bg-[#0a0a0a] border-2 border-violet-500/40 group-hover:border-violet-400/60 rounded-full p-1.5 transition-all duration-300">
+                    <GraduationCap className="h-4 w-4 text-violet-400 group-hover:text-violet-300 transition-colors" />
+                  </div>
+                </div>
               </div>
               
-              {/* Content */}
-              <div className="glass-card rounded-lg p-6 ml-4 hover-glow">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-xl font-bold">{edu.degree}</h3>
-                    <h4 className="text-lg text-accent mb-1">{edu.field}</h4>
-                    <div className="flex items-center mb-2 text-sm text-muted-foreground">
-                      <School className="h-4 w-4 mr-2" />
-                      <a
-                        href={`https://www.google.com/maps?q=${encodeURIComponent(edu.institution + ' Bangalore')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline hover:text-accent"
-                        aria-label={`Open ${edu.institution} location in Google Maps`}
-                      >
-                        {edu.institution}
-                      </a>
+              {/* Content card — frosted glass */}
+              <div className="relative rounded-[32px] p-7 ml-4 overflow-hidden group-hover:-translate-y-1 transition-all duration-500 border border-white/[0.07] bg-white/[0.03] backdrop-blur-2xl">
+                
+                <div className="relative">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white group-hover:text-violet-100 transition-colors">{edu.degree}</h3>
+                      <h4 className="text-sm font-medium mt-1 mb-1.5" style={{
+                        background: 'linear-gradient(135deg, #A78BFA 0%, #818CF8 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}>{edu.field}</h4>
+                      <div className="flex items-center mb-2 text-sm text-zinc-400">
+                        <School className="h-3.5 w-3.5 mr-1.5 text-zinc-500" />
+                        <a
+                          href={`https://www.google.com/maps?q=${encodeURIComponent(edu.institution + ' Bangalore')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-white transition-colors duration-300"
+                          aria-label={`Open ${edu.institution} location in Google Maps`}
+                        >
+                          {edu.institution}
+                        </a>
+                      </div>
+                      <div className="inline-flex items-center px-2.5 py-1 rounded-lg bg-white/[0.03] border border-white/[0.06] text-xs text-zinc-500">
+                        {formatDate(edu.startDate)} — {edu.endDate === "Present" ? "Present" : formatDate(edu.endDate)}
+                      </div>
                     </div>
-                    <div className="mb-3 text-sm text-muted-foreground">
-                      {formatDate(edu.startDate)} - {edu.endDate === "Present" ? "Present" : formatDate(edu.endDate)}
-                    </div>
+                    
+                    {isAdmin && onUpdateEducation && onDeleteEducation && (
+                      <EditControls 
+                        onEdit={() => handleEditEducation(edu)} 
+                        onDelete={() => handleDeleteEducation(edu)} 
+                      />
+                    )}
                   </div>
-                  
-                  {isAdmin && onUpdateEducation && onDeleteEducation && (
-                    <EditControls 
-                      onEdit={() => handleEditEducation(edu)} 
-                      onDelete={() => handleDeleteEducation(edu)} 
-                    />
-                  )}
                 </div>
               </div>
             </motion.div>

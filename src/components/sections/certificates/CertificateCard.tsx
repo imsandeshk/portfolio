@@ -35,7 +35,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
 
   return (
     <>
-      <Card className="relative overflow-hidden rounded-xl bg-gradient-to-b from-black/60 to-black/20 backdrop-blur-sm border border-white/10 shadow-xl hover:shadow-accent/20 transition-all duration-300 card-3d-tilt">
+      <Card className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-black/60 to-black/20 backdrop-blur-sm border border-white/10 shadow-xl transition-shadow duration-300 hover:shadow-accent/20">
         <div
           className="relative aspect-video overflow-hidden cursor-pointer"
           onClick={() => setShowViewer(true)}
@@ -45,9 +45,10 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
               <img
                 src={certificate.image}
                 alt={`Certificate: ${certificate.title}`}
-                loading="lazy"
+                loading="eager"
                 decoding="async"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                fetchPriority="high"
+                className="w-full h-full object-cover sm:hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             </div>
@@ -61,7 +62,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
             <Button
               variant="outline"
               size="icon"
-              className="rounded-full bg-black/50 hover:bg-accent/80 border-white/20 btn-3d"
+              className="rounded-full bg-black/50 hover:bg-violet-500/80 border-white/[0.08]"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowViewer(true);
@@ -80,7 +81,7 @@ const CertificateCard: React.FC<CertificateCardProps> = ({
                 <Button
                   variant="outline"
                   size="icon"
-                  className="rounded-full bg-black/50 hover:bg-accent/80 border-white/20 btn-3d"
+                  className="rounded-full bg-black/50 hover:bg-violet-500/80 border-white/[0.08]"
                   onClick={(e) => e.stopPropagation()}
                   aria-label="View certificate externally"
                 >

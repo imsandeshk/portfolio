@@ -51,16 +51,11 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   return (
     <motion.div
-      className={`glass-card rounded-xl p-5 hover-glow transition-all duration-300 border-l-4 ${task.completed ? "border-l-green-500/50 opacity-60" : `border-l-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'blue'}-500/50`}`}
-      initial={{ opacity: 0, y: 20 }}
+      className={`rounded-2xl p-5 bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.1] transition-colors duration-300 border-l-4 ${task.completed ? "border-l-green-500/50 opacity-60" : `border-l-${task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'yellow' : 'blue'}-500/50`}`}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      viewport={{ once: true, margin: "-50px" }}
-      whileHover={{
-        y: -5,
-        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.3)",
-        transition: { duration: 0.3, ease: "easeOut" }
-      }}
+      transition={{ duration: 0.3 }}
+      viewport={{ once: true, margin: "-30px" }}
     >
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-start gap-3">

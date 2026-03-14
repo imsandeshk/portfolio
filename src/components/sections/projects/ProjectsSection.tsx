@@ -139,54 +139,35 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         {/* Featured Projects - Desktop View with Large Cards */}
         {!isMobile && featuredProjects.length > 0 && (
           <div className="mb-16">
-            <h3 className="text-2xl font-playfair font-medium mb-8 text-center md:text-left">
+            <h3 className="text-xl font-display font-semibold mb-8 text-center text-zinc-300">
               Featured Projects
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {featuredProjects.map((project) => (
                 <motion.div
                   key={project.id}
-                  className="relative group overflow-hidden rounded-3xl bg-black/40 backdrop-blur-xl border-2 border-white/20 cursor-pointer"
+                  className="relative group overflow-hidden rounded-[32px] cursor-pointer border border-white/[0.07] bg-white/[0.03] backdrop-blur-md md:backdrop-blur-2xl"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   viewport={{ once: true, margin: "-100px" }}
                   onClick={() => handleProjectClick(project)}
-                  style={{ 
-                    transformStyle: 'preserve-3d',
-                    perspective: '1000px',
-                    boxShadow: `
-                      0 12px 28px rgba(0, 0, 0, 0.6),
-                      0 6px 16px rgba(0, 0, 0, 0.4),
-                      0 0 40px rgba(255, 135, 66, 0.15),
-                      inset 0 2px 4px rgba(255, 255, 255, 0.1),
-                      inset 0 -2px 4px rgba(0, 0, 0, 0.3)
-                    `
-                  }}
                   whileHover={{
-                    y: -8,
-                    scale: 1.01,
-                    boxShadow: `
-                      0 20px 40px rgba(0, 0, 0, 0.7),
-                      0 10px 24px rgba(0, 0, 0, 0.5),
-                      0 0 60px rgba(255, 135, 66, 0.3),
-                      inset 0 2px 6px rgba(255, 255, 255, 0.15),
-                      inset 0 -2px 6px rgba(0, 0, 0, 0.4)
-                    `,
+                    y: -4,
                     transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
                   }}
                 >
-                  <div className="relative h-[300px] md:h-[400px] overflow-hidden">
+                  <div className="relative h-[260px] md:h-[340px] overflow-hidden rounded-[32px]">
                     <motion.div 
-                      className="bg-gradient-to-b from-transparent to-black/90 z-10 absolute inset-0 flex flex-col justify-end p-8"
+                      className="bg-gradient-to-b from-transparent via-transparent to-black/95 z-10 absolute inset-0 flex flex-col justify-end p-8"
                       initial={{ opacity: 0.6 }}
                       whileHover={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-3">
                         <div>
-                          <h3 className="text-3xl md:text-4xl font-bold text-gradient mb-2">{project.title}</h3>
-                          <p className="text-white/80 text-lg mb-4 line-clamp-2">{project.description}</p>
+                          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 drop-shadow-lg">{project.title}</h3>
+                          <p className="text-white/50 text-sm md:text-base mb-3 line-clamp-2">{project.description}</p>
                         </div>
 
                         <div className="flex gap-3 items-center justify-start">
@@ -195,15 +176,10 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                               size="sm" 
                               variant="outline" 
                               asChild
-                              className="bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+                              className="bg-violet-500/15 hover:bg-violet-500/30 text-violet-200 hover:text-white transition-all duration-300 border-violet-500/25 hover:border-violet-500/50 rounded-full backdrop-blur-sm"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              <a 
-                                href={project.url} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="flex items-center"
-                              >
+                              <a href={project.url} target="_blank" rel="noopener noreferrer" className="flex items-center">
                                 View Live
                               </a>
                             </Button>
@@ -214,15 +190,10 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                               size="sm" 
                               variant="outline" 
                               asChild
-                              className="bg-white/5 hover:bg-accent hover:text-white transition-all duration-300 border-white/20"
+                              className="bg-white/[0.06] hover:bg-white/[0.12] text-zinc-300 hover:text-white transition-all duration-300 border-white/[0.1] hover:border-white/[0.2] rounded-full backdrop-blur-sm"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              <a 
-                                href={project.github} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="flex items-center"
-                              >
+                              <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center">
                                 View Code
                               </a>
                             </Button>
@@ -230,27 +201,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
                           {isAdmin && (
                             <div className="ml-auto">
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleEditProject(project);
-                                }}
-                                className="mr-2"
-                              >
-                                Edit
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="destructive" 
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDeleteProject(project);
-                                }}
-                              >
-                                Delete
-                              </Button>
+                              <Button size="sm" variant="outline" onClick={(e) => { e.stopPropagation(); handleEditProject(project); }} className="mr-2">Edit</Button>
+                              <Button size="sm" variant="destructive" onClick={(e) => { e.stopPropagation(); handleDeleteProject(project); }}>Delete</Button>
                             </div>
                           )}
                         </div>
@@ -262,8 +214,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                       alt={project.title}
                       className="w-full h-full object-cover"
                       initial={{ scale: 1 }}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.5 }}
+                      whileHover={{ scale: 1.06 }}
+                      transition={{ duration: 0.6 }}
                     />
                   </div>
                 </motion.div>
@@ -275,7 +227,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         {/* Featured Projects - Mobile View as Carousel */}
         {isMobile && featuredProjects.length > 0 && (
           <div className="mb-12">
-            <h3 className="text-xl font-playfair font-medium mb-6 text-center">
+            <h3 className="text-lg font-display font-semibold mb-6 text-center text-zinc-300">
               Featured Projects
             </h3>
             <Carousel className="w-full">
@@ -283,7 +235,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
                 {featuredProjects.map((project) => (
                   <CarouselItem key={project.id} className="md:basis-1/1">
                     <div 
-                      className="relative rounded-lg overflow-hidden h-[250px]"
+                      className="relative rounded-[32px] overflow-hidden h-[250px] border border-white/[0.07] bg-white/[0.03] backdrop-blur-md"
                       onClick={() => handleProjectClick(project)}
                     >
                       <img 
@@ -309,7 +261,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 
         {/* Other Projects with vertical layout for mobile */}
         <div className="mt-12">
-          <h3 className="text-2xl font-playfair font-medium mb-8 text-center">
+          <h3 className="text-xl font-display font-semibold mb-8 text-center text-zinc-300">
             More Projects
           </h3>
 
@@ -335,111 +287,58 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               {otherProjects.map((project) => (
                 <motion.div 
                   key={project.id}
-                  className="bg-black/40 backdrop-blur-xl border-2 border-white/20 rounded-3xl overflow-hidden cursor-pointer"
+                  className="relative group rounded-[32px] overflow-hidden cursor-pointer"
                   onClick={() => handleProjectClick(project)}
-                  style={{ 
-                    transformStyle: 'preserve-3d',
-                    perspective: '1000px',
-                    boxShadow: `
-                      0 8px 20px rgba(0, 0, 0, 0.5),
-                      0 4px 12px rgba(0, 0, 0, 0.3),
-                      0 0 30px rgba(255, 135, 66, 0.12),
-                      inset 0 1px 3px rgba(255, 255, 255, 0.1),
-                      inset 0 -1px 3px rgba(0, 0, 0, 0.25)
-                    `
-                  }}
-                  whileHover={{ 
-                    y: -6,
-                    scale: 1.01,
-                    boxShadow: `
-                      0 12px 28px rgba(0, 0, 0, 0.6),
-                      0 6px 16px rgba(0, 0, 0, 0.4),
-                      0 0 50px rgba(255, 135, 66, 0.25),
-                      inset 0 2px 4px rgba(255, 255, 255, 0.12),
-                      inset 0 -2px 4px rgba(0, 0, 0, 0.3)
-                    `,
-                    transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
-                  }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <div className="relative h-[200px] overflow-hidden">
-                    <img 
-                      src={project.image || "/placeholder.svg"} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  </div>
-                  <div className="p-5">
-                    <h4 className="text-xl font-bold mb-2 text-white">{project.title}</h4>
-                    <p className="text-sm text-white/70 mb-4 line-clamp-2 leading-relaxed">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags?.slice(0, 3).map((tag, idx) => (
-                        <span 
-                          key={idx}
-                          className="px-2.5 py-1 bg-white/10 rounded-lg text-xs text-white/80 backdrop-blur-sm border border-white/10"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                  {/* Frosted glass border */}
+                  <div className="absolute inset-0 rounded-[32px] border border-white/[0.07] z-[3] pointer-events-none" />
+                  <div className="absolute inset-0 rounded-[32px] bg-white/[0.03] backdrop-blur-md z-[1]" />
+                  
+                  <div className="relative z-[2]">
+                    <div className="relative h-[200px] overflow-hidden rounded-t-[32px]">
+                      <img 
+                        src={project.image || "/placeholder.svg"} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                     </div>
-                    <div className="flex justify-between items-center">
-                      <div className="flex space-x-2">
-                        {project.url && (
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            asChild
-                            className="text-xs bg-white/10 border-white/20 hover:bg-white/20 text-white"
-                            onClick={(e) => e.stopPropagation()}
+                    <div className="p-5">
+                      <h4 className="text-xl font-bold mb-2 text-white">{project.title}</h4>
+                      <p className="text-sm text-zinc-500 mb-4 line-clamp-2 leading-relaxed">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags?.slice(0, 3).map((tag, idx) => (
+                          <span 
+                            key={idx}
+                            className="px-2.5 py-1 bg-violet-500/10 rounded-full text-xs text-violet-300 border border-violet-500/15"
                           >
-                            <a href={project.url} target="_blank" rel="noopener noreferrer">
-                              Live
-                            </a>
-                          </Button>
-                        )}
-                        {project.github && (
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            asChild
-                            className="text-xs bg-white/10 border-white/20 hover:bg-white/20 text-white"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <a href={project.github} target="_blank" rel="noopener noreferrer">
-                              Code
-                            </a>
-                          </Button>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div className="flex space-x-2">
+                          {project.url && (
+                            <Button size="sm" variant="outline" asChild className="text-xs bg-violet-500/[0.08] border-violet-500/15 hover:bg-violet-500/20 text-violet-300 rounded-full" onClick={(e) => e.stopPropagation()}>
+                              <a href={project.url} target="_blank" rel="noopener noreferrer">Live</a>
+                            </Button>
+                          )}
+                          {project.github && (
+                            <Button size="sm" variant="outline" asChild className="text-xs bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08] text-zinc-400 rounded-full" onClick={(e) => e.stopPropagation()}>
+                              <a href={project.github} target="_blank" rel="noopener noreferrer">Code</a>
+                            </Button>
+                          )}
+                        </div>
+                        {isAdmin && (
+                          <div className="flex space-x-2">
+                            <Button size="sm" variant="ghost" className="text-xs h-8" onClick={(e) => { e.stopPropagation(); handleEditProject(project); }}>Edit</Button>
+                            <Button size="sm" variant="destructive" className="text-xs h-8" onClick={(e) => { e.stopPropagation(); handleDeleteProject(project); }}>Delete</Button>
+                          </div>
                         )}
                       </div>
-                      {isAdmin && (
-                        <div className="flex space-x-2">
-                          <Button 
-                            size="sm" 
-                            variant="ghost"
-                            className="text-xs h-8"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleEditProject(project);
-                            }}
-                          >
-                            Edit
-                          </Button>
-                          <Button 
-                            size="sm" 
-                            variant="destructive"
-                            className="text-xs h-8"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteProject(project);
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </motion.div>

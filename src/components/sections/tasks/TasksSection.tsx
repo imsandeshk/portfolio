@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Task } from "@/services/storageService";
 import SectionHeading from "@/components/SectionHeading";
+import TabSwitcher from "@/components/TabSwitcher";
 import TaskCard from "./TaskCard";
 import TaskForm from "./TaskForm";
 import { Button } from "@/components/ui/button";
@@ -132,41 +133,35 @@ const TasksSection: React.FC<TasksSectionProps> = ({
     setIsFormOpen(true);
   };
 
-  // Animation variants
+  // Animation variants — optimized for performance
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.05,
+        delayChildren: 0.1
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 12 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20
+        duration: 0.3,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   };
 
-  const tabVariants = {
-    inactive: { 
-      color: "rgba(255, 255, 255, 0.7)",
-      backgroundColor: "transparent" 
-    },
-    active: { 
-      color: "rgba(255, 255, 255, 1)",
-      backgroundColor: "rgba(255, 255, 255, 0.1)"
-    },
-  };
+  const taskFilterTabs = [
+    { id: "all", label: "All" },
+    { id: "active", label: "In Progress" },
+    { id: "completed", label: "Completed" },
+  ];
 
   return (
     <section id="tasks" className="py-16">
@@ -182,49 +177,16 @@ const TasksSection: React.FC<TasksSectionProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="flex justify-between items-center w-full max-w-2xl">
-            <motion.div 
-              className="flex justify-center w-full max-w-md mx-auto"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className="backdrop-blur-md bg-black/30 p-1 rounded-xl border border-white/10 flex w-full">
-                {["all", "active", "completed"].map((tab) => (
-                  <motion.button
-                    key={tab}
-                    onClick={() => setFilter(tab as "all" | "active" | "completed")}
-                    className={`
-                      relative flex-1 px-6 py-2.5 rounded-lg text-sm font-medium
-                      transition-all capitalize flex items-center justify-center
-                    `}
-                    animate={filter === tab ? "active" : "inactive"}
-                    variants={tabVariants}
-                    whileHover={{ scale: filter === tab ? 1 : 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {filter === tab && (
-                      <motion.span
-                        className="absolute inset-0 bg-white/10 rounded-lg"
-                        layoutId="taskTabBackground"
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 30,
-                          duration: 0.3
-                        }}
-                      />
-                    )}
-                    <span className="relative z-10">
-                      {tab === "active" ? "In Progress" : tab}
-                    </span>
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
+          <div className="flex flex-col items-center w-full max-w-2xl gap-4">
+            <TabSwitcher
+              tabs={taskFilterTabs}
+              activeTab={filter}
+              onTabChange={(tabId) => setFilter(tabId as "all" | "active" | "completed")}
+              layoutId="taskFilterTab"
+            />
             
             {isAdmin && onAddTask && (
-              <Button onClick={handleAddTask} size="sm" className="ml-4">
+              <Button onClick={handleAddTask} size="sm">
                 <Plus className="mr-2 h-4 w-4" />
                 Add Task
               </Button>

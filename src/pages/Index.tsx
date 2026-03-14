@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect, useMemo, useCallback, lazy, Suspense } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Code, Award, CheckSquare } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-import ParticlesBackground from "@/components/ParticlesBackground";
 import Hero from "@/components/sections/Hero";
 import ProjectsSection from "@/components/sections/projects/ProjectsSection";
 import CertificatesSection from "@/components/sections/certificates/CertificatesSection";
@@ -14,10 +14,11 @@ import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/Footer";
 import TabSwitcher from "@/components/TabSwitcher";
 import ScrollToTop from "@/components/ScrollToTop";
-import SplineBackground from '@/components/SplineBackground';
+
 import ScrollReveal from "@/components/ScrollReveal";
 import FloatingElements from "@/components/FloatingElements";
 import SectionDivider from "@/components/SectionDivider";
+import CursorGlow from "@/components/InteractiveGrid";
 
 import {
   getProfile,
@@ -42,7 +43,12 @@ import {
   fetchContact as fetchContactRemote,
 } from "@/services/dataClient";
 
+const ParticlesBackground = lazy(() => import("@/components/ParticlesBackground"));
+
 const Index = () => {
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = useReducedMotion();
+
   // Local state initialized with static defaults; replaced with Supabase data after mount
   const [profile, setProfile] = useState(getProfile());
   const [socialLinks, setSocialLinks] = useState(getSocialLinks());
@@ -57,13 +63,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("projects");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mainContentVisible, setMainContentVisible] = useState(false);
-  const [showTopBlur, setShowTopBlur] = useState(false);
-  const [showBottomBlur, setShowBottomBlur] = useState(false);
-
-  // Scroll-based parallax
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.6]);
+  const shouldUseHeavyEffects = !isMobile && !prefersReducedMotion;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -71,21 +71,8 @@ const Index = () => {
       setIsInitialLoad(false);
     }, 100);
     
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = window.innerHeight;
-      
-      setShowTopBlur(scrollTop > 50);
-      setShowBottomBlur(scrollTop + clientHeight < scrollHeight - 100);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -122,77 +109,52 @@ const Index = () => {
     return () => { mounted = false; };
   }, []);
 
-  const sectionVariants = {
+  const sectionVariants = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-        duration: 0.8,
+        staggerChildren: isMobile ? 0.1 : 0.2,
+        delayChildren: 0.05,
+        duration: isMobile ? 0.5 : 0.8,
         ease: [0.25, 0.46, 0.45, 0.94],
       }
     }
-  };
+  }), [isMobile]);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 60, scale: 0.95 },
+  const itemVariants = useMemo(() => ({
+    hidden: { opacity: 0, y: isMobile ? 15 : 30 },
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
       transition: { 
-        duration: 1,
+        duration: isMobile ? 0.4 : 0.8,
         ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
-  };
+  }), [isMobile]);
 
   return (
     <>
+      {/* Cursor-following gradient glow */}
+      {shouldUseHeavyEffects && <CursorGlow />}
+
       {/* Floating ambient elements */}
-      <FloatingElements className="z-0" />
+      {shouldUseHeavyEffects && <FloatingElements className="z-[3]" />}
 
-      {/* Premium top gradient blur - smooth fade - taller on mobile */}
-      <motion.div 
-        className="fixed top-0 left-0 w-full h-28 sm:h-24 md:h-20 pointer-events-none z-50"
-        style={{
-          background: 'linear-gradient(to bottom, #000000 0%, #000000 20%, rgba(0,0,0,0.9) 40%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.2) 80%, transparent 100%)',
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showTopBlur ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-      />
-      
-      {/* Premium bottom gradient blur - smooth fade - taller on mobile */}
-      <motion.div 
-        className="fixed bottom-0 left-0 w-full h-24 sm:h-20 md:h-16 pointer-events-none z-50"
-        style={{
-          background: 'linear-gradient(to top, #000000 0%, #000000 25%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0.15) 85%, transparent 100%)',
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showBottomBlur ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-      />
-
-      {/* Deep background with mesh gradient */}
-      <motion.div 
-        className="fixed inset-0 z-[-20]"
-        style={{ y: backgroundY, opacity: backgroundOpacity }}
-      >
-        <div className="absolute inset-0 bg-black" />
+      {/* Deep background */}
+      <div className="fixed inset-0 z-[1]">
+        <div className="absolute inset-0 bg-[#010101]" />
         <div 
           className="absolute inset-0"
           style={{
             background: `
-              radial-gradient(ellipse 100% 80% at 20% 10%, rgba(255, 140, 66, 0.08) 0%, transparent 50%),
-              radial-gradient(ellipse 80% 60% at 80% 20%, rgba(74, 144, 226, 0.06) 0%, transparent 50%),
-              radial-gradient(ellipse 90% 70% at 50% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-              radial-gradient(ellipse 70% 50% at 10% 60%, rgba(255, 107, 157, 0.04) 0%, transparent 50%)
+              radial-gradient(ellipse 80% 60% at 15% 10%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+              radial-gradient(ellipse 70% 50% at 85% 25%, rgba(99, 102, 241, 0.03) 0%, transparent 50%)
             `
           }}
         />
-      </motion.div>
+      </div>
 
       <div className="relative z-10 bg-transparent min-h-screen">
         <AnimatePresence mode="wait">
@@ -204,7 +166,11 @@ const Index = () => {
               transition={{ duration: 1.5, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="w-full"
             >
-              <ParticlesBackground />
+              {shouldUseHeavyEffects && (
+                <Suspense fallback={null}>
+                  <ParticlesBackground />
+                </Suspense>
+              )}
 
               <motion.div
                 initial={isInitialLoad ? "hidden" : false}
@@ -224,10 +190,10 @@ const Index = () => {
                   <section id="content-tabs" className="section-wrapper">
                     <div className="container mx-auto px-4">
                       <motion.div
-                        initial={{ opacity: 0, y: 30 }}
+                        initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        transition={{ duration: isMobile ? 0.4 : 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                       >
                         <TabSwitcher
                           tabs={tabs}
@@ -236,17 +202,18 @@ const Index = () => {
                         />
                       </motion.div>
                       
-                      <AnimatePresence mode="wait">
+                      <AnimatePresence initial={false} mode="wait">
                         <motion.div
                           key={activeTab}
-                          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+                          initial={{ opacity: 0, y: 8, scale: 0.99 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -30, scale: 0.98 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.99 }}
                           transition={{
-                            duration: 0.6,
+                            duration: isMobile ? 0.2 : 0.35,
                             ease: [0.25, 0.46, 0.45, 0.94],
                           }}
                           className="min-h-[400px]"
+                          style={{ willChange: "opacity, transform" }}
                         >
                           {activeTab === "projects" && <ProjectsSection projects={projects} />}
                           {activeTab === "certificates" && (
@@ -305,7 +272,6 @@ const Index = () => {
         </AnimatePresence>
       </div>
 
-      <SplineBackground />
     </>
   );
 };

@@ -80,25 +80,23 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   };
 
   const skillVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.8 },
+    hidden: { opacity: 0, y: 10 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      scale: 1,
       transition: {
         type: "spring",
-        stiffness: 260,
-        damping: 20
+        stiffness: 300,
+        damping: 24
       }
     },
     hover: {
-      scale: 1.08,
-      boxShadow: "0 0 25px rgba(255, 255, 255, 0.5)",
-      borderColor: "rgba(255, 255, 255, 0.5)",
+      scale: 1.03,
+      borderColor: "rgba(139, 92, 246, 0.25)",
       transition: {
         type: "spring",
         stiffness: 400,
-        damping: 10
+        damping: 20
       }
     }
   };
@@ -168,7 +166,7 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
   return (
     <section id="skills" className="py-16">
       <div className="container mx-auto">
-        <SectionHeading title="Tools I Use" subtitle="My technical expertise" />
+        <SectionHeading title="Tools I Use" subtitle="Technologies and frameworks I work with" />
 
         {isAdmin && onAddSkill && (
           <motion.div 
@@ -186,17 +184,15 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
 
       {/* Full-width container - no padding on mobile, with fade on desktop */}
       <div className="w-full relative">
-        {/* Animated glow pulse fade effect - only on desktop */}
-        <div className="hidden md:block absolute left-0 top-0 h-full w-48 z-10 pointer-events-none" 
+        {/* Subtle fade edges - desktop only */}
+        <div className="hidden md:block absolute left-0 top-0 h-full w-32 z-10 pointer-events-none" 
           style={{ 
-            background: 'linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)',
-            animation: 'glowPulseLeft 3s ease-in-out infinite'
+            background: 'linear-gradient(to right, rgba(1,1,1,0.95) 0%, transparent 100%)'
           }}
         />
-        <div className="hidden md:block absolute right-0 top-0 h-full w-48 z-10 pointer-events-none" 
+        <div className="hidden md:block absolute right-0 top-0 h-full w-32 z-10 pointer-events-none" 
           style={{ 
-            background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)',
-            animation: 'glowPulseRight 3s ease-in-out infinite'
+            background: 'linear-gradient(to left, rgba(1,1,1,0.95) 0%, transparent 100%)'
           }}
         />
         
@@ -213,33 +209,10 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
               key={skill.id}
               variants={skillVariants}
               whileHover="hover"
-              className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
-              style={{
-                backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
-                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
-                transformStyle: 'preserve-3d'
-              }}
+              className="group relative flex items-center gap-2.5 rounded-full px-4 py-2.5 text-white text-sm font-medium cursor-default border border-white/[0.07] hover:border-white/[0.12] bg-white/[0.03] hover:bg-white/[0.05] backdrop-blur-2xl transition-all duration-300"
             >
-              <img src={getIconUrl(skill.name)} alt={skill.name} loading="lazy" decoding="async" className="w-6 h-6 object-contain relative z-10" />
-              <span className="relative z-10">{skill.name}</span>
-              {/* Shine effect overlay */}
-              <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
-                initial={false}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  animate={{
-                    x: ["-100%", "200%"],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    repeatDelay: 0.5,
-                  }}
-                />
-              </motion.div>
+              <img src={getIconUrl(skill.name)} alt={skill.name} loading="lazy" decoding="async" className="w-4.5 h-4.5 object-contain" style={{ width: '18px', height: '18px' }} />
+              <span className="text-zinc-400 group-hover:text-zinc-200 transition-colors duration-300 text-[13px]">{skill.name}</span>
             </motion.div>
           ))}
 
@@ -248,34 +221,11 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
             <motion.div
               variants={skillVariants}
               whileHover="hover"
-              className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative cursor-pointer"
-              style={{
-                backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
-                borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
-                transformStyle: 'preserve-3d'
-              }}
+              className="group flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium cursor-pointer border border-violet-500/15 bg-violet-500/[0.04] hover:bg-violet-500/[0.08] hover:border-violet-500/25 backdrop-blur-2xl transition-all duration-300"
               onClick={() => setShowMore(true)}
             >
-              <span title="More" className="w-6 h-6 flex items-center justify-center relative z-10">⭐</span>
-              <span className="relative z-10">more...</span>
-              {/* Shine effect overlay */}
-              <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
-                initial={false}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  animate={{
-                    x: ["-100%", "200%"],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    repeatDelay: 0.5,
-                  }}
-                />
-              </motion.div>
+              <span title="More" className="w-4 h-4 flex items-center justify-center text-xs">⭐</span>
+              <span className="text-violet-400 group-hover:text-violet-300 transition-colors text-[13px]">more...</span>
             </motion.div>
           )}
         </motion.div>
@@ -295,33 +245,10 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
                   key={skill.id}
                   variants={skillVariants}
                   whileHover="hover"
-                  className="skill-pill-3d group flex items-center gap-2 rounded-full px-4 py-2 border backdrop-blur text-white text-sm font-medium overflow-hidden relative"
-                  style={{
-                    backgroundColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(20,20,20,0.9)',
-                    borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.15)',
-                    transformStyle: 'preserve-3d'
-                  }}
+                  className="group flex items-center gap-2.5 rounded-full px-4 py-2.5 text-sm font-medium cursor-default border border-white/[0.07] hover:border-white/[0.12] bg-white/[0.03] hover:bg-white/[0.05] backdrop-blur-2xl transition-all duration-300"
                 >
-                  <span className="relative z-10">{softSkillIcons[name]}</span>
-                  <span className="relative z-10">{skill.name}</span>
-                  {/* Shine effect overlay */}
-                  <motion.div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
-                    initial={false}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                      animate={{
-                        x: ["-100%", "200%"],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        repeatDelay: 0.5,
-                      }}
-                    />
-                  </motion.div>
+                  <span>{softSkillIcons[name]}</span>
+                  <span className="text-zinc-400 group-hover:text-zinc-200 transition-colors duration-300 text-[13px]">{skill.name}</span>
                 </motion.div>
               );
             })}
@@ -396,27 +323,6 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({
         </AlertDialogContent>
       </AlertDialog>
       
-      <style>
-        {`
-        @keyframes glowPulseLeft {
-          0%, 100% {
-            box-shadow: inset -20px 0 40px rgba(255, 140, 66, 0.1);
-          }
-          50% {
-            box-shadow: inset -30px 0 60px rgba(255, 140, 66, 0.2);
-          }
-        }
-        
-        @keyframes glowPulseRight {
-          0%, 100% {
-            box-shadow: inset 20px 0 40px rgba(255, 140, 66, 0.1);
-          }
-          50% {
-            box-shadow: inset 30px 0 60px rgba(255, 140, 66, 0.2);
-          }
-        }
-        `}
-      </style>
     </section>
   );
 };

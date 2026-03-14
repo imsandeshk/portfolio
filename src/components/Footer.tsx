@@ -1,6 +1,4 @@
 
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
 import SocialLinks from "./SocialLinks";
 import { SocialLink } from "@/services/storageService";
 
@@ -12,57 +10,24 @@ const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 border-t border-white/10">
-      <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <SocialLinks 
-              links={socialLinks} 
-              className="mb-4" 
-              iconSize={24}
-            />
-          </motion.div>
+    <footer className="relative py-20">
+      {/* Top border gradient */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-sm h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
+      
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center justify-center gap-8">
+          <SocialLinks links={socialLinks} iconSize={18} />
 
-          {/* Resume button at the end */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            viewport={{ once: true }}
-            className="mb-4"
+          <a
+            href="/resume"
+            className="group inline-flex items-center justify-center rounded-full px-6 py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-all duration-500 border border-white/[0.07] hover:border-white/[0.15] bg-white/[0.03] backdrop-blur-2xl"
           >
-            <a
-              href="/resume"
-              className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-accent/90 text-white hover:bg-accent transition-colors"
-            >
-              View Resume
-            </a>
-          </motion.div>
+            View Resume
+          </a>
           
-          <motion.p
-            className="text-sm text-muted-foreground text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            © {currentYear} Sandesh K. All rights reserved.
-          </motion.p>
-          
-          <motion.p
-            className="text-xs text-muted-foreground mt-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            Made by Sandesh K
-          </motion.p>
+          <p className="text-xs text-zinc-600">
+            © {currentYear} Sandesh K
+          </p>
         </div>
       </div>
     </footer>

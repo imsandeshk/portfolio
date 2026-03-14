@@ -106,16 +106,16 @@ const InterestsSection: React.FC = () => {
     setIsDragging(false);
   };
 
-  // First row of interests - Orange theme colors
+  // First row of interests - Violet/Cyan theme colors
   const baseInterestsRow1: Interest[] = [
-    { id: "web-dev", name: "Web Development", icon: Code2, color: "#FF8C42" },
-    { id: "software-dev", name: "Software Development", icon: Monitor, color: "#FF6B35" },
-    { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#F7931E" },
-    { id: "game-dev", name: "Game Development", icon: Gamepad, color: "#FF8C42" },
-    { id: "ai", name: "Artificial Intelligence", icon: Brain, color: "#FF6B35" },
-    { id: "ml", name: "Machine Learning", icon: Infinity, color: "#F7931E" },
-    { id: "fullstack", name: "Full Stack", icon: Package, color: "#FF8C42" },
-    { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#FF6B35" },
+    { id: "web-dev", name: "Web Development", icon: Code2, color: "#8B5CF6" },
+    { id: "software-dev", name: "Software Development", icon: Monitor, color: "#7C3AED" },
+    { id: "data-viz", name: "Data Visualization", icon: BarChart, color: "#06B6D4" },
+    { id: "game-dev", name: "Game Development", icon: Gamepad, color: "#8B5CF6" },
+    { id: "ai", name: "Artificial Intelligence", icon: Brain, color: "#7C3AED" },
+    { id: "ml", name: "Machine Learning", icon: Infinity, color: "#06B6D4" },
+    { id: "fullstack", name: "Full Stack", icon: Package, color: "#8B5CF6" },
+    { id: "beta-testing", name: "Beta Testing", icon: TestTube, color: "#7C3AED" },
   ];
 
   // Create array with 3 repetitions for seamless infinite scroll
@@ -124,16 +124,16 @@ const InterestsSection: React.FC = () => {
     id: `${interest.id}-${index}`
   }));
 
-  // Second row of interests - Orange theme colors
+  // Second row of interests - Violet/Cyan theme colors
   const baseInterestsRow2: Interest[] = [
-    { id: "databases", name: "Databases", icon: Database, color: "#FF8C42" },
-    { id: "cybersecurity", name: "Cybersecurity", icon: Key, color: "#FF6B35" },
-    { id: "cloud-computing", name: "Cloud Computing", icon: Package, color: "#F7931E" },
-    { id: "mobile-dev", name: "Mobile Development", icon: Monitor, color: "#FF8C42" },
-    { id: "devops", name: "DevOps", icon: TestTube, color: "#FF6B35" },
-    { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#F7931E" },
-    { id: "blockchain", name: "Blockchain", icon: Brain, color: "#FF8C42" },
-    { id: "api-dev", name: "API Development", icon: Package, color: "#FF6B35" },
+    { id: "databases", name: "Databases", icon: Database, color: "#06B6D4" },
+    { id: "cybersecurity", name: "Cybersecurity", icon: Key, color: "#8B5CF6" },
+    { id: "cloud-computing", name: "Cloud Computing", icon: Package, color: "#7C3AED" },
+    { id: "mobile-dev", name: "Mobile Development", icon: Monitor, color: "#06B6D4" },
+    { id: "devops", name: "DevOps", icon: TestTube, color: "#8B5CF6" },
+    { id: "ui-design", name: "UI/UX Design", icon: Code2, color: "#7C3AED" },
+    { id: "blockchain", name: "Blockchain", icon: Brain, color: "#06B6D4" },
+    { id: "api-dev", name: "API Development", icon: Package, color: "#8B5CF6" },
   ];
 
   // Create array with 3 repetitions for seamless infinite scroll
@@ -152,12 +152,12 @@ const InterestsSection: React.FC = () => {
       <div className="w-full space-y-2">
         {/* First row - scrolling left */}
         <div className="relative overflow-hidden">
-          {/* Animated glow pulse fade effect - only on desktop */}
-          <div className="hidden md:block absolute left-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-left" 
-            style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          {/* Subtle fade edges - desktop only */}
+          <div className="hidden md:block absolute left-0 top-0 h-full w-32 z-10 pointer-events-none" 
+            style={{ background: 'linear-gradient(to right, rgba(1,1,1,0.95) 0%, transparent 100%)' }}
           />
-          <div className="hidden md:block absolute right-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-right" 
-            style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          <div className="hidden md:block absolute right-0 top-0 h-full w-32 z-10 pointer-events-none" 
+            style={{ background: 'linear-gradient(to left, rgba(1,1,1,0.95) 0%, transparent 100%)' }}
           />
           
           <motion.div 
@@ -172,33 +172,25 @@ const InterestsSection: React.FC = () => {
             onTouchEnd={() => handleMouseUp(1)}
             style={{ userSelect: 'none', scrollBehavior: 'auto', x: parallaxRow1 }}
           >
-            <div className="flex gap-1 md:gap-4">
+            <div className="flex gap-1 md:gap-3">
               {interestsRow1.map((interest) => (
                 <motion.div
                   key={interest.id}
-                  className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                  className="group flex-shrink-0 rounded-[32px] p-2 md:p-3 flex items-center gap-1.5 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[52px] border border-white/[0.07] hover:border-white/[0.1] bg-white/[0.03] backdrop-blur-2xl transition-all duration-300"
                   whileHover={{ 
-                    scale: 1.05, 
-                    transition: { 
-                      type: "spring", 
-                      stiffness: 400, 
-                      damping: 10 
-                    } 
-                  }}
-                  style={{
-                    backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
-                    borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
+                    scale: 1.03, 
+                    transition: { type: "spring", stiffness: 400, damping: 20 } 
                   }}
                 >
-                  <motion.div 
-                    className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
-                    style={{ backgroundColor: `${interest.color}30` }}
+                  <div 
+                    className="flex items-center justify-center w-5 h-5 md:w-7 md:h-7 rounded-full"
+                    style={{ backgroundColor: `${interest.color}10` }}
                   >
-                    <span style={{ color: isDark ? interest.color : '#fff' }}>
-                      <interest.icon size={16} />
+                    <span style={{ color: interest.color, opacity: 0.8 }}>
+                      <interest.icon size={14} />
                     </span>
-                  </motion.div>
-                  <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
+                  </div>
+                  <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-zinc-400">
                     {interest.name}
                   </span>
                 </motion.div>
@@ -209,12 +201,12 @@ const InterestsSection: React.FC = () => {
 
         {/* Second row - scrolling right */}
         <div className="relative overflow-hidden">
-          {/* Animated glow pulse fade effect - only on desktop */}
-          <div className="hidden md:block absolute left-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-left" 
-            style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          {/* Subtle fade edges - desktop only */}
+          <div className="hidden md:block absolute left-0 top-0 h-full w-32 z-10 pointer-events-none" 
+            style={{ background: 'linear-gradient(to right, rgba(1,1,1,0.95) 0%, transparent 100%)' }}
           />
-          <div className="hidden md:block absolute right-0 top-0 h-full w-48 z-10 pointer-events-none fade-glow-right" 
-            style={{ background: 'linear-gradient(to left, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.3) 70%, transparent 100%)' }}
+          <div className="hidden md:block absolute right-0 top-0 h-full w-32 z-10 pointer-events-none" 
+            style={{ background: 'linear-gradient(to left, rgba(1,1,1,0.95) 0%, transparent 100%)' }}
           />
           
           <motion.div 
@@ -229,33 +221,25 @@ const InterestsSection: React.FC = () => {
             onTouchEnd={() => handleMouseUp(2)}
             style={{ userSelect: 'none', scrollBehavior: 'auto', x: parallaxRow2 }}
           >
-            <div className="flex gap-1 md:gap-4">
+            <div className="flex gap-1 md:gap-3">
               {interestsRow2.map((interest) => (
                 <motion.div
                   key={interest.id}
-                  className="badge-3d flex-shrink-0 rounded-[1.2rem] border backdrop-blur-md p-2 md:p-3 flex items-center gap-1 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[60px]"
+                  className="group flex-shrink-0 rounded-[32px] p-2 md:p-3 flex items-center gap-1.5 md:gap-3 min-w-[90px] md:min-w-[180px] h-[40px] md:h-[52px] border border-white/[0.07] hover:border-white/[0.1] bg-white/[0.03] backdrop-blur-2xl transition-all duration-300"
                   whileHover={{ 
-                    scale: 1.05, 
-                    transition: { 
-                      type: "spring", 
-                      stiffness: 400, 
-                      damping: 10 
-                    } 
-                  }}
-                  style={{
-                    backgroundColor: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(26,31,44,0.9)',
-                    borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(126,105,171,0.3)'
+                    scale: 1.03, 
+                    transition: { type: "spring", stiffness: 400, damping: 20 } 
                   }}
                 >
                   <div 
-                    className="flex items-center justify-center w-6 h-6 md:w-10 md:h-10 rounded-full relative z-10" 
-                    style={{ backgroundColor: `${interest.color}30` }}
+                    className="flex items-center justify-center w-5 h-5 md:w-7 md:h-7 rounded-full"
+                    style={{ backgroundColor: `${interest.color}10` }}
                   >
-                    <span style={{ color: isDark ? interest.color : '#fff' }}>
-                      <interest.icon size={16} />
+                    <span style={{ color: interest.color, opacity: 0.8 }}>
+                      <interest.icon size={14} />
                     </span>
                   </div>
-                  <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-white relative z-10">
+                  <span className="text-[0.7rem] md:text-sm font-medium whitespace-nowrap truncate text-zinc-400">
                     {interest.name}
                   </span>
                 </motion.div>
@@ -282,32 +266,6 @@ const InterestsSection: React.FC = () => {
         .infinite-scroll-right > div {
           animation: infiniteScrollRight 40s linear infinite;
           width: fit-content;
-        }
-        
-        /* Animated glow pulse effect for fade edges */
-        .fade-glow-left {
-          animation: glowPulseLeft 3s ease-in-out infinite;
-        }
-        .fade-glow-right {
-          animation: glowPulseRight 3s ease-in-out infinite;
-        }
-        
-        @keyframes glowPulseLeft {
-          0%, 100% {
-            box-shadow: inset -20px 0 40px rgba(255, 140, 66, 0.1);
-          }
-          50% {
-            box-shadow: inset -30px 0 60px rgba(255, 140, 66, 0.2);
-          }
-        }
-        
-        @keyframes glowPulseRight {
-          0%, 100% {
-            box-shadow: inset 20px 0 40px rgba(255, 140, 66, 0.1);
-          }
-          50% {
-            box-shadow: inset 30px 0 60px rgba(255, 140, 66, 0.2);
-          }
         }
         
         @keyframes infiniteScrollLeft {

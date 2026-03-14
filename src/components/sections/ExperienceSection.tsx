@@ -201,34 +201,34 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({
         )}
         
         {/* Experience Timeline */}
-        <div className="relative max-w-3xl mx-auto mt-8 pl-8 border-l-2 border-accent/30">
+        <div className="relative max-w-3xl mx-auto mt-8 pl-8 border-l border-white/[0.08]">
           {sortedExperience.map((exp, index) => (
             <motion.div
               key={exp.id}
               className="mb-10 relative"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
               viewport={{ once: true, margin: "-50px" }}
             >
               {/* Timeline dot */}
-              <div className="absolute -left-[2.15rem] bg-background border-2 border-accent rounded-full p-1">
-                <Briefcase className="h-5 w-5 text-accent" />
+              <div className="absolute -left-[1.65rem] bg-[#010101] border border-violet-500/40 rounded-full p-1.5">
+                <Briefcase className="h-4 w-4 text-violet-400" />
               </div>
               
               {/* Content */}
-              <div className="glass-card rounded-lg p-6 ml-4 hover-glow">
+              <div className="rounded-2xl p-5 ml-4 bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.1] transition-colors duration-300">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-xl font-bold">{exp.position}</h3>
-                    <div className="flex items-center mb-2 text-sm text-accent">
-                      <Building className="h-4 w-4 mr-2" />
+                    <h3 className="text-lg font-semibold text-white">{exp.position}</h3>
+                    <div className="flex items-center mb-2 text-sm text-violet-400">
+                      <Building className="h-3.5 w-3.5 mr-1.5" />
                       <span>{exp.company}</span>
                     </div>
-                    <div className="mb-3 text-sm text-muted-foreground">
-                      {formatDate(exp.startDate)} - {exp.endDate === "Present" ? "Present" : formatDate(exp.endDate)}
+                    <div className="mb-3 text-xs text-zinc-500">
+                      {formatDate(exp.startDate)} — {exp.endDate === "Present" ? "Present" : formatDate(exp.endDate)}
                     </div>
-                    <p className="text-muted-foreground mb-3">
+                    <p className="text-sm text-zinc-400 mb-3 leading-relaxed">
                       {exp.description}
                     </p>
                     

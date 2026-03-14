@@ -145,100 +145,101 @@ const ContactSection: React.FC<ContactSectionProps> = ({
           subtitle="Get in touch or leave your feedback."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 max-w-4xl mx-auto">
           {/* Contact Info */}
           <motion.div
-            className="glass-card rounded-lg p-6"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
+            className="rounded-[32px] p-8 border border-white/[0.07] bg-white/[0.03] backdrop-blur-2xl group"
           >
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-xl font-bold">Contact Information</h3>
-              {isAdmin && onUpdateContact && (
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  onClick={() => {
-                    setEditEmail(contact.email);
-                    setEditPhone(contact.phone || "");
-                    setEditAddress(contact.address || "");
-                    setEditLocation(contact.location || "");
-                    setIsEditFormOpen(true);
-                  }}
-                >
-                  <Edit size={18} />
-                </Button>
-              )}
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <Mail className="h-5 w-5 mr-3 text-accent" />
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="hover:text-accent transition-colors"
+            <div>
+              <div className="flex justify-between items-start mb-6">
+                <h3 className="text-lg font-semibold text-white">Contact Information</h3>
+                {isAdmin && onUpdateContact && (
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => {
+                      setEditEmail(contact.email);
+                      setEditPhone(contact.phone || "");
+                      setEditAddress(contact.address || "");
+                      setEditLocation(contact.location || "");
+                      setIsEditFormOpen(true);
+                    }}
                   >
-                    {contact.email}
-                  </a>
-                </div>
+                    <Edit size={18} />
+                  </Button>
+                )}
               </div>
 
-              {contact.phone && (
-                <div className="flex items-center">
-                  <Phone className="h-5 w-5 mr-3 text-accent" />
+              <div className="space-y-5">
+                <div className="flex items-center group/item">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-500/10 border border-violet-500/15 mr-4">
+                    <Mail className="h-4 w-4 text-violet-400" />
+                  </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <p className="text-xs text-zinc-500 mb-0.5">Email</p>
                     <a
-                      href={`tel:${contact.phone}`}
-                      className="hover:text-accent transition-colors"
+                      href={`mailto:${contact.email}`}
+                      className="text-sm text-zinc-300 hover:text-white transition-colors duration-300"
                     >
-                      {contact.phone}
+                      {contact.email}
                     </a>
                   </div>
                 </div>
-              )}
 
-              {(contact.address || contact.location) && (
-                <div className="flex items-center">
-                  <MapPin className="h-5 w-5 mr-3 text-accent" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p>
-                      {contact.address ? `${contact.address}, ` : ""}
-                      {contact.location}
-                    </p>
+                {contact.phone && (
+                  <div className="flex items-center group/item">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-violet-500/10 border border-violet-500/15 mr-4">
+                      <Phone className="h-4 w-4 text-violet-400" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-zinc-500 mb-0.5">Phone</p>
+                      <a
+                        href={`tel:${contact.phone}`}
+                        className="text-sm text-zinc-300 hover:text-white transition-colors duration-300"
+                      >
+                        {contact.phone}
+                      </a>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+
+                {(contact.address || contact.location) && (
+                  <div className="flex items-center group/item">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/15 mr-4">
+                      <MapPin className="h-4 w-4 text-cyan-400" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-zinc-500 mb-0.5">Location</p>
+                      <p className="text-sm text-zinc-300">
+                        {contact.address ? `${contact.address}, ` : ""}
+                        {contact.location}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </motion.div>
 
           {/* Feedback Form */}
           <motion.div
-            className="glass-card rounded-lg p-6 relative"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            viewport={{ once: true }}
+            className="rounded-[32px] p-8 border border-white/[0.07] bg-white/[0.03] backdrop-blur-2xl"
             variants={formVariants}
             animate={isSubmitting ? "submitting" : formStatus}
           >
-            <h3 className="text-xl font-bold mb-4">Send a Message</h3>
+            <div className="relative">
+              <h3 className="text-lg font-semibold text-white mb-6">Send a Message</h3>
 
             {/* Success/Error Animation Overlays */}
             {formStatus === "success" && (
               <motion.div 
-                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-lg z-10"
+                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-2xl z-10"
                 initial="hidden"
                 animate="visible"
                 variants={successIconVariants}
               >
                 <motion.div 
-                  className="flex flex-col items-center p-6 bg-green-500/20 rounded-lg border border-green-500/50 backdrop-blur-md"
+                  className="flex flex-col items-center p-6 bg-green-500/20 rounded-2xl border border-green-500/50 backdrop-blur-md"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -258,13 +259,13 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 
             {formStatus === "error" && (
               <motion.div 
-                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-lg z-10"
+                className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm rounded-2xl z-10"
                 initial="hidden"
                 animate="visible"
                 variants={successIconVariants}
               >
                 <motion.div 
-                  className="flex flex-col items-center p-6 bg-red-500/20 rounded-lg border border-red-500/50 backdrop-blur-md"
+                  className="flex flex-col items-center p-6 bg-red-500/20 rounded-2xl border border-red-500/50 backdrop-blur-md"
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2 }}
@@ -366,7 +367,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 <Button 
                   type="submit" 
                   disabled={isSubmitting} 
-                  className="w-full relative overflow-hidden group"
+                  className="w-full relative overflow-hidden group bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 border-0 shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30 transition-all duration-300 rounded-full"
                 >
                   {isSubmitting ? (
                     <motion.div 
@@ -397,6 +398,7 @@ const ContactSection: React.FC<ContactSectionProps> = ({
                 </Button>
               </motion.div>
             </form>
+            </div>
           </motion.div>
         </div>
 

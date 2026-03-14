@@ -236,22 +236,23 @@ const ChatbotFab = () => {
 
   return (
     <>
-      {/* Floating Button */}
-      <button
-        aria-label="Open AI Chatbot"
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 z-50 rounded-full shadow-[0_8px_30px_rgba(255,87,51,0.4)] hover:shadow-[0_12px_40px_rgba(255,87,51,0.6)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent flex items-center justify-center"
-        style={{
-          width: 64,
-          height: 64,
-          background: "linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))",
-          transform: 'translateZ(20px)',
-          boxShadow: '0 8px 30px rgba(255,87,51,0.4), 0 0 0 2px rgba(255,255,255,0.1) inset'
-        }}
-      >
-        <Bot className="w-7 h-7 text-white" />
-      </button>
-
+      {/* Floating Button — hidden when chat is open */}
+      {!open && (
+        <button
+          aria-label="Open AI Chatbot"
+          onClick={() => setOpen(true)}
+          className="fixed z-[9999] rounded-full shadow-[0_8px_30px_rgba(255,87,51,0.4)] hover:shadow-[0_12px_40px_rgba(255,87,51,0.6)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16"
+          style={{
+            bottom: 24,
+            right: 20,
+            background: "linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)))",
+            boxShadow: '0 8px 30px rgba(255,87,51,0.4), 0 0 0 2px rgba(255,255,255,0.1) inset'
+          }}
+        >
+          <Bot className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+        </button>
+      )
+    }
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="right" className="w-[min(480px,100vw)] h-[100svh] p-0 flex flex-col">
           <div className="flex h-full flex-col">

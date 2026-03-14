@@ -13,118 +13,76 @@ interface TabSwitcherProps {
   tabs: Tab[];
   activeTab: string;
   onTabChange: (tabId: string) => void;
+  layoutId?: string;
 }
 
 const TabSwitcher: React.FC<TabSwitcherProps> = ({ 
   tabs, 
   activeTab, 
-  onTabChange 
+  onTabChange,
+  layoutId = "activeTab"
 }) => {
   const isMobile = useIsMobile();
-  const { theme } = useTheme();
-  
-  const isDark = theme === 'dark';
 
   return (
     <div className="flex justify-center mb-8 sm:mb-10 px-3 sm:px-2">
       <motion.div 
-        className={`
-          relative p-1.5 rounded-3xl flex scrollbar-none
-          bg-white/5 backdrop-blur-xl
-          border-2 border-white/20
-          ${isMobile 
-            ? 'w-full gap-1.5' 
-            : 'w-full max-w-lg gap-2'
-          }
-        `}
-        style={{
-          transformStyle: 'preserve-3d',
-          perspective: '1000px',
-          boxShadow: `
-            0 12px 28px rgba(0, 0, 0, 0.6),
-            0 6px 16px rgba(0, 0, 0, 0.4),
-            0 0 40px rgba(255, 135, 66, 0.15),
-            inset 0 2px 4px rgba(255, 255, 255, 0.15),
-            inset 0 -2px 4px rgba(0, 0, 0, 0.3),
-            0 0 0 1px rgba(0, 0, 0, 0.5)
-          `
-        }}
-        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-        whileHover={{
-          scale: isMobile ? 1 : 1.01,
-          boxShadow: `
-            0 16px 36px rgba(0, 0, 0, 0.7),
-            0 8px 20px rgba(0, 0, 0, 0.5),
-            0 0 60px rgba(255, 135, 66, 0.25),
-            inset 0 2px 6px rgba(255, 255, 255, 0.2),
-            inset 0 -2px 6px rgba(0, 0, 0, 0.4),
-            0 0 0 1px rgba(0, 0, 0, 0.5)
-          `,
-          transition: { duration: 0.3, ease: [0.32, 0.72, 0, 1] }
-        }}
+        className="relative p-1.5 rounded-[32px] flex w-full max-w-md gap-1 overflow-hidden"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
-        {tabs.map((tab, index) => {
-          const isActive = tab.id === activeTab;
-          
-          return (
-            <motion.button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className={`
-                relative flex-1 px-3 sm:px-6 py-3 rounded-2xl
-                text-sm font-semibold
-                flex items-center justify-center gap-2
-                transition-colors duration-300
-                ${isActive 
-                  ? 'text-white z-10' 
-                  : 'text-white/60 hover:text-white/90'
-                }
-              `}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.4, 
-                delay: index * 0.08,
-                ease: [0.32, 0.72, 0, 1]
-              }}
-              whileHover={{ 
-                scale: 1.02,
-                y: -1,
-                transition: { duration: 0.2, ease: [0.32, 0.72, 0, 1] }
-              }}
-              whileTap={{ 
-                scale: 0.98,
-              }}
-            >
-              {isActive && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 rounded-2xl"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%)',
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.2)'
-                  }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 380,
-                    damping: 30,
-                  }}
-                />
-              )}
-              {!isMobile && tab.icon && (
-                <span className={`${isActive ? 'text-accent' : ''} flex items-center flex-shrink-0 relative z-10`}>
-                  {tab.icon}
+        {/* Tab container — frosted glass (reduced blur on mobile) */}
+        <div className="absolute inset-0 rounded-[32px] border border-white/[0.07] bg-white/[0.03] backdrop-blur-md sm:backdrop-blur-2xl z-0" />
+        
+        <div className="relative z-[1] flex w-full gap-1 p-0.5">
+          {tabs.map((tab) => {
+            const isActive = tab.id === activeTab;
+            
+            return (
+              <motion.button
+                key={tab.id}
+                onClick={() => onTabChange(tab.id)}
+                className={`
+                  relative flex-1 px-3 sm:px-5 py-2.5 rounded-full
+                  text-xs sm:text-sm font-medium
+                  flex items-center justify-center gap-1.5
+                  transition-colors duration-300
+                  ${isActive 
+                    ? 'text-white' 
+                    : 'text-zinc-500 hover:text-zinc-300'
+                  }
+                `}
+                whileTap={{ scale: 0.97 }}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId={layoutId}
+                    className="absolute inset-0 rounded-full overflow-hidden"
+                    style={{ willChange: 'transform' }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 35,
+                      mass: 0.8,
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.1] to-white/[0.04]" />
+                    <div className="absolute -inset-px rounded-full bg-gradient-to-b from-violet-500/15 to-transparent" />
+                  </motion.div>
+                )}
+                {!isMobile && tab.icon && (
+                  <span className={`${isActive ? 'text-violet-400' : ''} flex items-center flex-shrink-0 relative z-10 transition-colors duration-300`}>
+                    {tab.icon}
+                  </span>
+                )}
+                <span className="whitespace-nowrap overflow-hidden text-ellipsis relative z-10">
+                  {tab.label}
                 </span>
-              )}
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis relative z-10">
-                {tab.label}
-              </span>
-            </motion.button>
-          );
-        })}
+              </motion.button>
+            );
+          })}
+        </div>
       </motion.div>
     </div>
   );

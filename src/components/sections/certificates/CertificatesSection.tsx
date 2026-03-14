@@ -127,16 +127,14 @@ const CertificatesSection: React.FC<CertificatesSectionProps> = ({
           {sortedCertificates.map((certificate, index) => (
             <motion.div
               key={certificate.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ 
-                duration: 0.7,
-                delay: index * 0.1,
+                duration: 0.3,
+                delay: Math.min(index * 0.04, 0.15),
                 ease: [0.22, 1, 0.36, 1]
               }}
-              whileHover={{ y: -4 }}
-              className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:border-white/30"
+              className="bg-black/40 backdrop-blur-sm md:backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 hover:border-white/30"
             >
               <CertificateCard
                 certificate={certificate}

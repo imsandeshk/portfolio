@@ -5,7 +5,7 @@ import Image from "@/components/ui/image";
 import { ProfileInfo, SocialLink } from "@/services/storageService";
 import SocialLinks from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ExternalLink } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -31,382 +31,173 @@ const Hero: React.FC<HeroProps> = ({
   const handleContactClick = () => {
     const contactSection = document.getElementById("contact");
     if (contactSection) {
-      contactSection.scrollIntoView({
-        behavior: "smooth"
-      });
+      contactSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  // Ultra-smooth animation variants
-  const containerVariants = {
+  const stagger = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-        duration: 0.8,
-        ease: [0.19, 1, 0.22, 1]
-      }
+      transition: { staggerChildren: 0.12, delayChildren: 0.15 }
     }
   };
 
-  const nameVariants = {
-    hidden: { 
-      y: 40, 
-      opacity: 0,
-      scale: 0.95
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: { 
-        duration: 1.2, 
-        ease: [0.19, 1, 0.22, 1],
-        type: "spring",
-        stiffness: 80,
-        damping: 15
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { 
-      y: 30, 
-      opacity: 0,
-      scale: 0.95
-    },
-    visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: { 
-        duration: 0.8, 
-        ease: [0.19, 1, 0.22, 1]
-      }
-    }
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [0, -10, 0],
-      rotate: [0, 1, -1, 0],
-      transition: {
-        duration: 6,
-        ease: [0.19, 1, 0.22, 1],
-        repeat: Infinity,
-        repeatType: "reverse" as const
-      }
-    }
+  const fadeUp = {
+    hidden: { y: 24, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
   };
 
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-center px-4 sm:px-6 overflow-hidden py-8 sm:py-0">
-      <div className="container mx-auto max-w-6xl flex flex-col-reverse md:flex-row items-center gap-8 sm:gap-12 md:gap-16">
-        {/* Content */}
-        <motion.div 
-          className="w-full md:w-1/2 text-center md:text-left z-10 px-2 sm:px-0" 
-          variants={containerVariants}
-          initial="hidden" 
-          animate="visible" 
+    <section className="relative min-h-[100vh] flex flex-col justify-center px-4 sm:px-6 overflow-hidden py-12 sm:py-0">
+      {/* Hero ambient mesh */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-violet-600/[0.04] blur-[120px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] rounded-full bg-indigo-500/[0.03] blur-[100px]" />
+      </div>
+
+      <div className="container mx-auto max-w-5xl relative z-10">
+        <motion.div
+          className="flex flex-col items-center text-center"
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
         >
-          <motion.div variants={nameVariants} className="mb-4 sm:mb-6 overflow-hidden relative">
-            <motion.h1 
-              className="font-playfair text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight px-2 sm:px-0"
-              style={{
-                color: '#FFF8E7'
-              }}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.4, ease: [0.19, 1, 0.22, 1] }
-              }}
+          {/* Circular Profile Picture */}
+          <motion.div variants={fadeUp} className="mb-8">
+            <motion.div
+              className="relative"
+              whileHover={{ scale: 1.04, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }}
             >
-              {profile.name}
-            </motion.h1>
-          </motion.div>
-          
-          <motion.div variants={itemVariants}>
-            <motion.h2 
-              className="font-playfair text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium mb-4 sm:mb-6 px-2 sm:px-0"
-              style={{
-                color: '#FF8C42'
-              }}
-              whileHover={{
-                scale: 1.01,
-                transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
-              }}
-            >
-              {profile.title}
-            </motion.h2>
-          </motion.div>
-          
-          <motion.div variants={itemVariants} className="mb-4 sm:mb-6">
-            <div className="flex items-center justify-center md:justify-start gap-2">
-              <motion.div 
-                className="open-to-work-badge inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 backdrop-blur-md rounded-full border border-white/20 overflow-hidden relative"
-                style={{
-                  background: theme === 'dark' 
-                    ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)' 
-                    : 'linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 100%)',
-                  boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)'
-                }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1
-                }}
-                transition={{ 
-                  opacity: { duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] },
-                  scale: { duration: 0.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] }
-                }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                </span>
-                <span className="text-green-500 text-sm sm:text-base font-medium">Open to Work</span>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          <motion.div variants={itemVariants}>
-            <motion.p 
-              className="text-base sm:text-lg mb-6 sm:mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed px-4 sm:px-0"
-              style={{
-                color: '#FFFFFF'
-              }}
-              whileHover={{
-                scale: 1.01,
-                transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
-              }}
-            >
-              {profile.bio}
-            </motion.p>
-          </motion.div>
-
-          {/* View Resume CTA */}
-          <motion.div variants={itemVariants} className="mb-3 sm:mb-4">
-            <Link 
-              to="/resume" 
-              aria-label="View Resume" 
-              className="btn-3d hero-button inline-flex items-center justify-center rounded-full px-6 sm:px-7 py-3 sm:py-3.5 text-base sm:text-lg font-semibold bg-accent text-white hover:bg-accent/90 transition-all hover-scale shadow-lg hover:shadow-xl"
-            >
-              View Resume
-            </Link>
-          </motion.div>
-
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-col gap-4 sm:gap-5 items-center md:items-start"
-          >
-            <motion.div 
-              className="flex items-center"
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
-              }}
-            >
-              <SocialLinks links={socialLinks} iconSize={isMobile ? 18 : 20} className="mt-1" />
-              {isAdmin && onEditSocial && (
-                <Button 
-                  size="icon" 
-                  variant="ghost" 
-                  className="ml-2 hover-scale" 
-                  onClick={onEditSocial}
+              {/* Outer ring glow */}
+              <div className="absolute -inset-3 rounded-full opacity-50">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/40 via-transparent to-cyan-500/30 animate-spin-slow" style={{ animationDuration: '12s' }} />
+              </div>
+              {/* Subtle pulse ring */}
+              <div className="absolute -inset-4 rounded-full border border-violet-500/10 animate-pulse" style={{ animationDuration: '3s' }} />
+              
+              <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden ring-2 ring-white/[0.1] shadow-2xl shadow-violet-500/10">
+                <Image
+                  src="/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png"
+                  alt="Profile Picture"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  fallbackSrc="/placeholder.svg"
+                  decoding="async"
+                />
+              </div>
+              {/* Soft glow behind avatar */}
+              <div className="absolute inset-0 rounded-full bg-violet-500/20 blur-[60px] -z-10 scale-[2.5]" />
+              {isAdmin && onEditProfile && (
+                <Button
+                  size="icon"
+                  className="absolute -bottom-1 -right-1 rounded-full opacity-80 hover:opacity-100 w-8 h-8"
+                  onClick={onEditProfile}
                 >
-                  <ExternalLink size={16} />
+                  <FileText size={14} />
                 </Button>
               )}
             </motion.div>
-            
-            <motion.div
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
-              }}
-              whileTap={{
-                scale: 0.98,
-                transition: { duration: 0.1 }
-              }}
-            >
-              <Button 
-                onClick={handleContactClick} 
-                size="lg" 
-                className={`btn-3d hero-button text-base sm:text-lg font-semibold transition-all duration-500 rounded-xl btn-hover px-8 sm:px-10 py-3 sm:py-4 shadow-lg ${
-                  theme === 'dark'
-                    ? 'text-black bg-white hover:bg-white/90 shadow-[0_0_20px_rgba(255,255,255,0.6)]'
-                    : 'bg-light-secondary text-white hover:bg-light-tertiary shadow-xl'
-                }`}
-              >
-                Contact Me
-              </Button>
-            </motion.div>
           </motion.div>
-        </motion.div>
 
-        {/* Image */}
-        <motion.div 
-          className="w-full md:w-1/2 relative mb-6 sm:mb-8 md:mb-0 z-10 perspective-container px-4 sm:px-0" 
-          initial={{ opacity: 0, scale: 0.8, y: 20 }} 
-          animate={{ opacity: 1, scale: 1, y: 0 }} 
-          transition={{ duration: 1, ease: [0.19, 1, 0.22, 1], delay: 0.3 }}
-        >
-          <motion.div 
-            className="relative max-w-xs sm:max-w-md mx-auto float-3d"
-            style={{ transformStyle: 'preserve-3d' }}
+          {/* Availability badge */}
+          <motion.div variants={fadeUp} className="mb-7">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-medium border border-emerald-500/15 bg-emerald-500/[0.05] text-emerald-400/90 tracking-wide uppercase">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-40" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+              </span>
+              Available for work
+            </span>
+          </motion.div>
+
+          {/* Name — large, bold, clean */}
+          <motion.h1
+            variants={fadeUp}
+            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1] tracking-[-0.04em] mb-5"
+            style={{
+              background: 'linear-gradient(180deg, #FFFFFF 0%, #E4E4E7 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
           >
-            <motion.div 
-              className={`profile-3d aspect-square rounded-full overflow-hidden border-3 sm:border-2 ${
-                theme === 'dark' ? 'border-white/10' : 'border-light-secondary/30'
-              } hover-glow shadow-2xl`}
-              style={{ transformStyle: 'preserve-3d' }}
-              whileHover={{
-                scale: 1.05,
-                rotate: 2,
-                transition: { duration: 0.6, ease: [0.19, 1, 0.22, 1] }
-              }}
-              animate={{
-                boxShadow: theme === 'dark' 
-                  ? [
-                      "0 0 25px rgba(255,255,255,0.15)",
-                      "0 0 50px rgba(255,255,255,0.25)",
-                      "0 0 25px rgba(255,255,255,0.15)"
-                    ]
-                  : [
-                      "0 0 25px rgba(126,105,171,0.25)",
-                      "0 0 50px rgba(126,105,171,0.35)",
-                      "0 0 25px rgba(126,105,171,0.25)"
-                    ]
-              }}
-              transition={{ 
-                duration: 4, 
-                repeat: Infinity, 
-                repeatType: "reverse",
-                ease: [0.19, 1, 0.22, 1]
-              }}
+            {profile.name}
+          </motion.h1>
+
+          {/* Title — refined accent gradient */}
+          <motion.h2
+            variants={fadeUp}
+            className="font-display text-lg sm:text-xl md:text-2xl font-semibold mb-6 tracking-[-0.01em]"
+            style={{
+              background: 'linear-gradient(135deg, #C4B5FD 0%, #818CF8 40%, #22D3EE 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            {profile.title}
+          </motion.h2>
+
+          {/* Bio */}
+          <motion.p
+            variants={fadeUp}
+            className="hidden sm:block text-sm sm:text-[15px] text-zinc-500 max-w-lg leading-[1.8] mb-10"
+          >
+            {profile.bio}
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div variants={fadeUp} className="hidden sm:flex flex-wrap items-center justify-center gap-3 mb-10">
+            <Link
+              to="/resume"
+              className="group relative inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white overflow-hidden transition-all duration-500 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/20"
             >
-              <Image
-                src="/lovable-uploads/6f0800b3-624d-42cd-9762-3cbe10931da5.png"
-                alt="Profile Picture"
-                className="w-full h-full profile-image object-cover"
-                loading="eager"
-                fallbackSrc="/placeholder.svg"
-                decoding="async"
-              />
-            </motion.div>
-            {isAdmin && onEditProfile && (
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Button 
-                  size="icon" 
-                  className="absolute bottom-4 right-4 rounded-full opacity-80 hover:opacity-100 btn-hover" 
-                  onClick={onEditProfile}
-                >
-                  <ExternalLink size={16} />
-                </Button>
-              </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 transition-all duration-500" />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-violet-500 to-indigo-500" />
+              <FileText className="w-4 h-4 relative z-10" />
+              <span className="relative z-10">View Resume</span>
+            </Link>
+            <button
+              onClick={handleContactClick}
+              className="group relative inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium text-zinc-400 hover:text-white transition-all duration-500 hover:-translate-y-0.5 overflow-hidden border border-white/[0.07] bg-white/[0.03] backdrop-blur-2xl hover:border-white/[0.2]"
+            >
+              <span className="relative z-10">Get in Touch</span>
+              <ArrowRight className="w-3.5 h-3.5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+            </button>
+          </motion.div>
+
+          {/* Socials */}
+          <motion.div variants={fadeUp} className="flex items-center gap-2">
+            <SocialLinks links={socialLinks} iconSize={isMobile ? 17 : 19} />
+            {isAdmin && onEditSocial && (
+              <Button size="icon" variant="ghost" className="ml-1" onClick={onEditSocial}>
+                <FileText size={14} />
+              </Button>
             )}
           </motion.div>
         </motion.div>
       </div>
-      
+
       {/* Scroll indicator */}
-      <motion.div 
-        className={`absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 ${
-          theme === 'dark' ? 'text-white/50' : 'text-light-secondary'
-        } hover-scale hidden sm:block`}
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ 
-          duration: 0.8, 
-          delay: 1.5,
-          ease: [0.19, 1, 0.22, 1]
-        }}
-        whileHover={{
-          scale: 1.2,
-          y: -5,
-          transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] }
-        }}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
       >
         <motion.div
-          animate={{
-            y: [0, -10, 0],
-            opacity: [0.5, 1, 0.5]
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: [0.19, 1, 0.22, 1]
-          }}
+          className="w-5 h-8 rounded-full border border-white/[0.1] flex justify-center pt-1.5"
+          animate={{ opacity: [0.4, 0.8, 0.4] }}
+          transition={{ duration: 2, repeat: Infinity }}
         >
-          <ArrowDown className="w-8 h-8" />
+          <motion.div
+            className="w-1 h-1.5 rounded-full bg-white/40"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          />
         </motion.div>
       </motion.div>
-
-      {/* Enhanced glow effects - reduced on mobile */}
-      {theme === 'dark' && (
-        <>
-          <motion.div 
-            className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full filter blur-[120px] -z-0"
-            style={{ background: 'radial-gradient(circle, #FF8C42 0%, transparent 70%)' }}
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: isMobile ? [0.08, 0.15, 0.08] : [0.15, 0.35, 0.15]
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: [0.19, 1, 0.22, 1]
-            }}
-          />
-          <motion.div 
-            className="absolute bottom-1/3 right-1/4 w-96 h-96 rounded-full filter blur-[130px] -z-0"
-            style={{ background: 'radial-gradient(circle, #4A90E2 0%, transparent 70%)' }}
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: isMobile ? [0.1, 0.2, 0.1] : [0.2, 0.4, 0.2]
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: [0.19, 1, 0.22, 1],
-              delay: 2
-            }}
-          />
-          <motion.div 
-            className="absolute top-1/2 right-1/3 w-72 h-72 rounded-full filter blur-[110px] -z-0"
-            style={{ background: 'radial-gradient(circle, #10B981 0%, transparent 70%)' }}
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: isMobile ? [0.06, 0.15, 0.06] : [0.12, 0.3, 0.12]
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              ease: [0.19, 1, 0.22, 1],
-              delay: 4
-            }}
-          />
-          <motion.div 
-            className="absolute bottom-1/4 left-1/3 w-64 h-64 rounded-full filter blur-[100px] -z-0"
-            style={{ background: 'radial-gradient(circle, #FF6B9D 0%, transparent 70%)' }}
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: isMobile ? [0.05, 0.12, 0.05] : [0.1, 0.25, 0.1]
-            }}
-            transition={{
-              duration: 11,
-              repeat: Infinity,
-              ease: [0.19, 1, 0.22, 1],
-              delay: 6
-            }}
-          />
-        </>
-      )}
     </section>
   );
 };
